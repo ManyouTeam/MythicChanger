@@ -1,0 +1,10 @@
+error:
+  args: "&#98FB98[MythicChanger] &cWrong command usage, if you need help, use /mchanger help!"
+  in-game: "&#98FB98[MythicChanger] &cYou have to use this command in game!"
+  miss-permission: "&#98FB98[MythicChanger] &cYou don't have permission to use this command!"
+  rule-not-found: "&#98FB98[MythicChanger] &cWe can't find this rule!"
+
+plugin:
+  reloaded: "&#98FB98[MythicChanger] &fPlugin reloaded!"
+  saved: "&#98FB98[MythicChanger] &fItem Saved!"
+  changed: "&#98FB98[MythicChanger] &fItem Changed!"

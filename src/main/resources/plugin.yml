@@ -1,0 +1,22 @@
+name: MythicChanger
+version: '${project.version}'
+main: cn.superiormc.mythicchanger.MythicChanger
+api-version: '1.13'
+author: PQguanfang
+depend:
+  - ProtocolLib
+softdepend:
+  - EcoItems
+  - EcoArmor
+  - MythicMobs
+  - MMOItems
+  - NeigeItems
+  - ItemsAdder
+  - Oraxen
+commands:
+  mythicchanger:
+    aliases:
+      - "mc"
+      - "mchanger"
+    usage: "/mythicchanger"
+    description: "MythicChanger Main Command."

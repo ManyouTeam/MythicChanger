@@ -1,0 +1,37 @@
+weight: 15
+
+# If you want to all item apply this rule, just delete whole match_item section.
+match-item:
+  items:
+    - 'diamond_sword'
+  # Whether you use item tier instead of item ID to identify item slots.
+  # If this item plugin don't have tier, will still use Item ID as identify.
+  use-tier-identify: true
+  has-name: true
+  has-lore: true
+  contains-lore:
+    - 'test'
+  contains-name:
+    - 'test'
+
+fake-changes:
+  add-name-first: '&fGood '
+  set-name: '&fGood Diamond Sword'
+  add-lore-last:
+    - '&f&lCommon'
+  set-lore:
+    - '&7A good sword that all adventures should use!'
+    - '&f&lCommon'
+  add-lore-prefix: '%img_tooltip1%'
+  set-custom-model-data: 5
+  add-flags:
+    - 'HIDE_ENCHANTS'
+
+real-changes:
+  add-enchants:
+    POWER: 1
+  remove-enchants:
+    - 'POWER'
+  remove-all-enchants: true
+  replace-item:
+    material: golden_sword
