@@ -29,9 +29,11 @@ public class ChangesManager {
         registerNewMatchItemRule(new RemoveFlags());
         registerNewMatchItemRule(new RemoveEnchants());
         registerNewMatchItemRule(new Replace());
+        registerNewMatchItemRule(new ReplaceLore());
         registerNewMatchItemRule(new SetCustomModelData());
         registerNewMatchItemRule(new SetLore());
         registerNewMatchItemRule(new SetName());
+        registerNewMatchItemRule(new SetType());
     }
 
     public void registerNewMatchItemRule(AbstractChangesRule rule) {
