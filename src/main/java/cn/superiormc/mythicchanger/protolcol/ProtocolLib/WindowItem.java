@@ -8,6 +8,7 @@ import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.reflect.StructureModifier;
+import org.bukkit.GameMode;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -26,6 +27,9 @@ public class WindowItem extends GeneralPackets {
             @Override
             public void onPacketSending(PacketEvent event) {
                 if (event.getPlayer() == null) {
+                    return;
+                }
+                if (event.getPlayer().getGameMode() == GameMode.CREATIVE) {
                     return;
                 }
                 PacketContainer packet = event.getPacket();

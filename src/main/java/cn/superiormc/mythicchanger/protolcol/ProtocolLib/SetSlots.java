@@ -8,6 +8,7 @@ import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.reflect.StructureModifier;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -29,6 +30,9 @@ public class SetSlots extends GeneralPackets {
             public void onPacketSending(PacketEvent event) {
                 Player player = event.getPlayer();
                 if (player == null) {
+                    return;
+                }
+                if (player.getGameMode() == GameMode.CREATIVE) {
                     return;
                 }
                 PacketContainer packet = event.getPacket();
