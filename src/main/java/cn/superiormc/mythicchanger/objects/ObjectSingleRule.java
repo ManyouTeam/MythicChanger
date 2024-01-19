@@ -41,11 +41,11 @@ public class ObjectSingleRule implements Comparable<ObjectSingleRule> {
 
     public ItemStack setRealChange(ItemStack item, Player player) {
         if (item == null || item.getType().isAir()) {
-            return item;
+            return null;
         }
         ConfigurationSection section = config.getConfigurationSection("real-changes");
         if (section == null) {
-            return item;
+            return null;
         }
         return ChangesManager.changesManager.setRealChange(section, item, player);
     }
