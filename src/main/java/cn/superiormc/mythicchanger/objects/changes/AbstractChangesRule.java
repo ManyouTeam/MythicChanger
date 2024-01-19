@@ -10,16 +10,16 @@ public abstract class AbstractChangesRule implements Comparable<AbstractChangesR
         // Empty...
     }
 
-    public ItemStack setChange(ConfigurationSection section, ItemStack item) {
-        return item;
-    }
-
     public ItemStack setChange(ConfigurationSection section, ItemStack item, Player player) {
         return item;
     }
 
     public int getWeight() {
         return 0;
+    }
+
+    public boolean getNeedRewriteItem() {
+        return false;
     }
 
     @Override

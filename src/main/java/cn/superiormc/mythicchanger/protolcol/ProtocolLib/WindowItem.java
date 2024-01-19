@@ -33,6 +33,7 @@ public class WindowItem extends GeneralPackets {
                     return;
                 }
                 PacketContainer packet = event.getPacket();
+
                 StructureModifier<ItemStack> singleItemStackStructureModifier = packet.getItemModifier();
                 if (singleItemStackStructureModifier.size() != 0) {
                     ItemStack serverItemStack = singleItemStackStructureModifier.read(0);

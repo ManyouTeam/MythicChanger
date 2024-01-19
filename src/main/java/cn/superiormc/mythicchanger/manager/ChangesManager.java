@@ -12,7 +12,7 @@ public class ChangesManager {
 
     public static ChangesManager changesManager;
 
-    private static Collection<AbstractChangesRule> rules = new TreeSet<>();
+    private Collection<AbstractChangesRule> rules = new TreeSet<>();
 
     public ChangesManager() {
         changesManager = this;
@@ -28,7 +28,7 @@ public class ChangesManager {
         registerNewMatchItemRule(new RemoveAllEnchants());
         registerNewMatchItemRule(new RemoveFlags());
         registerNewMatchItemRule(new RemoveEnchants());
-        registerNewMatchItemRule(new Replace());
+        registerNewMatchItemRule(new ReplaceItem());
         registerNewMatchItemRule(new ReplaceLore());
         registerNewMatchItemRule(new SetCustomModelData());
         registerNewMatchItemRule(new SetLore());
@@ -40,12 +40,26 @@ public class ChangesManager {
         rules.add(rule);
     }
 
-    public ItemStack setChange(ConfigurationSection section, ItemStack item, Player player) {
+    public ItemStack setFakeChange(ConfigurationSection section, ItemStack item, Player player) {
         for (AbstractChangesRule rule : rules) {
-            item = rule.setChange(section, item);
             item = rule.setChange(section, item, player);
         }
         return item;
+    }
+
+    public ItemStack setRealChange(ConfigurationSection section, ItemStack item, Player player) {
+        boolean needReturnNewItem = false;
+        for (AbstractChangesRule rule : rules) {
+            if (rule.getNeedRewriteItem()) {
+                item = rule.setChange(section, item, player);
+                needReturnNewItem = true;
+            }
+            rule.setChange(section, item, player);
+        }
+        if (needReturnNewItem) {
+            return item;
+        }
+        return null;
     }
 
 }

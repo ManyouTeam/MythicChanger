@@ -58,15 +58,24 @@ public class ConfigManager {
         return item;
     }
 
-    public void startRealChange(ItemStack item, Player player) {
+    public ItemStack startRealChange(ItemStack item, Player player) {
         if (item == null || item.getType().isAir()) {
-            return;
+            return null;
         }
+        boolean needReturnNewItem = false;
         for (ObjectSingleRule rule: ruleCaches) {
             if (rule.getMatchItem(item)) {
-                rule.setRealChange(item, player);
+                ItemStack tempVal1 = rule.setRealChange(item, player);
+                if (tempVal1 != null) {
+                    item = tempVal1;
+                    needReturnNewItem = true;
+                }
             }
         }
+        if (needReturnNewItem) {
+            return item;
+        }
+        return null;
     }
 
     public ObjectSingleRule getRule(String id) {

@@ -20,7 +20,8 @@ public class AddNameFirst extends AbstractChangesRule {
             return item;
         }
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(TextUtil.parse(section.getString("add-name-first"), player) + CommonUtil.getItemName(item));
+        String tempVal1 = TextUtil.parse(section.getString("add-name-first"), player) + CommonUtil.getItemName(item);
+        meta.setDisplayName(tempVal1);
         item.setItemMeta(meta);
         return item;
     }

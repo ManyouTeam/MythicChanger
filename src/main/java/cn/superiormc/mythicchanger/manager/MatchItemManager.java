@@ -1,7 +1,6 @@
 package cn.superiormc.mythicchanger.manager;
 
 import cn.superiormc.mythicchanger.objects.matchitem.*;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 
@@ -12,12 +11,13 @@ public class MatchItemManager {
 
     public static MatchItemManager matchItemManager;
 
-    private static Collection<AbstractMatchItemRule> rules = new HashSet<>();
+    private Collection<AbstractMatchItemRule> rules = new HashSet<>();
 
     public MatchItemManager() {
         matchItemManager = this;
         registerNewMatchItemRule(new ContainsLore());
         registerNewMatchItemRule(new ContainsName());
+        registerNewMatchItemRule(new HasEnchants());
         registerNewMatchItemRule(new HasLore());
         registerNewMatchItemRule(new HasName());
         registerNewMatchItemRule(new Items());

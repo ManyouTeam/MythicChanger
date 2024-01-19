@@ -36,7 +36,7 @@ public class ObjectSingleRule implements Comparable<ObjectSingleRule> {
         if (section == null) {
             return item;
         }
-        return ChangesManager.changesManager.setChange(section, item, player);
+        return ChangesManager.changesManager.setFakeChange(section, item, player);
     }
 
     public ItemStack setRealChange(ItemStack item, Player player) {
@@ -47,7 +47,7 @@ public class ObjectSingleRule implements Comparable<ObjectSingleRule> {
         if (section == null) {
             return item;
         }
-        return ChangesManager.changesManager.setChange(section, item, player);
+        return ChangesManager.changesManager.setRealChange(section, item, player);
     }
 
     public String getId() {

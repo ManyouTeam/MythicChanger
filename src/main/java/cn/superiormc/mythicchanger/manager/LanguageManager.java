@@ -52,6 +52,15 @@ public class LanguageManager {
         this.tempFile.delete();
     }
 
+    public void sendStringText(CommandSender sender, String... args) {
+        if (sender instanceof Player) {
+            sendStringText((Player) sender, args);
+        }
+        else {
+            sendStringText(args);
+        }
+    }
+
     public void sendStringText(String... args) {
         String text = this.messageFile.getString(args[0]);
         if (text == null) {

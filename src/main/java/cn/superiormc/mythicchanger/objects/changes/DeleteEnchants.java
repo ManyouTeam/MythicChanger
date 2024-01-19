@@ -3,6 +3,7 @@ package cn.superiormc.mythicchanger.objects.changes;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -13,7 +14,7 @@ public class DeleteEnchants extends AbstractChangesRule {
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section, ItemStack item) {
+    public ItemStack setChange(ConfigurationSection section, ItemStack item, Player player) {
         if (!item.hasItemMeta()) {
             return item;
         }
