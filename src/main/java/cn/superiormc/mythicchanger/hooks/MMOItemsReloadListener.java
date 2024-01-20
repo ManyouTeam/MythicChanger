@@ -9,7 +9,6 @@ public class MMOItemsReloadListener implements Listener {
 
     @EventHandler
     public void onReloadMMOItems(PlayerCommandPreprocessEvent event) {
-        Bukkit.getConsoleSender().sendMessage(event.getMessage());
         if (event.getMessage().contains("mmoitems reload") || event.getMessage().contains("mi reload")) {
             MMOItemsHook.generateNewCache();
         }

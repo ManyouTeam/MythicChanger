@@ -56,7 +56,6 @@ public class ChangesManager {
         boolean needReturnNewItem = false;
         for (AbstractChangesRule rule : rules) {
             if (rule.getNeedRewriteItem()) {
-                item = rule.setChange(section, item, player);
                 needReturnNewItem = true;
             }
             rule.setChange(section, item, player);
