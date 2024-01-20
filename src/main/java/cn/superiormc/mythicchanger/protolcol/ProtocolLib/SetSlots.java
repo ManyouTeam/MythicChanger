@@ -1,6 +1,7 @@
 package cn.superiormc.mythicchanger.protolcol.ProtocolLib;
 
 import cn.superiormc.mythicchanger.MythicChanger;
+import cn.superiormc.mythicchanger.manager.ChangesManager;
 import cn.superiormc.mythicchanger.manager.ConfigManager;
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.ListenerPriority;
@@ -12,9 +13,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.Collection;
-import java.util.HashSet;
 
 public class SetSlots extends GeneralPackets {
 
@@ -44,7 +42,6 @@ public class SetSlots extends GeneralPackets {
                 ItemStack clientItemStack = ConfigManager.configManager.startFakeChange(serverItemStack, player);
                 // client 是加过 Lore 的，server 是没加过的！
                 itemStackStructureModifier.write(0, clientItemStack);
-                Bukkit.getConsoleSender().sendMessage(windowID + "");
                 if (slot < 5 || slot > 44) {
                     return;
                 }

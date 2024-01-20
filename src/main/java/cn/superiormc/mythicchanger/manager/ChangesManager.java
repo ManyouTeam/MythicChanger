@@ -1,16 +1,21 @@
 package cn.superiormc.mythicchanger.manager;
 
+import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.objects.changes.*;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.TreeSet;
 
 public class ChangesManager {
 
     public static ChangesManager changesManager;
+
+    //private Collection<Player> itemCooldown = new HashSet<>();
 
     private Collection<AbstractChangesRule> rules = new TreeSet<>();
 
@@ -57,9 +62,17 @@ public class ChangesManager {
             rule.setChange(section, item, player);
         }
         if (needReturnNewItem) {
+            //itemCooldown.add(player);
+            //Bukkit.getScheduler().runTaskLater(MythicChanger.instance, () -> {
+            //    itemCooldown.remove(player);
+            //}, 5L);
             return item;
         }
         return null;
     }
+
+    //public Collection<Player> getItemCooldown() {
+        //return itemCooldown;
+    //}
 
 }

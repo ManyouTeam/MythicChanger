@@ -1,6 +1,5 @@
 package cn.superiormc.mythicchanger.hooks;
 
-import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.manager.ErrorManager;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
 import com.willfp.eco.core.items.Items;
@@ -15,11 +14,10 @@ import io.lumine.xikage.mythicmobs.MythicMobs;
 import io.th0rgal.oraxen.api.OraxenItems;
 import io.th0rgal.oraxen.items.ItemBuilder;
 import net.Indyuce.mmoitems.MMOItems;
-import org.bukkit.Bukkit;
+import net.Indyuce.mmoitems.api.Type;
+import net.Indyuce.mmoitems.api.item.template.MMOItemTemplate;
 import org.bukkit.inventory.ItemStack;
 import pers.neige.neigeitems.manager.ItemManager;
-
-import java.util.concurrent.ExecutionException;
 
 public class ItemsHook {
 
@@ -49,21 +47,20 @@ public class ItemsHook {
                     return builder.build();
                 }
             case "MMOItems":
-                try {
-                    return Bukkit.getScheduler().callSyncMethod(MythicChanger.instance, () -> {
-                        if (MMOItems.plugin.getTypes().get(itemID.split(";;")[0]) == null) {
-                            ErrorManager.errorManager.sendErrorMessage("§x§9§8§F§B§9§8[MythicChanger] §cError: Can not get "
-                                    + pluginName + " item: " + itemID + "!");
-                            return null;
-                        } else if (MMOItems.plugin.getItem(itemID.split(";;")[0], itemID.split(";;")[1]) == null) {
-                            ErrorManager.errorManager.sendErrorMessage("§x§9§8§F§B§9§8[MythicChanger] §cError: Can not get "
-                                    + pluginName + " item: " + itemID + "!");
-                            return null;
-                        }
-                        return MMOItems.plugin.getItem(itemID.split(";;")[0], itemID.split(";;")[1]);
-                    }).get();
-                } catch (InterruptedException | ExecutionException e) {
+                Type type = MMOItems.plugin.getTypes().get(itemID.split(";;")[0]);
+                if (type == null) {
+                    ErrorManager.errorManager.sendErrorMessage("§x§9§8§F§B§9§8[MythicChanger] §cError: Can not get "
+                            + pluginName + " item: " + itemID + "!");
                     return null;
+                } else {
+                    MMOItemTemplate template = MMOItems.plugin.getTemplates().getTemplate(type, itemID.split(";;")[1]);
+                    if (template == null) {
+                        ErrorManager.errorManager.sendErrorMessage("§x§9§8§F§B§9§8[MythicChanger] §cError: Can not get "
+                                + pluginName + " item: " + itemID + "!");
+                        return null;
+                    }
+                    MMOItemsHook.generateNewCache(template);
+                    return MMOItemsHook.getItem(template);
                 }
             case "EcoItems":
                 EcoItems ecoItems = EcoItems.INSTANCE;

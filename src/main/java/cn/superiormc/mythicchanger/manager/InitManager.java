@@ -14,7 +14,6 @@ public class InitManager {
         initManager = this;
         File file = new File(MythicChanger.instance.getDataFolder() + "/rules/", "default.yml");
         if (!file.exists()) {
-            MythicChanger.instance.saveDefaultConfig();
             firstLoad = true;
         }
         init();

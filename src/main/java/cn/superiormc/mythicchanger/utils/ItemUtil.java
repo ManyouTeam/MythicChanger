@@ -46,6 +46,8 @@ public class ItemUtil {
                 ItemStack hookItem = ItemsHook.getHookItem(pluginName, itemID);
                 if (hookItem != null) {
                     item = hookItem;
+                } else {
+                    return null;
                 }
             }
         }
