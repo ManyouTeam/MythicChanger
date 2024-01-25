@@ -1,14 +1,11 @@
 package cn.superiormc.mythicchanger.manager;
 
-import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.objects.changes.*;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.TreeSet;
 
 public class ChangesManager {
@@ -21,27 +18,27 @@ public class ChangesManager {
 
     public ChangesManager() {
         changesManager = this;
-        registerNewMatchItemRule(new AddEnchants());
-        registerNewMatchItemRule(new AddFlags());
-        registerNewMatchItemRule(new AddLoreFirst());
-        registerNewMatchItemRule(new AddLoreLast());
-        registerNewMatchItemRule(new AddLorePrefix());
-        registerNewMatchItemRule(new AddLoreSuffix());
-        registerNewMatchItemRule(new AddNameFirst());
-        registerNewMatchItemRule(new AddNameLast());
-        registerNewMatchItemRule(new DeleteEnchants());
-        registerNewMatchItemRule(new RemoveAllEnchants());
-        registerNewMatchItemRule(new RemoveFlags());
-        registerNewMatchItemRule(new RemoveEnchants());
-        registerNewMatchItemRule(new ReplaceItem());
-        registerNewMatchItemRule(new ReplaceLore());
-        registerNewMatchItemRule(new SetCustomModelData());
-        registerNewMatchItemRule(new SetLore());
-        registerNewMatchItemRule(new SetName());
-        registerNewMatchItemRule(new SetType());
+        registerNewRule(new AddEnchants());
+        registerNewRule(new AddFlags());
+        registerNewRule(new AddLoreFirst());
+        registerNewRule(new AddLoreLast());
+        registerNewRule(new AddLorePrefix());
+        registerNewRule(new AddLoreSuffix());
+        registerNewRule(new AddNameFirst());
+        registerNewRule(new AddNameLast());
+        registerNewRule(new DeleteEnchants());
+        registerNewRule(new RemoveAllEnchants());
+        registerNewRule(new RemoveFlags());
+        registerNewRule(new RemoveEnchants());
+        registerNewRule(new ReplaceItem());
+        registerNewRule(new ReplaceLore());
+        registerNewRule(new SetCustomModelData());
+        registerNewRule(new SetLore());
+        registerNewRule(new SetName());
+        registerNewRule(new SetType());
     }
 
-    public void registerNewMatchItemRule(AbstractChangesRule rule) {
+    public void registerNewRule(AbstractChangesRule rule) {
         rules.add(rule);
     }
 

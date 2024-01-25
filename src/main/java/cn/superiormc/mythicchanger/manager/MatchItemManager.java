@@ -15,15 +15,15 @@ public class MatchItemManager {
 
     public MatchItemManager() {
         matchItemManager = this;
-        registerNewMatchItemRule(new ContainsLore());
-        registerNewMatchItemRule(new ContainsName());
-        registerNewMatchItemRule(new HasEnchants());
-        registerNewMatchItemRule(new HasLore());
-        registerNewMatchItemRule(new HasName());
-        registerNewMatchItemRule(new Items());
+        registerNewRule(new ContainsLore());
+        registerNewRule(new ContainsName());
+        registerNewRule(new HasEnchants());
+        registerNewRule(new HasLore());
+        registerNewRule(new HasName());
+        registerNewRule(new Items());
     }
 
-    public void registerNewMatchItemRule(AbstractMatchItemRule rule) {
+    public void registerNewRule(AbstractMatchItemRule rule) {
         rules.add(rule);
     }
 

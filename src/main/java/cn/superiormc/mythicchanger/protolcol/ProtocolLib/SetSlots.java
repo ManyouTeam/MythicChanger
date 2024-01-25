@@ -37,7 +37,6 @@ public class SetSlots extends GeneralPackets {
                 if (serverItemStack == null || serverItemStack.getType().isAir()) {
                     return;
                 }
-                int windowID = packet.getIntegers().read(0);
                 int slot = packet.getIntegers().read(packet.getIntegers().size() - 1);
                 ItemStack clientItemStack = ConfigManager.configManager.startFakeChange(serverItemStack, player);
                 // client 是加过 Lore 的，server 是没加过的！
