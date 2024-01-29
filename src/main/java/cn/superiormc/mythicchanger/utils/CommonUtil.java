@@ -25,20 +25,24 @@ public class CommonUtil {
     }
 
     public static String getItemName(ItemStack displayItem) {
-        if (displayItem == null) {
+        if (displayItem == null || displayItem.getItemMeta() == null) {
             return "";
         }
         if (CommonUtil.checkPluginLoad("NeigeItems")) {
             return ItemUtils.getItemName(displayItem);
         }
-        if (displayItem.getItemMeta() == null) {
-            return displayItem.getType().name().replace("_", " ");
+        if (displayItem.getItemMeta().hasDisplayName()) {
+            return displayItem.getItemMeta().getDisplayName();
         }
-        return displayItem.getItemMeta().hasDisplayName() ?
-                displayItem.getItemMeta().getDisplayName() :
-                displayItem.getItemMeta().hasLocalizedName() ?
-                        displayItem.getItemMeta().getLocalizedName() :
-                        displayItem.getType().name().replace("_", " ");
+        StringBuilder result = new StringBuilder();
+        for (String word : displayItem.getType().name().toLowerCase().split("_")) {
+            if (!word.isEmpty()) {
+                char firstChar = Character.toUpperCase(word.charAt(0));
+                String restOfWord = word.substring(1);
+                result.append(firstChar).append(restOfWord).append(" ");
+            }
+        }
+        return result.toString();
     }
 
     public static void mkDir(File dir) {
