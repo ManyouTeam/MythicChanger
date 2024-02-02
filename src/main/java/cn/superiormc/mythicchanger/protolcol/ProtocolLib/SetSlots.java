@@ -41,29 +41,38 @@ public class SetSlots extends GeneralPackets {
                 ItemStack clientItemStack = ConfigManager.configManager.startFakeChange(serverItemStack, player);
                 // client 是加过 Lore 的，server 是没加过的！
                 itemStackStructureModifier.write(0, clientItemStack);
-                if (slot < 5 || slot > 44) {
-                    return;
-                }
-                int spigotSlot;
-                if (slot >= 36) {
-                    spigotSlot = slot - 36;
-                } else if (slot <= 8) {
-                    spigotSlot = slot + 31;
+                if (ChangesManager.changesManager.getItemCooldown(player, slot)) {
+                    ChangesManager.changesManager.removeCooldown(player, slot);
+                    event.setCancelled(true);
                 } else {
-                    spigotSlot = slot;
-                }
-                ItemStack tempItemStack = event.getPlayer().getInventory().getItem(spigotSlot);
-                if (tempItemStack == null || tempItemStack.getType().isAir()) {
-                    return;
-                }
-                ItemStack newItem = ConfigManager.configManager.startRealChange(tempItemStack, player);
-                if (newItem != null) {
-                    Bukkit.getScheduler().callSyncMethod(MythicChanger.instance, () -> {
-                        player.getInventory().setItem(spigotSlot, newItem);
-                        return null;
-                    });
+                    startRealChange(slot, player);
                 }
             }
         };
+    }
+
+    public void startRealChange(int slot, Player player) {
+        if (slot < 5 || slot > 44) {
+            return;
+        }
+        int spigotSlot;
+        if (slot >= 36) {
+            spigotSlot = slot - 36;
+        } else if (slot <= 8) {
+            spigotSlot = slot + 31;
+        } else {
+            spigotSlot = slot;
+        }
+        ItemStack tempItemStack = player.getInventory().getItem(spigotSlot);
+        if (tempItemStack == null || tempItemStack.getType().isAir()) {
+            return;
+        }
+        ItemStack newItem = ConfigManager.configManager.startRealChange(tempItemStack, player);
+        if (newItem != null && !newItem.getType().isAir()) {
+            ChangesManager.changesManager.addCooldown(player, slot);
+            Bukkit.getScheduler().runTask(MythicChanger.instance, () -> {
+                player.getInventory().setItem(spigotSlot, newItem);
+            });
+        }
     }
 }

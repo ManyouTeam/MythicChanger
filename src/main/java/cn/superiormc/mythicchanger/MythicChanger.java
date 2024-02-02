@@ -30,8 +30,14 @@ public final class MythicChanger extends JavaPlugin {
         new MatchItemManager();
         new CommandManager();
         if (CommonUtil.checkPluginLoad("MMOItems")) {
-            MMOItemsHook.generateNewCache();
-            new ListenerManager();
+            try {
+                Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fRegistering special item register manager" +
+                        " for MMOItems because it does not support async...");
+                MMOItemsHook.generateNewCache();
+                new ListenerManager();
+            } catch (Exception ignored) {
+                Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §cFalied to register MMOItems hook!");
+            }
         }
         Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fPlugin is loaded. Author: PQguanfang.");
     }

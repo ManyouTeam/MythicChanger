@@ -52,40 +52,15 @@ public class WindowClick extends GeneralPackets{
                     }
                     ItemStack newItem = ConfigManager.configManager.startRealChange(tempItemStack, player);
                     if (newItem != null) {
-                        Bukkit.getScheduler().callSyncMethod(MythicChanger.instance, () -> {
+                        Bukkit.getScheduler().runTask(MythicChanger.instance, () -> {
                             if (!player.getItemOnCursor().getType().isAir()) {
                                 player.getItemOnCursor().setAmount(0);
                             }
                             player.getInventory().setItem(spigotSlot, newItem);
-                            return null;
                         });
                     }
                 } else {
                     if (slot < 10 || slot > 44) {
-                        //Inventory inventory = player.getOpenInventory().getTopInventory();
-                        //if (inventory instanceof AnvilInventory && slot == 2) {
-                        //    ItemStack newItem = ConfigManager.configManager.startRealChange(inventory.getItem(2), player);
-                        //    if (newItem != null) {
-                        //        Bukkit.getScheduler().callSyncMethod(MythicChanger.instance, () -> {
-                        //            if (!player.getItemOnCursor().getType().isAir()) {
-                        //                player.getItemOnCursor().setAmount(0);
-                        //            }
-                        //            player.getInventory().setItem(2, newItem);
-                        //            return null;
-                        //        });
-                        //    }
-                        //} else if (inventory instanceof CraftingInventory && slot == -1) {
-                        //    ItemStack newItem = ConfigManager.configManager.startRealChange(inventory.getItem(-1), player);
-                        //    if (newItem != null) {
-                        //        Bukkit.getScheduler().callSyncMethod(MythicChanger.instance, () -> {
-                        //            if (!player.getItemOnCursor().getType().isAir()) {
-                        //                player.getItemOnCursor().setAmount(0);
-                        //            }
-                        //            player.getInventory().setItem(-1, newItem);
-                        //            return null;
-                        //        });
-                        //    }
-                        //}
                         return;
                     }
                     int spigotSlot;
@@ -99,13 +74,12 @@ public class WindowClick extends GeneralPackets{
                         return;
                     }
                     ItemStack newItem = ConfigManager.configManager.startRealChange(tempItemStack, player);
-                    if (newItem != null) {
-                        Bukkit.getScheduler().callSyncMethod(MythicChanger.instance, () -> {
+                    if (newItem != null && !newItem.getType().isAir()) {
+                        Bukkit.getScheduler().runTask(MythicChanger.instance, () -> {
                             if (!player.getItemOnCursor().getType().isAir()) {
                                 player.getItemOnCursor().setAmount(0);
                             }
                             player.getInventory().setItem(spigotSlot, newItem);
-                            return null;
                         });
                     }
                 }
