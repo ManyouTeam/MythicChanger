@@ -60,14 +60,17 @@ public class WindowClick extends GeneralPackets{
                         });
                     }
                 } else {
-                    if (slot < 10 || slot > 44) {
+                    int topSize = player.getOpenInventory().getTopInventory().getSize();
+                    if (slot < topSize || slot > topSize + 36) {
                         return;
                     }
                     int spigotSlot;
-                    if (slot >= 36) {
-                        spigotSlot = slot - 36;
+                    // 如果是最后9个格子
+                    if (slot >= 27 + topSize) {
+                        spigotSlot = slot - 27 - topSize;
+                        // 如果是中间三排
                     } else {
-                        spigotSlot = slot;
+                        spigotSlot = slot - topSize + 9;
                     }
                     ItemStack tempItemStack = event.getPlayer().getInventory().getItem(spigotSlot);
                     if (tempItemStack == null || tempItemStack.getType().isAir()) {
