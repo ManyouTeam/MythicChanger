@@ -3,6 +3,7 @@ package cn.superiormc.mythicchanger.protolcol.ProtocolLib;
 import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.manager.ChangesManager;
 import cn.superiormc.mythicchanger.manager.ConfigManager;
+import cn.superiormc.mythicchanger.utils.CommonUtil;
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
@@ -52,7 +53,7 @@ public class SetSlots extends GeneralPackets {
     }
 
     public void startRealChange(int slot, Player player) {
-        if (slot < 5 || slot > 44) {
+        if (!CommonUtil.inPlayerInventory(player, slot)) {
             return;
         }
         int spigotSlot;
