@@ -54,10 +54,9 @@ public class WindowClick extends GeneralPackets{
                     }
                     ItemStack newItem = ConfigManager.configManager.startRealChange(tempItemStack, player);
                     if (newItem != null) {
+                        tempItemStack.setAmount(0);
                         Bukkit.getScheduler().runTask(MythicChanger.instance, () -> {
-                            if (!player.getItemOnCursor().getType().isAir()) {
-                                player.getItemOnCursor().setAmount(0);
-                            }
+                            player.getItemOnCursor().setAmount(0);
                             player.getInventory().setItem(spigotSlot, newItem);
                         });
                     }
@@ -83,10 +82,9 @@ public class WindowClick extends GeneralPackets{
                     }
                     ItemStack newItem = ConfigManager.configManager.startRealChange(tempItemStack, player);
                     if (newItem != null && !newItem.getType().isAir()) {
+                        tempItemStack.setAmount(0);
                         Bukkit.getScheduler().runTask(MythicChanger.instance, () -> {
-                            if (!player.getItemOnCursor().getType().isAir()) {
-                                player.getItemOnCursor().setAmount(0);
-                            }
+                            player.getItemOnCursor().setAmount(0);
                             player.getInventory().setItem(spigotSlot, newItem);
                         });
                     }
