@@ -17,6 +17,16 @@ public class CommonUtil {
         return MythicChanger.instance.getServer().getPluginManager().isPluginEnabled(pluginName);
     }
 
+    public static boolean getClass(String className) {
+        try {
+            Class.forName(className);
+            return true;
+        }
+        catch (ClassNotFoundException e) {
+            return false;
+        }
+    }
+
     public static int getMajorVersion() {
         String version = Bukkit.getVersion();
         Matcher matcher = Pattern.compile("MC: \\d\\.(\\d+)").matcher(version);
