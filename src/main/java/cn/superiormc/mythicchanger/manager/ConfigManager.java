@@ -1,8 +1,11 @@
 package cn.superiormc.mythicchanger.manager;
 
 import cn.superiormc.mythicchanger.MythicChanger;
+import cn.superiormc.mythicchanger.objects.ObjectApplyItem;
 import cn.superiormc.mythicchanger.objects.ObjectSingleRule;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -15,13 +18,21 @@ public class ConfigManager {
 
     public static ConfigManager configManager;
 
+    public FileConfiguration config;
+
     public Map<String, ObjectSingleRule> ruleMap = new TreeMap<>();
+
+    public Map<String, ObjectApplyItem> itemMap = new HashMap<>();
 
     public Collection<ObjectSingleRule> ruleCaches = new TreeSet<>();
 
     public ConfigManager() {
         configManager = this;
+        config = MythicChanger.instance.getConfig();
         initRulesConfigs();
+        if (!MythicChanger.freeVersion) {
+            initApplyItemConfigs();
+        }
     }
 
     private void initRulesConfigs() {
@@ -46,12 +57,26 @@ public class ConfigManager {
         }
     }
 
+    private void initApplyItemConfigs() {
+        MythicChanger.instance.saveDefaultConfig();
+        ConfigurationSection tempVal1 = MythicChanger.instance.getConfig().getConfigurationSection(
+                "apply-items");
+        if (tempVal1 == null) {
+            return;
+        }
+        itemMap = new HashMap<>();
+        for (String key : tempVal1.getKeys(false)) {
+            Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fLoaded apply item: " + key + "!");
+            itemMap.put(key, new ObjectApplyItem(key, tempVal1.getConfigurationSection(key)));
+        }
+    }
+
     public ItemStack startFakeChange(ItemStack item, Player player) {
         if (item == null || item.getType().isAir()) {
             return item;
         }
         for (ObjectSingleRule rule: ruleCaches) {
-            if (rule.getMatchItem(item)) {
+            if (rule.getMatchItem(item, true)) {
                 item = rule.setFakeChange(item, player);
             }
         }
@@ -64,7 +89,7 @@ public class ConfigManager {
         }
         boolean needReturnNewItem = false;
         for (ObjectSingleRule rule: ruleCaches) {
-            if (rule.getMatchItem(item)) {
+            if (rule.getMatchItem(item, false)) {
                 ItemStack tempVal1 = rule.setRealChange(item, player);
                 if (tempVal1 != null) {
                     item = tempVal1;
@@ -79,7 +104,21 @@ public class ConfigManager {
     }
 
     public ObjectSingleRule getRule(String id) {
+        if (id == null) {
+            return null;
+        }
         return ruleMap.get(id);
+    }
+
+    public ObjectApplyItem getApplyItem(String id) {
+        if (id == null) {
+            return null;
+        }
+        return itemMap.get(id);
+    }
+
+    public boolean getBoolean(String path) {
+        return config.getBoolean(path, true);
     }
 
 }

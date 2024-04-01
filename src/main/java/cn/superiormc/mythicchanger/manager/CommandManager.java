@@ -1,5 +1,6 @@
 package cn.superiormc.mythicchanger.manager;
 
+import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.commands.*;
 import cn.superiormc.mythicchanger.objects.ObjectCommand;
 import org.bukkit.Bukkit;
@@ -26,7 +27,9 @@ public class CommandManager {
     }
 
     private void registerObjectCommand() {
-        registeredCommands.put("applyrule", new SubApplyFakeRule());
+        if (!MythicChanger.freeVersion) {
+            registeredCommands.put("giveapplyitem", new SubGiveApplyItem());
+        }
         registeredCommands.put("reload", new SubReload());
         registeredCommands.put("saveitem", new SubSaveItem());
     }

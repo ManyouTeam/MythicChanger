@@ -1,5 +1,6 @@
 package cn.superiormc.mythicchanger.manager;
 
+import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.objects.matchitem.*;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
@@ -21,6 +22,13 @@ public class MatchItemManager {
         registerNewRule(new HasLore());
         registerNewRule(new HasName());
         registerNewRule(new Items());
+        if (!MythicChanger.freeVersion) {
+            registerNewRule(new ContainsNBT());
+            registerNewRule(new NBTString());
+            registerNewRule(new NBTByte());
+            registerNewRule(new NBTInt());
+            registerNewRule(new NBTDouble());
+        }
     }
 
     public void registerNewRule(AbstractMatchItemRule rule) {

@@ -77,4 +77,39 @@ public class CommonUtil {
             dir.mkdir();
         }
     }
+
+    // Unused but save here for anyone maybe need it.
+    public static int convertNMSSlotToBukkitSlot(int slot, int windowID, Player player) {
+        if (windowID == 0) {
+            if (slot < 5 || slot > 44) {
+                return -1;
+            }
+            int spigotSlot;
+            if (slot >= 36) {
+                spigotSlot = slot - 36;
+            } else if (slot <= 8) {
+                spigotSlot = slot + 31;
+            } else {
+                spigotSlot = slot;
+            }
+            return spigotSlot;
+        } else {
+            int topSize = player.getOpenInventory().getTopInventory().getSize();
+            if (topSize == 5 && CommonUtil.inPlayerInventory(player, slot)) {
+                topSize = 9;
+            }
+            if (slot < topSize || slot > topSize + 36) {
+                return -1;
+            }
+            int spigotSlot;
+            // 如果是最后9个格子
+            if (slot >= 27 + topSize) {
+                spigotSlot = slot - 27 - topSize;
+                // 如果是中间三排
+            } else {
+                spigotSlot = slot - topSize + 9;
+            }
+            return spigotSlot;
+        }
+    }
 }

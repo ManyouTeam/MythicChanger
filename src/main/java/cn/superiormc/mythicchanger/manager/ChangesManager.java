@@ -38,6 +38,10 @@ public class ChangesManager {
         registerNewRule(new SetLore());
         registerNewRule(new SetName());
         registerNewRule(new SetType());
+        if (!MythicChanger.freeVersion) {
+            registerNewRule(new SetColor());
+            registerNewRule(new AddNBTString());
+        }
     }
 
     public void registerNewRule(AbstractChangesRule rule) {
@@ -78,6 +82,7 @@ public class ChangesManager {
     public void addCooldown(Player player, int slot) {
         if (itemCooldown.get(player) != null) {
             itemCooldown.get(player).add(slot);
+            return;
         }
         Collection<Integer> tempVal1 = new HashSet<>();
         tempVal1.add(slot);

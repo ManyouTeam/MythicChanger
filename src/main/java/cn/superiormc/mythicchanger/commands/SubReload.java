@@ -32,6 +32,7 @@ public class SubReload extends ObjectCommand {
 
     @Override
     public void executeCommandInConsole(String[] args) {
+        MythicChanger.instance.reloadConfig();
         new ConfigManager();
         new ItemManager();
         new ChangesManager();

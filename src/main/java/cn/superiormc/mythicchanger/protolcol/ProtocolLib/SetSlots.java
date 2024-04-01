@@ -39,14 +39,15 @@ public class SetSlots extends GeneralPackets {
                     return;
                 }
                 int slot = packet.getIntegers().read(packet.getIntegers().size() - 1);
-                ItemStack clientItemStack = ConfigManager.configManager.startFakeChange(serverItemStack, player);
-                // client 是加过 Lore 的，server 是没加过的！
-                itemStackStructureModifier.write(0, clientItemStack);
                 if (ChangesManager.changesManager.getItemCooldown(player, slot)) {
                     ChangesManager.changesManager.removeCooldown(player, slot);
-                    event.setCancelled(true);
                 } else {
-                    startRealChange(slot, player);
+                    ItemStack clientItemStack = ConfigManager.configManager.startFakeChange(serverItemStack, player);
+                    // client 是加过 Lore 的，server 是没加过的！
+                    itemStackStructureModifier.write(0, clientItemStack);
+                    if (ConfigManager.configManager.getBoolean("real-change-trigger.SetSlotPacket")) {
+                        startRealChange(slot, player);
+                    }
                 }
             }
         };

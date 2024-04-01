@@ -1,11 +1,13 @@
 package cn.superiormc.mythicchanger.objects;
 
 import cn.superiormc.mythicchanger.manager.ChangesManager;
+import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.manager.MatchItemManager;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
 public class ObjectSingleRule implements Comparable<ObjectSingleRule> {
@@ -20,7 +22,15 @@ public class ObjectSingleRule implements Comparable<ObjectSingleRule> {
         this.config = config;
     }
 
-    public boolean getMatchItem(ItemStack item) {
+    public boolean getMatchItem(ItemStack item, boolean fakeOrReal) {
+        if (item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer().has(ObjectApplyItem.MYTHICCHANGER_APPLY_RULE,
+                PersistentDataType.STRING)) {
+            String id = item.getItemMeta().getPersistentDataContainer().get(ObjectApplyItem.MYTHICCHANGER_APPLY_RULE, PersistentDataType.STRING);
+            if (id != null && id.equals(this.id)) {
+                ObjectApplyItem applyItem = ConfigManager.configManager.getApplyItem(id);
+                return fakeOrReal || (applyItem != null && applyItem.getApplyRealChange());
+            }
+        }
         ConfigurationSection section = config.getConfigurationSection("match-item");
         if (section == null) {
             return true;
@@ -57,7 +67,6 @@ public class ObjectSingleRule implements Comparable<ObjectSingleRule> {
     public int getWeight() {
         return config.getInt("weight", 0);
     }
-
 
     @Override
     public int compareTo(@NotNull ObjectSingleRule otherPrefix) {

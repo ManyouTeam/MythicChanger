@@ -1,0 +1,29 @@
+# MythicChanger by @PQguanfang
+#
+# Read the Wiki here: https://mythicchanger.superiormc.cn/
+
+real-change-trigger:
+  SetSlotTrigger:
+    enabled: true
+  InventoryClickEvent:
+    enabled: true
+
+# Premium version only
+apply-items:
+  A:
+    material: PAPER
+    name: '&fItem Skin &8(Diamond Sword)'
+    lore:
+      - '&7Drag this item onto the item you want to apply.'
+    apply-rule: default
+    # After apply real change, the item can no longer be rollback.
+    apply-real-change: false
+    match-item:
+      items:
+        - 'diamond_sword'
+  B:
+    material: BOOK
+    name: '&fRollback book'
+    lore:
+      - '&7Drag this item onto the item you want to rollback its apply.'
+    apply-rule: deapply
