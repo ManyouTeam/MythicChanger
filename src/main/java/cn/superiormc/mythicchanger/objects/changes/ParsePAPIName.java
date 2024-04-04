@@ -1,37 +1,33 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
-import com.google.common.base.Enums;
+import cn.superiormc.mythicchanger.utils.TextUtil;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class AddFlags extends AbstractChangesRule {
+public class ParsePAPIName extends AbstractChangesRule {
 
-    public AddFlags() {
+    public ParsePAPIName() {
         super();
     }
 
     @Override
     public ItemStack setChange(ConfigurationSection section, ItemStack item, Player player, boolean fakeOrReal) {
-        if (section.getStringList("add-flags").isEmpty()) {
+        if (!section.getBoolean("parse-papi-name")) {
             return item;
         }
         ItemMeta meta = item.getItemMeta();
-        for (String flag : section.getStringList("add-flags")) {
-            flag = flag.toUpperCase();
-            ItemFlag itemFlag = Enums.getIfPresent(ItemFlag.class, flag).orNull();
-            if (itemFlag != null) {
-                meta.addItemFlags(itemFlag);
-            }
+        if (!meta.hasDisplayName()) {
+            return item;
         }
+        meta.setDisplayName(TextUtil.parse(meta.getDisplayName(), player));
         item.setItemMeta(meta);
         return item;
     }
 
     @Override
     public int getWeight() {
-        return 3;
+        return 501;
     }
 }

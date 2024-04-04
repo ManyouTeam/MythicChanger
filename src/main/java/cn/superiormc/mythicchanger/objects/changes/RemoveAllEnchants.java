@@ -15,7 +15,7 @@ public class RemoveAllEnchants extends AbstractChangesRule {
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section, ItemStack item, Player player) {
+    public ItemStack setChange(ConfigurationSection section, ItemStack item, Player player, boolean fakeOrReal) {
         if (!item.hasItemMeta()) {
             return item;
         }

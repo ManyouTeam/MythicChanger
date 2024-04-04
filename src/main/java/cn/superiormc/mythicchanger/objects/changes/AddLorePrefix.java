@@ -16,7 +16,7 @@ public class AddLorePrefix extends AbstractChangesRule {
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section, ItemStack item, Player player) {
+    public ItemStack setChange(ConfigurationSection section, ItemStack item, Player player, boolean fakeOrReal) {
         if (section.getString("add-lore-prefix") == null) {
             return item;
         }

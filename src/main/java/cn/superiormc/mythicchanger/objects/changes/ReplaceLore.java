@@ -16,7 +16,7 @@ public class ReplaceLore extends AbstractChangesRule {
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section, ItemStack item, Player player) {
+    public ItemStack setChange(ConfigurationSection section, ItemStack item, Player player, boolean fakeOrReal) {
         ConfigurationSection tempVal1 = section.getConfigurationSection("replace-lore");
         if (tempVal1 == null) {
             return item;

@@ -14,7 +14,7 @@ public class SetColor extends AbstractChangesRule {
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section, ItemStack item, Player player) {
+    public ItemStack setChange(ConfigurationSection section, ItemStack item, Player player, boolean fakeOrReal) {
         if (section.get("set-color") == null) {
             return item;
         }

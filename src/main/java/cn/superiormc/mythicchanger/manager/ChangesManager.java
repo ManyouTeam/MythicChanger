@@ -41,6 +41,8 @@ public class ChangesManager {
         if (!MythicChanger.freeVersion) {
             registerNewRule(new SetColor());
             registerNewRule(new AddNBTString());
+            registerNewRule(new ParsePAPIName());
+            registerNewRule(new ParsePAPILore());
         }
     }
 
@@ -50,7 +52,7 @@ public class ChangesManager {
 
     public ItemStack setFakeChange(ConfigurationSection section, ItemStack item, Player player) {
         for (AbstractChangesRule rule : rules) {
-            item = rule.setChange(section, item, player);
+            item = rule.setChange(section, item, player, true);
         }
         return item;
     }
@@ -59,10 +61,10 @@ public class ChangesManager {
         boolean needReturnNewItem = false;
         for (AbstractChangesRule rule : rules) {
             if (rule.getNeedRewriteItem()) {
-                item = rule.setChange(section, item, player);
+                item = rule.setChange(section, item, player, false);
                 needReturnNewItem = true;
             } else {
-                rule.setChange(section, item, player);
+                rule.setChange(section, item, player, false);
             }
         }
         if (needReturnNewItem) {

@@ -13,7 +13,7 @@ public class SetLore extends AbstractChangesRule {
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section, ItemStack item, Player player) {
+    public ItemStack setChange(ConfigurationSection section, ItemStack item, Player player, boolean fakeOrReal) {
         if (section.getStringList("set-lore").isEmpty()) {
             return item;
         }

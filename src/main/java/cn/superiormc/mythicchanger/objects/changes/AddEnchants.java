@@ -14,7 +14,7 @@ public class AddEnchants extends AbstractChangesRule {
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section, ItemStack item, Player player) {
+    public ItemStack setChange(ConfigurationSection section, ItemStack item, Player player, boolean fakeOrReal) {
         if (section.getConfigurationSection("add-enchants") == null) {
             return item;
         }
