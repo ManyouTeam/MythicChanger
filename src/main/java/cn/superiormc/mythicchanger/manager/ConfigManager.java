@@ -87,6 +87,7 @@ public class ConfigManager {
         if (item == null || item.getType().isAir()) {
             return null;
         }
+        int amount = item.getAmount();
         boolean needReturnNewItem = false;
         for (ObjectSingleRule rule: ruleCaches) {
             if (rule.getMatchItem(item, false)) {
@@ -98,6 +99,7 @@ public class ConfigManager {
             }
         }
         if (needReturnNewItem) {
+            item.setAmount(amount);
             return item;
         }
         return null;
