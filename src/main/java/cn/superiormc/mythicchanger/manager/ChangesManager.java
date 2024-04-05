@@ -41,6 +41,10 @@ public class ChangesManager {
         if (!MythicChanger.freeVersion) {
             registerNewRule(new SetColor());
             registerNewRule(new AddNBTString());
+            registerNewRule(new AddNBTByte());
+            registerNewRule(new AddNBTInt());
+            registerNewRule(new AddNBTDouble());
+            registerNewRule(new RemoveNBT());
             registerNewRule(new ParsePAPIName());
             registerNewRule(new ParsePAPILore());
         }

@@ -3,6 +3,7 @@ package cn.superiormc.mythicchanger.objects.changes;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
 import de.tr7zw.nbtapi.NBTCompound;
 import de.tr7zw.nbtapi.NBTItem;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -12,15 +13,15 @@ import java.util.List;
 
 ;
 
-public class AddNBTDouble extends AbstractChangesRule {
+public class AddNBTInt extends AbstractChangesRule {
 
-    public AddNBTDouble() {
+    public AddNBTInt() {
         super();
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section, ItemStack item, Player player) {
-        if (section.get("add-nbt-double") == null) {
+    public ItemStack setChange(ConfigurationSection section, ItemStack item, Player player, boolean fakeOrReal) {
+        if (section.get("add-nbt-int") == null) {
             return item;
         }
         ItemMeta meta = item.getItemMeta();
@@ -31,11 +32,11 @@ public class AddNBTDouble extends AbstractChangesRule {
             return item;
         }
         NBTItem nbtItem = new NBTItem(item.clone());
-        List<String> tempVal1 = section.getStringList("add-nbt-double");
+        List<String> tempVal1 = section.getStringList("add-nbt-int");
         for (String key : tempVal1) {
             String[] parentKeys = key.split(";;");
             if (parentKeys.length == 2) {
-                nbtItem.setDouble(parentKeys[0], Double.parseDouble(parentKeys[1]));
+                nbtItem.setInteger(parentKeys[0], Integer.parseInt(parentKeys[1]));
             } else if (parentKeys.length > 2) {
                 NBTCompound nbtCompound = null;
                 String lastElement = parentKeys[parentKeys.length - 1];
@@ -44,16 +45,19 @@ public class AddNBTDouble extends AbstractChangesRule {
                 System.arraycopy(parentKeys, 0, newArray, 0, parentKeys.length - 2);
                 parentKeys = newArray;
                 for (String parentKey : parentKeys) {
-                    if (nbtCompound == null) {
-                        nbtCompound = nbtItem.getCompound(parentKey);
-                    } else if (nbtCompound.getCompound(parentKey) != null){
-                        nbtCompound = nbtCompound.getCompound(parentKey);
+                    if (parentKey.isEmpty()) {
+                        continue;
+                    }
+                    if (nbtCompound == null && nbtItem.getCompound(parentKey) == null) {
+                        nbtCompound = nbtItem.getOrCreateCompound(parentKey);
+                    } else if (nbtCompound != null && nbtCompound.getCompound(parentKey) == null) {
+                        nbtCompound = nbtCompound.getOrCreateCompound(parentKey);
                     } else {
-                        nbtCompound.setDouble(last2Element, Double.parseDouble(lastElement));
+                        return item;
                     }
                 }
                 if (nbtCompound != null) {
-                    nbtCompound.setDouble(last2Element, Double.parseDouble(lastElement));
+                    nbtCompound.setInteger(last2Element, Integer.parseInt(lastElement));
                 }
             }
         }
@@ -62,6 +66,11 @@ public class AddNBTDouble extends AbstractChangesRule {
 
     @Override
     public int getWeight() {
-        return 202;
+        return 201;
+    }
+
+    @Override
+    public boolean getNeedRewriteItem() {
+        return true;
     }
 }

@@ -3,6 +3,7 @@ package cn.superiormc.mythicchanger.objects.changes;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
 import de.tr7zw.nbtapi.NBTCompound;
 import de.tr7zw.nbtapi.NBTItem;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -12,15 +13,15 @@ import java.util.List;
 
 ;
 
-public class AddNBTInt extends AbstractChangesRule {
+public class RemoveNBT extends AbstractChangesRule {
 
-    public AddNBTInt() {
+    public RemoveNBT() {
         super();
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section, ItemStack item, Player player) {
-        if (section.get("add-nbt-int") == null) {
+    public ItemStack setChange(ConfigurationSection section, ItemStack item, Player player, boolean fakeOrReal) {
+        if (section.get("remove-nbt") == null) {
             return item;
         }
         ItemMeta meta = item.getItemMeta();
@@ -31,29 +32,34 @@ public class AddNBTInt extends AbstractChangesRule {
             return item;
         }
         NBTItem nbtItem = new NBTItem(item.clone());
-        List<String> tempVal1 = section.getStringList("add-nbt-int");
+        List<String> tempVal1 = section.getStringList("remove-nbt");
         for (String key : tempVal1) {
             String[] parentKeys = key.split(";;");
-            if (parentKeys.length == 2) {
-                nbtItem.setInteger(parentKeys[0], Integer.parseInt(parentKeys[1]));
-            } else if (parentKeys.length > 2) {
+            if (parentKeys.length == 1) {
+                nbtItem.removeKey(parentKeys[0]);
+            } else if (parentKeys.length > 1) {
                 NBTCompound nbtCompound = null;
                 String lastElement = parentKeys[parentKeys.length - 1];
-                String last2Element = parentKeys[parentKeys.length - 2];
-                String[] newArray = new String[parentKeys.length - 2];
-                System.arraycopy(parentKeys, 0, newArray, 0, parentKeys.length - 2);
+                String[] newArray = new String[parentKeys.length - 1];
+                System.arraycopy(parentKeys, 0, newArray, 0, parentKeys.length - 1);
                 parentKeys = newArray;
                 for (String parentKey : parentKeys) {
-                    if (nbtCompound == null) {
+                    if (parentKey.isEmpty()) {
+                        continue;
+                    }
+                    if (nbtCompound == null && nbtItem.getCompound(parentKey) != null) {
                         nbtCompound = nbtItem.getCompound(parentKey);
-                    } else if (nbtCompound.getCompound(parentKey) != null){
+                    } else if (nbtCompound != null && nbtCompound.getCompound(parentKey) != null) {
                         nbtCompound = nbtCompound.getCompound(parentKey);
                     } else {
-                        nbtCompound.setInteger(last2Element, Integer.parseInt(lastElement));
+                        return item;
                     }
                 }
                 if (nbtCompound != null) {
-                    nbtCompound.setInteger(last2Element, Integer.parseInt(lastElement));
+                    nbtCompound.removeKey(lastElement);
+                    if (nbtCompound.getKeys().isEmpty() && nbtCompound.getParent() != null) {
+                        nbtCompound.getParent().removeKey(nbtCompound.getName());
+                    }
                 }
             }
         }
@@ -62,6 +68,11 @@ public class AddNBTInt extends AbstractChangesRule {
 
     @Override
     public int getWeight() {
-        return 201;
+        return 199;
+    }
+
+    @Override
+    public boolean getNeedRewriteItem() {
+        return true;
     }
 }
