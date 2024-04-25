@@ -21,8 +21,8 @@ public class AddLoreFirst extends AbstractChangesRule {
         if (section.getStringList("add-lore-first").isEmpty()) {
             return item;
         }
-        if (!fakeOrReal || ConfigManager.configManager.getBoolean("bypass-real-change-limit")) {
-            ErrorManager.errorManager.sendErrorMessage("§x§9§8§F§B§9§8[MythicChanger] §6Warning: add-lore-first rule only supports" +
+        if (!fakeOrReal || !ConfigManager.configManager.getBoolean("bypass-real-change-limit")) {
+            ErrorManager.errorManager.sendErrorMessage("§x§9§8§F§B§9§8[MythicChanger] §cError: add-lore-first rule only supports" +
                     " fake change, please remove it in real changes from all your rule configs! If you want to bypass this limit, " +
                     "please disable limit check in config.yml file.");
             return item;

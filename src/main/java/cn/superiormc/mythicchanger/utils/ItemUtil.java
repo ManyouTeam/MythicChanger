@@ -1,6 +1,7 @@
 package cn.superiormc.mythicchanger.utils;
 
 import cn.superiormc.mythicchanger.hooks.ItemsHook;
+import cn.superiormc.mythicchanger.manager.ErrorManager;
 import cn.superiormc.mythicchanger.manager.ItemManager;
 import com.google.common.base.Enums;
 import com.mojang.authlib.GameProfile;
@@ -96,14 +97,14 @@ public class ItemUtil {
             SkullMeta skullMeta = (SkullMeta) meta;
             String skullTextureNameKey = section.getString("skull-meta", section.getString("skull"));
             if (skullTextureNameKey != null) {
-                GameProfile profile = new GameProfile(UUID.randomUUID(), null);
+                GameProfile profile = new GameProfile(UUID.randomUUID(), "");
                 profile.getProperties().put("textures", new Property("textures", skullTextureNameKey));
                 try {
                     Method mtd = skullMeta.getClass().getDeclaredMethod("setProfile", GameProfile.class);
                     mtd.setAccessible(true);
                     mtd.invoke(skullMeta, profile);
                 } catch (Exception exception) {
-                    Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §cError: Can not parse skull texture in a item!");
+                    ErrorManager.errorManager.sendErrorMessage("§x§9§8§F§B§9§8[MythicChanger] §cError: Can not parse skull texture in a item!");
                 }
             }
             item.setItemMeta(skullMeta);

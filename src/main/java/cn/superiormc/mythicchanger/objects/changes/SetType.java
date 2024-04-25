@@ -1,5 +1,7 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
+import cn.superiormc.mythicchanger.manager.ConfigManager;
+import cn.superiormc.mythicchanger.manager.ErrorManager;
 import cn.superiormc.mythicchanger.utils.TextUtil;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;

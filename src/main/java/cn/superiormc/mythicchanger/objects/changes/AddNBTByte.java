@@ -5,6 +5,7 @@ import de.tr7zw.nbtapi.NBTCompound;
 import de.tr7zw.nbtapi.NBTItem;
 import de.tr7zw.nbtapi.NBTType;
 import de.tr7zw.nbtapi.plugin.NBTAPI;
+import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -49,12 +50,10 @@ public class AddNBTByte extends AbstractChangesRule {
                     if (parentKey.isEmpty()) {
                         continue;
                     }
-                    if (nbtCompound == null && nbtItem.getCompound(parentKey) == null) {
+                    if (nbtCompound == null) {
                         nbtCompound = nbtItem.getOrCreateCompound(parentKey);
-                    } else if (nbtCompound != null && nbtCompound.getCompound(parentKey) == null) {
-                        nbtCompound = nbtCompound.getOrCreateCompound(parentKey);
                     } else {
-                        return item;
+                        nbtCompound = nbtCompound.getOrCreateCompound(parentKey);
                     }
                 }
                 if (nbtCompound != null) {

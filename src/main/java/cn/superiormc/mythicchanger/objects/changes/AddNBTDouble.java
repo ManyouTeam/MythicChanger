@@ -47,12 +47,10 @@ public class AddNBTDouble extends AbstractChangesRule {
                     if (parentKey.isEmpty()) {
                         continue;
                     }
-                    if (nbtCompound == null && nbtItem.getCompound(parentKey) == null) {
+                    if (nbtCompound == null) {
                         nbtCompound = nbtItem.getOrCreateCompound(parentKey);
-                    } else if (nbtCompound != null && nbtCompound.getCompound(parentKey) == null) {
-                        nbtCompound = nbtCompound.getOrCreateCompound(parentKey);
                     } else {
-                        return item;
+                        nbtCompound = nbtCompound.getOrCreateCompound(parentKey);
                     }
                 }
                 if (nbtCompound != null) {

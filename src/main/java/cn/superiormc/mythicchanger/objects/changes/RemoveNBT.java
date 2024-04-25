@@ -33,7 +33,7 @@ public class RemoveNBT extends AbstractChangesRule {
         }
         NBTItem nbtItem = new NBTItem(item.clone());
         List<String> tempVal1 = section.getStringList("remove-nbt");
-        for (String key : tempVal1) {
+        big: for (String key : tempVal1) {
             String[] parentKeys = key.split(";;");
             if (parentKeys.length == 1) {
                 nbtItem.removeKey(parentKeys[0]);
@@ -52,7 +52,7 @@ public class RemoveNBT extends AbstractChangesRule {
                     } else if (nbtCompound != null && nbtCompound.getCompound(parentKey) != null) {
                         nbtCompound = nbtCompound.getCompound(parentKey);
                     } else {
-                        return item;
+                        continue big;
                     }
                 }
                 if (nbtCompound != null) {
