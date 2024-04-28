@@ -14,7 +14,7 @@ public final class MythicChanger extends JavaPlugin {
 
     public static MythicChanger instance;
 
-    public static boolean freeVersion = true;
+    public static boolean freeVersion = false;
 
     @Override
     public void onEnable() {
