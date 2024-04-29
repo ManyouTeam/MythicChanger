@@ -2,6 +2,12 @@
 #
 # Read the Wiki here: https://mythicchanger.superiormc.cn/
 
+# Paper only feature.
+use-component:
+  message: false
+  # Only for Item Format for now, does not support item modify in rule.
+  item: false
+
 real-change-trigger:
   SetSlotTrigger:
     enabled: true

@@ -12,14 +12,6 @@ public class TextUtil {
         return ColorParser.parse(text);
     }
 
-    public static List<String> getListWithColor(List<String> inList) {
-        List<String> resultList = new ArrayList<>();
-        for (String s : inList) {
-            resultList.add(TextUtil.parse(s));
-        }
-        return resultList;
-    }
-
     public static String parse(String text, Player player) {
         if (CommonUtil.checkPluginLoad("PlaceholderAPI")) {
             return PlaceholderAPI.setPlaceholders(player, parse(text));

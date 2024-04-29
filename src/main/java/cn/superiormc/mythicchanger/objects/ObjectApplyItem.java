@@ -4,6 +4,7 @@ import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.manager.ErrorManager;
 import cn.superiormc.mythicchanger.manager.MatchItemManager;
+import cn.superiormc.mythicchanger.methods.BuildItem;
 import cn.superiormc.mythicchanger.utils.ItemUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
@@ -35,7 +36,7 @@ public class ObjectApplyItem {
     public ObjectApplyItem(String id, ConfigurationSection section) {
         this.id = id;
         this.section = section;
-        this.applyItem = ItemUtil.buildItemStack(section);
+        this.applyItem = BuildItem.buildItemStack(section);
         if (applyItem != null) {
             ItemMeta meta = applyItem.getItemMeta();
             if (meta != null) {

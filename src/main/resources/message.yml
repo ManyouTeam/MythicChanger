@@ -11,6 +11,7 @@ plugin:
   reloaded: "&#98FB98[MythicChanger] &fPlugin reloaded!"
   saved: "&#98FB98[MythicChanger] &fItem Saved!"
   item-gave: "&#98FB98[MythicChanger] &aGave {player} apply item {item} x{amount}!"
+  generated: "&#98FB98[MythicChanger] &fGenerated hold item's item format at plugin config folder, please copy them into your menu or shop configs!"
 
 apply-item-success: "&#98FB98[MythicChanger] &fSuccess consume apply item!"
 deapply-item-success: "&#98FB98[MythicChanger] &fSuccess consume rollback item!"

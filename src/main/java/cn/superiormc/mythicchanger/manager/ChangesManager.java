@@ -2,7 +2,7 @@ package cn.superiormc.mythicchanger.manager;
 
 import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.objects.changes.*;
-import org.bukkit.Bukkit;
+import cn.superiormc.mythicchanger.utils.CommonUtil;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -40,13 +40,16 @@ public class ChangesManager {
         registerNewRule(new SetType());
         if (!MythicChanger.freeVersion) {
             registerNewRule(new SetColor());
-            registerNewRule(new AddNBTString());
-            registerNewRule(new AddNBTByte());
-            registerNewRule(new AddNBTInt());
-            registerNewRule(new AddNBTDouble());
-            registerNewRule(new RemoveNBT());
+            if (CommonUtil.checkPluginLoad("NBTAPI")) {
+                registerNewRule(new AddNBTString());
+                registerNewRule(new AddNBTByte());
+                registerNewRule(new AddNBTInt());
+                registerNewRule(new AddNBTDouble());
+                registerNewRule(new RemoveNBT());
+            }
             registerNewRule(new ParsePAPIName());
             registerNewRule(new ParsePAPILore());
+            registerNewRule(new EditItem());
         }
     }
 

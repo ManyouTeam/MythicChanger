@@ -32,6 +32,7 @@ public class CommandManager {
         }
         registeredCommands.put("reload", new SubReload());
         registeredCommands.put("saveitem", new SubSaveItem());
+        registeredCommands.put("generateitemformat", new SubGenerateItemFormat());
     }
 
     public Map<String, ObjectCommand> getSubCommandsMap() {

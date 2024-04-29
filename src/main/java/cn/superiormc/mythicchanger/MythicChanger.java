@@ -14,6 +14,8 @@ public final class MythicChanger extends JavaPlugin {
 
     public static MythicChanger instance;
 
+    public static boolean isPaper = false;
+
     public static boolean freeVersion = false;
 
     @Override
@@ -41,9 +43,12 @@ public final class MythicChanger extends JavaPlugin {
                         " for MMOItems because it does not support async...");
                 MMOItemsHook.generateNewCache();
                 new ListenerManager();
-            } catch (Exception ignored) {
-                Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §cFalied to register MMOItems hook!");
+            } catch (Throwable throwable) {
+                Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §cFailed to register MMOItems hook!");
             }
+        }
+        if (CommonUtil.getClass("com.destroystokyo.paper.PaperConfig")) {
+            isPaper = true;
         }
         Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fPlugin is loaded. Author: PQguanfang.");
     }

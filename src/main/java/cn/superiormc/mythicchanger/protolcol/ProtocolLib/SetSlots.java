@@ -45,7 +45,7 @@ public class SetSlots extends GeneralPackets {
                     ItemStack clientItemStack = ConfigManager.configManager.startFakeChange(serverItemStack, player);
                     // client 是加过 Lore 的，server 是没加过的！
                     itemStackStructureModifier.write(0, clientItemStack);
-                    if (ConfigManager.configManager.getBoolean("real-change-trigger.SetSlotPacket.enabled")) {
+                    if (ConfigManager.configManager.getBoolean("real-change-trigger.SetSlotPacket.enabled", true)) {
                         startRealChange(slot, player);
                     }
                 }

@@ -1,5 +1,7 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
+import cn.superiormc.mythicchanger.utils.CommonUtil;
+import cn.superiormc.mythicchanger.utils.ItemUtil;
 import cn.superiormc.mythicchanger.utils.TextUtil;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -23,7 +25,9 @@ public class ParsePAPILore extends AbstractChangesRule {
         if (!meta.hasLore()) {
             return item;
         }
-        meta.setLore(TextUtil.getListWithColorAndPAPI(meta.getLore(), player));
+        List<String> lore = CommonUtil.modifyList(meta.getLore(),
+                "name", ItemUtil.getItemName(item));
+        meta.setLore(TextUtil.getListWithColorAndPAPI(lore, player));
         item.setItemMeta(meta);
         return item;
     }

@@ -15,7 +15,7 @@ public class WindowClick implements Listener {
 
     // 客户端发给服务端
     public WindowClick() {
-        if (ConfigManager.configManager.getBoolean("real-change-trigger.InventoryClickEvent.enabled")) {
+        if (ConfigManager.configManager.getBoolean("real-change-trigger.InventoryClickEvent.enabled", true)) {
             Bukkit.getPluginManager().registerEvents(this, MythicChanger.instance);
         }
     }

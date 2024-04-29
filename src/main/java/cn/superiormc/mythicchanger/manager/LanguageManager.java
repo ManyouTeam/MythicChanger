@@ -2,6 +2,7 @@ package cn.superiormc.mythicchanger.manager;
 
 import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.utils.TextUtil;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -90,7 +91,11 @@ public class LanguageManager {
             }
         }
         if (text.length() != 0) {
-            Bukkit.getConsoleSender().sendMessage(TextUtil.parse(text));
+            if (MythicChanger.isPaper && ConfigManager.configManager.getBoolean("use-component.message")) {
+                Bukkit.getConsoleSender().sendMessage(MiniMessage.miniMessage().deserialize(text));
+            } else {
+                Bukkit.getConsoleSender().sendMessage(TextUtil.parse(text));
+            }
         }
     }
 
@@ -123,26 +128,13 @@ public class LanguageManager {
             }
         }
         if (text.length() != 0) {
-            player.sendMessage(TextUtil.parse(text, player));
+            if (MythicChanger.isPaper && ConfigManager.configManager.getBoolean("use-component.message")) {
+                player.sendMessage(MiniMessage.miniMessage().deserialize(text));
+            } else {
+                player.sendMessage(TextUtil.parse(text, player));
+            }
         }
-    }
 
-    public String getStringText(String path) {
-        if (this.messageFile.getString(path) == null) {
-            if (this.tempMessageFile.getString(path) == null) {
-                return "§cCan not found language key: " + path + "!";
-            }
-            Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §cUpdated your language file, added " +
-                    "new language key and it's default value: " + path + "!");
-            messageFile.set(path, this.tempMessageFile.getString(path));
-            try {
-                messageFile.save(file);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            return this.tempMessageFile.getString(path);
-        }
-        return this.messageFile.getString(path);
     }
 
 }

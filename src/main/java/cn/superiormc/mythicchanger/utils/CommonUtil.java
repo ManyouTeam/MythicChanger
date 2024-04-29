@@ -2,14 +2,16 @@ package cn.superiormc.mythicchanger.utils;
 
 import cn.superiormc.mythicchanger.MythicChanger;
 import org.bukkit.Bukkit;
+import org.bukkit.Color;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.ItemStack;
 import pers.neige.neigeitems.utils.ItemUtils;
 
 import java.io.File;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CommonUtil {
 
@@ -27,13 +29,68 @@ public class CommonUtil {
         }
     }
 
-    public static int getMajorVersion() {
-        String version = Bukkit.getVersion();
-        Matcher matcher = Pattern.compile("MC: \\d\\.(\\d+)").matcher(version);
-        if (matcher.find()) {
-            return Integer.parseInt(matcher.group(1));
+    public static boolean getMajorVersion(int version) {
+        String[] parts = Bukkit.getVersion().split("\\.");
+        if (parts.length >= 2) {
+            try {
+                return Integer.parseInt(parts[1]) >= version;
+            } catch (NumberFormatException e) {
+                return false;
+            }
         }
-        return 20;
+        return false;
+    }
+
+    public static boolean getMinorVersion(int majorVersion, int minorVersion) {
+        if (!getMajorVersion(majorVersion)) {
+            return false;
+        }
+        String[] parts = Bukkit.getVersion().split("\\.");
+        if (parts.length >= 3) {
+            try {
+                return Integer.parseInt(parts[2].replace(")", "")) >= minorVersion;
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        }
+        return 0 >= minorVersion;
+    }
+
+    public static String modifyString(String text, String... args) {
+        for (int i = 0 ; i < args.length ; i += 2) {
+            String var = "{" + args[i] + "}";
+            if (args[i + 1] == null) {
+                text = text.replace(var, "");
+            }
+            else {
+                text = text.replace(var, args[i + 1]);
+            }
+        }
+        return text;
+    }
+
+    public static List<String> modifyList(List<String> config, String... args) {
+        List<String> resultList = new ArrayList<>();
+        for (String s : config) {
+            for (int i = 0 ; i < args.length ; i += 2) {
+                String var = "{" + args[i] + "}";
+                if (args[i + 1] == null) {
+                    s = s.replace(var, "");
+                }
+                else {
+                    s = s.replace(var, args[i + 1]);
+                }
+            }
+            String[] tempVal1 = s.split(";;");
+            if (tempVal1.length > 1) {
+                for (String string : tempVal1) {
+                    resultList.add(TextUtil.parse(string));
+                }
+                continue;
+            }
+            resultList.add(TextUtil.parse(s));
+        }
+        return resultList;
     }
 
     public static boolean inPlayerInventory(Player player, int slot) {
@@ -111,5 +168,21 @@ public class CommonUtil {
             }
             return spigotSlot;
         }
+    }
+
+    public static NamespacedKey parseNamespacedKey(String key) {
+        String[] keySplit = key.split(":");
+        if (keySplit.length == 1) {
+            return NamespacedKey.minecraft(key.toLowerCase());
+        }
+        return NamespacedKey.fromString(key);
+    }
+
+    public static Color parseColor(String color) {
+        String[] keySplit = color.replace(" ", "").split(",");
+        if (keySplit.length == 3) {
+            return Color.fromRGB(Integer.parseInt(keySplit[0]), Integer.parseInt(keySplit[1]), Integer.parseInt(keySplit[2]));
+        }
+        return Color.fromRGB(Integer.parseInt(color));
     }
 }

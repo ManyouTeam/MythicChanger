@@ -2,6 +2,7 @@ package cn.superiormc.mythicchanger.manager;
 
 import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.objects.matchitem.*;
+import cn.superiormc.mythicchanger.utils.CommonUtil;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 
@@ -23,11 +24,14 @@ public class MatchItemManager {
         registerNewRule(new HasName());
         registerNewRule(new Items());
         if (!MythicChanger.freeVersion) {
-            registerNewRule(new ContainsNBT());
-            registerNewRule(new NBTString());
-            registerNewRule(new NBTByte());
-            registerNewRule(new NBTInt());
-            registerNewRule(new NBTDouble());
+            if (CommonUtil.checkPluginLoad("NBTAPI")) {
+                registerNewRule(new ContainsNBT());
+                registerNewRule(new NBTString());
+                registerNewRule(new NBTByte());
+                registerNewRule(new NBTInt());
+                registerNewRule(new NBTDouble());
+            }
+            registerNewRule(new Not());
         }
     }
 
@@ -36,6 +40,9 @@ public class MatchItemManager {
     }
 
     public boolean getMatch(ConfigurationSection section, ItemStack item) {
+        if (section == null) {
+            return true;
+        }
         for (AbstractMatchItemRule rule : rules) {
             if (!rule.getMatch(section, item)) {
                 return false;
@@ -44,4 +51,7 @@ public class MatchItemManager {
         return true;
     }
 
+    public Collection<AbstractMatchItemRule> getRules() {
+        return rules;
+    }
 }

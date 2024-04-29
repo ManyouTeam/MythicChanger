@@ -120,7 +120,11 @@ public class ConfigManager {
     }
 
     public boolean getBoolean(String path) {
-        return config.getBoolean(path, true);
+        return config.getBoolean(path, false);
+    }
+
+    public boolean getBoolean(String path, boolean defaultValue) {
+        return config.getBoolean(path, defaultValue);
     }
 
 }

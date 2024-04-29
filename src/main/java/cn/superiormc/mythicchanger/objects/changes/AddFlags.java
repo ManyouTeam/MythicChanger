@@ -1,5 +1,6 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
+import cn.superiormc.mythicchanger.objects.changes.AbstractChangesRule;
 import com.google.common.base.Enums;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
