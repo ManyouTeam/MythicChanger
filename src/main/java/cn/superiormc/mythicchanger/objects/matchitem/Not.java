@@ -19,10 +19,10 @@ public class Not extends AbstractMatchItemRule{
             return true;
         }
         for (AbstractMatchItemRule rule : MatchItemManager.matchItemManager.getRules()) {
-            if (!rule.getMatch(notSection, item)) {
-                return true;
+            if (rule.getMatch(notSection, item)) {
+                return false;
             }
         }
-        return false;
+        return true;
     }
 }
