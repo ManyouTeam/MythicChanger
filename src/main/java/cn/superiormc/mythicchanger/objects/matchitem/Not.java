@@ -11,18 +11,20 @@ public class Not extends AbstractMatchItemRule{
 
     @Override
     public boolean getMatch(ConfigurationSection section, ItemStack item) {
-        if (item == null) {
-            return false;
-        }
         ConfigurationSection notSection = section.getConfigurationSection("not");
-        if (notSection == null) {
-            return true;
-        }
         for (AbstractMatchItemRule rule : MatchItemManager.matchItemManager.getRules()) {
+            if (rule.configNotContains(notSection)) {
+                continue;
+            }
             if (rule.getMatch(notSection, item)) {
                 return false;
             }
         }
         return true;
+    }
+
+    @Override
+    public boolean configNotContains(ConfigurationSection section) {
+        return section.getConfigurationSection("not") == null;
     }
 }

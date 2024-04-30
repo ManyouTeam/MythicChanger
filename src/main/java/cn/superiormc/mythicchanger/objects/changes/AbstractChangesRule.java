@@ -10,9 +10,7 @@ public abstract class AbstractChangesRule implements Comparable<AbstractChangesR
         // Empty...
     }
 
-    public ItemStack setChange(ConfigurationSection section, ItemStack item, Player player, boolean fakeOrReal) {
-        return item;
-    }
+    public abstract ItemStack setChange(ConfigurationSection section, ItemStack item, Player player, boolean fakeOrReal);
 
     public int getWeight() {
         return 0;
@@ -21,6 +19,8 @@ public abstract class AbstractChangesRule implements Comparable<AbstractChangesR
     public boolean getNeedRewriteItem() {
         return false;
     }
+
+    public abstract boolean configNotContains(ConfigurationSection section);
 
     @Override
     public int compareTo(AbstractChangesRule otherRule) {

@@ -3,6 +3,7 @@ package cn.superiormc.mythicchanger.manager;
 import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.objects.changes.*;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -59,6 +60,9 @@ public class ChangesManager {
 
     public ItemStack setFakeChange(ConfigurationSection section, ItemStack item, Player player) {
         for (AbstractChangesRule rule : rules) {
+            if (rule.configNotContains(section)) {
+                continue;
+            }
             item = rule.setChange(section, item, player, true);
         }
         return item;
@@ -67,6 +71,9 @@ public class ChangesManager {
     public ItemStack setRealChange(ConfigurationSection section, ItemStack item, Player player) {
         boolean needReturnNewItem = false;
         for (AbstractChangesRule rule : rules) {
+            if (rule.configNotContains(section)) {
+                continue;
+            }
             if (rule.getNeedRewriteItem()) {
                 item = rule.setChange(section, item, player, false);
                 needReturnNewItem = true;

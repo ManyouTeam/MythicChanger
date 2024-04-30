@@ -1,10 +1,8 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
-import com.google.common.base.Enums;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -33,5 +31,10 @@ public class RemoveAllEnchants extends AbstractChangesRule {
     @Override
     public int getWeight() {
         return -198;
+    }
+
+    @Override
+    public boolean configNotContains(ConfigurationSection section) {
+        return section.get("remove-all-enchants") == null;
     }
 }

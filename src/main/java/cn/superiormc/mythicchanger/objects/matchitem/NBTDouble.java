@@ -16,15 +16,6 @@ public class NBTDouble extends AbstractMatchItemRule {
 
     @Override
     public boolean getMatch(ConfigurationSection section, ItemStack item) {
-        if (item == null) {
-            return false;
-        }
-        if (section.get("nbt-double") == null) {
-            return true;
-        }
-        if (!CommonUtil.checkPluginLoad("NBTAPI")) {
-            return false;
-        }
         NBTItem nbtItem = new NBTItem(item);
         List<String> tempVal1 = section.getStringList("nbt-double");
         for (String key : tempVal1) {
@@ -70,5 +61,10 @@ public class NBTDouble extends AbstractMatchItemRule {
                 return nbtCompound.getDouble(last3Element) == Double.parseDouble(lastElement);
         }
         return false;
+    }
+
+    @Override
+    public boolean configNotContains(ConfigurationSection section) {
+        return section.get("nbt-double") == null;
     }
 }

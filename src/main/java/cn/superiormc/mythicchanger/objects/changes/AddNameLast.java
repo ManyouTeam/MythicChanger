@@ -17,10 +17,7 @@ public class AddNameLast extends AbstractChangesRule {
 
     @Override
     public ItemStack setChange(ConfigurationSection section, ItemStack item, Player player, boolean fakeOrReal) {
-        if (section.getString("add-name-last") == null) {
-            return item;
-        }
-        if (!fakeOrReal || !ConfigManager.configManager.getBoolean("bypass-real-change-limit")) {
+        if (!fakeOrReal && !ConfigManager.configManager.getBoolean("bypass-real-change-limit")) {
             ErrorManager.errorManager.sendErrorMessage("§x§9§8§F§B§9§8[MythicChanger] §cError: add-name-last rule only supports" +
                     " fake change, please remove it in real changes from all your rule configs! If you want to bypass this limit, " +
                     "please disable limit check in config.yml file.");
@@ -35,5 +32,10 @@ public class AddNameLast extends AbstractChangesRule {
     @Override
     public int getWeight() {
         return 22;
+    }
+
+    @Override
+    public boolean configNotContains(ConfigurationSection section) {
+        return section.getString("add-name-last") == null;
     }
 }

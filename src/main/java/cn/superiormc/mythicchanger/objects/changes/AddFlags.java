@@ -16,9 +16,6 @@ public class AddFlags extends AbstractChangesRule {
 
     @Override
     public ItemStack setChange(ConfigurationSection section, ItemStack item, Player player, boolean fakeOrReal) {
-        if (section.getStringList("add-flags").isEmpty()) {
-            return item;
-        }
         ItemMeta meta = item.getItemMeta();
         for (String flag : section.getStringList("add-flags")) {
             flag = flag.toUpperCase();
@@ -35,4 +32,10 @@ public class AddFlags extends AbstractChangesRule {
     public int getWeight() {
         return 3;
     }
+
+    @Override
+    public boolean configNotContains(ConfigurationSection section) {
+        return section.getStringList("add-flags").isEmpty();
+    }
+
 }

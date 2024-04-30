@@ -1,6 +1,5 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
-import cn.superiormc.mythicchanger.objects.changes.AbstractChangesRule;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
@@ -16,9 +15,6 @@ public class AddEnchants extends AbstractChangesRule {
 
     @Override
     public ItemStack setChange(ConfigurationSection section, ItemStack item, Player player, boolean fakeOrReal) {
-        if (section.getConfigurationSection("add-enchants") == null) {
-            return item;
-        }
         ItemMeta meta = item.getItemMeta();
         for (String ench : section.getConfigurationSection("add-enchants").getKeys(false)) {
             Enchantment vanillaEnchant = Enchantment.getByKey(NamespacedKey.minecraft(ench.toLowerCase()));
@@ -36,5 +32,10 @@ public class AddEnchants extends AbstractChangesRule {
     @Override
     public int getWeight() {
         return 2;
+    }
+
+    @Override
+    public boolean configNotContains(ConfigurationSection section) {
+        return section.getConfigurationSection("add-enchants") == null;
     }
 }

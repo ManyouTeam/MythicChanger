@@ -10,13 +10,7 @@ public class ContainsName extends AbstractMatchItemRule{
 
     @Override
     public boolean getMatch(ConfigurationSection section, ItemStack item) {
-        if (section.getStringList("contains-name").isEmpty()) {
-            return true;
-        }
-        if (item == null || !item.hasItemMeta()) {
-            return false;
-        }
-        if (!item.getItemMeta().hasDisplayName()) {
+        if (!item.hasItemMeta() || !item.getItemMeta().hasDisplayName()) {
             return false;
         }
         for (String requiredName : section.getStringList("contains-name")) {
@@ -25,5 +19,10 @@ public class ContainsName extends AbstractMatchItemRule{
             }
         }
         return false;
+    }
+
+    @Override
+    public boolean configNotContains(ConfigurationSection section) {
+        return section.getStringList("contains-name").isEmpty();
     }
 }

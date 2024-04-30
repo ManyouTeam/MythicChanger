@@ -11,10 +11,12 @@ public class Items extends AbstractMatchItemRule {
 
     @Override
     public boolean getMatch(ConfigurationSection section, ItemStack item) {
-        if (section.getStringList("items").isEmpty()) {
-            return true;
-        }
         return section.getStringList("items").contains(
                 CheckValidHook.checkValid(item, section.getBoolean("use-tier-identify", false)));
+    }
+
+    @Override
+    public boolean configNotContains(ConfigurationSection section) {
+        return section.getStringList("items").isEmpty();
     }
 }

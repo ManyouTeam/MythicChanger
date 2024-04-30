@@ -18,9 +18,6 @@ public class DeleteEnchants extends AbstractChangesRule {
         if (!item.hasItemMeta()) {
             return item;
         }
-        if (section.getConfigurationSection("delete-enchants") == null) {
-            return item;
-        }
         ItemMeta meta = item.getItemMeta();
         for (String ench : section.getConfigurationSection("delete-enchants").getKeys(false)) {
             Enchantment vanillaEnchant = Enchantment.getByKey(NamespacedKey.minecraft(ench.toLowerCase()));
@@ -36,5 +33,10 @@ public class DeleteEnchants extends AbstractChangesRule {
     @Override
     public int getWeight() {
         return -199;
+    }
+
+    @Override
+    public boolean configNotContains(ConfigurationSection section) {
+        return section.getConfigurationSection("delete-enchants") == null;
     }
 }

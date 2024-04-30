@@ -6,6 +6,8 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Objects;
+
 public class EditItem extends AbstractChangesRule {
 
     public EditItem() {
@@ -14,15 +16,16 @@ public class EditItem extends AbstractChangesRule {
 
     @Override
     public ItemStack setChange(ConfigurationSection section, ItemStack item, Player player, boolean fakeOrReal) {
-        ConfigurationSection tempVal1 = section.getConfigurationSection("edit-item");
-        if (tempVal1 == null) {
-            return item;
-        }
-        return BuildItem.editItemStack(item, tempVal1, "name", ItemUtil.getItemName(item));
+        return BuildItem.editItemStack(item, Objects.requireNonNull(section.getConfigurationSection("edit-item")), "name", ItemUtil.getItemName(item));
     }
 
     @Override
     public int getWeight() {
         return 1;
+    }
+
+    @Override
+    public boolean configNotContains(ConfigurationSection section) {
+        return section.getConfigurationSection("edit-item") == null;
     }
 }

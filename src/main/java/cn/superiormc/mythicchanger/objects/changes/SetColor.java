@@ -1,6 +1,5 @@
 package cn.superiormc.mythicchanger.objects.changes;
-;
-import cn.superiormc.mythicchanger.objects.changes.AbstractChangesRule;
+
 import org.bukkit.Color;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -16,9 +15,6 @@ public class SetColor extends AbstractChangesRule {
 
     @Override
     public ItemStack setChange(ConfigurationSection section, ItemStack item, Player player, boolean fakeOrReal) {
-        if (section.get("set-color") == null) {
-            return item;
-        }
         ItemMeta meta = item.getItemMeta();
         if (meta == null) {
             return item;
@@ -34,5 +30,10 @@ public class SetColor extends AbstractChangesRule {
     @Override
     public int getWeight() {
         return 150;
+    }
+
+    @Override
+    public boolean configNotContains(ConfigurationSection section) {
+        return section.get("set-color") == null;
     }
 }

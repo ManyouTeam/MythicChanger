@@ -1,6 +1,5 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
-import cn.superiormc.mythicchanger.objects.changes.AbstractChangesRule;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -14,9 +13,6 @@ public class SetCustomModelData extends AbstractChangesRule {
 
     @Override
     public ItemStack setChange(ConfigurationSection section, ItemStack item, Player player, boolean fakeOrReal) {
-        if (section.getInt("set-custom-model-data", -1) < 0) {
-            return item;
-        }
         ItemMeta meta = item.getItemMeta();
         meta.setCustomModelData(section.getInt("set-custom-model-data"));
         item.setItemMeta(meta);
@@ -26,5 +22,10 @@ public class SetCustomModelData extends AbstractChangesRule {
     @Override
     public int getWeight() {
         return 5;
+    }
+
+    @Override
+    public boolean configNotContains(ConfigurationSection section) {
+        return section.getInt("set-custom-model-data", -1) < 0;
     }
 }

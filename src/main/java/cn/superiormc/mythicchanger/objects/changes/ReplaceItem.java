@@ -13,11 +13,7 @@ public class ReplaceItem extends AbstractChangesRule {
 
     @Override
     public ItemStack setChange(ConfigurationSection section, ItemStack item, Player player, boolean fakeOrReal) {
-        ConfigurationSection tempVal1 = section.getConfigurationSection("replace-item");
-        if (tempVal1 == null) {
-            return item;
-        }
-        return BuildItem.buildItemStack(tempVal1);
+        return BuildItem.buildItemStack(section.getConfigurationSection("replace-item"));
     }
 
     @Override
@@ -28,5 +24,10 @@ public class ReplaceItem extends AbstractChangesRule {
     @Override
     public boolean getNeedRewriteItem() {
         return true;
+    }
+
+    @Override
+    public boolean configNotContains(ConfigurationSection section) {
+        return section.getConfigurationSection("replace-item") == null;
     }
 }

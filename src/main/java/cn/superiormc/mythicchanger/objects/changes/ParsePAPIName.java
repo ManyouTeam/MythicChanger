@@ -30,4 +30,9 @@ public class ParsePAPIName extends AbstractChangesRule {
     public int getWeight() {
         return 501;
     }
+
+    @Override
+    public boolean configNotContains(ConfigurationSection section) {
+        return section.get("parse-papi-name") == null;
+    }
 }

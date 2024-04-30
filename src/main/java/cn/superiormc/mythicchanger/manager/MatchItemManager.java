@@ -43,7 +43,13 @@ public class MatchItemManager {
         if (section == null) {
             return true;
         }
+        if (item == null) {
+            return false;
+        }
         for (AbstractMatchItemRule rule : rules) {
+            if (rule.configNotContains(section)) {
+                continue;
+            }
             if (!rule.getMatch(section, item)) {
                 return false;
             }

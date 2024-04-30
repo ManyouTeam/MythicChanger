@@ -18,9 +18,6 @@ public class RemoveFlags extends AbstractChangesRule {
         if (!item.hasItemMeta()) {
             return item;
         }
-        if (section.getStringList("remove-flags").isEmpty()) {
-            return item;
-        }
         ItemMeta meta = item.getItemMeta();
         for (String flag : section.getStringList("remove-flags")) {
             flag = flag.toUpperCase();
@@ -36,5 +33,10 @@ public class RemoveFlags extends AbstractChangesRule {
     @Override
     public int getWeight() {
         return -196;
+    }
+
+    @Override
+    public boolean configNotContains(ConfigurationSection section) {
+        return section.getStringList("remove-flags").isEmpty();
     }
 }

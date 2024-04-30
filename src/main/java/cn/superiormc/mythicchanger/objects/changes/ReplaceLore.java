@@ -18,9 +18,6 @@ public class ReplaceLore extends AbstractChangesRule {
     @Override
     public ItemStack setChange(ConfigurationSection section, ItemStack item, Player player, boolean fakeOrReal) {
         ConfigurationSection tempVal1 = section.getConfigurationSection("replace-lore");
-        if (tempVal1 == null) {
-            return item;
-        }
         ItemMeta meta = item.getItemMeta();
         if (!meta.hasLore()) {
             return item;
@@ -52,5 +49,10 @@ public class ReplaceLore extends AbstractChangesRule {
     @Override
     public int getWeight() {
         return 9;
+    }
+
+    @Override
+    public boolean configNotContains(ConfigurationSection section) {
+        return section.getConfigurationSection("replace-lore") == null;
     }
 }

@@ -10,13 +10,7 @@ public class ContainsLore extends AbstractMatchItemRule{
 
     @Override
     public boolean getMatch(ConfigurationSection section, ItemStack item) {
-        if (section.getStringList("contains-lore").isEmpty()) {
-            return true;
-        }
-        if (item == null || !item.hasItemMeta()) {
-            return false;
-        }
-        if (!item.getItemMeta().hasLore()) {
+        if (!item.hasItemMeta() || !item.getItemMeta().hasLore()) {
             return false;
         }
         for (String hasLore : item.getItemMeta().getLore()) {
@@ -27,5 +21,10 @@ public class ContainsLore extends AbstractMatchItemRule{
             }
         }
         return false;
+    }
+
+    @Override
+    public boolean configNotContains(ConfigurationSection section) {
+        return section.getStringList("contains-lore").isEmpty();
     }
 }

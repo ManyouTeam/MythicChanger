@@ -10,15 +10,18 @@ public class HasLore extends AbstractMatchItemRule {
 
     @Override
     public boolean getMatch(ConfigurationSection section, ItemStack item) {
-        if (item == null) {
+        if (item.getItemMeta() == null) {
             return false;
         }
-        if (section.get("has-lore") == null) {
-            return true;
-        } if (section.getBoolean("has-lore", false)) {
-            return item.hasItemMeta() && item.getItemMeta().hasLore();
+        if (section.getBoolean("has-lore", false)) {
+            return item.getItemMeta().hasLore();
         } else {
-            return item.hasItemMeta() && !item.getItemMeta().hasLore();
+            return !item.getItemMeta().hasLore();
         }
+    }
+
+    @Override
+    public boolean configNotContains(ConfigurationSection section) {
+        return section.get("has-lore") == null;
     }
 }

@@ -13,12 +13,6 @@ public class HasEnchants extends AbstractMatchItemRule {
 
     @Override
     public boolean getMatch(ConfigurationSection section, ItemStack item) {
-        if (item == null) {
-            return false;
-        }
-        if (section.getStringList("has-enchants").isEmpty()) {
-            return true;
-        }
         ItemMeta meta = item.getItemMeta();
         for (String ench : section.getStringList("has-enchants")) {
             Enchantment vanillaEnchant = Enchantment.getByKey(NamespacedKey.minecraft(ench.toLowerCase()));
@@ -27,5 +21,10 @@ public class HasEnchants extends AbstractMatchItemRule {
             }
         }
         return false;
+    }
+
+    @Override
+    public boolean configNotContains(ConfigurationSection section) {
+        return section.getStringList("has-enchants").isEmpty();
     }
 }

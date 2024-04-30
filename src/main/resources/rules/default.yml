@@ -16,11 +16,7 @@ match-item:
 
 fake-changes:
   add-name-first: '&fGood '
-  set-name: '&fGood Diamond Sword'
   add-lore-last:
-    - '&f&lCommon'
-  set-lore:
-    - '&7A good sword that all adventures should use!'
     - '&f&lCommon'
   add-lore-prefix: '%img_tooltip1%'
   set-custom-model-data: 5
@@ -35,3 +31,7 @@ real-changes:
   remove-all-enchants: true
   replace-item:
     material: golden_sword
+  set-lore:
+    - '&7A good sword that all adventures should use!'
+    - '&f&lCommon'
+  set-name: '&fGood Diamond Sword'

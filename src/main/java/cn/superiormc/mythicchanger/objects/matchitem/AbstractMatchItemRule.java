@@ -12,6 +12,8 @@ public abstract class AbstractMatchItemRule {
 
     public abstract boolean getMatch(ConfigurationSection section, ItemStack item);
 
+    public abstract boolean configNotContains(ConfigurationSection section);
+
     @Override
     public String toString() {
         return getClass().getName();

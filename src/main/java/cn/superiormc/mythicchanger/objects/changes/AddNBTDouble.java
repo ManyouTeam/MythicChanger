@@ -1,6 +1,5 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
-import cn.superiormc.mythicchanger.utils.CommonUtil;
 import de.tr7zw.nbtapi.NBTCompound;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.configuration.ConfigurationSection;
@@ -10,8 +9,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
-;
-
 public class AddNBTDouble extends AbstractChangesRule {
 
     public AddNBTDouble() {
@@ -20,14 +17,8 @@ public class AddNBTDouble extends AbstractChangesRule {
 
     @Override
     public ItemStack setChange(ConfigurationSection section, ItemStack item, Player player, boolean fakeOrReal) {
-        if (section.get("add-nbt-double") == null) {
-            return item;
-        }
         ItemMeta meta = item.getItemMeta();
         if (meta == null) {
-            return item;
-        }
-        if (!CommonUtil.checkPluginLoad("NBTAPI")) {
             return item;
         }
         NBTItem nbtItem = new NBTItem(item.clone());
@@ -69,5 +60,10 @@ public class AddNBTDouble extends AbstractChangesRule {
     @Override
     public boolean getNeedRewriteItem() {
         return true;
+    }
+
+    @Override
+    public boolean configNotContains(ConfigurationSection section) {
+        return section.get("add-nbt-double") == null;
     }
 }

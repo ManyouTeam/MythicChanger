@@ -36,4 +36,9 @@ public class ParsePAPILore extends AbstractChangesRule {
     public int getWeight() {
         return 500;
     }
+
+    @Override
+    public boolean configNotContains(ConfigurationSection section) {
+        return section.get("parse-papi-lore") == null;
+    }
 }

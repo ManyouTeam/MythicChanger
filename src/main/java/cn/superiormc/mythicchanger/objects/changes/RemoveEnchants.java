@@ -18,9 +18,6 @@ public class RemoveEnchants extends AbstractChangesRule {
         if (!item.hasItemMeta()) {
             return item;
         }
-        if (section.getStringList("remove-enchants").isEmpty()) {
-            return item;
-        }
         ItemMeta meta = item.getItemMeta();
         for (String ench : section.getStringList("remove-enchants")) {
             Enchantment vanillaEnchant = Enchantment.getByKey(NamespacedKey.minecraft(ench.toLowerCase()));
@@ -35,5 +32,10 @@ public class RemoveEnchants extends AbstractChangesRule {
     @Override
     public int getWeight() {
         return -197;
+    }
+
+    @Override
+    public boolean configNotContains(ConfigurationSection section) {
+        return section.getStringList("remove-enchants").isEmpty();
     }
 }

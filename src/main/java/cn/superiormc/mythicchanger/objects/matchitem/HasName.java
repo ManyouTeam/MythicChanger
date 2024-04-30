@@ -10,15 +10,15 @@ public class HasName extends AbstractMatchItemRule {
 
     @Override
     public boolean getMatch(ConfigurationSection section, ItemStack item) {
-        if (item == null) {
-            return false;
-        }
-        if (section.get("has-name") == null) {
-            return true;
-        } if (section.getBoolean("has-name", false)) {
-            return item.hasItemMeta() && item.getItemMeta().hasDisplayName();
+        if (section.getBoolean("has-name", false)) {
+            return item.getItemMeta() != null && item.getItemMeta().hasDisplayName();
         } else {
-            return item.hasItemMeta() && !item.getItemMeta().hasDisplayName();
+            return item.getItemMeta() != null && !item.getItemMeta().hasDisplayName();
         }
+    }
+
+    @Override
+    public boolean configNotContains(ConfigurationSection section) {
+        return section.get("has-name") == null;
     }
 }

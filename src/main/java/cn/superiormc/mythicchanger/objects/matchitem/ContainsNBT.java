@@ -15,15 +15,6 @@ public class ContainsNBT extends AbstractMatchItemRule {
 
     @Override
     public boolean getMatch(ConfigurationSection section, ItemStack item) {
-        if (item == null) {
-            return false;
-        }
-        if (section.get("contains-nbt") == null) {
-            return true;
-        }
-        if (!CommonUtil.checkPluginLoad("NBTAPI")) {
-            return false;
-        }
         NBTItem nbtItem = new NBTItem(item);
         List<String> tempVal1 = section.getStringList("contains-nbt");
         for (String key : tempVal1) {
@@ -51,5 +42,10 @@ public class ContainsNBT extends AbstractMatchItemRule {
             }
         }
         return false;
+    }
+
+    @Override
+    public boolean configNotContains(ConfigurationSection section) {
+        return section.get("contains-nbt") == null;
     }
 }
