@@ -31,15 +31,18 @@ public class LanguageManager {
     }
 
     private void initLanguage() {
-        this.file = new File(MythicChanger.instance.getDataFolder(), "message.yml");
+        this.file = new File(MythicChanger.instance.getDataFolder() + "/languages/" + ConfigManager.configManager.getString("language", "en_US") + ".yml");
         if (!file.exists()){
-            Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §cWe can not found your message file, " +
-                    "please try restart your server!");
+            this.file = new File(MythicChanger.instance.getDataFolder(), "message.yml");
+            if (!file.exists()) {
+                Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §cWe can not found your message file, " +
+                        "please try restart your server!");
+            }
         }
         else {
             this.messageFile = YamlConfiguration.loadConfiguration(file);
         }
-        InputStream is = MythicChanger.instance.getResource("message.yml");
+        InputStream is = MythicChanger.instance.getResource("languages/en_US.yml");
         if (is == null) {
             return;
         }

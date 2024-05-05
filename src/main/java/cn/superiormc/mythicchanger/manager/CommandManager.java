@@ -30,6 +30,7 @@ public class CommandManager {
         if (!MythicChanger.freeVersion) {
             registeredCommands.put("giveapplyitem", new SubGiveApplyItem());
         }
+        registeredCommands.put("help", new SubHelp());
         registeredCommands.put("reload", new SubReload());
         registeredCommands.put("saveitem", new SubSaveItem());
         registeredCommands.put("generateitemformat", new SubGenerateItemFormat());

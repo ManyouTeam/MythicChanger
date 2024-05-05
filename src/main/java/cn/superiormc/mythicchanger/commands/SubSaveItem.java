@@ -17,7 +17,7 @@ public class SubSaveItem extends ObjectCommand {
 
     /* Usage:
 
-    /prefix reload
+    /mc reload
 
      */
     @Override

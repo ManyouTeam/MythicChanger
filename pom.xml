@@ -6,7 +6,7 @@
 
     <groupId>cn.superiormc</groupId>
     <artifactId>MythicChanger</artifactId>
-    <version>1.4.3</version>
+    <version>1.4.4</version>
     <packaging>jar</packaging>
 
     <name>MythicChanger</name>
@@ -131,10 +131,11 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>net.Indyuce</groupId>
+            <groupId>net.Indyuce.me</groupId>
             <artifactId>MMOItems-API</artifactId>
-            <version>6.9.5-20231202.120258-16</version>
-            <scope>provided</scope>
+            <version>6.9.3-20230407.131648-1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/MMOItems-6.9.4.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>io.lumine</groupId>

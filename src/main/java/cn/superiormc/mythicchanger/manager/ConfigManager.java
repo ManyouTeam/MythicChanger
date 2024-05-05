@@ -127,4 +127,24 @@ public class ConfigManager {
         return config.getBoolean(path, defaultValue);
     }
 
+    public String getString(String path, String... args) {
+        String s = config.getString(path);
+        if (s == null) {
+            if (args.length == 0) {
+                return null;
+            }
+            s = args[0];
+        }
+        for (int i = 1 ; i < args.length ; i += 2) {
+            String var = "{" + args[i] + "}";
+            if (args[i + 1] == null) {
+                s = s.replace(var, "");
+            }
+            else {
+                s = s.replace(var, args[i + 1]);
+            }
+        }
+        return s.replace("{plugin_folder}", String.valueOf(MythicChanger.instance.getDataFolder()));
+    }
+
 }

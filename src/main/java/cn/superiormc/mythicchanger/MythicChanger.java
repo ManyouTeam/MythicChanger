@@ -21,15 +21,18 @@ public final class MythicChanger extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
+        new ErrorManager();
         new InitManager();
+        new ConfigManager();
+        new LanguageManager();
+        if (CommonUtil.getClass("com.destroystokyo.paper.PaperConfig")) {
+            isPaper = true;
+        }
         Bukkit.getScheduler().runTaskAsynchronously(MythicChanger.instance, () -> {
             new SetSlots();
             new WindowItem();
             new WindowClick();
         });
-        new LanguageManager();
-        new ErrorManager();
-        new ConfigManager();
         new ItemManager();
         new ChangesManager();
         new MatchItemManager();
@@ -44,11 +47,9 @@ public final class MythicChanger extends JavaPlugin {
                 MMOItemsHook.generateNewCache();
                 new ListenerManager();
             } catch (Throwable throwable) {
-                Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §cFailed to register MMOItems hook!");
+                ErrorManager.errorManager.sendErrorMessage("§x§9§8§F§B§9§8[MythicChanger] §cError: Failed to register MMOItems hook, consider update " +
+                        "your MMOItems to latest dev version!");
             }
-        }
-        if (CommonUtil.getClass("com.destroystokyo.paper.PaperConfig")) {
-            isPaper = true;
         }
         Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fPlugin is loaded. Author: PQguanfang.");
     }

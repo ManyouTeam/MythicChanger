@@ -17,7 +17,7 @@ public class SubReload extends ObjectCommand {
 
     /* Usage:
 
-    /prefix reload
+    /mc reload
 
      */
     @Override

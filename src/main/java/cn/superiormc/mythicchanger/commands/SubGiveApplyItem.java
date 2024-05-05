@@ -23,7 +23,7 @@ public class SubGiveApplyItem extends ObjectCommand {
 
     /* Usage:
 
-    /prefix giveapplyitem <item> <player> <amount>
+    /mc giveapplyitem <item> <player> <amount>
 
      */
     @Override

@@ -20,7 +20,7 @@ public class InitManager {
     }
 
     public void init() {
-        resourceOutput("message.yml", true);
+        resourceOutput("languages/en_US.yml", true);
         resourceOutput("rules/default.yml", false);
     }
     private void resourceOutput(String fileName, boolean fix) {

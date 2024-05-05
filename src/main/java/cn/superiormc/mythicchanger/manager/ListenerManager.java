@@ -16,8 +16,6 @@ public class ListenerManager {
 
     private void registerListeners(){
         if (CommonUtil.checkPluginLoad("MMOItems")) {
-            Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fRegistering special item register manager" +
-                    " for MMOItems because it does not support async...");
             Bukkit.getPluginManager().registerEvents(new MMOItemsReloadListener(), MythicChanger.instance);
         }
     }

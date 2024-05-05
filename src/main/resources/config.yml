@@ -2,6 +2,8 @@
 #
 # Read the Wiki here: https://mythicchanger.superiormc.cn/
 
+language: en_US
+
 # Paper only feature.
 use-component:
   message: false
