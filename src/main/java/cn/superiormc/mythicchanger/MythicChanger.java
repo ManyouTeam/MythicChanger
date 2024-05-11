@@ -16,7 +16,7 @@ public final class MythicChanger extends JavaPlugin {
 
     public static boolean isPaper = false;
 
-    public static boolean freeVersion = true;
+    public static boolean freeVersion = false;
 
     @Override
     public void onEnable() {

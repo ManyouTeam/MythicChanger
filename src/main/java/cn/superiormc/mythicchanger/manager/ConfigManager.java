@@ -55,10 +55,15 @@ public class ConfigManager {
                 String fileName = file.getName();
                 if (fileName.endsWith(".yml")) {
                     String substring = fileName.substring(0, fileName.length() - 4);
+                    if (ruleMap.containsKey(substring)) {
+                        ErrorManager.errorManager.sendErrorMessage("§x§9§8§F§B§9§8[MythicChanger] §cError: Already loaded a rule config called: " +
+                                fileName + "!");
+                        continue;
+                    }
                     ObjectSingleRule rule = new ObjectSingleRule(substring, YamlConfiguration.loadConfiguration(file));
                     ruleCaches.add(rule);
                     ruleMap.put(substring, rule);
-                    Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fLoaded change rule: " +
+                    Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fLoaded rule: " +
                             fileName + "!");
                 }
             }
