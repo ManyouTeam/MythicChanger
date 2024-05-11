@@ -40,19 +40,27 @@ public class ConfigManager {
         if (!dir.exists()) {
             dir.mkdir();
         }
-        File[] files = dir.listFiles();
+        loadRules(dir);
+    }
+
+    private void loadRules(File folder) {
+        File[] files = folder.listFiles();
         if (files == null) {
             return;
         }
         for (File file : files) {
-            String fileName = file.getName();
-            if (fileName.endsWith(".yml")) {
-                String substring = fileName.substring(0, fileName.length() - 4);
-                ObjectSingleRule rule = new ObjectSingleRule(substring, YamlConfiguration.loadConfiguration(file));
-                ruleCaches.add(rule);
-                ruleMap.put(substring, rule);
-                Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fLoaded change rule: " +
-                        fileName + "!");
+            if (file.isDirectory()) {
+                loadRules(file); // 递归调用以加载子文件夹内的文件
+            } else {
+                String fileName = file.getName();
+                if (fileName.endsWith(".yml")) {
+                    String substring = fileName.substring(0, fileName.length() - 4);
+                    ObjectSingleRule rule = new ObjectSingleRule(substring, YamlConfiguration.loadConfiguration(file));
+                    ruleCaches.add(rule);
+                    ruleMap.put(substring, rule);
+                    Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fLoaded change rule: " +
+                            fileName + "!");
+                }
             }
         }
     }
