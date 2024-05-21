@@ -25,6 +25,11 @@ public class EditItem extends AbstractChangesRule {
     }
 
     @Override
+    public boolean getNeedRewriteItem(ConfigurationSection section) {
+        return section.getBoolean("edit-item.replace-item", false);
+    }
+
+    @Override
     public boolean configNotContains(ConfigurationSection section) {
         return section.getConfigurationSection("edit-item") == null;
     }

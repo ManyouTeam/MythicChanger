@@ -60,7 +60,7 @@ public class AddNBTByte extends AbstractChangesRule {
     }
 
     @Override
-    public boolean getNeedRewriteItem() {
+    public boolean getNeedRewriteItem(ConfigurationSection section) {
         return true;
     }
 

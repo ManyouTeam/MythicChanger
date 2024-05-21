@@ -58,7 +58,7 @@ public class AddNBTString extends AbstractChangesRule {
     }
 
     @Override
-    public boolean getNeedRewriteItem() {
+    public boolean getNeedRewriteItem(ConfigurationSection section) {
         return true;
     }
 

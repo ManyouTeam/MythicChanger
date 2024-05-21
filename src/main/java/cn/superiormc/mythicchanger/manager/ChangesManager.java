@@ -74,7 +74,7 @@ public class ChangesManager {
             if (rule.configNotContains(section)) {
                 continue;
             }
-            if (rule.getNeedRewriteItem()) {
+            if (rule.getNeedRewriteItem(section)) {
                 item = rule.setChange(section, item, player, false);
                 needReturnNewItem = true;
             } else {
