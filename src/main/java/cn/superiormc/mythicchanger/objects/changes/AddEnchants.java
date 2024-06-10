@@ -14,13 +14,13 @@ public class AddEnchants extends AbstractChangesRule {
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section, ItemStack item, Player player, boolean fakeOrReal) {
+    public ItemStack setChange(ConfigurationSection section, ItemStack original, ItemStack item, Player player, boolean fakeOrReal) {
         ItemMeta meta = item.getItemMeta();
         for (String ench : section.getConfigurationSection("add-enchants").getKeys(false)) {
             Enchantment vanillaEnchant = Enchantment.getByKey(NamespacedKey.minecraft(ench.toLowerCase()));
             if (vanillaEnchant != null) {
                 int level = section.getConfigurationSection("add-enchants").getInt(ench);
-                if (meta.getEnchants().get(vanillaEnchant) == null || meta.getEnchants().get(vanillaEnchant) < level ) {
+                if (meta.getEnchants().get(vanillaEnchant) == null || meta.getEnchants().get(vanillaEnchant) < level) {
                     meta.addEnchant(vanillaEnchant, level, true);
                 }
             }

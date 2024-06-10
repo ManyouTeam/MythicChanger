@@ -11,7 +11,7 @@ public abstract class AbstractChangesRule implements Comparable<AbstractChangesR
         // Empty...
     }
 
-    public abstract ItemStack setChange(ConfigurationSection section, ItemStack item, Player player, boolean fakeOrReal);
+    public abstract ItemStack setChange(ConfigurationSection section, ItemStack original, ItemStack item, Player player, boolean fakeOrReal);
 
     public int getWeight() {
         return 0;

@@ -12,8 +12,9 @@ public class ReplaceItem extends AbstractChangesRule {
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section, ItemStack item, Player player, boolean fakeOrReal) {
-        return BuildItem.buildItemStack(section.getConfigurationSection("replace-item"));
+    public ItemStack setChange(ConfigurationSection section, ItemStack original, ItemStack item, Player player, boolean fakeOrReal) {
+        ConfigurationSection itemSection = section.getConfigurationSection("replace-item");
+        return BuildItem.buildItemStack(itemSection);
     }
 
     @Override

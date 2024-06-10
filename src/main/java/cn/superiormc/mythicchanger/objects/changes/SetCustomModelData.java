@@ -12,7 +12,7 @@ public class SetCustomModelData extends AbstractChangesRule {
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section, ItemStack item, Player player, boolean fakeOrReal) {
+    public ItemStack setChange(ConfigurationSection section, ItemStack original, ItemStack item, Player player, boolean fakeOrReal) {
         ItemMeta meta = item.getItemMeta();
         meta.setCustomModelData(section.getInt("set-custom-model-data"));
         item.setItemMeta(meta);

@@ -16,7 +16,7 @@ public class AddNBTDouble extends AbstractChangesRule {
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section, ItemStack item, Player player, boolean fakeOrReal) {
+    public ItemStack setChange(ConfigurationSection section, ItemStack original, ItemStack item, Player player, boolean fakeOrReal) {
         ItemMeta meta = item.getItemMeta();
         if (meta == null) {
             return item;

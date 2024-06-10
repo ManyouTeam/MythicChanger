@@ -3,7 +3,6 @@ package cn.superiormc.mythicchanger.manager;
 import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.objects.changes.*;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -15,9 +14,9 @@ public class ChangesManager {
 
     public static ChangesManager changesManager;
 
-    private Map<Player, Collection<Integer>> itemCooldown = new ConcurrentHashMap<>();
+    private final Map<Player, Collection<Integer>> itemCooldown = new ConcurrentHashMap<>();
 
-    private Collection<AbstractChangesRule> rules = new TreeSet<>();
+    private final Collection<AbstractChangesRule> rules = new TreeSet<>();
 
     public ChangesManager() {
         changesManager = this;
@@ -51,6 +50,7 @@ public class ChangesManager {
             registerNewRule(new ParsePAPIName());
             registerNewRule(new ParsePAPILore());
             registerNewRule(new EditItem());
+            registerNewRule(new KeepEnchants());
         }
     }
 
@@ -58,27 +58,27 @@ public class ChangesManager {
         rules.add(rule);
     }
 
-    public ItemStack setFakeChange(ConfigurationSection section, ItemStack item, Player player) {
+    public ItemStack setFakeChange(ConfigurationSection section, ItemStack original, ItemStack item, Player player) {
         for (AbstractChangesRule rule : rules) {
             if (rule.configNotContains(section)) {
                 continue;
             }
-            item = rule.setChange(section, item, player, true);
+            item = rule.setChange(section, item, original, player, true);
         }
         return item;
     }
 
-    public ItemStack setRealChange(ConfigurationSection section, ItemStack item, Player player) {
+    public ItemStack setRealChange(ConfigurationSection section, ItemStack original, ItemStack item, Player player) {
         boolean needReturnNewItem = false;
         for (AbstractChangesRule rule : rules) {
             if (rule.configNotContains(section)) {
                 continue;
             }
             if (rule.getNeedRewriteItem(section)) {
-                item = rule.setChange(section, item, player, false);
+                item = rule.setChange(section, original, item, player, false);
                 needReturnNewItem = true;
             } else {
-                rule.setChange(section, item, player, false);
+                rule.setChange(section, original, item, player, false);
             }
         }
         if (needReturnNewItem) {

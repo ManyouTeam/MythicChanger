@@ -1,38 +1,31 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
-import cn.superiormc.mythicchanger.utils.TextUtil;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
-public class ParsePAPIName extends AbstractChangesRule {
+public class KeepEnchants extends AbstractChangesRule {
 
-    public ParsePAPIName() {
+    public KeepEnchants() {
         super();
     }
 
     @Override
     public ItemStack setChange(ConfigurationSection section, ItemStack original, ItemStack item, Player player, boolean fakeOrReal) {
-        if (!section.getBoolean("parse-papi-name")) {
+        if (section.getBoolean("keep-enchants", false) && !original.getEnchantments().isEmpty()) {
+            item.addEnchantments(original.getEnchantments());
             return item;
         }
-        ItemMeta meta = item.getItemMeta();
-        if (!meta.hasDisplayName()) {
-            return item;
-        }
-        meta.setDisplayName(TextUtil.parse(meta.getDisplayName(), player));
-        item.setItemMeta(meta);
         return item;
     }
 
     @Override
     public int getWeight() {
-        return 501;
+        return 1001;
     }
 
     @Override
     public boolean configNotContains(ConfigurationSection section) {
-        return section.get("parse-papi-name") == null;
+        return section.get("keep-enchants") == null;
     }
 }

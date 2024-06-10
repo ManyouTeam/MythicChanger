@@ -14,7 +14,7 @@ public class SetType extends AbstractChangesRule {
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section, ItemStack item, Player player, boolean fakeOrReal) {
+    public ItemStack setChange(ConfigurationSection section, ItemStack original, ItemStack item, Player player, boolean fakeOrReal) {
         Material material = Material.getMaterial(Objects.requireNonNull(section.getString("set-type")));
         if (material == null) {
             return item;

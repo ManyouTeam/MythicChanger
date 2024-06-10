@@ -88,9 +88,10 @@ public class ConfigManager {
         if (item == null || item.getType().isAir()) {
             return item;
         }
+        ItemStack originalItem = item.clone();
         for (ObjectSingleRule rule: ruleCaches) {
             if (rule.getMatchItem(item, true)) {
-                item = rule.setFakeChange(item, player);
+                item = rule.setFakeChange(originalItem, item, player);
             }
         }
         return item;
@@ -102,9 +103,10 @@ public class ConfigManager {
         }
         int amount = item.getAmount();
         boolean needReturnNewItem = false;
+        ItemStack originalItem = item.clone();
         for (ObjectSingleRule rule: ruleCaches) {
             if (rule.getMatchItem(item, false)) {
-                ItemStack tempVal1 = rule.setRealChange(item, player);
+                ItemStack tempVal1 = rule.setRealChange(originalItem, item, player);
                 if (tempVal1 != null) {
                     item = tempVal1;
                     needReturnNewItem = true;

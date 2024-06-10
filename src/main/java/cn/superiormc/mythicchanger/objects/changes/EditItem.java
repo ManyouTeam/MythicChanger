@@ -15,7 +15,7 @@ public class EditItem extends AbstractChangesRule {
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section, ItemStack item, Player player, boolean fakeOrReal) {
+    public ItemStack setChange(ConfigurationSection section, ItemStack original, ItemStack item, Player player, boolean fakeOrReal) {
         return BuildItem.editItemStack(item, Objects.requireNonNull(section.getConfigurationSection("edit-item")), "name", ItemUtil.getItemName(item));
     }
 

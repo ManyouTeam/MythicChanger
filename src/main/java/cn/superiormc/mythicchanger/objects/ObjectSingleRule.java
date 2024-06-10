@@ -38,26 +38,26 @@ public class ObjectSingleRule implements Comparable<ObjectSingleRule> {
         return MatchItemManager.matchItemManager.getMatch(section, item);
     }
 
-    public ItemStack setFakeChange(ItemStack item, Player player) {
+    public ItemStack setFakeChange(ItemStack original, ItemStack item, Player player) {
         if (item == null || item.getType().isAir()) {
             return item;
         }
         ConfigurationSection section = config.getConfigurationSection("fake-changes");
-        if (section == null) {
+        if (section == null || section.getKeys(false).isEmpty()) {
             return item;
         }
-        return ChangesManager.changesManager.setFakeChange(section, item, player);
+        return ChangesManager.changesManager.setFakeChange(section, original, item, player);
     }
 
-    public ItemStack setRealChange(ItemStack item, Player player) {
+    public ItemStack setRealChange(ItemStack original, ItemStack item, Player player) {
         if (item == null || item.getType().isAir()) {
             return null;
         }
         ConfigurationSection section = config.getConfigurationSection("real-changes");
-        if (section == null) {
+        if (section == null || section.getKeys(false).isEmpty()) {
             return null;
         }
-        return ChangesManager.changesManager.setRealChange(section, item, player);
+        return ChangesManager.changesManager.setRealChange(section, original, item, player);
     }
 
     public String getId() {
