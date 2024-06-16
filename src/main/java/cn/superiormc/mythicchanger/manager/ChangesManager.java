@@ -51,6 +51,13 @@ public class ChangesManager {
             registerNewRule(new ParsePAPILore());
             registerNewRule(new EditItem());
             registerNewRule(new KeepEnchants());
+            registerNewRule(new KeepDamage());
+            registerNewRule(new KeepName());
+            registerNewRule(new KeepLore());
+            registerNewRule(new KeepFlags());
+            if (CommonUtil.getMinorVersion(20, 5)) {
+                registerNewRule(new KeepItemName());
+            }
         }
     }
 
