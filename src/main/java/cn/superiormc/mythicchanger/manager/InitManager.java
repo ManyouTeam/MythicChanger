@@ -12,7 +12,7 @@ public class InitManager {
 
     public InitManager() {
         initManager = this;
-        File file = new File(MythicChanger.instance.getDataFolder() + "/rules/", "default.yml");
+        File file = new File(MythicChanger.instance.getDataFolder() + "config.yml");
         if (!file.exists()) {
             firstLoad = true;
         }
@@ -21,7 +21,7 @@ public class InitManager {
 
     public void init() {
         resourceOutput("languages/en_US.yml", true);
-        resourceOutput("rules/default.yml", false);
+        resourceOutput("rules/example.yml", false);
     }
     private void resourceOutput(String fileName, boolean fix) {
         File tempVal1 = new File(MythicChanger.instance.getDataFolder(), fileName);

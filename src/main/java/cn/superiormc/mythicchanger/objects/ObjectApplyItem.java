@@ -5,17 +5,11 @@ import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.manager.ErrorManager;
 import cn.superiormc.mythicchanger.manager.MatchItemManager;
 import cn.superiormc.mythicchanger.methods.BuildItem;
-import cn.superiormc.mythicchanger.utils.ItemUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class ObjectApplyItem {
 
@@ -37,14 +31,12 @@ public class ObjectApplyItem {
         this.id = id;
         this.section = section;
         this.applyItem = BuildItem.buildItemStack(section);
-        if (applyItem != null) {
-            ItemMeta meta = applyItem.getItemMeta();
-            if (meta != null) {
-                meta.getPersistentDataContainer().set(MYTHICCHANGER_APPLY_ITEM, PersistentDataType.STRING, id);
-                applyItem.setItemMeta(meta);
-            } else {
-                ErrorManager.errorManager.sendErrorMessage("§x§9§8§F§B§9§8[MythicChanger] §cFailed to generate apply item ID: " + id);
-            }
+        ItemMeta meta = applyItem.getItemMeta();
+        if (meta != null) {
+            meta.getPersistentDataContainer().set(MYTHICCHANGER_APPLY_ITEM, PersistentDataType.STRING, id);
+            applyItem.setItemMeta(meta);
+        } else {
+            ErrorManager.errorManager.sendErrorMessage("§x§9§8§F§B§9§8[MythicChanger] §cFailed to generate apply item ID: " + id);
         }
         String tempVal2 = section.getString("apply-rule");
         if (tempVal2 != null) {

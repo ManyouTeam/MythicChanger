@@ -1,10 +1,8 @@
 package cn.superiormc.mythicchanger.objects.matchitem;
 
-import cn.superiormc.mythicchanger.utils.CommonUtil;
 import de.tr7zw.nbtapi.NBTCompound;
 import de.tr7zw.nbtapi.NBTItem;
 import de.tr7zw.nbtapi.NBTType;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 

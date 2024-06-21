@@ -53,6 +53,9 @@ public class LanguageManager {
             e.printStackTrace();
         }
         this.tempMessageFile = YamlConfiguration.loadConfiguration(tempFile);
+        if (messageFile == null) {
+            messageFile = tempMessageFile;
+        }
         this.tempFile.delete();
     }
 

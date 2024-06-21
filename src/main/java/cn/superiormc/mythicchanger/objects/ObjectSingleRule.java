@@ -32,9 +32,6 @@ public class ObjectSingleRule implements Comparable<ObjectSingleRule> {
             }
         }
         ConfigurationSection section = config.getConfigurationSection("match-item");
-        if (section == null) {
-            return true;
-        }
         return MatchItemManager.matchItemManager.getMatch(section, item);
     }
 
