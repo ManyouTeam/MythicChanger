@@ -30,30 +30,12 @@ public class CommonUtil {
     }
 
     public static boolean getMajorVersion(int version) {
-        String[] parts = Bukkit.getVersion().split("\\.");
-        if (parts.length >= 2) {
-            try {
-                return Integer.parseInt(parts[1]) >= version;
-            } catch (NumberFormatException e) {
-                return false;
-            }
-        }
-        return false;
+        return MythicChanger.majorVersion >= version;
     }
 
     public static boolean getMinorVersion(int majorVersion, int minorVersion) {
-        if (!getMajorVersion(majorVersion)) {
-            return false;
-        }
-        String[] parts = Bukkit.getVersion().split("\\.");
-        if (parts.length >= 3) {
-            try {
-                return Integer.parseInt(parts[2].replace(")", "")) >= minorVersion;
-            } catch (NumberFormatException e) {
-                return false;
-            }
-        }
-        return 0 >= minorVersion;
+        return MythicChanger.majorVersion > majorVersion || (MythicChanger.majorVersion == majorVersion &&
+                MythicChanger.miniorVersion >= minorVersion);
     }
 
     public static String modifyString(String text, String... args) {

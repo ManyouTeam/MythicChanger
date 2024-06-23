@@ -16,7 +16,11 @@ public final class MythicChanger extends JavaPlugin {
 
     public static boolean isPaper = false;
 
-    public static boolean freeVersion = true;
+    public static boolean freeVersion = false;
+
+    public static int majorVersion;
+
+    public static int miniorVersion;
 
     @Override
     public void onEnable() {
@@ -50,6 +54,14 @@ public final class MythicChanger extends JavaPlugin {
                 ErrorManager.errorManager.sendErrorMessage("§x§9§8§F§B§9§8[MythicChanger] §cError: Failed to register MMOItems hook, consider update " +
                         "your MMOItems to latest dev version!");
             }
+        }
+        try {
+            String[] versionParts = Bukkit.getBukkitVersion().split("-")[0].split("\\.");
+            majorVersion = versionParts.length > 1 ? Integer.parseInt(versionParts[1]) : 0;
+            miniorVersion = versionParts.length > 2 ? Integer.parseInt(versionParts[2]) : 0;
+            Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fYour Minecraft version is: 1." + majorVersion + "." + miniorVersion + "!");
+        } catch (Throwable throwable) {
+            Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §cError: Can not get your Minecraft version! Default set to 1.0.0.");
         }
         Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fPlugin is loaded. Author: PQguanfang.");
     }
