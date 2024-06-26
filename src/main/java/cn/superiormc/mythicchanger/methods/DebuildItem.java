@@ -10,6 +10,7 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
+import org.bukkit.JukeboxSong;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
@@ -97,7 +98,7 @@ public class DebuildItem {
         // Food
         if (CommonUtil.getMinorVersion(20, 5)) {
             FoodComponent foodComponent = meta.getFood();
-            if (foodComponent.getEatSeconds() != 1.6) {
+            if (foodComponent.getEatSeconds() != 1.6f) {
                 section.set("food.eat-seconds", foodComponent.getEatSeconds());
             }
             if (foodComponent.canAlwaysEat()) {
@@ -134,7 +135,7 @@ public class DebuildItem {
         // Tool
         if (CommonUtil.getMajorVersion(21)) {
             ToolComponent toolComponent = meta.getTool();
-            if (toolComponent.getDamagePerBlock() != 1) {
+            if (toolComponent.getDamagePerBlock() != 0) {
                 section.set("tool.damage-per-block", toolComponent.getDamagePerBlock());
             }
             if (toolComponent.getDefaultMiningSpeed() != 1) {
@@ -147,7 +148,7 @@ public class DebuildItem {
                 }
                 StringBuilder materials = new StringBuilder();
                 for (Material material : toolRule.getBlocks()) {
-                    if (materials.isEmpty()) {
+                    if (materials.toString().isEmpty()) {
                         materials.append(material.name());
                     } else {
                         materials.append(", ").append(material.name());
@@ -164,11 +165,14 @@ public class DebuildItem {
         // Jukebox Playable
         if (CommonUtil.getMajorVersion(21)) {
             JukeboxPlayableComponent jukeboxPlayableComponent = meta.getJukeboxPlayable();
+            if (!jukeboxPlayableComponent.isShowInTooltip()) {
             section.set("show-song", jukeboxPlayableComponent.isShowInTooltip());
-            if (jukeboxPlayableComponent.getSongKey() != null) {
+            }
+            if (!jukeboxPlayableComponent.getSongKey().toString().equals("minecraft:13")) {
                 section.set("song", jukeboxPlayableComponent.getSongKey().toString());
             }
         }
+
         // Fire Resistant
         if (CommonUtil.getMinorVersion(20, 5)) {
             if (meta.isFireResistant()) {
