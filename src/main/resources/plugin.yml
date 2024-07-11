@@ -13,6 +13,7 @@ softdepend:
   - NeigeItems
   - ItemsAdder
   - Oraxen
+  - ExecutableItems
 commands:
   mythicchanger:
     aliases:

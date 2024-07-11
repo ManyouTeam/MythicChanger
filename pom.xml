@@ -6,7 +6,7 @@
 
     <groupId>cn.superiormc</groupId>
     <artifactId>MythicChanger</artifactId>
-    <version>1.4.11</version>
+    <version>1.4.12</version>
     <packaging>jar</packaging>
 
     <name>MythicChanger</name>
@@ -220,6 +220,20 @@
             <artifactId>item-nbt-api-plugin</artifactId>
             <version>2.12.3</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.ssomar.score</groupId>
+            <artifactId>SCore</artifactId>
+            <version>5.24.7.8</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/SCore-5.24.7.9.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.ssomar.score</groupId>
+            <artifactId>ExecutableItems</artifactId>
+            <version>7.24.7.9</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/ExecutableItems-7.24.7.9.jar</systemPath>
         </dependency>
     </dependencies>
 </project>

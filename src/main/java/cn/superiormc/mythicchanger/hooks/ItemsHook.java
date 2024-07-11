@@ -2,6 +2,8 @@ package cn.superiormc.mythicchanger.hooks;
 
 import cn.superiormc.mythicchanger.manager.ErrorManager;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
+import com.ssomar.executableitems.executableitems.manager.ExecutableItemsManager;
+import com.ssomar.score.api.executableitems.config.ExecutableItemInterface;
 import com.willfp.eco.core.items.Items;
 import com.willfp.ecoarmor.sets.ArmorSet;
 import com.willfp.ecoarmor.sets.ArmorSets;
@@ -18,6 +20,8 @@ import net.Indyuce.mmoitems.api.Type;
 import net.Indyuce.mmoitems.api.item.template.MMOItemTemplate;
 import org.bukkit.inventory.ItemStack;
 import pers.neige.neigeitems.manager.ItemManager;
+
+import java.util.Optional;
 
 public class ItemsHook {
 
@@ -133,6 +137,9 @@ public class ItemsHook {
                 return Items.lookup(itemID).getItem();
             case "NeigeItems":
                 return ItemManager.INSTANCE.getItemStack(itemID);
+            case "ExecutableItems":
+                Optional<ExecutableItemInterface> itemInterface = ExecutableItemsManager.getInstance().getExecutableItem(itemID);
+                return itemInterface.map(executableItemInterface -> executableItemInterface.buildItem(1, Optional.empty())).orElse(null);
         }
         ErrorManager.errorManager.sendErrorMessage("§x§9§8§F§B§9§8[MythicChanger] §cError: You set hook plugin to "
                 + pluginName + " in rule config, however for now MythicChanger is not support it!");

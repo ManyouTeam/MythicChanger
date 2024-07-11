@@ -1,6 +1,6 @@
 weight: 15
 
-# If you want to all item apply this rule, just delete whole match_item section.
+# If you want to all item apply this rule, just delete whole match-item section.
 match-item:
   items:
     - 'diamond_sword'

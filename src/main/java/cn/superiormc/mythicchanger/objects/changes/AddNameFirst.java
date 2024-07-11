@@ -3,6 +3,7 @@ package cn.superiormc.mythicchanger.objects.changes;
 import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.manager.ErrorManager;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
+import cn.superiormc.mythicchanger.utils.ItemUtil;
 import cn.superiormc.mythicchanger.utils.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
@@ -25,7 +26,7 @@ public class AddNameFirst extends AbstractChangesRule {
             return item;
         }
         ItemMeta meta = item.getItemMeta();
-        String tempVal1 = TextUtil.parse(section.getString("add-name-first"), player) + CommonUtil.getItemName(item);
+        String tempVal1 = TextUtil.parse(section.getString("add-name-first"), player) + ItemUtil.getItemName(item);
         meta.setDisplayName(tempVal1);
         item.setItemMeta(meta);
         return item;

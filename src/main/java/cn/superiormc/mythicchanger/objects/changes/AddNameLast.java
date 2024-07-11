@@ -3,6 +3,7 @@ package cn.superiormc.mythicchanger.objects.changes;
 import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.manager.ErrorManager;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
+import cn.superiormc.mythicchanger.utils.ItemUtil;
 import cn.superiormc.mythicchanger.utils.TextUtil;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -24,7 +25,7 @@ public class AddNameLast extends AbstractChangesRule {
             return item;
         }
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(CommonUtil.getItemName(item) + TextUtil.parse(section.getString("add-name-last"), player));
+        meta.setDisplayName(ItemUtil.getItemName(item) + TextUtil.parse(section.getString("add-name-last"), player));
         item.setItemMeta(meta);
         return item;
     }

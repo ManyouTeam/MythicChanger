@@ -1,15 +1,19 @@
 package cn.superiormc.mythicchanger.utils;
 
 import cn.superiormc.mythicchanger.MythicChanger;
-import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.ItemStack;
+import org.json.JSONObject;
 import pers.neige.neigeitems.utils.ItemUtils;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,27 +88,6 @@ public class CommonUtil {
         return slot >= topSize;
     }
 
-    public static String getItemName(ItemStack displayItem) {
-        if (displayItem == null || displayItem.getItemMeta() == null) {
-            return "";
-        }
-        if (CommonUtil.checkPluginLoad("NeigeItems")) {
-            return ItemUtils.getItemName(displayItem);
-        }
-        if (displayItem.getItemMeta().hasDisplayName()) {
-            return displayItem.getItemMeta().getDisplayName();
-        }
-        StringBuilder result = new StringBuilder();
-        for (String word : displayItem.getType().name().toLowerCase().split("_")) {
-            if (!word.isEmpty()) {
-                char firstChar = Character.toUpperCase(word.charAt(0));
-                String restOfWord = word.substring(1);
-                result.append(firstChar).append(restOfWord).append(" ");
-            }
-        }
-        return result.toString();
-    }
-
     public static void mkDir(File dir) {
         if (!dir.exists()) {
             File parentFile = dir.getParentFile();
@@ -166,5 +149,20 @@ public class CommonUtil {
             return Color.fromRGB(Integer.parseInt(keySplit[0]), Integer.parseInt(keySplit[1]), Integer.parseInt(keySplit[2]));
         }
         return Color.fromRGB(Integer.parseInt(color));
+    }
+
+    public static JSONObject fetchJson(String urlString) throws Exception {
+        URL url = new URL(urlString);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("GET");
+
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+            return new JSONObject(response.toString());
+        }
     }
 }

@@ -31,7 +31,7 @@ public class LanguageManager {
     }
 
     private void initLanguage() {
-        this.file = new File(MythicChanger.instance.getDataFolder() + "/languages/" + ConfigManager.configManager.getString("language", "en_US") + ".yml");
+        this.file = new File(MythicChanger.instance.getDataFolder() + "/languages/" + ConfigManager.configManager.getString("config-files.language", "en_US") + ".yml");
         if (!file.exists()){
             this.file = new File(MythicChanger.instance.getDataFolder(), "message.yml");
             if (!file.exists()) {

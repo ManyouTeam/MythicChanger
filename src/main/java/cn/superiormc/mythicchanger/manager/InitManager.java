@@ -23,6 +23,11 @@ public class InitManager {
         resourceOutput("languages/en_US.yml", true);
         resourceOutput("rules/example.yml", false);
     }
+
+    public boolean isFirstLoad() {
+        return firstLoad;
+    }
+
     private void resourceOutput(String fileName, boolean fix) {
         File tempVal1 = new File(MythicChanger.instance.getDataFolder(), fileName);
         if (!tempVal1.exists()) {

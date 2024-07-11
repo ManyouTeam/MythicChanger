@@ -1,6 +1,7 @@
 package cn.superiormc.mythicchanger.hooks;
 
 import cn.superiormc.mythicchanger.utils.CommonUtil;
+import com.ssomar.executableitems.executableitems.manager.ExecutableItemsManager;
 import com.willfp.eco.core.items.Items;
 import com.willfp.ecoarmor.sets.ArmorSet;
 import com.willfp.ecoarmor.sets.ArmorSlot;
@@ -71,6 +72,12 @@ public class CheckValidHook {
                 return ItemManager.INSTANCE.isNiItem(itemStack).getId();
             }
         }
+        if (CommonUtil.checkPluginLoad("ExecutableItems")) {
+            if (ExecutableItemsManager.getInstance().getObject(itemStack).isPresent()) {
+                return ExecutableItemsManager.getInstance().getObject(itemStack).get().getId();
+            }
+            return null;
+        }
         return itemStack.getType().getKey().getKey().toLowerCase();
     }
 
@@ -121,6 +128,11 @@ public class CheckValidHook {
         if (CommonUtil.checkPluginLoad("NeigeItems")) {
             if (ItemManager.INSTANCE.isNiItem(itemStack) != null) {
                 return new String[]{"NeigeItems", ItemManager.INSTANCE.isNiItem(itemStack).getId()};
+            }
+        }
+        if (CommonUtil.checkPluginLoad("ExecutableItems")) {
+            if (ExecutableItemsManager.getInstance().getObject(itemStack).isPresent()) {
+                return new String[]{"ExecutableItems", ExecutableItemsManager.getInstance().getObject(itemStack).get().getId()};
             }
         }
         return null;

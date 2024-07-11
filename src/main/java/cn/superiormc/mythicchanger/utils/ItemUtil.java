@@ -1,5 +1,6 @@
 package cn.superiormc.mythicchanger.utils;
 
+import cn.superiormc.mythicchanger.manager.LocateManager;
 import org.bukkit.inventory.ItemStack;
 import pers.neige.neigeitems.utils.ItemUtils;
 
@@ -7,7 +8,10 @@ public class ItemUtil {
 
     public static String getItemName(ItemStack displayItem) {
         if (displayItem == null || displayItem.getItemMeta() == null) {
-            return "";
+            return "ERROR: Unknown Item";
+        }
+        if (LocateManager.enableThis() && LocateManager.locateManager != null) {
+            return LocateManager.locateManager.getLocateName(displayItem);
         }
         if (CommonUtil.checkPluginLoad("NeigeItems")) {
             return ItemUtils.getItemName(displayItem);
@@ -17,10 +21,7 @@ public class ItemUtil {
 
     public static String getItemNameWithoutVanilla(ItemStack displayItem) {
         if (displayItem == null || displayItem.getItemMeta() == null) {
-            return "";
-        }
-        if (displayItem.getItemMeta().hasDisplayName()) {
-            return displayItem.getItemMeta().getDisplayName();
+            return "ERROR: Unknown Item";
         }
         if (displayItem.getItemMeta().hasDisplayName()) {
             return displayItem.getItemMeta().getDisplayName();
