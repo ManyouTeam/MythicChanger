@@ -162,4 +162,8 @@ public class ConfigManager {
         return s.replace("{plugin_folder}", String.valueOf(MythicChanger.instance.getDataFolder()));
     }
 
+    public int getRuleWeight(String ruleID, int defaultValue) {
+        return config.getInt("change-rule-weight." + ruleID, defaultValue);
+    }
+
 }

@@ -1,5 +1,6 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
+import cn.superiormc.mythicchanger.manager.ConfigManager;
 import org.bukkit.Color;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -29,7 +30,7 @@ public class SetColor extends AbstractChangesRule {
 
     @Override
     public int getWeight() {
-        return 150;
+        return ConfigManager.configManager.getRuleWeight("set-color", 150);
     }
 
     @Override

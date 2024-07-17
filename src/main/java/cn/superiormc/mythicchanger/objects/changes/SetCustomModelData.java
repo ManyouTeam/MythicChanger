@@ -1,5 +1,6 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
+import cn.superiormc.mythicchanger.manager.ConfigManager;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -21,7 +22,7 @@ public class SetCustomModelData extends AbstractChangesRule {
 
     @Override
     public int getWeight() {
-        return 5;
+        return ConfigManager.configManager.getRuleWeight("set-custom-model-data", 5);
     }
 
     @Override

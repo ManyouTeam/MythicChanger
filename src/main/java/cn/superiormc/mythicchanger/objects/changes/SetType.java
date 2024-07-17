@@ -1,5 +1,6 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
+import cn.superiormc.mythicchanger.manager.ConfigManager;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -25,7 +26,7 @@ public class SetType extends AbstractChangesRule {
 
     @Override
     public int getWeight() {
-        return 60;
+        return ConfigManager.configManager.getRuleWeight("set-type", 60);
     }
 
     @Override

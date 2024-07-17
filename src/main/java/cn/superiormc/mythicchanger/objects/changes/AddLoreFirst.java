@@ -36,7 +36,7 @@ public class AddLoreFirst extends AbstractChangesRule {
 
     @Override
     public int getWeight() {
-        return 11;
+        return ConfigManager.configManager.getRuleWeight("add-lore-first", 11);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
+import cn.superiormc.mythicchanger.manager.ConfigManager;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
@@ -33,7 +34,7 @@ public class KeepFlags extends AbstractChangesRule {
 
     @Override
     public int getWeight() {
-        return 1006;
+        return ConfigManager.configManager.getRuleWeight("keep-flags", -252);
     }
 
     @Override

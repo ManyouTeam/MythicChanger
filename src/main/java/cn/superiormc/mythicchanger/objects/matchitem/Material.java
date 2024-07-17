@@ -1,0 +1,27 @@
+package cn.superiormc.mythicchanger.objects.matchitem;
+
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Material extends AbstractMatchItemRule {
+    public Material() {
+        super();
+    }
+
+    @Override
+    public boolean getMatch(ConfigurationSection section, ItemStack item) {
+        List<String> materials = new ArrayList<>();
+        for (String singleMaterial : section.getStringList("material")) {
+            materials.add(singleMaterial.toLowerCase());
+        }
+        return materials.contains(item.getType().getKey().getKey());
+    }
+
+    @Override
+    public boolean configNotContains(ConfigurationSection section) {
+        return section.getStringList("material").isEmpty();
+    }
+}

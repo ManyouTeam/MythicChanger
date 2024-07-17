@@ -1,5 +1,6 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
+import cn.superiormc.mythicchanger.manager.ConfigManager;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -30,7 +31,7 @@ public class RemoveAllEnchants extends AbstractChangesRule {
 
     @Override
     public int getWeight() {
-        return -198;
+        return ConfigManager.configManager.getRuleWeight("remove-all-enchants", -198);
     }
 
     @Override

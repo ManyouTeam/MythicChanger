@@ -34,7 +34,7 @@ public class AddNameFirst extends AbstractChangesRule {
 
     @Override
     public int getWeight() {
-        return 21;
+        return ConfigManager.configManager.getRuleWeight("add-name-first", 21);
     }
 
     @Override

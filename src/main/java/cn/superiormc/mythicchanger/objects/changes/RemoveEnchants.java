@@ -1,5 +1,6 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
+import cn.superiormc.mythicchanger.manager.ConfigManager;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
@@ -31,7 +32,7 @@ public class RemoveEnchants extends AbstractChangesRule {
 
     @Override
     public int getWeight() {
-        return -197;
+        return ConfigManager.configManager.getRuleWeight("remove-enchants", -197);
     }
 
     @Override

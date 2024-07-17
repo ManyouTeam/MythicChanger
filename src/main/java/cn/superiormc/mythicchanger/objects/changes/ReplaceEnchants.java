@@ -1,5 +1,6 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
+import cn.superiormc.mythicchanger.manager.ConfigManager;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
@@ -37,7 +38,7 @@ public class ReplaceEnchants extends AbstractChangesRule {
 
     @Override
     public int getWeight() {
-        return -203;
+        return ConfigManager.configManager.getRuleWeight("replace-enchants", -203);
     }
 
     @Override

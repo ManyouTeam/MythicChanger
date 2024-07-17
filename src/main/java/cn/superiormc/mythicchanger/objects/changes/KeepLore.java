@@ -1,5 +1,6 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
+import cn.superiormc.mythicchanger.manager.ConfigManager;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -30,7 +31,7 @@ public class KeepLore extends AbstractChangesRule {
 
     @Override
     public int getWeight() {
-        return 1005;
+        return ConfigManager.configManager.getRuleWeight("keep-lore", -254);
     }
 
     @Override

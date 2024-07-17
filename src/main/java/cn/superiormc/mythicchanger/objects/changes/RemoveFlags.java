@@ -1,5 +1,6 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
+import cn.superiormc.mythicchanger.manager.ConfigManager;
 import com.google.common.base.Enums;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -32,7 +33,7 @@ public class RemoveFlags extends AbstractChangesRule {
 
     @Override
     public int getWeight() {
-        return -196;
+        return ConfigManager.configManager.getRuleWeight("remove-flags", -196);
     }
 
     @Override

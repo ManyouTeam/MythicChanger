@@ -34,6 +34,43 @@ bypass-real-change-limit: false
 # Like our EnchantmentSlots, and Auxilor plugins (EcoItems, EcoEnchants, ect.)
 ignore-fake-change-warning: false
 
+# You can override the weight values set by the plugin for each rule here. The higher the weight value, the earlier the rule will be executed.
+# The default value of the plugin is a carefully considered and reasonably configured value.
+# Please do not modify the value here unless you know what you are doing.
+change-rule-weight:
+  add-enchants: 2
+  add-flags: 3
+  add-lore-first: 11
+  add-lore-last: 12
+  add-lore-prefix: 13
+  add-name-first: 21
+  add-name-last: 22
+  add-nbt-byte: 203
+  add-nbt-double: 202
+  add-nbt-int: 201
+  add-nbt-string: 200
+  edit-item: 1
+  keep-damage: -250
+  keep-enchants: -251
+  keep-flags: -252
+  keep-item-name: -253
+  keep-lore: -254
+  keep-name: -255
+  parse-papi-lore: 500
+  parse-papi-name: 501
+  remove-all-enchants: -198
+  remove-enchants: -197
+  remove-flags: -196
+  remove-nbt: -199
+  replace-enchants: -203
+  replace-item: 1000
+  replace-lore: 9
+  set-color: 150
+  set-custom-model-data: 5
+  set-lore: 6
+  set-name: 7
+  set-type: 60
+
 # Premium version only,
 apply-items:
   A:

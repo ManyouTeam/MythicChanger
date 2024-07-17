@@ -29,7 +29,7 @@ public class SetName extends AbstractChangesRule {
 
     @Override
     public int getWeight() {
-        return 7;
+        return ConfigManager.configManager.getRuleWeight("set-name", 7);
     }
 
     @Override

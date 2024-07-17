@@ -34,6 +34,8 @@ public class MatchItemManager {
                 registerNewRule(new NBTDouble());
             }
             registerNewRule(new Not());
+            registerNewRule(new Material());
+            registerNewRule(new ContainsEnchants());
         }
     }
 

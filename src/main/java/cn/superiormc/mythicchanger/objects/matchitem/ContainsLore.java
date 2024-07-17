@@ -3,7 +3,7 @@ package cn.superiormc.mythicchanger.objects.matchitem;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 
-public class ContainsLore extends AbstractMatchItemRule{
+public class ContainsLore extends AbstractMatchItemRule {
     public ContainsLore() {
         super();
     }

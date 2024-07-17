@@ -1,5 +1,6 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
+import cn.superiormc.mythicchanger.manager.ConfigManager;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -35,7 +36,7 @@ public class KeepDamage extends AbstractChangesRule {
 
     @Override
     public int getWeight() {
-        return 1002;
+        return ConfigManager.configManager.getRuleWeight("keep-damage", -250);
     }
 
     @Override

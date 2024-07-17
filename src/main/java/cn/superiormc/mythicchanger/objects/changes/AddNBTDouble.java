@@ -1,5 +1,6 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
+import cn.superiormc.mythicchanger.manager.ConfigManager;
 import de.tr7zw.nbtapi.NBTCompound;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.configuration.ConfigurationSection;
@@ -54,7 +55,7 @@ public class AddNBTDouble extends AbstractChangesRule {
 
     @Override
     public int getWeight() {
-        return 202;
+        return ConfigManager.configManager.getRuleWeight("add-nbt-double", 202);
     }
 
     @Override

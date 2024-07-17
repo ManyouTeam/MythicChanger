@@ -38,7 +38,7 @@ public class AddLoreLast extends AbstractChangesRule {
 
     @Override
     public int getWeight() {
-        return 12;
+        return ConfigManager.configManager.getRuleWeight("add-lore-last", 12);
     }
 
     @Override

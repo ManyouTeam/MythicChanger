@@ -1,5 +1,6 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
+import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.methods.BuildItem;
 import cn.superiormc.mythicchanger.utils.ItemUtil;
 import org.bukkit.configuration.ConfigurationSection;
@@ -21,7 +22,7 @@ public class EditItem extends AbstractChangesRule {
 
     @Override
     public int getWeight() {
-        return 1;
+        return ConfigManager.configManager.getRuleWeight("edit-item", 1);
     }
 
     @Override

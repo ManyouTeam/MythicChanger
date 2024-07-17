@@ -1,5 +1,6 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
+import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.utils.TextUtil;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -28,7 +29,7 @@ public class ParsePAPIName extends AbstractChangesRule {
 
     @Override
     public int getWeight() {
-        return 501;
+        return ConfigManager.configManager.getRuleWeight("parse-papi-name", 501);
     }
 
     @Override

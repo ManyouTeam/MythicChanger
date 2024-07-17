@@ -1,5 +1,6 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
+import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.objects.changes.AbstractChangesRule;
 import com.google.common.base.Enums;
 import org.bukkit.configuration.ConfigurationSection;
@@ -30,7 +31,7 @@ public class AddFlags extends AbstractChangesRule {
 
     @Override
     public int getWeight() {
-        return 3;
+        return ConfigManager.configManager.getRuleWeight("add-flags", 3);
     }
 
     @Override

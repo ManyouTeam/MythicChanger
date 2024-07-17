@@ -29,7 +29,7 @@ public class SetLore extends AbstractChangesRule {
 
     @Override
     public int getWeight() {
-        return 6;
+        return ConfigManager.configManager.getRuleWeight("set-lore", 6);
     }
 
     @Override

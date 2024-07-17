@@ -1,5 +1,6 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
+import cn.superiormc.mythicchanger.manager.ConfigManager;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -13,7 +14,7 @@ public class KeepEnchants extends AbstractChangesRule {
     @Override
     public ItemStack setChange(ConfigurationSection section, ItemStack original, ItemStack item, Player player, boolean fakeOrReal) {
         if (section.getBoolean("keep-enchants", false) && !original.getEnchantments().isEmpty()) {
-            item.addEnchantments(original.getEnchantments());
+            item.addUnsafeEnchantments(original.getEnchantments());
             return item;
         }
         return item;
@@ -21,7 +22,7 @@ public class KeepEnchants extends AbstractChangesRule {
 
     @Override
     public int getWeight() {
-        return 1001;
+        return ConfigManager.configManager.getRuleWeight("keep-enchants", -251);
     }
 
     @Override

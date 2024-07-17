@@ -1,5 +1,6 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
+import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -31,7 +32,7 @@ public class KeepItemName extends AbstractChangesRule {
 
     @Override
     public int getWeight() {
-        return 1004;
+        return ConfigManager.configManager.getRuleWeight("keep-item-name", -253);
     }
 
     @Override

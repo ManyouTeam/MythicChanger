@@ -1,5 +1,6 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
+import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
 import cn.superiormc.mythicchanger.utils.ItemUtil;
 import cn.superiormc.mythicchanger.utils.TextUtil;
@@ -34,7 +35,7 @@ public class ParsePAPILore extends AbstractChangesRule {
 
     @Override
     public int getWeight() {
-        return 500;
+        return ConfigManager.configManager.getRuleWeight("parse-papi-lore", 500);
     }
 
     @Override

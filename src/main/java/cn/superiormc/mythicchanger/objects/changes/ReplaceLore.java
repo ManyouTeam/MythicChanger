@@ -1,5 +1,6 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
+import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.utils.TextUtil;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -48,7 +49,7 @@ public class ReplaceLore extends AbstractChangesRule {
 
     @Override
     public int getWeight() {
-        return 9;
+        return ConfigManager.configManager.getRuleWeight("replace-lore", 9);
     }
 
     @Override
