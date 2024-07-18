@@ -76,7 +76,6 @@ public class CheckValidHook {
             if (ExecutableItemsManager.getInstance().getObject(itemStack).isPresent()) {
                 return ExecutableItemsManager.getInstance().getObject(itemStack).get().getId();
             }
-            return null;
         }
         return itemStack.getType().getKey().getKey().toLowerCase();
     }

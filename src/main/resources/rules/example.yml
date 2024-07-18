@@ -35,3 +35,9 @@ real-changes:
   #  - '&7A good sword that all adventures should use!'
   #  - '&f&lCommon'
   #set-name: '&fGood Diamond Sword'
+
+real-change-actions:
+  - 'message: &#98FB98[MythicChanger] &fChanged item!'
+
+conditions:
+  - 'permission: mythicchanger.admin'

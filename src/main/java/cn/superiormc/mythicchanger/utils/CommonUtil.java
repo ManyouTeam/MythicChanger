@@ -1,7 +1,13 @@
 package cn.superiormc.mythicchanger.utils;
 
 import cn.superiormc.mythicchanger.MythicChanger;
+import io.lumine.mythic.api.mobs.MythicMob;
+import io.lumine.mythic.bukkit.BukkitAdapter;
+import io.lumine.mythic.bukkit.MythicBukkit;
+import io.lumine.xikage.mythicmobs.MythicMobs;
+import org.bukkit.Bukkit;
 import org.bukkit.Color;
+import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.CraftingInventory;
@@ -40,6 +46,39 @@ public class CommonUtil {
     public static boolean getMinorVersion(int majorVersion, int minorVersion) {
         return MythicChanger.majorVersion > majorVersion || (MythicChanger.majorVersion == majorVersion &&
                 MythicChanger.miniorVersion >= minorVersion);
+    }
+
+    public static void dispatchCommand(String command) {
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+    }
+
+    public static void dispatchCommand(Player player, String command) {
+        Bukkit.dispatchCommand(player, command);
+    }
+
+    public static void dispatchOpCommand(Player player, String command) {
+        boolean playerIsOp = player.isOp();
+        try {
+            player.setOp(true);
+            Bukkit.dispatchCommand(player, command);
+        } finally {
+            player.setOp(playerIsOp);
+        }
+    }
+
+    public static void summonMythicMobs(Location location, String mobID, int level) {
+        try {
+            MythicMob mob = MythicBukkit.inst().getMobManager().getMythicMob(mobID).orElse(null);
+            if (mob != null) {
+                mob.spawn(BukkitAdapter.adapt(location), level);
+            }
+        }
+        catch (NoClassDefFoundError ep) {
+            io.lumine.xikage.mythicmobs.mobs.MythicMob mob = MythicMobs.inst().getMobManager().getMythicMob(mobID);
+            if (mob != null) {
+                mob.spawn(io.lumine.xikage.mythicmobs.adapters.bukkit.BukkitAdapter.adapt(location), level);
+            }
+        }
     }
 
     public static String modifyString(String text, String... args) {

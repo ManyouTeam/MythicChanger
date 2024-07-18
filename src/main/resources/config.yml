@@ -2,6 +2,8 @@
 #
 # Read the Wiki here: https://mythicchanger.superiormc.cn/
 
+debug: false
+
 config-files:
   language: en_US
   # Premium version only.

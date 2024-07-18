@@ -1,5 +1,6 @@
 package cn.superiormc.mythicchanger.objects;
 
+import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.manager.ChangesManager;
 import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.manager.MatchItemManager;
@@ -16,13 +17,21 @@ public class ObjectSingleRule implements Comparable<ObjectSingleRule> {
 
     private final YamlConfiguration config;
 
+    private final ObjectAction action;
+
+    private final ObjectCondition condition;
 
     public ObjectSingleRule(String id, YamlConfiguration config) {
         this.id = id;
         this.config = config;
+        this.action = new ObjectAction(config.getStringList("real-change-actions"));
+        this.condition = new ObjectCondition(config.getStringList("conditions"));
     }
 
-    public boolean getMatchItem(ItemStack item, boolean fakeOrReal) {
+    public boolean getMatchItem(ItemStack item, boolean fakeOrReal, Player player) {
+        if (!MythicChanger.freeVersion && !condition.getBoolean(player)) {
+            return false;
+        }
         if (item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer().has(ObjectApplyItem.MYTHICCHANGER_APPLY_RULE,
                 PersistentDataType.STRING)) {
             String id = item.getItemMeta().getPersistentDataContainer().get(ObjectApplyItem.MYTHICCHANGER_APPLY_RULE, PersistentDataType.STRING);
@@ -54,7 +63,7 @@ public class ObjectSingleRule implements Comparable<ObjectSingleRule> {
         if (section == null || section.getKeys(false).isEmpty()) {
             return null;
         }
-        return ChangesManager.changesManager.setRealChange(section, original, item, player);
+        return ChangesManager.changesManager.setRealChange(action, section, original, item, player);
     }
 
     public String getId() {
@@ -63,6 +72,14 @@ public class ObjectSingleRule implements Comparable<ObjectSingleRule> {
 
     public int getWeight() {
         return config.getInt("weight", 0);
+    }
+
+    public ObjectAction getAction() {
+        return action;
+    }
+
+    public ObjectCondition getCondition() {
+        return condition;
     }
 
     @Override

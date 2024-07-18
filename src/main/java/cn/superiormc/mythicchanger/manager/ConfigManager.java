@@ -90,7 +90,7 @@ public class ConfigManager {
         }
         ItemStack originalItem = item.clone();
         for (ObjectSingleRule rule: ruleCaches) {
-            if (rule.getMatchItem(item, true)) {
+            if (rule.getMatchItem(item, true, player)) {
                 item = rule.setFakeChange(originalItem, item, player);
             }
         }
@@ -105,7 +105,7 @@ public class ConfigManager {
         boolean needReturnNewItem = false;
         ItemStack originalItem = item.clone();
         for (ObjectSingleRule rule: ruleCaches) {
-            if (rule.getMatchItem(item, false)) {
+            if (rule.getMatchItem(item, false, player)) {
                 ItemStack tempVal1 = rule.setRealChange(originalItem, item, player);
                 if (tempVal1 != null) {
                     item = tempVal1;

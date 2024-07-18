@@ -1,6 +1,7 @@
 package cn.superiormc.mythicchanger.manager;
 
 import cn.superiormc.mythicchanger.MythicChanger;
+import cn.superiormc.mythicchanger.objects.ObjectAction;
 import cn.superiormc.mythicchanger.objects.changes.*;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
 import org.bukkit.Bukkit;
@@ -78,7 +79,7 @@ public class ChangesManager {
         return item;
     }
 
-    public ItemStack setRealChange(ConfigurationSection section, ItemStack original, ItemStack item, Player player) {
+    public ItemStack setRealChange(ObjectAction action, ConfigurationSection section, ItemStack original, ItemStack item, Player player) {
         boolean needReturnNewItem = false;
         for (AbstractChangesRule rule : rules) {
             if (rule.configNotContains(section)) {
@@ -90,6 +91,9 @@ public class ChangesManager {
             } else {
                 rule.setChange(section, original, item, player, false);
             }
+        }
+        if (!MythicChanger.freeVersion && !action.isEmpty()) {
+            action.doAction(player, original, item);
         }
         if (needReturnNewItem) {
             return item;
