@@ -31,7 +31,6 @@ public class MMOItemsHook {
         //    return;
         //}
         Bukkit.getScheduler().runTask(MythicChanger.instance, () -> {
-            itemCaches.remove(template);
             itemCaches.put(template, template.newBuilder().build().newBuilder().build());
         });
     }

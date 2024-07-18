@@ -73,7 +73,7 @@ change-rule-weight:
   set-name: 7
   set-type: 60
 
-# Premium version only,
+# Premium version only.
 apply-items:
   A:
     material: PAPER

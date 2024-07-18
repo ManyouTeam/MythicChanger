@@ -2,6 +2,7 @@ package cn.superiormc.mythicchanger.objects.changes;
 
 import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.methods.BuildItem;
+import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -15,7 +16,11 @@ public class ReplaceItem extends AbstractChangesRule {
     @Override
     public ItemStack setChange(ConfigurationSection section, ItemStack original, ItemStack item, Player player, boolean fakeOrReal) {
         ConfigurationSection itemSection = section.getConfigurationSection("replace-item");
-        return BuildItem.buildItemStack(itemSection);
+        ItemStack result = BuildItem.buildItemStack(itemSection);
+        if (result.getType() == Material.BARRIER) {
+            return item;
+        }
+        return result;
     }
 
     @Override

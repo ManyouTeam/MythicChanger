@@ -39,7 +39,7 @@ import java.util.*;
 public class BuildItem {
     public static ItemStack buildItemStack(ConfigurationSection section,
                                            String... args) {
-        ItemStack item = new ItemStack(Material.STONE);
+        ItemStack item = new ItemStack(Material.BARRIER);
         return editItemStack(item, section, args);
     }
 

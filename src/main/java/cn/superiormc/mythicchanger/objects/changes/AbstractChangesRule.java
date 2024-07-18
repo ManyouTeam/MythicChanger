@@ -28,7 +28,7 @@ public abstract class AbstractChangesRule implements Comparable<AbstractChangesR
         if (getWeight() == otherRule.getWeight()) {
             return 1;
         }
-        return getWeight() - otherRule.getWeight();
+        return otherRule.getWeight() - getWeight();
     }
 
     @Override
