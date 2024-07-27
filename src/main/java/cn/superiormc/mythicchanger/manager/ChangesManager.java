@@ -75,9 +75,9 @@ public class ChangesManager {
                 continue;
             }
             if (ConfigManager.configManager.getBoolean("debug")) {
-                Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fApply rule: " + rule.getClass().getName());
+                Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fApply fake rule: " + rule.getClass().getName());
             }
-            item = rule.setChange(section, item, original.clone(), player, true);
+            item = rule.setChange(section, item, original, player, true);
         }
         return item;
     }
@@ -89,17 +89,17 @@ public class ChangesManager {
                 continue;
             }
             if (ConfigManager.configManager.getBoolean("debug")) {
-                Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fApply rule: " + rule.getClass().getName());
+                Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fApply real rule: " + rule.getClass().getName());
             }
             if (rule.getNeedRewriteItem(section)) {
-                item = rule.setChange(section, original.clone(), item, player, false);
+                item = rule.setChange(section, original, item, player, false);
                 needReturnNewItem = true;
             } else {
-                rule.setChange(section, original.clone(), item, player, false);
+                rule.setChange(section, original, item, player, false);
             }
         }
         if (!MythicChanger.freeVersion && !action.isEmpty()) {
-            action.doAction(player, original.clone(), item);
+            action.doAction(player, original, item);
         }
         if (needReturnNewItem) {
             return item;

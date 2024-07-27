@@ -11,9 +11,7 @@ import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.CraftingInventory;
-import org.bukkit.inventory.ItemStack;
 import org.json.JSONObject;
-import pers.neige.neigeitems.utils.ItemUtils;
 
 import java.io.BufferedReader;
 import java.io.File;

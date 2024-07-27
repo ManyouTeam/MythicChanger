@@ -1,5 +1,6 @@
 package cn.superiormc.mythicchanger.objects;
 
+import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.manager.ErrorManager;
 import cn.superiormc.mythicchanger.utils.TextUtil;
 import org.bukkit.entity.Player;
@@ -21,6 +22,9 @@ public class ObjectCondition {
     }
 
     public boolean getBoolean(Player player) {
+        if (!MythicChanger.freeVersion) {
+            return true;
+        }
         if (player == null) {
             return false;
         }

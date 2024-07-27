@@ -29,7 +29,7 @@ public class ObjectSingleRule implements Comparable<ObjectSingleRule> {
     }
 
     public boolean getMatchItem(ItemStack item, boolean fakeOrReal, Player player) {
-        if (!MythicChanger.freeVersion && !condition.getBoolean(player)) {
+        if (!condition.getBoolean(player)) {
             return false;
         }
         if (item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer().has(ObjectApplyItem.MYTHICCHANGER_APPLY_RULE,

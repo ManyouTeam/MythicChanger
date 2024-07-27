@@ -88,6 +88,9 @@ public class ConfigManager {
         if (item == null || item.getType().isAir()) {
             return item;
         }
+        if (ConfigManager.configManager.getBoolean("debug")) {
+            Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fStart fake change!");
+        }
         ItemStack originalItem = item.clone();
         for (ObjectSingleRule rule: ruleCaches) {
             if (rule.getMatchItem(item, true, player)) {
@@ -100,6 +103,9 @@ public class ConfigManager {
     public ItemStack startRealChange(ItemStack item, Player player) {
         if (item == null || item.getType().isAir()) {
             return null;
+        }
+        if (ConfigManager.configManager.getBoolean("debug")) {
+            Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fStart real change!");
         }
         int amount = item.getAmount();
         boolean needReturnNewItem = false;

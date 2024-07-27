@@ -14,7 +14,7 @@ public class MatchItemManager {
 
     public static MatchItemManager matchItemManager;
 
-    private Collection<AbstractMatchItemRule> rules = new HashSet<>();
+    private final Collection<AbstractMatchItemRule> rules = new HashSet<>();
 
     public MatchItemManager() {
         matchItemManager = this;
