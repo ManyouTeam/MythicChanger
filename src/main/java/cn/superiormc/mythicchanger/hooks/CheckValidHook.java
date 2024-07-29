@@ -4,8 +4,10 @@ import cn.superiormc.mythicchanger.utils.CommonUtil;
 import com.ssomar.executableitems.executableitems.manager.ExecutableItemsManager;
 import com.willfp.eco.core.items.Items;
 import com.willfp.ecoarmor.sets.ArmorSet;
+import com.willfp.ecoarmor.sets.ArmorSets;
 import com.willfp.ecoarmor.sets.ArmorSlot;
 import com.willfp.ecoarmor.sets.ArmorUtils;
+import com.willfp.ecoarmor.upgrades.Tier;
 import com.willfp.ecoitems.items.EcoItem;
 import com.willfp.ecoitems.items.ItemUtilsKt;
 import dev.lone.itemsadder.api.CustomStack;
@@ -51,9 +53,15 @@ public class CheckValidHook {
             }
         }
         if (CommonUtil.checkPluginLoad("EcoArmor")) {
+            if (useTier) {
+                Tier tier = ArmorUtils.getTier(itemStack);
+                if (tier != null) {
+                    return tier.getID();
+                }
+            }
             ArmorSet tempVal1 = ArmorUtils.getSetOnItem(itemStack);
             if (tempVal1 != null) {
-                return tempVal1.getId();
+                return tempVal1.getID();
             }
         }
         if (CommonUtil.checkPluginLoad("eco")) {

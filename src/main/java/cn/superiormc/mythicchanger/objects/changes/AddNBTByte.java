@@ -10,8 +10,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
-;
-
 public class AddNBTByte extends AbstractChangesRule {
 
     public AddNBTByte() {

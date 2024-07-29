@@ -62,6 +62,7 @@ public class ChangesManager {
                 registerNewRule(new KeepItemName());
             }
             registerNewRule(new ReplaceEnchants());
+            registerNewRule(new EditLore());
         }
     }
 

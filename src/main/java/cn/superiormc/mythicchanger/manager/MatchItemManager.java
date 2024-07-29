@@ -33,9 +33,14 @@ public class MatchItemManager {
                 registerNewRule(new NBTInt());
                 registerNewRule(new NBTDouble());
             }
+            if (CommonUtil.getMinorVersion(20, 5)) {
+                registerNewRule(new Rarity());
+            }
             registerNewRule(new Not());
             registerNewRule(new Material());
             registerNewRule(new ContainsEnchants());
+            registerNewRule(new ItemFormat());
+            registerNewRule(new Any());
         }
     }
 

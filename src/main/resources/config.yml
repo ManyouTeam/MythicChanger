@@ -58,6 +58,7 @@ change-rule-weight:
   keep-item-name: -253
   keep-lore: -254
   keep-name: -255
+  edit-lore: 14
   parse-papi-lore: 500
   parse-papi-name: 501
   remove-all-enchants: -198
@@ -80,7 +81,7 @@ apply-items:
     name: '&fItem Skin &8(Diamond Sword)'
     lore:
       - '&7Drag this item onto the item you want to apply.'
-    apply-rule: default
+    apply-rule: example
     # After apply real change, the item can no longer be rollback.
     apply-real-change: false
     match-item:
