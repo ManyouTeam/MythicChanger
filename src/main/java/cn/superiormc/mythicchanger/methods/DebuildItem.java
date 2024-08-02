@@ -229,7 +229,7 @@ public class DebuildItem {
                 String path = "attributes." + attribute.getKey().name() + '.';
                 AttributeModifier modifier = attribute.getValue();
 
-                if (CommonUtil.getMajorVersion(21)) {
+                if (!CommonUtil.getMajorVersion(21)) {
                     section.set(path + "id", modifier.getUniqueId().toString());
                 }
                 section.set(path + "name", modifier.getName());
@@ -237,7 +237,7 @@ public class DebuildItem {
                 section.set(path + "operation", modifier.getOperation().name());
 
                 if (CommonUtil.getMinorVersion(20, 5)) {
-                    section.set("slot", modifier.getSlotGroup().toString());
+                    section.set(path + "slot", modifier.getSlotGroup().toString());
                 } else if (modifier.getSlot() != null) {
                     section.set(path + "slot", modifier.getSlot().name());
                 }
