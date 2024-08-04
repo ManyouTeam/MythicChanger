@@ -1,8 +1,10 @@
 package cn.superiormc.mythicchanger.objects;
 
 import cn.superiormc.mythicchanger.MythicChanger;
+import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.manager.ErrorManager;
 import cn.superiormc.mythicchanger.utils.TextUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -22,8 +24,11 @@ public class ObjectCondition {
     }
 
     public boolean getBoolean(Player player) {
-        if (!MythicChanger.freeVersion) {
+        if (MythicChanger.freeVersion) {
             return true;
+        }
+        if (ConfigManager.configManager.getBoolean("debug")) {
+            Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fStarting check conditions...");
         }
         if (player == null) {
             return false;
