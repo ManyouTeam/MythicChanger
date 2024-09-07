@@ -3,6 +3,7 @@ package cn.superiormc.mythicchanger.manager;
 import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.commands.*;
 import cn.superiormc.mythicchanger.objects.ObjectCommand;
+import cn.superiormc.mythicchanger.utils.CommonUtil;
 import org.bukkit.Bukkit;
 
 import java.util.HashMap;
@@ -29,6 +30,9 @@ public class CommandManager {
     private void registerObjectCommand() {
         if (!MythicChanger.freeVersion) {
             registeredCommands.put("giveapplyitem", new SubGiveApplyItem());
+            if (CommonUtil.checkPluginLoad("NBTAPI")) {
+                registeredCommands.put("viewnbt", new SubViewNBT());
+            }
         }
         registeredCommands.put("help", new SubHelp());
         registeredCommands.put("reload", new SubReload());

@@ -6,6 +6,7 @@ error:
   player-not-found: "&#98FB98[MythicChanger] &cWe can't find player {player}!"
   creative-mode: "&#98FB98[MythicChanger] &cThis feature does not support creative mode for now!"
   item-only-one: "&#98FB98[MythicChanger] &cYour apply item can not be stacked to more than 1 amount!"
+  item-empty: "&#98FB98[MythicChanger] &cYou are holding empty item!"
 
 plugin:
   reloaded: "&#98FB98[MythicChanger] &fPlugin reloaded!"
@@ -32,6 +33,8 @@ help:
     &f/mythicchanger reload &7- Reload the plugin.
     &f/mythicchanger giveapplyitem <item> <player> <amount> &7- Give apply item for specified players.
 
+nbt-view-empty: "&#98FB98[MythicChanger] &fThis item does not has any custom NBT!"
+nbt-view: "&#98FB98[MythicChanger] &fThis item has those NBT content:"
 apply-item-success: "&#98FB98[MythicChanger] &fSuccess consume apply item!"
 deapply-item-success: "&#98FB98[MythicChanger] &fSuccess consume rollback item!"
 already-has-rule: "&#98FB98[MythicChanger] &fThis item already has applied other rule!"

@@ -3,6 +3,7 @@ package cn.superiormc.mythicchanger.objects.matchitem;
 import de.tr7zw.nbtapi.NBTCompound;
 import de.tr7zw.nbtapi.NBTItem;
 import de.tr7zw.nbtapi.NBTType;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 
@@ -34,11 +35,11 @@ public class NBTInt extends AbstractMatchItemRule {
                         nbtCompound = nbtItem.getCompound(parentKey);
                     } else if (nbtCompound.getCompound(parentKey) != null){
                         nbtCompound = nbtCompound.getCompound(parentKey);
-                    } else if (nbtCompound.hasTag(last2Element, NBTType.NBTTagInt) && getResult(lastElement, last2Element, last3Element, nbtCompound)) {
+                    } else if (nbtCompound.hasTag(last3Element, NBTType.NBTTagInt) && getResult(lastElement, last2Element, last3Element, nbtCompound)) {
                         return true;
                     }
                 }
-                if (nbtCompound != null && nbtCompound.hasTag(last2Element, NBTType.NBTTagInt) && getResult(lastElement, last2Element, last3Element, nbtCompound)) {
+                if (nbtCompound != null && nbtCompound.hasTag(last3Element, NBTType.NBTTagInt) && getResult(lastElement, last2Element, last3Element, nbtCompound)) {
                     return true;
                 }
             }

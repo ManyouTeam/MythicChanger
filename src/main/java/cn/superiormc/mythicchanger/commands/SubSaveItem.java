@@ -1,6 +1,5 @@
 package cn.superiormc.mythicchanger.commands;
 
-import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.manager.*;
 import cn.superiormc.mythicchanger.objects.ObjectCommand;
 import org.bukkit.entity.Player;

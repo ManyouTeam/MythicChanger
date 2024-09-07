@@ -34,11 +34,11 @@ public class NBTByte extends AbstractMatchItemRule {
                         nbtCompound = nbtItem.getCompound(parentKey);
                     } else if (nbtCompound.getCompound(parentKey) != null){
                         nbtCompound = nbtCompound.getCompound(parentKey);
-                    } else if (nbtCompound.hasTag(last2Element, NBTType.NBTTagByte) && getResult(lastElement, last2Element, last3Element, nbtCompound)) {
+                    } else if (nbtCompound.hasTag(last3Element, NBTType.NBTTagByte) && getResult(lastElement, last2Element, last3Element, nbtCompound)) {
                         return true;
                     }
                 }
-                if (nbtCompound != null && nbtCompound.hasTag(last2Element, NBTType.NBTTagByte) && getResult(lastElement, last2Element, last3Element, nbtCompound)) {
+                if (nbtCompound != null && nbtCompound.hasTag(last3Element, NBTType.NBTTagByte) && getResult(lastElement, last2Element, last3Element, nbtCompound)) {
                     return true;
                 }
             }
