@@ -14,8 +14,7 @@ public class Rarity extends AbstractMatchItemRule {
     }
 
     @Override
-    public boolean getMatch(ConfigurationSection section, ItemStack item) {
-        ItemMeta meta = item.getItemMeta();
+    public boolean getMatch(ConfigurationSection section, ItemStack item, ItemMeta meta) {
         String result;
         if (meta.hasRarity()) {
             ItemRarity rarity = meta.getRarity();

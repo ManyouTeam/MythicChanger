@@ -2,6 +2,7 @@ package cn.superiormc.mythicchanger.objects.matchitem;
 
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class ContainsName extends AbstractMatchItemRule {
     public ContainsName() {
@@ -9,12 +10,12 @@ public class ContainsName extends AbstractMatchItemRule {
     }
 
     @Override
-    public boolean getMatch(ConfigurationSection section, ItemStack item) {
-        if (!item.hasItemMeta() || !item.getItemMeta().hasDisplayName()) {
+    public boolean getMatch(ConfigurationSection section, ItemStack item, ItemMeta meta) {
+        if (!meta.hasDisplayName()) {
             return false;
         }
         for (String requiredName : section.getStringList("contains-name")) {
-            if (item.getItemMeta().getDisplayName().contains(requiredName)) {
+            if (meta.getDisplayName().contains(requiredName)) {
                 return true;
             }
         }

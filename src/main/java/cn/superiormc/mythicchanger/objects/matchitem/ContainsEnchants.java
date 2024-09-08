@@ -1,6 +1,8 @@
 package cn.superiormc.mythicchanger.objects.matchitem;
 
+import cn.superiormc.mythicchanger.utils.CommonUtil;
 import org.bukkit.NamespacedKey;
+import org.bukkit.Registry;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
@@ -12,10 +14,10 @@ public class ContainsEnchants extends AbstractMatchItemRule {
     }
 
     @Override
-    public boolean getMatch(ConfigurationSection section, ItemStack item) {
+    public boolean getMatch(ConfigurationSection section, ItemStack item, ItemMeta meta) {
         ConfigurationSection containsEnchantsSection = section.getConfigurationSection("contains-enchants");
         for (String ench : containsEnchantsSection.getKeys(false)) {
-            Enchantment vanillaEnchant = Enchantment.getByKey(NamespacedKey.minecraft(ench.toLowerCase()));
+            Enchantment vanillaEnchant = Registry.ENCHANTMENT.get(CommonUtil.parseNamespacedKey(ench.toLowerCase()));
             if (vanillaEnchant == null || item.getEnchantments().get(vanillaEnchant) == null) {
                 continue;
             }

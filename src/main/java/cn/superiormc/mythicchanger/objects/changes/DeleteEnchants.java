@@ -1,7 +1,9 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
 import cn.superiormc.mythicchanger.MythicChanger;
+import cn.superiormc.mythicchanger.utils.CommonUtil;
 import org.bukkit.NamespacedKey;
+import org.bukkit.Registry;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -24,7 +26,7 @@ public class DeleteEnchants extends AbstractChangesRule {
         ConfigurationSection deleteEnchantsSection = section.getConfigurationSection("delete-enchants");
         ItemMeta meta = item.getItemMeta();
         for (String ench : deleteEnchantsSection.getKeys(false)) {
-            Enchantment vanillaEnchant = Enchantment.getByKey(NamespacedKey.minecraft(ench.toLowerCase()));
+            Enchantment vanillaEnchant = Registry.ENCHANTMENT.get(CommonUtil.parseNamespacedKey(ench.toLowerCase()));
             if (vanillaEnchant == null || item.getEnchantments().get(vanillaEnchant) == null) {
                 continue;
             }

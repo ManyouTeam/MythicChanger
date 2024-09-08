@@ -6,6 +6,7 @@ import cn.superiormc.mythicchanger.utils.CommonUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -55,11 +56,15 @@ public class MatchItemManager {
         if (item == null) {
             return false;
         }
+        ItemMeta meta = item.getItemMeta();
+        if (meta == null) {
+            return false;
+        }
         for (AbstractMatchItemRule rule : rules) {
             if (rule.configNotContains(section)) {
                 continue;
             }
-            if (!rule.getMatch(section, item)) {
+            if (!rule.getMatch(section, item, meta)) {
                 return false;
             }
         }

@@ -5,6 +5,7 @@ import de.tr7zw.nbtapi.NBTItem;
 import de.tr7zw.nbtapi.NBTType;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class NBTString extends AbstractMatchItemRule {
     }
 
     @Override
-    public boolean getMatch(ConfigurationSection section, ItemStack item) {
+    public boolean getMatch(ConfigurationSection section, ItemStack item, ItemMeta meta) {
         NBTItem nbtItem = new NBTItem(item);
         List<String> tempVal1 = section.getStringList("nbt-string");
         for (String key : tempVal1) {

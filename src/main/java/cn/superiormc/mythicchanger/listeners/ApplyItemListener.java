@@ -55,8 +55,7 @@ public class ApplyItemListener implements Listener {
             LanguageManager.languageManager.sendStringText(player, "error.item-only-one");
             return;
         }
-        String id = meta.getPersistentDataContainer().get(ObjectApplyItem.MYTHICCHANGER_APPLY_ITEM, PersistentDataType.STRING);
-        ObjectApplyItem applyItem = ConfigManager.configManager.getApplyItem(id);
+        ObjectApplyItem applyItem = ConfigManager.configManager.getApplyItemID(extraItem);
         if (applyItem != null && targetItem.getItemMeta() != null) {
             if (applyItem.matchItem(targetItem)) {
                 ObjectSingleRule rule = applyItem.getRule();

@@ -7,9 +7,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.util.*;
@@ -138,6 +140,17 @@ public class ConfigManager {
             return null;
         }
         return itemMap.get(id);
+    }
+
+    @Nullable
+    public ObjectApplyItem getApplyItemID(ItemStack item) {
+        ItemMeta meta = item.getItemMeta();
+        if (meta == null) {
+            return null;
+        }
+        String id = meta.getPersistentDataContainer().get(ObjectApplyItem.MYTHICCHANGER_APPLY_ITEM, PersistentDataType.STRING);
+        ObjectApplyItem applyItem = ConfigManager.configManager.getApplyItem(id);
+        return applyItem;
     }
 
     public boolean getBoolean(String path) {

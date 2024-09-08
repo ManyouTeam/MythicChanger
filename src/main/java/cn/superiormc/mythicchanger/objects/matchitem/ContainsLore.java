@@ -2,6 +2,7 @@ package cn.superiormc.mythicchanger.objects.matchitem;
 
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class ContainsLore extends AbstractMatchItemRule {
     public ContainsLore() {
@@ -9,11 +10,11 @@ public class ContainsLore extends AbstractMatchItemRule {
     }
 
     @Override
-    public boolean getMatch(ConfigurationSection section, ItemStack item) {
-        if (!item.hasItemMeta() || !item.getItemMeta().hasLore()) {
+    public boolean getMatch(ConfigurationSection section, ItemStack item, ItemMeta meta) {
+        if (!meta.hasLore()) {
             return false;
         }
-        for (String hasLore : item.getItemMeta().getLore()) {
+        for (String hasLore : meta.getLore()) {
             for (String requiredLore : section.getStringList("contains-lore")) {
                 if (hasLore.contains(requiredLore)) {
                     return true;

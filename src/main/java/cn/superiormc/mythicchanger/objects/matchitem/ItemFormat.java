@@ -4,6 +4,7 @@ import cn.superiormc.mythicchanger.methods.DebuildItem;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemoryConfiguration;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class ItemFormat extends AbstractMatchItemRule{
     public ItemFormat() {
@@ -11,7 +12,7 @@ public class ItemFormat extends AbstractMatchItemRule{
     }
 
     @Override
-    public boolean getMatch(ConfigurationSection section, ItemStack item) {
+    public boolean getMatch(ConfigurationSection section, ItemStack item, ItemMeta meta) {
         ConfigurationSection itemSection = DebuildItem.debuildItem(item, new MemoryConfiguration());
         ConfigurationSection requireSection = section.getConfigurationSection("item-format");
         for (String key : requireSection.getKeys(true)) {

@@ -5,6 +5,7 @@ import cn.superiormc.mythicchanger.manager.ConfigManager;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class Items extends AbstractMatchItemRule {
     public Items() {
@@ -12,7 +13,7 @@ public class Items extends AbstractMatchItemRule {
     }
 
     @Override
-    public boolean getMatch(ConfigurationSection section, ItemStack item) {
+    public boolean getMatch(ConfigurationSection section, ItemStack item, ItemMeta meta) {
         if (ConfigManager.configManager.getBoolean("debug")) {
             Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §cItem ID: " +
                     CheckValidHook.checkValid(item, section.getBoolean("use-tier-identify", false)));

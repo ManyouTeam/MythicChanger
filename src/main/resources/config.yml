@@ -75,6 +75,22 @@ change-rule-weight:
   set-type: 60
 
 # Premium version only.
+change-gui:
+  title: 'Change your item!'
+  size: 54
+  item-slot: 0
+  book-slot: 1
+  confirm-slot: 2
+  confirm-item:
+    material: ANVIL
+    name: '&eConfirm'
+    lore:
+      - '&7Click to confirm change the item!'
+  custom-item:
+    49: # 代表槽位
+      material: SPAWNER
+
+# Premium version only.
 apply-items:
   A:
     material: PAPER

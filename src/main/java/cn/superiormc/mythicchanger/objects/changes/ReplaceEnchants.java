@@ -1,7 +1,9 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
 import cn.superiormc.mythicchanger.manager.ConfigManager;
+import cn.superiormc.mythicchanger.utils.CommonUtil;
 import org.bukkit.NamespacedKey;
+import org.bukkit.Registry;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -22,11 +24,11 @@ public class ReplaceEnchants extends AbstractChangesRule {
         ItemMeta meta = item.getItemMeta();
         ConfigurationSection enchantSection = section.getConfigurationSection("replace-enchants");
         for (String ench : enchantSection.getKeys(false)) {
-            Enchantment vanillaEnchant = Enchantment.getByKey(NamespacedKey.minecraft(ench.toLowerCase()));
+            Enchantment vanillaEnchant = Registry.ENCHANTMENT.get(CommonUtil.parseNamespacedKey(ench.toLowerCase()));
             if (vanillaEnchant != null && item.getEnchantments().get(vanillaEnchant) != null) {
                 int level = item.getEnchantmentLevel(vanillaEnchant);
                 meta.removeEnchant(vanillaEnchant);
-                Enchantment addEnchant = Enchantment.getByKey(NamespacedKey.minecraft(enchantSection.getString(ench).toLowerCase()));
+                Enchantment addEnchant = Registry.ENCHANTMENT.get(CommonUtil.parseNamespacedKey(ench.toLowerCase()));
                 if (addEnchant != null) {
                     meta.addEnchant(addEnchant, level, false);
                 }

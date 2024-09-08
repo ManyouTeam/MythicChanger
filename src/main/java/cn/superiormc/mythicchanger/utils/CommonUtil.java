@@ -11,6 +11,7 @@ import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.CraftingInventory;
+import org.bukkit.inventory.ItemStack;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -19,11 +20,19 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CommonUtil {
 
-    public static boolean checkPluginLoad(String pluginName){
+    public static Map<String, Boolean> loadedPlugins = new HashMap<>();
+
+    public static boolean checkPluginLoad(String pluginName) {
+        if (loadedPlugins.containsKey(pluginName)) {
+            return loadedPlugins.get(pluginName);
+        }
+        loadedPlugins.put(pluginName, MythicChanger.instance.getServer().getPluginManager().isPluginEnabled(pluginName));
         return MythicChanger.instance.getServer().getPluginManager().isPluginEnabled(pluginName);
     }
 
@@ -200,6 +209,15 @@ public class CommonUtil {
                 response.append(line);
             }
             return new JSONObject(response.toString());
+        }
+    }
+
+    public static void giveOrDrop(Player player, ItemStack... item) {
+        HashMap<Integer, ItemStack> result = player.getInventory().addItem(item);
+        if (!result.isEmpty()) {
+            for (int id : result.keySet()) {
+                player.getWorld().dropItem(player.getLocation(), result.get(id));
+            }
         }
     }
 }

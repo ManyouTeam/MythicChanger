@@ -2,6 +2,7 @@ package cn.superiormc.mythicchanger.objects.matchitem;
 
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class HasName extends AbstractMatchItemRule {
     public HasName() {
@@ -9,11 +10,11 @@ public class HasName extends AbstractMatchItemRule {
     }
 
     @Override
-    public boolean getMatch(ConfigurationSection section, ItemStack item) {
+    public boolean getMatch(ConfigurationSection section, ItemStack item, ItemMeta meta) {
         if (section.getBoolean("has-name", false)) {
-            return item.getItemMeta() != null && item.getItemMeta().hasDisplayName();
+            return meta.hasDisplayName();
         } else {
-            return item.getItemMeta() != null && !item.getItemMeta().hasDisplayName();
+            return !meta.hasDisplayName();
         }
     }
 

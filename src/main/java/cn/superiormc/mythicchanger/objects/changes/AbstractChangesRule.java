@@ -1,7 +1,6 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.MemoryConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
