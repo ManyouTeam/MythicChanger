@@ -52,6 +52,7 @@ change-rule-weight:
   add-nbt-int: 201
   add-nbt-string: 200
   edit-item: 1
+  fix-hide-attributes: 1500
   keep-damage: -250
   keep-enchants: -251
   keep-flags: -252
@@ -77,18 +78,28 @@ change-rule-weight:
 # Premium version only.
 change-gui:
   title: 'Change your item!'
-  size: 54
-  item-slot: 0
-  book-slot: 1
-  confirm-slot: 2
+  size: 27
+  item-slot: 11
+  book-slot: 15
+  confirm-slot: 22
   confirm-item:
     material: ANVIL
     name: '&eConfirm'
     lore:
       - '&7Click to confirm change the item!'
   custom-item:
-    49: # 代表槽位
-      material: SPAWNER
+    2:
+      material: PAPER
+      name: '&bDrag the item you want change below.'
+    6:
+      material: BOOK
+      name: '&bDrag the apply item below.'
+  close-if-fail: true
+
+# Premium version only.
+# Support value: GUI, DRAG
+# GUI mode is in EARLY ALPHA TEST, be careful to use!
+apply-item-mode: DRAG
 
 # Premium version only.
 apply-items:

@@ -5,6 +5,7 @@ import cn.superiormc.mythicchanger.objects.ObjectApplyItem;
 import cn.superiormc.mythicchanger.objects.ObjectSingleRule;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.MemoryConfiguration;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -179,6 +180,17 @@ public class ConfigManager {
             }
         }
         return s.replace("{plugin_folder}", String.valueOf(MythicChanger.instance.getDataFolder()));
+    }
+
+    public int getInt(String path, int defaultValue) {
+        return config.getInt(path, defaultValue);
+    }
+
+    public ConfigurationSection getSection(String path) {
+        if (config.getConfigurationSection(path) == null) {
+            return new MemoryConfiguration();
+        }
+        return config.getConfigurationSection(path);
     }
 
     public int getRuleWeight(String ruleID, int defaultValue) {

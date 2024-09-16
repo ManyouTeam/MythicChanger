@@ -33,6 +33,9 @@ public class CommandManager {
             if (CommonUtil.checkPluginLoad("NBTAPI")) {
                 registeredCommands.put("viewnbt", new SubViewNBT());
             }
+            if (ConfigManager.configManager.getString("apply-item-mode", "DRAG").equalsIgnoreCase("GUI")) {
+                registeredCommands.put("openchangegui", new SubOpenChangeGUI());
+            }
         }
         registeredCommands.put("help", new SubHelp());
         registeredCommands.put("reload", new SubReload());

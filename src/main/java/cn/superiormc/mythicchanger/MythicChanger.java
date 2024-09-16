@@ -52,7 +52,7 @@ public final class MythicChanger extends JavaPlugin {
         if (LocateManager.enableThis()) {
             new LocateManager();
         }
-        if (!MythicChanger.freeVersion) {
+        if (!MythicChanger.freeVersion && ConfigManager.configManager.getString("apply-item-mode", "DRAG").equalsIgnoreCase("DRAG")) {
             Bukkit.getPluginManager().registerEvents(new ApplyItemListener(), this);
         }
         if (CommonUtil.checkPluginLoad("MMOItems")) {

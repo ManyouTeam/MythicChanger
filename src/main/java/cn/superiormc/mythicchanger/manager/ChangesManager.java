@@ -40,6 +40,7 @@ public class ChangesManager {
         registerNewRule(new SetLore());
         registerNewRule(new SetName());
         registerNewRule(new SetType());
+        registerNewRule(new FixHideAttributes());
         if (!MythicChanger.freeVersion) {
             Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fRegistering PREMIUM change rules...");
             registerNewRule(new SetColor());
