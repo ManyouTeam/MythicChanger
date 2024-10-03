@@ -17,6 +17,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
+import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -42,6 +43,23 @@ public class CommonUtil {
             return true;
         }
         catch (ClassNotFoundException e) {
+            return false;
+        }
+    }
+
+    public static boolean checkClass(String className, String methodName) {
+        try {
+            Class<?> targetClass = Class.forName(className);
+            Method[] methods = targetClass.getDeclaredMethods();
+
+            for (Method method : methods) {
+                if (method.getName().equals(methodName)) {
+                    return true;
+                }
+            }
+
+            return false;
+        } catch (ClassNotFoundException e) {
             return false;
         }
     }

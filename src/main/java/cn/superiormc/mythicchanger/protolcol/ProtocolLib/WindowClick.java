@@ -36,14 +36,19 @@ public class WindowClick implements Listener {
             return;
         }
         if (event.getClickedInventory().equals(player.getOpenInventory().getBottomInventory())) {
-            ItemStack slotItem = event.getCurrentItem();
-            if (isValid(slotItem)) {
-                ItemStack newItem = ConfigManager.configManager.startRealChange(slotItem, player);
-                if (isValid(newItem) && !newItem.isSimilar(slotItem)) {
-                    event.setCurrentItem(newItem);
-                    event.setCancelled(true);
-                    player.updateInventory();
+            ItemStack tempItemStack = event.getCurrentItem();
+            if (tempItemStack == null || tempItemStack.getType().isAir()) {
+                tempItemStack = player.getItemOnCursor();
+                if (tempItemStack.getType().isAir()) {
+                    return;
                 }
+            }
+            ItemStack newItem = ConfigManager.configManager.startRealChange(tempItemStack, player);
+            if (isValid(newItem) && !newItem.isSimilar(tempItemStack)) {
+                tempItemStack.setAmount(0);
+                event.setCurrentItem(newItem);
+                event.setCancelled(true);
+                player.updateInventory();
             }
         }
     }

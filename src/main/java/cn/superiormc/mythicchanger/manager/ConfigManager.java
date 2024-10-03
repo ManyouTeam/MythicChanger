@@ -9,6 +9,7 @@ import org.bukkit.configuration.MemoryConfiguration;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -87,7 +88,7 @@ public class ConfigManager {
         }
     }
 
-    public ItemStack startFakeChange(ItemStack item, Player player) {
+    public ItemStack startFakeChange(ItemStack item, Player player, boolean isPlayerInventory) {
         if (item == null || item.getType().isAir()) {
             return item;
         }
@@ -96,7 +97,8 @@ public class ConfigManager {
         }
         ItemStack originalItem = item.clone();
         for (ObjectSingleRule rule: ruleCaches) {
-            if (rule.getMatchItem(item, true, player)) {
+            if (rule.getMatchItem(item, true, player) && (!rule.getOnlyInPlayerInventory() || isPlayerInventory ||
+                    (!ConfigManager.configManager.getBoolean("check-chests-only") || !player.getOpenInventory().getType().equals(InventoryType.CHEST)))) {
                 item = rule.setFakeChange(originalItem, item, player);
             }
         }

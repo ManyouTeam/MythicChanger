@@ -82,6 +82,10 @@ public class ObjectSingleRule implements Comparable<ObjectSingleRule> {
         return condition;
     }
 
+    public boolean getOnlyInPlayerInventory() {
+        return config.getBoolean("only-in-player-inventory", false);
+    }
+
     @Override
     public int compareTo(@NotNull ObjectSingleRule otherPrefix) {
         if (getWeight() == otherPrefix.getWeight()) {

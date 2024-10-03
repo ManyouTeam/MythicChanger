@@ -3,9 +3,7 @@ package cn.superiormc.mythicchanger;
 import cn.superiormc.mythicchanger.hooks.MMOItemsHook;
 import cn.superiormc.mythicchanger.listeners.ApplyItemListener;
 import cn.superiormc.mythicchanger.manager.*;
-import cn.superiormc.mythicchanger.protolcol.ProtocolLib.SetSlots;
-import cn.superiormc.mythicchanger.protolcol.ProtocolLib.WindowClick;
-import cn.superiormc.mythicchanger.protolcol.ProtocolLib.WindowItem;
+import cn.superiormc.mythicchanger.protolcol.ProtocolLib.*;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -16,11 +14,13 @@ public final class MythicChanger extends JavaPlugin {
 
     public static boolean isPaper = false;
 
-    public static final boolean freeVersion = true;
+    public static final boolean freeVersion = false;
 
     public static int majorVersion;
 
     public static int miniorVersion;
+
+    public static boolean newSkullMethod;
 
     @Override
     public void onEnable() {
@@ -44,6 +44,8 @@ public final class MythicChanger extends JavaPlugin {
             new SetSlots();
             new WindowItem();
             new WindowClick();
+            new WindowMerchant();
+            //new OpenWindow();
         });
         new ItemManager();
         new ChangesManager();
@@ -65,6 +67,10 @@ public final class MythicChanger extends JavaPlugin {
                 ErrorManager.errorManager.sendErrorMessage("§x§9§8§F§B§9§8[MythicChanger] §cError: Failed to register MMOItems hook, consider update " +
                         "your MMOItems to latest dev version!");
             }
+        }
+        if (!CommonUtil.checkClass("com.mojang.authlib.properties.Property", "getValue") && CommonUtil.getMinorVersion(21, 1)) {
+            newSkullMethod = true;
+            Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fNew AuthLib found, enabled new skull get method!");
         }
         Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fYour Minecraft version is: 1." + majorVersion + "." + miniorVersion + "!");
         Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fPlugin is loaded. Author: PQguanfang.");

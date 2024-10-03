@@ -59,12 +59,16 @@ public class ObjectCondition {
                         break;
                     }
                 }
+            } else if (singleCondition.startsWith("window:")) {
+                if (player.getOpenInventory().getType().name().equals(singleCondition.substring(8))) {
+                    conditionTrueOrFasle = false;
+                    break;
+                }
             } else if (singleCondition.startsWith("placeholder: ")) {
                 try {
                     if (singleCondition.split(";;").length == 3) {
                         String[] conditionString = singleCondition.substring(13).split(";;");
                         String placeholder = TextUtil.withPAPI(conditionString[0], player);
-                        //Bukkit.getConsoleSender().sendMessage(placeholder);
                         String conditionValue = conditionString[1];
                         String value = conditionString[2];
                         if (conditionValue.equals("==")) {

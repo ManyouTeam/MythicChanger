@@ -1,8 +1,13 @@
 package cn.superiormc.mythicchanger.methods;
 
+import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.hooks.ItemsHook;
+import cn.superiormc.mythicchanger.manager.ConfigManager;
+import cn.superiormc.mythicchanger.manager.ErrorManager;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
 import cn.superiormc.mythicchanger.utils.TextUtil;
+import com.destroystokyo.paper.profile.PlayerProfile;
+import com.destroystokyo.paper.profile.ProfileProperty;
 import com.google.common.base.Enums;
 import com.google.common.collect.MultimapBuilder;
 import com.mojang.authlib.GameProfile;
@@ -34,6 +39,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.*;
 
@@ -523,18 +529,40 @@ public class BuildItem {
             SkullMeta skullMeta = (SkullMeta) meta;
             String skullTextureNameKey = section.getString("skull-meta", section.getString("skull"));
             if (skullTextureNameKey != null) {
-                if (skullTextureNameKey.length() > 16) {
-                    GameProfile profile = new GameProfile(UUID.randomUUID(), "");
-                    profile.getProperties().put("textures", new Property("textures", skullTextureNameKey));
-                    try {
-                        Method mtd = skullMeta.getClass().getDeclaredMethod("setProfile", GameProfile.class);
-                        mtd.setAccessible(true);
-                        mtd.invoke(skullMeta, profile);
-                    } catch (Exception exception) {
-                        Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[ManyouItems] §cError: Can not parse skull texture in a item!");
-                    }
+                if (MythicChanger.isPaper && ConfigManager.configManager.getBoolean("use-component.skull")) {
+                    PlayerProfile profile = Bukkit.createProfile(UUID.randomUUID(), "");
+                    profile.setProperty(new ProfileProperty("textures", skullTextureNameKey));
+                    skullMeta.setPlayerProfile(profile);
                 } else {
-                    skullMeta.setOwningPlayer(Bukkit.getOfflinePlayer(skullTextureNameKey));
+                    if (MythicChanger.newSkullMethod) {
+                        try {
+                            Class<?> profileClass = Class.forName("net.minecraft.world.item.component.ResolvableProfile");
+                            Constructor constroctor = profileClass.getConstructor(GameProfile.class);
+                            GameProfile profile = new GameProfile(UUID.randomUUID(), "");
+                            profile.getProperties().put("textures", new Property("textures", skullTextureNameKey));
+                            try {
+                                Method mtd = skullMeta.getClass().getDeclaredMethod("setProfile", profileClass);
+                                mtd.setAccessible(true);
+                                mtd.invoke(skullMeta, constroctor.newInstance(profile));
+                            } catch (Exception exception) {
+                                exception.printStackTrace();
+                                ErrorManager.errorManager.sendErrorMessage("§x§9§8§F§B§9§8[ManyouItems] §cError: Can not parse skull texture in a item!");
+                            }
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    } else {
+                        GameProfile profile = new GameProfile(UUID.randomUUID(), "");
+                        profile.getProperties().put("textures", new Property("textures", skullTextureNameKey));
+                        try {
+                            Method mtd = skullMeta.getClass().getDeclaredMethod("setProfile", GameProfile.class);
+                            mtd.setAccessible(true);
+                            mtd.invoke(skullMeta, profile);
+                        } catch (Exception exception) {
+                            exception.printStackTrace();
+                            ErrorManager.errorManager.sendErrorMessage("§x§9§8§F§B§9§8[ManyouItems] §cError: Can not parse skull texture in a item!");
+                        }
+                    }
                 }
             }
         }

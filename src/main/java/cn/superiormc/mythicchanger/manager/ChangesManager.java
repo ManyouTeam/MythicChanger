@@ -7,7 +7,9 @@ import cn.superiormc.mythicchanger.utils.CommonUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -64,6 +66,7 @@ public class ChangesManager {
             }
             registerNewRule(new ReplaceEnchants());
             registerNewRule(new EditLore());
+            registerNewRule(new ReplaceRandomItem());
         }
     }
 
@@ -80,6 +83,12 @@ public class ChangesManager {
                 Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fApply fake rule: " + rule.getClass().getName());
             }
             item = rule.setChange(section, item, original, player, true);
+        }
+        if (ConfigManager.configManager.getBoolean("keep-name-in-anvil") && player.getOpenInventory().getType().equals(InventoryType.ANVIL)
+                && item.getItemMeta().hasDisplayName()) {
+            ItemMeta meta = item.getItemMeta();
+            meta.setDisplayName(original.getItemMeta().getDisplayName());
+            item.setItemMeta(meta);
         }
         return item;
     }

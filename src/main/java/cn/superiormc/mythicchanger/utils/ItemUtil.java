@@ -10,6 +10,11 @@ public class ItemUtil {
         if (displayItem == null || displayItem.getItemMeta() == null) {
             return "ERROR: Unknown Item";
         }
+        if (CommonUtil.getMinorVersion(20, 5)) {
+            if (displayItem.getItemMeta().hasItemName()) {
+                return displayItem.getItemMeta().getItemName();
+            }
+        }
         if (displayItem.getItemMeta().hasDisplayName()) {
             return displayItem.getItemMeta().getDisplayName();
         }

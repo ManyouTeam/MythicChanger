@@ -19,6 +19,7 @@ use-component:
   message: false
   # Only for Item Format for now, does not support item modify in rule.
   item: false
+  skull: false
 
 real-change-trigger:
   SetSlotTrigger:
@@ -35,6 +36,12 @@ bypass-real-change-limit: false
 # Some change rules have incompatibility issues with other packet-based item plugins.
 # Like our EnchantmentSlots, and Auxilor plugins (EcoItems, EcoEnchants, ect.)
 ignore-fake-change-warning: false
+
+# Whether we keep item name to original in anvil name.
+keep-name-in-anvil: true
+
+# Whether only-in-player-inventory option in each rule only checks chest UI.
+check-chests-only: true
 
 # You can override the weight values set by the plugin for each rule here. The higher the weight value, the earlier the rule will be executed.
 # The default value of the plugin is a carefully considered and reasonably configured value.
@@ -68,6 +75,7 @@ change-rule-weight:
   remove-nbt: -199
   replace-enchants: -203
   replace-item: 1000
+  replace-random-item: 1001
   replace-lore: 9
   set-color: 150
   set-custom-model-data: 5
