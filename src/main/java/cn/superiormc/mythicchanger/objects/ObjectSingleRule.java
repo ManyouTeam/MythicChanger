@@ -44,7 +44,7 @@ public class ObjectSingleRule implements Comparable<ObjectSingleRule> {
         return MatchItemManager.matchItemManager.getMatch(section, item);
     }
 
-    public ItemStack setFakeChange(ItemStack original, ItemStack item, Player player) {
+    public ItemStack setFakeChange(ItemStack original, ItemStack item, Player player, boolean isPlayerInventory) {
         if (item == null || item.getType().isAir()) {
             return item;
         }
@@ -52,7 +52,7 @@ public class ObjectSingleRule implements Comparable<ObjectSingleRule> {
         if (section == null || section.getKeys(false).isEmpty()) {
             return item;
         }
-        return ChangesManager.changesManager.setFakeChange(section, original, item, player);
+        return ChangesManager.changesManager.setFakeChange(section, original, item, player, isPlayerInventory);
     }
 
     public ItemStack setRealChange(ItemStack original, ItemStack item, Player player) {

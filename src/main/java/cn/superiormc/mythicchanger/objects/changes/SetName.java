@@ -2,6 +2,8 @@ package cn.superiormc.mythicchanger.objects.changes;
 
 import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.manager.ErrorManager;
+import cn.superiormc.mythicchanger.utils.CommonUtil;
+import cn.superiormc.mythicchanger.utils.ItemUtil;
 import cn.superiormc.mythicchanger.utils.TextUtil;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -15,14 +17,19 @@ public class SetName extends AbstractChangesRule {
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section, ItemStack original, ItemStack item, Player player, boolean fakeOrReal) {
+    public ItemStack setChange(ConfigurationSection section,
+                               ItemStack original,
+                               ItemStack item,
+                               Player player,
+                               boolean fakeOrReal,
+                               boolean isPlayerInventory) {
         if (fakeOrReal && !ConfigManager.configManager.getBoolean("ignore-fake-change-warning")) {
             ErrorManager.errorManager.sendErrorMessage("§x§9§8§F§B§9§8[MythicChanger] §6Warning: set-name rule has incompatibility issues with" +
                     " other packet based item plugins, it is recommend that remove it in fake changes from all your rule configs!" +
                     " If you want to ignore this warning, please disable warning display in config.yml file.");
         }
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(TextUtil.parse(section.getString("set-name"), player));
+        meta.setDisplayName(CommonUtil.modifyString(TextUtil.parse(section.getString("set-name"), player), "name", ItemUtil.getItemName(original)));
         item.setItemMeta(meta);
         return item;
     }

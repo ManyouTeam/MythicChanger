@@ -14,7 +14,12 @@ public class ReplaceItem extends AbstractChangesRule {
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section, ItemStack original, ItemStack item, Player player, boolean fakeOrReal) {
+    public ItemStack setChange(ConfigurationSection section,
+                               ItemStack original,
+                               ItemStack item,
+                               Player player,
+                               boolean fakeOrReal,
+                               boolean isPlayerInventory) {
         ConfigurationSection itemSection = section.getConfigurationSection("replace-item");
         ItemStack result = BuildItem.buildItemStack(itemSection);
         if (result.getType() == Material.BARRIER) {

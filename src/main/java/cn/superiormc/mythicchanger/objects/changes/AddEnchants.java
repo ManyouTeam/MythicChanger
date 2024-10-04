@@ -17,7 +17,12 @@ public class AddEnchants extends AbstractChangesRule {
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section, ItemStack original, ItemStack item, Player player, boolean fakeOrReal) {
+    public ItemStack setChange(ConfigurationSection section,
+                               ItemStack original,
+                               ItemStack item,
+                               Player player,
+                               boolean fakeOrReal,
+                               boolean isPlayerInventory) {
         ItemMeta meta = item.getItemMeta();
         for (String ench : section.getConfigurationSection("add-enchants").getKeys(false)) {
             Enchantment vanillaEnchant = Registry.ENCHANTMENT.get(CommonUtil.parseNamespacedKey(ench.toLowerCase()));

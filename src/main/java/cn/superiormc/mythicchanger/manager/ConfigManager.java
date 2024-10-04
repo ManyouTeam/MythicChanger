@@ -95,11 +95,11 @@ public class ConfigManager {
         if (ConfigManager.configManager.getBoolean("debug")) {
             Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fStart fake change!");
         }
-        ItemStack originalItem = item.clone();
+        final ItemStack originalItem = item.clone();
         for (ObjectSingleRule rule: ruleCaches) {
             if (rule.getMatchItem(item, true, player) && (!rule.getOnlyInPlayerInventory() || isPlayerInventory ||
                     (!ConfigManager.configManager.getBoolean("check-chests-only") || !player.getOpenInventory().getType().equals(InventoryType.CHEST)))) {
-                item = rule.setFakeChange(originalItem, item, player);
+                item = rule.setFakeChange(originalItem, item, player, isPlayerInventory);
             }
         }
         return item;
@@ -152,8 +152,7 @@ public class ConfigManager {
             return null;
         }
         String id = meta.getPersistentDataContainer().get(ObjectApplyItem.MYTHICCHANGER_APPLY_ITEM, PersistentDataType.STRING);
-        ObjectApplyItem applyItem = ConfigManager.configManager.getApplyItem(id);
-        return applyItem;
+        return ConfigManager.configManager.getApplyItem(id);
     }
 
     public boolean getBoolean(String path) {

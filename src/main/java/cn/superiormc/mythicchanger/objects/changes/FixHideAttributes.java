@@ -16,7 +16,12 @@ public class FixHideAttributes extends AbstractChangesRule {
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section, ItemStack original, ItemStack item, Player player, boolean fakeOrReal) {
+    public ItemStack setChange(ConfigurationSection section,
+                               ItemStack original,
+                               ItemStack item,
+                               Player player,
+                               boolean fakeOrReal,
+                               boolean isPlayerInventory) {
         ItemMeta meta = item.getItemMeta();
         if (CommonUtil.getMinorVersion(20, 6) && meta.getItemFlags().contains(ItemFlag.HIDE_ATTRIBUTES)
                 && meta.getAttributeModifiers() == null) {

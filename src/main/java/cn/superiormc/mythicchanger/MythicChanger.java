@@ -14,7 +14,7 @@ public final class MythicChanger extends JavaPlugin {
 
     public static boolean isPaper = false;
 
-    public static final boolean freeVersion = false;
+    public static final boolean freeVersion = true;
 
     public static int majorVersion;
 
@@ -45,7 +45,6 @@ public final class MythicChanger extends JavaPlugin {
             new WindowItem();
             new WindowClick();
             new WindowMerchant();
-            //new OpenWindow();
         });
         new ItemManager();
         new ChangesManager();

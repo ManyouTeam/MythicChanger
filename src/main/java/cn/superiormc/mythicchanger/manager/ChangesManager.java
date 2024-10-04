@@ -7,9 +7,7 @@ import cn.superiormc.mythicchanger.utils.CommonUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -67,6 +65,7 @@ public class ChangesManager {
             registerNewRule(new ReplaceEnchants());
             registerNewRule(new EditLore());
             registerNewRule(new ReplaceRandomItem());
+            registerNewRule(new ReplaceName());
         }
     }
 
@@ -74,7 +73,7 @@ public class ChangesManager {
         rules.add(rule);
     }
 
-    public ItemStack setFakeChange(ConfigurationSection section, ItemStack original, ItemStack item, Player player) {
+    public ItemStack setFakeChange(ConfigurationSection section, ItemStack original, ItemStack item, Player player, boolean isPlayerInventory) {
         for (AbstractChangesRule rule : rules) {
             if (rule.configNotContains(section)) {
                 continue;
@@ -82,13 +81,7 @@ public class ChangesManager {
             if (ConfigManager.configManager.getBoolean("debug")) {
                 Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fApply fake rule: " + rule.getClass().getName());
             }
-            item = rule.setChange(section, item, original, player, true);
-        }
-        if (ConfigManager.configManager.getBoolean("keep-name-in-anvil") && player.getOpenInventory().getType().equals(InventoryType.ANVIL)
-                && item.getItemMeta().hasDisplayName()) {
-            ItemMeta meta = item.getItemMeta();
-            meta.setDisplayName(original.getItemMeta().getDisplayName());
-            item.setItemMeta(meta);
+            item = rule.setChange(section, item, original, player, true, isPlayerInventory);
         }
         return item;
     }
@@ -103,10 +96,10 @@ public class ChangesManager {
                 Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fApply real rule: " + rule.getClass().getName());
             }
             if (rule.getNeedRewriteItem(section)) {
-                item = rule.setChange(section, original, item, player, false);
+                item = rule.setChange(section, original, item, player, false, true);
                 needReturnNewItem = true;
             } else {
-                rule.setChange(section, original, item, player, false);
+                rule.setChange(section, original, item, player, false, true);
             }
         }
         if (!MythicChanger.freeVersion && !action.isEmpty()) {

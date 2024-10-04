@@ -18,7 +18,12 @@ public class AddFlags extends AbstractChangesRule {
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section, ItemStack original, ItemStack item, Player player, boolean fakeOrReal) {
+    public ItemStack setChange(ConfigurationSection section,
+                               ItemStack original,
+                               ItemStack item,
+                               Player player,
+                               boolean fakeOrReal,
+                               boolean isPlayerInventory) {
         ItemMeta meta = item.getItemMeta();
         for (String flag : section.getStringList("add-flags")) {
             flag = flag.toUpperCase();

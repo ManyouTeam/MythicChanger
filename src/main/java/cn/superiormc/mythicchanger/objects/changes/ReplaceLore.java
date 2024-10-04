@@ -17,7 +17,12 @@ public class ReplaceLore extends AbstractChangesRule {
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section, ItemStack original, ItemStack item, Player player, boolean fakeOrReal) {
+    public ItemStack setChange(ConfigurationSection section,
+                               ItemStack original,
+                               ItemStack item,
+                               Player player,
+                               boolean fakeOrReal,
+                               boolean isPlayerInventory) {
         ConfigurationSection tempVal1 = section.getConfigurationSection("replace-lore");
         ItemMeta meta = item.getItemMeta();
         if (!meta.hasLore()) {

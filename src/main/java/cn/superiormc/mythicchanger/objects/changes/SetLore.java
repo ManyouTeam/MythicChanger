@@ -15,7 +15,12 @@ public class SetLore extends AbstractChangesRule {
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section, ItemStack original, ItemStack item, Player player, boolean fakeOrReal) {
+    public ItemStack setChange(ConfigurationSection section,
+                               ItemStack original,
+                               ItemStack item,
+                               Player player,
+                               boolean fakeOrReal,
+                               boolean isPlayerInventory) {
         if (fakeOrReal && !ConfigManager.configManager.getBoolean("ignore-fake-change-warning")) {
             ErrorManager.errorManager.sendErrorMessage("§x§9§8§F§B§9§8[MythicChanger] §6Warning: set-lore rule has incompatibility issues with" +
                     " other packet based item plugins, it is recommend that remove it in fake changes from all your rule configs!" +

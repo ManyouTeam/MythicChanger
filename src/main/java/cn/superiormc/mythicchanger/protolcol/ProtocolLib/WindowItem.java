@@ -8,6 +8,7 @@ import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.reflect.StructureModifier;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.inventory.ItemStack;
 
@@ -44,15 +45,17 @@ public class WindowItem extends GeneralPackets {
                 StructureModifier<List<ItemStack>> itemStackStructureModifier = packet.getItemListModifier();
                 List<ItemStack> serverItemStack = itemStackStructureModifier.read(0);
                 List<ItemStack> clientItemStack = new ArrayList<>();
-                boolean isPlayerInventory = event.getPacket().getIntegers().read(0) == 0 ||
-                        serverItemStack.size() % 9 != 0;
                 int index = 1;
                 for (ItemStack itemStack : serverItemStack) {
                     if (itemStack.getType().isAir()) {
                         clientItemStack.add(itemStack);
+                        index ++;
                         continue;
                     }
-                    clientItemStack.add(ConfigManager.configManager.startFakeChange(itemStack, event.getPlayer(), isPlayerInventory || index > serverItemStack.size() - 36));
+                    boolean isPlayerInventory = event.getPacket().getIntegers().read(0) == 0 || index > serverItemStack.size() - 36;
+                    clientItemStack.add(ConfigManager.configManager.startFakeChange(itemStack,
+                            event.getPlayer(), isPlayerInventory
+                            ));
                     index ++;
                 }
                 // client 是加过 Lore 的，server 是没加过的！

@@ -12,7 +12,12 @@ public class KeepEnchants extends AbstractChangesRule {
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section, ItemStack original, ItemStack item, Player player, boolean fakeOrReal) {
+    public ItemStack setChange(ConfigurationSection section,
+                               ItemStack original,
+                               ItemStack item,
+                               Player player,
+                               boolean fakeOrReal,
+                               boolean isPlayerInventory) {
         if (section.getBoolean("keep-enchants", false) && !original.getEnchantments().isEmpty()) {
             item.addUnsafeEnchantments(original.getEnchantments());
             return item;

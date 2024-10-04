@@ -14,7 +14,12 @@ public class KeepItemName extends AbstractChangesRule {
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section, ItemStack original, ItemStack item, Player player, boolean fakeOrReal) {
+    public ItemStack setChange(ConfigurationSection section,
+                               ItemStack original,
+                               ItemStack item,
+                               Player player,
+                               boolean fakeOrReal,
+                               boolean isPlayerInventory) {
         if (section.getBoolean("keep-item-name", false)) {
             ItemMeta meta = item.getItemMeta();
             ItemMeta originalMeta = original.getItemMeta();

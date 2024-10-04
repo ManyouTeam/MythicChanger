@@ -16,7 +16,12 @@ public class ReplaceRandomItem extends AbstractChangesRule {
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section, ItemStack original, ItemStack item, Player player, boolean fakeOrReal) {
+    public ItemStack setChange(ConfigurationSection section,
+                               ItemStack original,
+                               ItemStack item,
+                               Player player,
+                               boolean fakeOrReal,
+                               boolean isPlayerInventory) {
         ConfigurationSection itemSection = section.getConfigurationSection("replace-random-item");
         Map<ItemStack, Double> items = new HashMap<>();
         for (String itemKey : itemSection.getKeys(false)) {

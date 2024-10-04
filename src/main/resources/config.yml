@@ -77,6 +77,7 @@ change-rule-weight:
   replace-item: 1000
   replace-random-item: 1001
   replace-lore: 9
+  replace-name: 8
   set-color: 150
   set-custom-model-data: 5
   set-lore: 6
