@@ -10,6 +10,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -97,12 +98,19 @@ public class ConfigManager {
         }
         final ItemStack originalItem = item.clone();
         for (ObjectSingleRule rule: ruleCaches) {
-            if (rule.getMatchItem(item, true, player) && (!rule.getOnlyInPlayerInventory() || isPlayerInventory ||
-                    (!ConfigManager.configManager.getBoolean("check-chests-only") || !player.getOpenInventory().getType().equals(InventoryType.CHEST)))) {
+            if (rule.getMatchItem(item, true, player) && (!rule.getOnlyInPlayerInventory() || modifyPlayerInInventory(player, isPlayerInventory))) {
                 item = rule.setFakeChange(originalItem, item, player, isPlayerInventory);
             }
         }
         return item;
+    }
+
+    private boolean modifyPlayerInInventory(Player player, boolean playerInInventory) {
+        InventoryView view = player.getOpenInventory();
+        if (view.getType().equals(InventoryType.CHEST)) {
+            return playerInInventory || view.getTitle().equals("Chest");
+        }
+        return playerInInventory || ConfigManager.configManager.getBoolean("check-chests-only");
     }
 
     public ItemStack startRealChange(ItemStack item, Player player) {
