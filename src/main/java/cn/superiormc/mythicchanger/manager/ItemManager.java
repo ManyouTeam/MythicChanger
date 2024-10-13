@@ -1,7 +1,9 @@
 package cn.superiormc.mythicchanger.manager;
 
 import cn.superiormc.mythicchanger.MythicChanger;
+import cn.superiormc.mythicchanger.utils.CommonUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -34,10 +36,15 @@ public class ItemManager {
         File[] tempList = dir.listFiles();
         for (File file : tempList) {
             if (file.getName().endsWith(".yml")) {
-                ItemStack itemStack = YamlConfiguration.loadConfiguration(file).getItemStack("item");
+                YamlConfiguration section = YamlConfiguration.loadConfiguration(file);
                 String key = file.getName();
                 key = key.substring(0, key.length() - 4);
-                savedItemMap.put(key, itemStack);
+                Object object = section.get("item");
+                if (object instanceof ItemStack) {
+                    savedItemMap.put(key, (ItemStack) object);
+                } else {
+                    savedItemMap.put(key, ItemStack.deserializeBytes((byte[]) object));
+                }
             }
         }
     }
@@ -49,7 +56,11 @@ public class ItemManager {
             dir.mkdir();
         }
         YamlConfiguration briefcase = new YamlConfiguration();
-        briefcase.set("item", itemStack);
+        if (MythicChanger.isPaper && CommonUtil.getMajorVersion(15) && ConfigManager.configManager.getBoolean("paper-api.save-item", true)) {
+            briefcase.set("item", itemStack.serializeAsBytes());
+        } else {
+            briefcase.set("item", itemStack);
+        }
         String yaml = briefcase.saveToString();
         Bukkit.getScheduler().runTaskAsynchronously(MythicChanger.instance,() -> {
             Path path = new File(dir.getPath(), key + ".yml").toPath();
@@ -67,5 +78,9 @@ public class ItemManager {
             return savedItemMap.get(key).clone();
         }
         return null;
+    }
+
+    public Map<String, ItemStack> getSavedItemMap() {
+        return savedItemMap;
     }
 }

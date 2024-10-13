@@ -184,15 +184,15 @@ public class ObjectAction {
     }
 
     private String replacePlaceholder(String str, Player player, ItemStack original, ItemStack item) {
-        str = str.replace("{world}", player.getWorld().getName())
-                .replace("{player_x}", String.valueOf(player.getLocation().getX()))
-                .replace("{player_y}", String.valueOf(player.getLocation().getY()))
-                .replace("{player_z}", String.valueOf(player.getLocation().getZ()))
-                .replace("{player_pitch}", String.valueOf(player.getLocation().getPitch()))
-                .replace("{player_yaw}", String.valueOf(player.getLocation().getYaw()))
-                .replace("{player}", player.getName()
-                .replace("{original-name}", ItemUtil.getItemName(original)
-                .replace("{name}", ItemUtil.getItemName(item))));
+        str = CommonUtil.modifyString(str, "world", player.getWorld().getName()
+                ,"player_x", String.valueOf(player.getLocation().getX())
+                ,"player_y", String.valueOf(player.getLocation().getY())
+                ,"player_z", String.valueOf(player.getLocation().getZ())
+                ,"player_pitch", String.valueOf(player.getLocation().getPitch())
+                ,"player_yaw", String.valueOf(player.getLocation().getYaw())
+                ,"player", player.getName()
+                ,"original-name", ItemUtil.getItemName(original)
+                ,"name", ItemUtil.getItemName(item));
         if (CommonUtil.checkPluginLoad("PlaceholderAPI")) {
             str = PlaceholderAPI.setPlaceholders(player, str);
         }

@@ -3,6 +3,7 @@ error:
   in-game: "&#98FB98[MythicChanger] &cYou have to use this command in game!"
   miss-permission: "&#98FB98[MythicChanger] &cYou don't have permission to use this command!"
   item-not-found: "&#98FB98[MythicChanger] &cWe can't find this apply item called {item}!"
+  save-item-not-found: "&#98FB98[MythicChanger] &cWe can't find this save item called {item}!"
   player-not-found: "&#98FB98[MythicChanger] &cWe can't find player {player}!"
   creative-mode: "&#98FB98[MythicChanger] &cThis feature does not support creative mode for now!"
   item-only-one: "&#98FB98[MythicChanger] &cYour apply item can not be stacked to more than 1 amount!"

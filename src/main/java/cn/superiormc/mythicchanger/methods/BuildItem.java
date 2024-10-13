@@ -4,6 +4,7 @@ import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.hooks.ItemsHook;
 import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.manager.ErrorManager;
+import cn.superiormc.mythicchanger.manager.ItemManager;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
 import cn.superiormc.mythicchanger.utils.TextUtil;
 import com.destroystokyo.paper.profile.PlayerProfile;
@@ -60,6 +61,11 @@ public class BuildItem {
             Material material = Material.getMaterial(materialKey.toUpperCase());
             if (material != null) {
                 item.setType(material);
+            } else {
+                ItemStack savedItem = ItemManager.itemManager.getItemByKey(section.getString("material"));
+                if (savedItem != null) {
+                    item = savedItem;
+                }
             }
         } else {
             String pluginName = section.getString("hook-plugin");
@@ -529,7 +535,7 @@ public class BuildItem {
             SkullMeta skullMeta = (SkullMeta) meta;
             String skullTextureNameKey = section.getString("skull-meta", section.getString("skull"));
             if (skullTextureNameKey != null) {
-                if (MythicChanger.isPaper && ConfigManager.configManager.getBoolean("use-component.skull")) {
+                if (MythicChanger.isPaper && ConfigManager.configManager.getBoolean("papar-api.skull")) {
                     PlayerProfile profile = Bukkit.createProfile(UUID.randomUUID(), "");
                     profile.setProperty(new ProfileProperty("textures", skullTextureNameKey));
                     skullMeta.setPlayerProfile(profile);

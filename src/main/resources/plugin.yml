@@ -16,6 +16,9 @@ softdepend:
   - ExecutableItems
   - NBTAPI
   - eco
+  - QuickShop-Hikari
+  - InteractiveChat
+  - TrChat
 commands:
   mythicchanger:
     aliases:

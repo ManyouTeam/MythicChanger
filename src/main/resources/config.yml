@@ -19,7 +19,10 @@ use-component:
   message: false
   # Only for Item Format for now, does not support item modify in rule.
   item: false
-  skull: false
+
+paper-api:
+  save-item: true
+  skull: true
 
 real-change-trigger:
   SetSlotTrigger:
