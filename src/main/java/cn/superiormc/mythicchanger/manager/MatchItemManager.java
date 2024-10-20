@@ -25,6 +25,9 @@ public class MatchItemManager {
         registerNewRule(new HasLore());
         registerNewRule(new HasName());
         registerNewRule(new Items());
+        registerNewRule(new Not());
+        registerNewRule(new Material());
+        registerNewRule(new None());
         if (!MythicChanger.freeVersion) {
             Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fRegistering PREMIUM match rules...");
             if (CommonUtil.checkPluginLoad("NBTAPI")) {
@@ -37,8 +40,6 @@ public class MatchItemManager {
             if (CommonUtil.getMinorVersion(20, 5)) {
                 registerNewRule(new Rarity());
             }
-            registerNewRule(new Not());
-            registerNewRule(new Material());
             registerNewRule(new ContainsEnchants());
             registerNewRule(new ItemFormat());
             registerNewRule(new Any());

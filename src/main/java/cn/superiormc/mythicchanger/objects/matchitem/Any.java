@@ -5,7 +5,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class Any extends AbstractMatchItemRule{
+public class Any extends AbstractMatchItemRule {
     public Any() {
         super();
     }

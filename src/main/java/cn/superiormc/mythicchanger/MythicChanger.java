@@ -45,12 +45,14 @@ public final class MythicChanger extends JavaPlugin {
             Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fPaper is found, enabled Paper only feature!");
             isPaper = true;
         }
-        Bukkit.getScheduler().runTaskAsynchronously(MythicChanger.instance, () -> {
-            new SetSlots();
-            new WindowItem();
-            new WindowClick();
-            new WindowMerchant();
-        });
+        if (ConfigManager.configManager.getBoolean("pack-listener", true)) {
+            Bukkit.getScheduler().runTaskAsynchronously(MythicChanger.instance, () -> {
+                new SetSlots();
+                new WindowItem();
+                new WindowClick();
+                new WindowMerchant();
+            });
+        }
         new ItemManager();
         new ChangesManager();
         new MatchItemManager();

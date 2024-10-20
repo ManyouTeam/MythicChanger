@@ -4,6 +4,10 @@
 
 debug: false
 
+# If you just want to use our apply item system, or just use our match item feature without any need of change item,
+# you can disable this option to improve plugin performance and disable auto item change feature.
+packet-listener: true
+
 config-files:
   language: en_US
   # Premium version only.
@@ -15,14 +19,13 @@ config-files:
     file: 'zh_cn.json'
 
 # Paper only feature.
-use-component:
-  message: false
-  # Only for Item Format for now, does not support item modify in rule.
-  item: false
-
 paper-api:
   save-item: true
   skull: true
+  use-component:
+    message: false
+    # Only for Item Format for now, does not support item modify in rule.
+    item: false
 
 real-change-trigger:
   SetSlotTrigger:

@@ -60,7 +60,7 @@ public class DebuildItem {
 
         // Custom Name
         if (meta.hasDisplayName()) {
-            if (MythicChanger.isPaper && ConfigManager.configManager.getBoolean("use-component.item")) {
+            if (MythicChanger.isPaper && ConfigManager.configManager.getBoolean("paper-api.use-component.item")) {
                 section.set("name", meta.displayName());
             } else {
                 section.set("name", meta.getDisplayName());
@@ -76,7 +76,7 @@ public class DebuildItem {
 
         // Lore
         if (meta.hasLore()) {
-            if (MythicChanger.isPaper && ConfigManager.configManager.getBoolean("use-component.item")) {
+            if (MythicChanger.isPaper && ConfigManager.configManager.getBoolean("paper-api.use-component.item")) {
                 section.set("lore", meta.lore());
             } else {
                 section.set("lore", meta.getLore());

@@ -33,7 +33,10 @@ public class SubGiveSaveItem extends ObjectCommand {
             LanguageManager.languageManager.sendStringText(player, "error.save-item-not-found");
             return;
         }
-        Player target = Bukkit.getPlayer(args[args.length - 1]);
+        Player target = null;
+        if (args.length > 2) {
+            target = Bukkit.getPlayer(args[2]);
+        }
         if (target == null) {
             int amount = 1;
             if (args.length == 3) {
@@ -60,6 +63,10 @@ public class SubGiveSaveItem extends ObjectCommand {
         ItemStack item = ItemManager.itemManager.getItemByKey(args[1]);
         if (item == null) {
             LanguageManager.languageManager.sendStringText("error.save-item-not-found");
+            return;
+        }
+        if (args.length < 3) {
+            LanguageManager.languageManager.sendStringText("error.args");
             return;
         }
         Player target = Bukkit.getPlayer(args[2]);

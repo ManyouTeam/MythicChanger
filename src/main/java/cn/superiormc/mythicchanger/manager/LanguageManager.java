@@ -97,7 +97,7 @@ public class LanguageManager {
             }
         }
         if (text.length() != 0) {
-            if (MythicChanger.isPaper && ConfigManager.configManager.getBoolean("use-component.message")) {
+            if (MythicChanger.isPaper && ConfigManager.configManager.getBoolean("paper-api.use-component.message")) {
                 Bukkit.getConsoleSender().sendMessage(MiniMessage.miniMessage().deserialize(text));
             } else {
                 Bukkit.getConsoleSender().sendMessage(TextUtil.parse(text));
@@ -134,7 +134,7 @@ public class LanguageManager {
             }
         }
         if (text.length() != 0) {
-            if (MythicChanger.isPaper && ConfigManager.configManager.getBoolean("use-component.message")) {
+            if (MythicChanger.isPaper && ConfigManager.configManager.getBoolean("paper-api.use-component.message")) {
                 player.sendMessage(MiniMessage.miniMessage().deserialize(text));
             } else {
                 player.sendMessage(TextUtil.parse(text, player));
