@@ -89,6 +89,7 @@ change-rule-weight:
   set-lore: 6
   set-name: 7
   set-type: 60
+  deapply: 61
 
 # Premium version only.
 change-gui:
@@ -115,23 +116,3 @@ change-gui:
 # Support value: GUI, DRAG
 # GUI mode is in EARLY ALPHA TEST, be careful to use!
 apply-item-mode: DRAG
-
-# Premium version only.
-apply-items:
-  A:
-    material: PAPER
-    name: '&fItem Skin &8(Diamond Sword)'
-    lore:
-      - '&7Drag this item onto the item you want to apply.'
-    apply-rule: example
-    # After apply real change, the item can no longer be rollback.
-    apply-real-change: false
-    match-item:
-      items:
-        - 'diamond_sword'
-  B:
-    material: BOOK
-    name: '&fRollback book'
-    lore:
-      - '&7Drag this item onto the item you want to rollback its apply.'
-    apply-rule: deapply # This means deapply, not rule ID.

@@ -1,142 +1,65 @@
 package cn.superiormc.mythicchanger.objects;
 
-import cn.superiormc.mythicchanger.MythicChanger;
-import cn.superiormc.mythicchanger.manager.ConfigManager;
-import cn.superiormc.mythicchanger.manager.ErrorManager;
-import cn.superiormc.mythicchanger.utils.TextUtil;
-import org.bukkit.Bukkit;
+import cn.superiormc.mythicchanger.objects.conditions.ObjectSingleCondition;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.MemoryConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ObjectCondition {
 
-    private final List<String> condition;
+    private ConfigurationSection section;
+
+    private final List<ObjectSingleCondition> conditions = new ArrayList<>();
 
     public ObjectCondition() {
-        this.condition = new ArrayList<>();
-        condition.add("none");
+        this.section = new MemoryConfiguration();
     }
 
-    public ObjectCondition(List<String> condition) {
-        this.condition = condition;
+    public ObjectCondition(ConfigurationSection section) {
+        this.section = section;
+        initCondition();
     }
 
-    public boolean getBoolean(Player player) {
-        if (MythicChanger.freeVersion) {
-            return true;
+    private void initCondition() {
+        if (section == null) {
+            this.section = new MemoryConfiguration();
+            return;
         }
-        if (ConfigManager.configManager.getBoolean("debug")) {
-            Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fStarting check conditions...");
+        for (String key : section.getKeys(false)) {
+            ConfigurationSection singleActionSection = section.getConfigurationSection(key);
+            if (singleActionSection == null) {
+                continue;
+            }
+            ObjectSingleCondition singleAction = new ObjectSingleCondition(this, singleActionSection);
+            conditions.add(singleAction);
         }
+    }
+
+    public boolean getAllBoolean(Player player, ItemStack original, ItemStack item) {
         if (player == null) {
             return false;
         }
-        if (condition.isEmpty()) {
-            return true;
-        }
-        boolean conditionTrueOrFasle = true;
-        for (String singleCondition : condition){
-            if (singleCondition.equals("none")) {
-                return true;
-            } else if (singleCondition.startsWith("world: ")) {
-                int i = 0;
-                for (String str : singleCondition.substring(7).split(";;")){
-                    if (str.equals(player.getWorld().getName())){
-                        break;
-                    }
-                    i ++;
-                }
-                if (i == singleCondition.substring(7).split(";;").length){
-                    conditionTrueOrFasle = false;
-                    break;
-                }
-            } else if (singleCondition.startsWith("permission: ")) {
-                for (String str : singleCondition.substring(12).split(";;")) {
-                    if (!player.hasPermission(str)) {
-                        conditionTrueOrFasle = false;
-                        break;
-                    }
-                }
-            } else if (singleCondition.startsWith("window:")) {
-                if (player.getOpenInventory().getType().name().equals(singleCondition.substring(8))) {
-                    conditionTrueOrFasle = false;
-                    break;
-                }
-            } else if (singleCondition.startsWith("placeholder: ")) {
-                try {
-                    if (singleCondition.split(";;").length == 3) {
-                        String[] conditionString = singleCondition.substring(13).split(";;");
-                        String placeholder = TextUtil.withPAPI(conditionString[0], player);
-                        String conditionValue = conditionString[1];
-                        String value = conditionString[2];
-                        if (conditionValue.equals("==")) {
-                            if (!placeholder.equals(value)) {
-                                conditionTrueOrFasle = false;
-                                break;
-                            }
-                        }
-                        if (conditionValue.equals("!=")) {
-                            if (placeholder.equals(value)) {
-                                conditionTrueOrFasle = false;
-                                break;
-                            }
-                        }
-                        if (conditionValue.equals("*=")) {
-                            if (!placeholder.contains(value)) {
-                                conditionTrueOrFasle = false;
-                                break;
-                            }
-                        }
-                        if (conditionValue.equals("!*=")) {
-                            if (placeholder.contains(value)) {
-                                conditionTrueOrFasle = false;
-                                break;
-                            }
-                        }
-                        if (conditionValue.equals(">=")) {
-                            if (!(Double.parseDouble(placeholder) >= Double.parseDouble(value))) {
-                                conditionTrueOrFasle = false;
-                                break;
-                            }
-                        }
-                        if (conditionValue.equals(">")) {
-                            if (!(Double.parseDouble(placeholder) > Double.parseDouble(value))) {
-                                conditionTrueOrFasle = false;
-                                break;
-                            }
-                        }
-                        if (conditionValue.equals("<=")) {
-                            if (!(Double.parseDouble(placeholder) <= Double.parseDouble(value))) {
-                                conditionTrueOrFasle = false;
-                                break;
-                            }
-                        }
-                        if (conditionValue.equals("<")) {
-                            if (!(Double.parseDouble(placeholder) < Double.parseDouble(value))) {
-                                conditionTrueOrFasle = false;
-                                break;
-                            }
-                        }
-                        if (conditionValue.equals("=")) {
-                            if (!(Double.parseDouble(placeholder) == Double.parseDouble(value))) {
-                                conditionTrueOrFasle = false;
-                                break;
-                            }
-                        }
-                    }
-                    else {
-                        ErrorManager.errorManager.sendErrorMessage("§x§9§8§F§B§9§8[MythicChanger] §cError: Your placeholder condition in totem configs can not being correctly load.");
-                        return false;
-                    }
-                }
-                catch (ArrayIndexOutOfBoundsException e) {
-                    ErrorManager.errorManager.sendErrorMessage("§x§9§8§F§B§9§8[MythicChanger] §cError: Your placeholder condition in totem configs can not being correctly load.");
-                    return false;
-                }
+        for (ObjectSingleCondition singleCondition : conditions){
+            if (!singleCondition.checkBoolean(player, original, item)) {
+                return false;
             }
         }
-        return conditionTrueOrFasle;
+        return true;
+    }
+
+    public boolean getAnyBoolean(Player player, ItemStack original, ItemStack item) {
+        if (player == null) {
+            return false;
+        }
+        for (ObjectSingleCondition singleCondition : conditions){
+            if (singleCondition.checkBoolean(player, original, item)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

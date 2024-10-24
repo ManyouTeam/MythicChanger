@@ -1,6 +1,5 @@
 package cn.superiormc.mythicchanger.objects.matchitem;
 
-import cn.superiormc.mythicchanger.utils.CommonUtil;
 import de.tr7zw.nbtapi.NBTCompound;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.configuration.ConfigurationSection;

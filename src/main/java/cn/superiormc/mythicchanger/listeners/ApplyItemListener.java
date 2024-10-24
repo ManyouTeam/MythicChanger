@@ -61,12 +61,19 @@ public class ApplyItemListener implements Listener {
                 ObjectSingleRule rule = applyItem.getRule();
                 ItemMeta tempVal3 = targetItem.getItemMeta();
                 if (rule != null) {
-                    if (!rule.getCondition().getBoolean(player)) {
+                    if (!rule.getCondition().getAllBoolean(player, targetItem, targetItem)) {
                         LanguageManager.languageManager.sendStringText(player, "not-meet-condition");
                     } else if (!tempVal3.getPersistentDataContainer().has(
                             ObjectApplyItem.MYTHICCHANGER_APPLY_RULE, PersistentDataType.STRING)) {
                         tempVal3.getPersistentDataContainer().set(ObjectApplyItem.MYTHICCHANGER_APPLY_RULE, PersistentDataType.STRING, rule.getId());
                         targetItem.setItemMeta(tempVal3);
+                        if (applyItem.getApplyRealChange()) {
+                            ItemStack newItem = rule.setRealChange(targetItem.clone(), targetItem, player);
+                            targetItem.setAmount(0);
+                            event.setCurrentItem(newItem);
+                            event.setCancelled(true);
+                            player.updateInventory();
+                        }
                         LanguageManager.languageManager.sendStringText(player, "apply-item-success");
                         extraItem.setAmount(extraItem.getAmount() - 1);
                     } else {

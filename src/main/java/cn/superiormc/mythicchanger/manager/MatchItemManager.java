@@ -43,6 +43,8 @@ public class MatchItemManager {
             registerNewRule(new ContainsEnchants());
             registerNewRule(new ItemFormat());
             registerNewRule(new Any());
+            registerNewRule(new HasApply());
+            registerNewRule(new ContainsApply());
         }
     }
 

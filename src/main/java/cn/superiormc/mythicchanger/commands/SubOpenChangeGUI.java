@@ -2,11 +2,11 @@ package cn.superiormc.mythicchanger.commands;
 
 import cn.superiormc.mythicchanger.gui.ChangeGUI;
 import cn.superiormc.mythicchanger.manager.LanguageManager;
-import cn.superiormc.mythicchanger.objects.ObjectCommand;
+import cn.superiormc.mythicchanger.objects.AbstractCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-public class SubOpenChangeGUI extends ObjectCommand {
+public class SubOpenChangeGUI extends AbstractCommand {
 
 
     public SubOpenChangeGUI() {

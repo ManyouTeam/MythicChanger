@@ -2,7 +2,7 @@ package cn.superiormc.mythicchanger.commands;
 
 import cn.superiormc.mythicchanger.manager.CommandManager;
 import cn.superiormc.mythicchanger.manager.LanguageManager;
-import cn.superiormc.mythicchanger.objects.ObjectCommand;
+import cn.superiormc.mythicchanger.objects.AbstractCommand;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -13,7 +13,7 @@ public class MainCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length > 0 &&
                 CommandManager.commandManager.getSubCommandsMap().get(args[0]) != null) {
-            ObjectCommand object = CommandManager.commandManager.getSubCommandsMap().get(args[0]);
+            AbstractCommand object = CommandManager.commandManager.getSubCommandsMap().get(args[0]);
             if (object.getOnlyInGame() && !(sender instanceof Player)) {
                 LanguageManager.languageManager.sendStringText("error.in-game");
                 return true;

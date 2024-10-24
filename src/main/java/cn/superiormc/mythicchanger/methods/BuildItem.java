@@ -1,9 +1,9 @@
 package cn.superiormc.mythicchanger.methods;
 
 import cn.superiormc.mythicchanger.MythicChanger;
-import cn.superiormc.mythicchanger.hooks.ItemsHook;
 import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.manager.ErrorManager;
+import cn.superiormc.mythicchanger.manager.HookManager;
 import cn.superiormc.mythicchanger.manager.ItemManager;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
 import cn.superiormc.mythicchanger.utils.TextUtil;
@@ -26,6 +26,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Axolotl;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.entity.TropicalFish;
 import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.*;
@@ -45,13 +46,15 @@ import java.lang.reflect.Method;
 import java.util.*;
 
 public class BuildItem {
-    public static ItemStack buildItemStack(ConfigurationSection section,
+    public static ItemStack buildItemStack(Player player,
+                                           ConfigurationSection section,
                                            String... args) {
         ItemStack item = new ItemStack(Material.BARRIER);
-        return editItemStack(item, section, args);
+        return editItemStack(player, item, section, args);
     }
 
-    public static ItemStack editItemStack(ItemStack item,
+    public static ItemStack editItemStack(Player player,
+                                          ItemStack item,
                                           ConfigurationSection section,
                                           String... args) {
 
@@ -76,7 +79,7 @@ public class BuildItem {
                 } else if (pluginName.equals("EcoArmor") && !itemID.contains(";;")) {
                     itemID = itemID + ";;" + section.getString("hook-item-type");
                 }
-                ItemStack hookItem = ItemsHook.getHookItem(pluginName, itemID);
+                ItemStack hookItem = HookManager.hookManager.getHookItem(player, pluginName, itemID);
                 if (hookItem != null) {
                     item = hookItem;
                 }
@@ -97,7 +100,7 @@ public class BuildItem {
         // Custom Name
         String displayNameKey = section.getString("name", section.getString("display"));
         if (displayNameKey != null) {
-            meta.setDisplayName(TextUtil.parse(CommonUtil.modifyString(displayNameKey, args)));
+            meta.setDisplayName(TextUtil.parse(CommonUtil.modifyString(displayNameKey, args), player));
         }
 
         // Item Name
@@ -107,7 +110,7 @@ public class BuildItem {
                 if (itemNameKey.isEmpty()) {
                     meta.setItemName(" ");
                 } else {
-                    meta.setItemName(TextUtil.parse(CommonUtil.modifyString(itemNameKey, args)));
+                    meta.setItemName(TextUtil.parse(CommonUtil.modifyString(itemNameKey, args), player));
                 }
             }
         }
@@ -123,7 +126,7 @@ public class BuildItem {
                         newLore.add(" ");
                         continue;
                     }
-                    newLore.add(TextUtil.parse(singleLore));
+                    newLore.add(TextUtil.parse(singleLore, player));
                 }
             }
             if (!newLore.isEmpty()) {
@@ -168,7 +171,7 @@ public class BuildItem {
                 }
                 ConfigurationSection convertItem = section.getConfigurationSection("convert");
                 if (CommonUtil.getMajorVersion(21) && convertItem != null) {
-                    foodComponent.setUsingConvertsTo(buildItemStack(convertItem, args));
+                    foodComponent.setUsingConvertsTo(buildItemStack(player, convertItem, args));
                 }
                 for (String effects : foodKey.getStringList("effects")) {
                     String[] effectParseResult = effects.replace(" ", "").split(",");
@@ -685,7 +688,7 @@ public class BuildItem {
                     for (String key : bundleContentKey.getKeys(false)) {
                         ConfigurationSection contentItemSection = bundleContentKey.getConfigurationSection(key);
                         if (contentItemSection != null) {
-                            bundleMeta.addItem(buildItemStack(contentItemSection,
+                            bundleMeta.addItem(buildItemStack(player, contentItemSection,
                                     args));
                         }
                     }
@@ -742,7 +745,7 @@ public class BuildItem {
                     for (String key : shulkerContentKey.getKeys(false)) {
                         ConfigurationSection contentItemSection = shulkerContentKey.getConfigurationSection(key);
                         if (contentItemSection != null) {
-                            box.getInventory().setItem(Integer.parseInt(key), buildItemStack(contentItemSection,
+                            box.getInventory().setItem(Integer.parseInt(key), buildItemStack(player, contentItemSection,
                                     args));
                         }
                     }
@@ -753,7 +756,7 @@ public class BuildItem {
                 BrushableBlock brushableBlock = (BrushableBlock) state;
                 ConfigurationSection brushableContentKey = section.getConfigurationSection("content");
                 if (brushableContentKey != null) {
-                    brushableBlock.setItem(buildItemStack(brushableContentKey, args));
+                    brushableBlock.setItem(buildItemStack(player, brushableContentKey, args));
                 }
                 blockStateMeta.setBlockState(brushableBlock);
             }

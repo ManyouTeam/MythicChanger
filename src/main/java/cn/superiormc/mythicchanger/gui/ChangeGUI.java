@@ -33,12 +33,12 @@ public class ChangeGUI extends InvGUI {
             inv = Bukkit.createInventory(player, ConfigManager.configManager.getInt("change-gui.size", 54),
                     TextUtil.parse(ConfigManager.configManager.getString("change-gui.title"), player));
         }
-        inv.setItem(ConfigManager.configManager.getInt("change-gui.confirm-slot", 2), BuildItem.buildItemStack(
+        inv.setItem(ConfigManager.configManager.getInt("change-gui.confirm-slot", 2), BuildItem.buildItemStack(player,
                 ConfigManager.configManager.getSection("change-gui.confirm-item")));
         ConfigurationSection customItemSection = ConfigManager.configManager.getSection("change-gui.custom-item");
         if (customItemSection != null) {
             for (String key : customItemSection.getKeys(false)){
-                inv.setItem(Integer.parseInt(key), BuildItem.buildItemStack(customItemSection.getConfigurationSection(key)));
+                inv.setItem(Integer.parseInt(key), BuildItem.buildItemStack(player, customItemSection.getConfigurationSection(key)));
             }
         }
     }
@@ -92,7 +92,7 @@ public class ChangeGUI extends InvGUI {
         ObjectSingleRule rule = applyItem.getRule();
         ItemMeta tempVal3 = requireItem.getItemMeta();
         if (rule != null) {
-            if (!rule.getCondition().getBoolean(player)) {
+            if (!rule.getCondition().getAllBoolean(player, item, item)) {
                 success = false;
                 if (ConfigManager.configManager.getBoolean("change-gui.close-if-fail")) {
                     player.closeInventory();
@@ -102,6 +102,12 @@ public class ChangeGUI extends InvGUI {
                     ObjectApplyItem.MYTHICCHANGER_APPLY_RULE, PersistentDataType.STRING)) {
                 tempVal3.getPersistentDataContainer().set(ObjectApplyItem.MYTHICCHANGER_APPLY_RULE, PersistentDataType.STRING, rule.getId());
                 requireItem.setItemMeta(tempVal3);
+                if (applyItem.getApplyRealChange()) {
+                    ItemStack changeItem = rule.setRealChange(requireItem.clone(), requireItem, player);
+                    requireItem.setAmount(0);
+                    inv.setItem(ConfigManager.configManager.getInt("change-gui.item-slot", 0),
+                            changeItem);
+                }
                 LanguageManager.languageManager.sendStringText(player, "apply-item-success");
                 targetItem.setAmount(targetItem.getAmount() - 1);
             } else {

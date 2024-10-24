@@ -1,16 +1,15 @@
 package cn.superiormc.mythicchanger.methods;
 
 import cn.superiormc.mythicchanger.MythicChanger;
-import cn.superiormc.mythicchanger.hooks.CheckValidHook;
 import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.manager.ErrorManager;
+import cn.superiormc.mythicchanger.manager.HookManager;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
 import com.google.common.collect.Multimap;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
-import org.bukkit.JukeboxSong;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
@@ -42,9 +41,9 @@ public class DebuildItem {
 
     public static ConfigurationSection debuildItem(ItemStack itemStack, ConfigurationSection section) {
 
-        if (CheckValidHook.checkValid(itemStack) != null) {
-            section.set("hook-plugin", CheckValidHook.checkValid(itemStack)[0]);
-            section.set("hook-item", CheckValidHook.checkValid(itemStack)[1]);
+        if (HookManager.hookManager.getHookItemPluginAndID(itemStack) != null) {
+            section.set("hook-plugin", HookManager.hookManager.getHookItemPluginAndID(itemStack)[0]);
+            section.set("hook-item", HookManager.hookManager.getHookItemPluginAndID(itemStack)[1]);
         } else {
             // Material
             section.set("material", itemStack.getType().name());

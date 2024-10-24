@@ -21,7 +21,7 @@ public class ReplaceItem extends AbstractChangesRule {
                                boolean fakeOrReal,
                                boolean isPlayerInventory) {
         ConfigurationSection itemSection = section.getConfigurationSection("replace-item");
-        ItemStack result = BuildItem.buildItemStack(itemSection);
+        ItemStack result = BuildItem.buildItemStack(player, itemSection);
         if (result.getType() == Material.BARRIER) {
             return item;
         }

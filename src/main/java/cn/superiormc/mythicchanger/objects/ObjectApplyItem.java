@@ -7,6 +7,7 @@ import cn.superiormc.mythicchanger.manager.MatchItemManager;
 import cn.superiormc.mythicchanger.methods.BuildItem;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -16,8 +17,6 @@ public class ObjectApplyItem {
     public static final NamespacedKey MYTHICCHANGER_APPLY_ITEM = new NamespacedKey(MythicChanger.instance, "apply_item_id");
 
     public static final NamespacedKey MYTHICCHANGER_APPLY_RULE = new NamespacedKey(MythicChanger.instance, "rule_id");
-
-    private final ItemStack applyItem;
 
     private final String id;
 
@@ -30,14 +29,6 @@ public class ObjectApplyItem {
     public ObjectApplyItem(String id, ConfigurationSection section) {
         this.id = id;
         this.section = section;
-        this.applyItem = BuildItem.buildItemStack(section);
-        ItemMeta meta = applyItem.getItemMeta();
-        if (meta != null) {
-            meta.getPersistentDataContainer().set(MYTHICCHANGER_APPLY_ITEM, PersistentDataType.STRING, id);
-            applyItem.setItemMeta(meta);
-        } else {
-            ErrorManager.errorManager.sendErrorMessage("§x§9§8§F§B§9§8[MythicChanger] §cFailed to generate apply item ID: " + id);
-        }
         String tempVal2 = section.getString("apply-rule");
         if (tempVal2 != null) {
             if (tempVal2.equals("deapply")) {
@@ -66,7 +57,15 @@ public class ObjectApplyItem {
         return section.getBoolean("apply-real-change", false);
     }
 
-    public ItemStack getApplyItem() {
+    public ItemStack getApplyItem(Player player) {
+        ItemStack applyItem = BuildItem.buildItemStack(player, section);
+        ItemMeta meta = applyItem.getItemMeta();
+        if (meta != null) {
+            meta.getPersistentDataContainer().set(MYTHICCHANGER_APPLY_ITEM, PersistentDataType.STRING, id);
+            applyItem.setItemMeta(meta);
+        } else {
+            ErrorManager.errorManager.sendErrorMessage("§x§9§8§F§B§9§8[MythicChanger] §cFailed to generate apply item ID: " + id);
+        }
         return applyItem;
     }
 

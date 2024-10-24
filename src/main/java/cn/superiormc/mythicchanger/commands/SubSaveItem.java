@@ -1,10 +1,10 @@
 package cn.superiormc.mythicchanger.commands;
 
 import cn.superiormc.mythicchanger.manager.*;
-import cn.superiormc.mythicchanger.objects.ObjectCommand;
+import cn.superiormc.mythicchanger.objects.AbstractCommand;
 import org.bukkit.entity.Player;
 
-public class SubSaveItem extends ObjectCommand {
+public class SubSaveItem extends AbstractCommand {
 
 
     public SubSaveItem() {

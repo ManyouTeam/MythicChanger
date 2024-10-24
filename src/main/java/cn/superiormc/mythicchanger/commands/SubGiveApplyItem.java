@@ -3,7 +3,7 @@ package cn.superiormc.mythicchanger.commands;
 import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.manager.LanguageManager;
 import cn.superiormc.mythicchanger.objects.ObjectApplyItem;
-import cn.superiormc.mythicchanger.objects.ObjectCommand;
+import cn.superiormc.mythicchanger.objects.AbstractCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SubGiveApplyItem extends ObjectCommand {
+public class SubGiveApplyItem extends AbstractCommand {
 
 
     public SubGiveApplyItem() {
@@ -45,7 +45,7 @@ public class SubGiveApplyItem extends ObjectCommand {
         if (args.length == 4) {
             amount = Integer.parseInt(args[3]);
         }
-        ItemStack item = applyItem.getApplyItem();
+        ItemStack item = applyItem.getApplyItem(player);
         if (item != null) {
             item.setAmount(amount);
             givePlayer.getInventory().addItem(item);
@@ -74,7 +74,7 @@ public class SubGiveApplyItem extends ObjectCommand {
         if (args.length == 4) {
             amount = Integer.parseInt(args[3]);
         }
-        ItemStack item = applyItem.getApplyItem();
+        ItemStack item = applyItem.getApplyItem(givePlayer);
         if (item != null) {
             item.setAmount(amount);
             givePlayer.getInventory().addItem(item);

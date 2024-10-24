@@ -1,7 +1,7 @@
 package cn.superiormc.mythicchanger.manager;
 
 import cn.superiormc.mythicchanger.MythicChanger;
-import cn.superiormc.mythicchanger.hooks.MMOItemsReloadListener;
+import cn.superiormc.mythicchanger.listeners.MMOItemsReloadListener;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
 import org.bukkit.Bukkit;
 

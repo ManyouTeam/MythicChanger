@@ -3,7 +3,7 @@ package cn.superiormc.mythicchanger.commands;
 import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.manager.LanguageManager;
 import cn.superiormc.mythicchanger.methods.DebuildItem;
-import cn.superiormc.mythicchanger.objects.ObjectCommand;
+import cn.superiormc.mythicchanger.objects.AbstractCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -14,7 +14,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class SubGenerateItemFormat extends ObjectCommand {
+public class SubGenerateItemFormat extends AbstractCommand {
 
     public SubGenerateItemFormat() {
         this.id = "generateitemformat";

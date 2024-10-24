@@ -1,16 +1,15 @@
 package cn.superiormc.mythicchanger.commands;
 
 import cn.superiormc.mythicchanger.manager.LanguageManager;
-import cn.superiormc.mythicchanger.objects.ObjectCommand;
+import cn.superiormc.mythicchanger.objects.AbstractCommand;
 import de.tr7zw.nbtapi.*;
 import de.tr7zw.nbtapi.iface.ReadWriteNBT;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Set;
 
-public class SubViewNBT extends ObjectCommand {
+public class SubViewNBT extends AbstractCommand {
 
 
     public SubViewNBT() {

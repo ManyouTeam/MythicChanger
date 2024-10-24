@@ -22,6 +22,8 @@ public class InitManager {
     public void init() {
         resourceOutput("languages/en_US.yml", true);
         resourceOutput("rules/example.yml", false);
+        resourceOutput("apply_items/A.yml", false);
+        resourceOutput("apply_items/B.yml", false);
     }
 
     public boolean isFirstLoad() {

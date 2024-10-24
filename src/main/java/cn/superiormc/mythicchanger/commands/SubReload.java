@@ -2,10 +2,10 @@ package cn.superiormc.mythicchanger.commands;
 
 import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.manager.*;
-import cn.superiormc.mythicchanger.objects.ObjectCommand;
+import cn.superiormc.mythicchanger.objects.AbstractCommand;
 import org.bukkit.entity.Player;
 
-public class SubReload extends ObjectCommand {
+public class SubReload extends AbstractCommand {
 
 
     public SubReload() {

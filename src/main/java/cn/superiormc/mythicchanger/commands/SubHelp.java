@@ -1,10 +1,10 @@
 package cn.superiormc.mythicchanger.commands;
 
 import cn.superiormc.mythicchanger.manager.LanguageManager;
-import cn.superiormc.mythicchanger.objects.ObjectCommand;
+import cn.superiormc.mythicchanger.objects.AbstractCommand;
 import org.bukkit.entity.Player;
 
-public class SubHelp extends ObjectCommand {
+public class SubHelp extends AbstractCommand {
 
     public SubHelp() {
         this.id = "help";

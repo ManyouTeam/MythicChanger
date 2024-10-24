@@ -22,7 +22,9 @@ public class EditItem extends AbstractChangesRule {
                                Player player,
                                boolean fakeOrReal,
                                boolean isPlayerInventory) {
-        return BuildItem.editItemStack(item, Objects.requireNonNull(section.getConfigurationSection("edit-item")), "name", ItemUtil.getItemName(item));
+        return BuildItem.editItemStack(player,
+                item,
+                Objects.requireNonNull(section.getConfigurationSection("edit-item")), "name", ItemUtil.getItemName(item));
     }
 
     @Override

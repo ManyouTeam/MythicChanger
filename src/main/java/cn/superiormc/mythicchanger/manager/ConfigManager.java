@@ -76,16 +76,34 @@ public class ConfigManager {
     }
 
     private void initApplyItemConfigs() {
-        MythicChanger.instance.saveDefaultConfig();
-        ConfigurationSection tempVal1 = MythicChanger.instance.getConfig().getConfigurationSection(
-                "apply-items");
-        if (tempVal1 == null) {
+        File dir = new File(MythicChanger.instance.getDataFolder(), "apply_items");
+        if (!dir.exists()) {
+            dir.mkdir();
+        }
+        loadApplyItem(dir);
+    }
+
+    private void loadApplyItem(File folder) {
+        File[] files = folder.listFiles();
+        if (files == null) {
             return;
         }
-        itemMap = new HashMap<>();
-        for (String key : tempVal1.getKeys(false)) {
-            Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fLoaded apply item: " + key + "!");
-            itemMap.put(key, new ObjectApplyItem(key, tempVal1.getConfigurationSection(key)));
+        for (File file : files) {
+            if (file.isDirectory()) {
+                loadRules(file); // 递归调用以加载子文件夹内的文件
+            } else {
+                String fileName = file.getName();
+                if (fileName.endsWith(".yml")) {
+                    String substring = fileName.substring(0, fileName.length() - 4);
+                    if (ruleMap.containsKey(substring)) {
+                        ErrorManager.errorManager.sendErrorMessage("§x§9§8§F§B§9§8[MythicChanger] §cError: Already loaded a apply item config called: " +
+                                fileName + "!");
+                        continue;
+                    }
+                    itemMap.put(substring, new ObjectApplyItem(substring, YamlConfiguration.loadConfiguration(file)));
+                    Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fLoaded apply item: " + substring + "!");
+                }
+            }
         }
     }
 

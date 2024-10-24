@@ -1,6 +1,5 @@
 package cn.superiormc.mythicchanger.objects;
 
-import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.manager.ChangesManager;
 import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.manager.MatchItemManager;
@@ -24,20 +23,19 @@ public class ObjectSingleRule implements Comparable<ObjectSingleRule> {
     public ObjectSingleRule(String id, YamlConfiguration config) {
         this.id = id;
         this.config = config;
-        this.action = new ObjectAction(config.getStringList("real-change-actions"));
-        this.condition = new ObjectCondition(config.getStringList("conditions"));
+        this.action = new ObjectAction(config.getConfigurationSection("real-change-actions"));
+        this.condition = new ObjectCondition(config.getConfigurationSection("conditions"));
     }
 
     public boolean getMatchItem(ItemStack item, boolean fakeOrReal, Player player) {
-        if (!condition.getBoolean(player)) {
+        if (!condition.getAllBoolean(player, item, item)) {
             return false;
         }
-        if (item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer().has(ObjectApplyItem.MYTHICCHANGER_APPLY_RULE,
+        if (fakeOrReal && item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer().has(ObjectApplyItem.MYTHICCHANGER_APPLY_RULE,
                 PersistentDataType.STRING)) {
             String id = item.getItemMeta().getPersistentDataContainer().get(ObjectApplyItem.MYTHICCHANGER_APPLY_RULE, PersistentDataType.STRING);
             if (id != null && id.equals(this.id)) {
-                ObjectApplyItem applyItem = ConfigManager.configManager.getApplyItem(id);
-                return fakeOrReal || (applyItem != null && applyItem.getApplyRealChange());
+                return true;
             }
         }
         ConfigurationSection section = config.getConfigurationSection("match-item");

@@ -2,7 +2,7 @@ package cn.superiormc.mythicchanger.manager;
 
 import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.commands.*;
-import cn.superiormc.mythicchanger.objects.ObjectCommand;
+import cn.superiormc.mythicchanger.objects.AbstractCommand;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
 import org.bukkit.Bukkit;
 
@@ -14,7 +14,7 @@ public class CommandManager {
 
     public static CommandManager commandManager;
 
-    private Map<String, ObjectCommand> registeredCommands = new HashMap<>();
+    private Map<String, AbstractCommand> registeredCommands = new HashMap<>();
 
     public CommandManager(){
         commandManager = this;
@@ -44,7 +44,7 @@ public class CommandManager {
         registeredCommands.put("generateitemformat", new SubGenerateItemFormat());
     }
 
-    public Map<String, ObjectCommand> getSubCommandsMap() {
+    public Map<String, AbstractCommand> getSubCommandsMap() {
         return registeredCommands;
     }
 }

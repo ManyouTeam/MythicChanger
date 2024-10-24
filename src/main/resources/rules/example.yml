@@ -37,7 +37,11 @@ real-changes:
   #set-name: '&fGood Diamond Sword'
 
 real-change-actions:
-  - 'message: &#98FB98[MythicChanger] &fChanged item!'
+  1:
+    type: message
+    message: '&#98FB98[MythicChanger] &fChanged item!'
 
 conditions:
-  - 'permission: mythicchanger.admin'
+  1:
+    type: permission
+    permission: 'mythicchanger.admin'

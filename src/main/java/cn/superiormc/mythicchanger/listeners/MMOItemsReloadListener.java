@@ -1,6 +1,6 @@
-package cn.superiormc.mythicchanger.hooks;
+package cn.superiormc.mythicchanger.listeners;
 
-import org.bukkit.Bukkit;
+import cn.superiormc.mythicchanger.hooks.MMOItemsHook;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;

@@ -1,0 +1,6 @@
+material: BOOK
+name: '&fRollback book'
+lore:
+  - '&7Drag this item onto the item you want to rollback its apply.'
+apply-rule: deapply # This means deapply, not rule ID.
+apply-real-change: true

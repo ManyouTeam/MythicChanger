@@ -1,15 +1,9 @@
 package cn.superiormc.mythicchanger;
 
-import cn.superiormc.mythicchanger.hooks.MMOItemsHook;
 import cn.superiormc.mythicchanger.listeners.ApplyItemListener;
-import cn.superiormc.mythicchanger.listeners.QuickShopListener;
 import cn.superiormc.mythicchanger.manager.*;
 import cn.superiormc.mythicchanger.protolcol.ProtocolLib.*;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
-import com.loohp.interactivechat.api.InteractiveChatAPI;
-import com.loohp.interactivechat.objectholders.ICPlayer;
-import com.loohp.interactivechat.objectholders.ICPlayerFactory;
-import me.arasple.mc.trchat.module.internal.hook.HookPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -39,7 +33,10 @@ public final class MythicChanger extends JavaPlugin {
         }
         new ErrorManager();
         new InitManager();
+        new ActionManager();
+        new ConditionManager();
         new ConfigManager();
+        new HookManager();
         new LanguageManager();
         if (CommonUtil.getClass("com.destroystokyo.paper.PaperConfig")) {
             Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fPaper is found, enabled Paper only feature!");
@@ -62,32 +59,6 @@ public final class MythicChanger extends JavaPlugin {
         }
         if (!MythicChanger.freeVersion && ConfigManager.configManager.getString("apply-item-mode", "DRAG").equalsIgnoreCase("DRAG")) {
             Bukkit.getPluginManager().registerEvents(new ApplyItemListener(), this);
-        }
-        if (CommonUtil.checkPluginLoad("InteractiveChat")) {
-            Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fHooking into InteractiveChat...");
-            InteractiveChatAPI.registerItemStackTransformProvider(MythicChanger.instance, 10, (itemStack, uuid) -> {
-                ICPlayer icPlayer = ICPlayerFactory.getICPlayer(uuid);
-                return ConfigManager.configManager.startFakeChange(itemStack, icPlayer.getLocalPlayer(), true);
-            });
-        }
-        if (CommonUtil.checkPluginLoad("TrChat")) {
-            Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fHooking into TrChat...");
-            HookPlugin.INSTANCE.registerDisplayItemHook("EnchantmentSlots", (itemStack, player) -> ConfigManager.configManager.startFakeChange(itemStack, player, true));
-        }
-        if (CommonUtil.checkPluginLoad("QuickShop-Hikari")) {
-            Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fHooking into QuickShop-Hikari...");
-            Bukkit.getPluginManager().registerEvents(new QuickShopListener(), MythicChanger.instance);
-        }
-        if (CommonUtil.checkPluginLoad("MMOItems")) {
-            try {
-                Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fRegistering special item register manager" +
-                        " for MMOItems because it does not support async...");
-                MMOItemsHook.generateNewCache();
-                new ListenerManager();
-            } catch (Throwable throwable) {
-                ErrorManager.errorManager.sendErrorMessage("§x§9§8§F§B§9§8[MythicChanger] §cError: Failed to register MMOItems hook, consider update " +
-                        "your MMOItems to latest dev version!");
-            }
         }
         if (!CommonUtil.checkClass("com.mojang.authlib.properties.Property", "getValue") && CommonUtil.getMinorVersion(21, 1)) {
             newSkullMethod = true;

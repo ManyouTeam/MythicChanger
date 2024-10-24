@@ -8,7 +8,6 @@ import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.reflect.StructureModifier;
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.inventory.ItemStack;
 

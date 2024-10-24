@@ -66,6 +66,7 @@ public class ChangesManager {
             registerNewRule(new EditLore());
             registerNewRule(new ReplaceRandomItem());
             registerNewRule(new ReplaceName());
+            registerNewRule(new Deapply());
         }
     }
 
@@ -103,7 +104,7 @@ public class ChangesManager {
             }
         }
         if (!MythicChanger.freeVersion && !action.isEmpty()) {
-            action.doAction(player, original, item);
+            action.runAllActions(player, original, item);
         }
         if (needReturnNewItem) {
             return item;

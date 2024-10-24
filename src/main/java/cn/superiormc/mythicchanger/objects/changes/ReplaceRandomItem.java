@@ -25,7 +25,7 @@ public class ReplaceRandomItem extends AbstractChangesRule {
         ConfigurationSection itemSection = section.getConfigurationSection("replace-random-item");
         Map<ItemStack, Double> items = new HashMap<>();
         for (String itemKey : itemSection.getKeys(false)) {
-            ItemStack result = BuildItem.buildItemStack(itemSection.getConfigurationSection(itemKey));
+            ItemStack result = BuildItem.buildItemStack(player, itemSection.getConfigurationSection(itemKey));
             if (result.getType() == Material.BARRIER) {
                 continue;
             }
