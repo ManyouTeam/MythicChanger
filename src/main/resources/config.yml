@@ -89,6 +89,7 @@ change-rule-weight:
   set-lore: 6
   set-name: 7
   set-type: 60
+  set-amount: 59
   deapply: 61
 
 # Premium version only.
