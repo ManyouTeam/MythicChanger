@@ -56,7 +56,7 @@ public class ChangeGUI extends InvGUI {
             if (item == null || item.getType().isAir()) {
                 return true;
             }
-            return ConfigManager.configManager.getApplyItemID(item) == null;
+            return ConfigManager.configManager.getApplyItemID(item.getItemMeta()) == null;
         }
         return true;
     }
@@ -77,7 +77,7 @@ public class ChangeGUI extends InvGUI {
             success = false;
             return;
         }
-        ObjectApplyItem applyItem = ConfigManager.configManager.getApplyItemID(targetItem);
+        ObjectApplyItem applyItem = ConfigManager.configManager.getApplyItemID(targetItem.getItemMeta());
         if (applyItem == null) {
             success = false;
             return;
@@ -98,24 +98,27 @@ public class ChangeGUI extends InvGUI {
                     player.closeInventory();
                 }
                 LanguageManager.languageManager.sendStringText(player, "not-meet-condition");
-            } else if (!tempVal3.getPersistentDataContainer().has(
-                    ObjectApplyItem.MYTHICCHANGER_APPLY_RULE, PersistentDataType.STRING)) {
-                tempVal3.getPersistentDataContainer().set(ObjectApplyItem.MYTHICCHANGER_APPLY_RULE, PersistentDataType.STRING, rule.getId());
-                requireItem.setItemMeta(tempVal3);
-                if (applyItem.getApplyRealChange()) {
-                    ItemStack changeItem = rule.setRealChange(requireItem.clone(), requireItem, player);
-                    requireItem.setAmount(0);
-                    inv.setItem(ConfigManager.configManager.getInt("change-gui.item-slot", 0),
-                            changeItem);
-                }
-                LanguageManager.languageManager.sendStringText(player, "apply-item-success");
-                targetItem.setAmount(targetItem.getAmount() - 1);
-            } else {
+            } else if (ObjectApplyItem.getRule(tempVal3).size() >= ObjectApplyItem.getLimit(tempVal3)) {
                 success = false;
                 if (ConfigManager.configManager.getBoolean("change-gui.close-if-fail")) {
                     player.closeInventory();
                 }
-                LanguageManager.languageManager.sendStringText(player, "already-has-rule");
+                LanguageManager.languageManager.sendStringText(player, "rule-limit-reached");
+            } else {
+                if (applyItem.getChance()) {
+                    applyItem.doSuccessAction(player, requireItem);
+                    requireItem = applyItem.addRuleID(requireItem, tempVal3);
+                    if (applyItem.getApplyRealChange()) {
+                        ItemStack changeItem = rule.setRealChange(requireItem.clone(), requireItem, player);
+                        requireItem.setAmount(0);
+                        inv.setItem(ConfigManager.configManager.getInt("change-gui.item-slot", 0),
+                                changeItem);
+                    }
+                    LanguageManager.languageManager.sendStringText(player, "apply-item-success");
+                } else {
+                    applyItem.doFailAction(player, requireItem);
+                }
+                targetItem.setAmount(targetItem.getAmount() - 1);
             }
         } else if (applyItem.getDeapply()) {
             if (tempVal3.getPersistentDataContainer().has(

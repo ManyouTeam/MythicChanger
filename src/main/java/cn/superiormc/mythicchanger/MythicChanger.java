@@ -7,13 +7,13 @@ import cn.superiormc.mythicchanger.utils.CommonUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public final class MythicChanger extends JavaPlugin {
+public class MythicChanger extends JavaPlugin {
 
     public static MythicChanger instance;
 
     public static boolean isPaper = false;
 
-    public static final boolean freeVersion = true;
+    public static final boolean freeVersion = false;
 
     public static int majorVersion;
 

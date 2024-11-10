@@ -1,6 +1,7 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
 import cn.superiormc.mythicchanger.manager.ConfigManager;
+import cn.superiormc.mythicchanger.objects.ObjectSingleChange;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -12,17 +13,12 @@ public class KeepEnchants extends AbstractChangesRule {
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section,
-                               ItemStack original,
-                               ItemStack item,
-                               Player player,
-                               boolean fakeOrReal,
-                               boolean isPlayerInventory) {
-        if (section.getBoolean("keep-enchants", false) && !original.getEnchantments().isEmpty()) {
-            item.addUnsafeEnchantments(original.getEnchantments());
-            return item;
+    public ItemStack setChange(ObjectSingleChange singleChange) {
+        if (singleChange.getBoolean("keep-enchants") && !singleChange.getOriginal().getEnchantments().isEmpty()) {
+            singleChange.getItem().addUnsafeEnchantments(singleChange.getOriginal().getEnchantments());
+            return singleChange.getItem();
         }
-        return item;
+        return singleChange.getItem();
     }
 
     @Override

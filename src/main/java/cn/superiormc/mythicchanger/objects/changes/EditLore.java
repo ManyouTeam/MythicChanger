@@ -1,10 +1,10 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
 import cn.superiormc.mythicchanger.manager.ConfigManager;
+import cn.superiormc.mythicchanger.objects.ObjectSingleChange;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
 import cn.superiormc.mythicchanger.utils.TextUtil;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -17,27 +17,22 @@ public class EditLore extends AbstractChangesRule {
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section,
-                               ItemStack original,
-                               ItemStack item,
-                               Player player,
-                               boolean fakeOrReal,
-                               boolean isPlayerInventory) {
+    public ItemStack setChange(ObjectSingleChange singleChange) {
         try {
-            ItemMeta meta = item.getItemMeta();
+            ItemMeta meta = singleChange.getItemMeta();
             if (!meta.hasLore()) {
-                return item;
+                return singleChange.getItem();
             }
-            ConfigurationSection editLoreSection = section.getConfigurationSection("edit-lore");
+            ConfigurationSection editLoreSection = singleChange.section.getConfigurationSection("edit-lore");
             if (editLoreSection == null) {
-                return item;
+                return singleChange.getItem();
             }
             List<String> itemLore = meta.getLore();
             for (String key : editLoreSection.getKeys(false)) {
                 String parsedKey = key.replace("last", String.valueOf(itemLore.size()));
                 int line = Integer.parseInt(parsedKey);
                 if (line > itemLore.size()) {
-                    if (section.getBoolean("edit-lore-bypass", false)) {
+                    if (singleChange.section.getBoolean("edit-lore-bypass", false)) {
                         continue;
                     } else {
                         itemLore.add(TextUtil.parse(CommonUtil.modifyString(editLoreSection.getString(key), "original", "")));
@@ -45,12 +40,11 @@ public class EditLore extends AbstractChangesRule {
                 } else {
                     itemLore.set(line - 1, TextUtil.parse(CommonUtil.modifyString(editLoreSection.getString(key), "original", itemLore.get(line - 1))));
                 }
-                meta.setLore(itemLore);
-                item.setItemMeta(meta);
+                return singleChange.setItemMeta(meta);
             }
-            return item;
+            return singleChange.getItem();
         } catch (Throwable throwable) {
-            return item;
+            return singleChange.getItem();
         }
     }
 

@@ -1,9 +1,9 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
 import cn.superiormc.mythicchanger.manager.ConfigManager;
+import cn.superiormc.mythicchanger.objects.ObjectSingleChange;
 import cn.superiormc.mythicchanger.utils.TextUtil;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -17,22 +17,17 @@ public class ReplaceLore extends AbstractChangesRule {
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section,
-                               ItemStack original,
-                               ItemStack item,
-                               Player player,
-                               boolean fakeOrReal,
-                               boolean isPlayerInventory) {
-        ConfigurationSection tempVal1 = section.getConfigurationSection("replace-lore");
-        ItemMeta meta = item.getItemMeta();
+    public ItemStack setChange(ObjectSingleChange singleChange) {
+        ConfigurationSection tempVal1 = singleChange.section.getConfigurationSection("replace-lore");
+        ItemMeta meta = singleChange.getItemMeta();
         if (!meta.hasLore()) {
-            return item;
+            return singleChange.getItem();
         }
         List<String> newLore = new ArrayList<>();
-        for (String hasLore : item.getItemMeta().getLore()) {
+        for (String hasLore : singleChange.getItemMeta().getLore()) {
             for (String requiredLore : tempVal1.getKeys(false)) {
                 if (hasLore.contains(requiredLore)) {
-                    hasLore = hasLore.replace(requiredLore, TextUtil.parse(tempVal1.getString(requiredLore), player));
+                    hasLore = hasLore.replace(requiredLore, TextUtil.parse(tempVal1.getString(requiredLore), singleChange.getPlayer()));
                 }
             }
             String[] tempVal2 = hasLore.split("\\\\n");
@@ -48,8 +43,7 @@ public class ReplaceLore extends AbstractChangesRule {
             newLore.add(hasLore);
         }
         meta.setLore(newLore);
-        item.setItemMeta(meta);
-        return item;
+        return singleChange.setItemMeta(meta);
     }
 
     @Override

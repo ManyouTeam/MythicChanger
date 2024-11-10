@@ -45,6 +45,7 @@ public class MatchItemManager {
             registerNewRule(new Any());
             registerNewRule(new HasApply());
             registerNewRule(new ContainsApply());
+            registerNewRule(new MaterialTag());
         }
     }
 

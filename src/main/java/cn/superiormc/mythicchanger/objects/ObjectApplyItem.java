@@ -12,11 +12,19 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Random;
+
 public class ObjectApplyItem {
 
     public static final NamespacedKey MYTHICCHANGER_APPLY_ITEM = new NamespacedKey(MythicChanger.instance, "apply_item_id");
 
+    public static final NamespacedKey MYTHICCHANGER_APPLY_LIMIT = new NamespacedKey(MythicChanger.instance, "apply_item_limit");
+
     public static final NamespacedKey MYTHICCHANGER_APPLY_RULE = new NamespacedKey(MythicChanger.instance, "rule_id");
+
+    private double chance;
 
     private final String id;
 
@@ -26,9 +34,21 @@ public class ObjectApplyItem {
 
     private final ConfigurationSection section;
 
+    private final ObjectAction successAction;
+
+    private final ObjectAction failAction;
+
     public ObjectApplyItem(String id, ConfigurationSection section) {
         this.id = id;
         this.section = section;
+        this.chance = section.getDouble("chance", 100);
+        if (chance > 100) {
+            chance = 100;
+        } else if (chance < 0) {
+            chance = 0;
+        }
+        this.successAction = new ObjectAction(section.getConfigurationSection("success-actions"));
+        this.failAction = new ObjectAction(section.getConfigurationSection("fail-actions"));
         String tempVal2 = section.getString("apply-rule");
         if (tempVal2 != null) {
             if (tempVal2.equals("deapply")) {
@@ -78,37 +98,70 @@ public class ObjectApplyItem {
         }
     }
 
-    /*TODO: Multi support
-    public static void addRuleID(ItemStack item, String ruleID) {
-        ItemMeta meta = item.getItemMeta();
+    public ItemStack addRuleID(ItemStack item, ItemMeta meta) {
         if (meta == null) {
-            return;
+            return item;
         }
         String id = "";
-        if (meta.getPersistentDataContainer().has(MYTHICCHANGER_APPLY_RULE, PersistentDataType.STRING)) {
-            id = meta.getPersistentDataContainer().get(MYTHICCHANGER_APPLY_RULE, PersistentDataType.STRING);
+        Collection<ObjectApplyItem> applyItems = getRule(meta);
+        if (!applyItems.isEmpty()) {
+            if (applyItems.contains(this)) {
+                id = meta.getPersistentDataContainer().get(MYTHICCHANGER_APPLY_RULE, PersistentDataType.STRING) + ";;" + this.id;
+            }
+        } else {
+            id = this.id;
         }
-        id = id + ";;" + ruleID;
         meta.getPersistentDataContainer().set(MYTHICCHANGER_APPLY_RULE, PersistentDataType.STRING, id);
         item.setItemMeta(meta);
+        return item;
     }
 
-    public static List<String> getRuleID(ItemStack item) {
-        List<String> tempVal1 = new ArrayList<>();
-        ItemMeta meta = item.getItemMeta();
+    public void doSuccessAction(Player player, ItemStack item) {
+        successAction.runAllActions(player, item, item);
+    }
+
+    public void doFailAction(Player player, ItemStack item) {
+        failAction.runAllActions(player, item, item);
+    }
+
+    public boolean getChance() {
+        Random random = new Random();
+        double rollNumber = random.nextDouble() * 100;
+        if (chance > rollNumber) {
+            return true;
+        }
+        return false;
+    }
+
+    public static Collection<ObjectApplyItem> getRule(ItemMeta meta) {
+        Collection<ObjectApplyItem> tempVal1 = new HashSet<>();
         if (meta == null) {
             return tempVal1;
         }
-        String tempVal2;
         if (meta.getPersistentDataContainer().has(MYTHICCHANGER_APPLY_RULE, PersistentDataType.STRING)) {
-            tempVal2 = meta.getPersistentDataContainer().get(MYTHICCHANGER_APPLY_RULE, PersistentDataType.STRING);
-        } else {
-            return tempVal1;
+            String tempVal2 = meta.getPersistentDataContainer().get(MYTHICCHANGER_APPLY_RULE, PersistentDataType.STRING);
+            if (tempVal2 == null) {
+                return tempVal1;
+            }
+            for (String tempVal3 : tempVal2.split(";;")) {
+                ObjectApplyItem applyItem = ConfigManager.configManager.getApplyItem(tempVal3);
+                if (applyItem != null) {
+                    tempVal1.add(applyItem);
+                }
+            }
         }
-        String[] tempVal3 = tempVal2.split(";;");
-        Collections.addAll(tempVal1, tempVal3);
         return tempVal1;
     }
-     */
+
+    public static int getLimit(ItemMeta meta) {
+        if (meta == null) {
+            return ConfigManager.configManager.getInt("default-apply-item-limit", 1);
+        }
+        if (meta.getPersistentDataContainer().has(MYTHICCHANGER_APPLY_LIMIT, PersistentDataType.INTEGER)) {
+            return meta.getPersistentDataContainer().get(MYTHICCHANGER_APPLY_LIMIT, PersistentDataType.INTEGER);
+        } else {
+            return ConfigManager.configManager.getInt("default-apply-item-limit", 1);
+        }
+    }
     
 }

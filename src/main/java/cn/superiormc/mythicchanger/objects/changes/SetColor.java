@@ -1,9 +1,9 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
 import cn.superiormc.mythicchanger.manager.ConfigManager;
+import cn.superiormc.mythicchanger.objects.ObjectSingleChange;
 import org.bukkit.Color;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
@@ -15,22 +15,14 @@ public class SetColor extends AbstractChangesRule {
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section,
-                               ItemStack original,
-                               ItemStack item,
-                               Player player,
-                               boolean fakeOrReal,
-                               boolean isPlayerInventory) {
-        ItemMeta meta = item.getItemMeta();
-        if (meta == null) {
-            return item;
-        }
+    public ItemStack setChange(ObjectSingleChange singleChange) {
+        ItemMeta meta = singleChange.getItemMeta();
         if (meta instanceof LeatherArmorMeta) {
             LeatherArmorMeta armorMeta = (LeatherArmorMeta) meta;
-            armorMeta.setColor(Color.fromRGB(section.getInt("set-color")));
-            item.setItemMeta(armorMeta);
+            armorMeta.setColor(Color.fromRGB(singleChange.getInt("set-color")));
+            return singleChange.setItemMeta(armorMeta);
         }
-        return item;
+        return singleChange.getItem();
     }
 
     @Override

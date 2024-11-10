@@ -27,6 +27,10 @@ paper-api:
     # Only for Item Format for now, does not support item modify in rule.
     item: false
 
+math:
+  enabled: true
+  scale: 2
+
 real-change-trigger:
   SetSlotTrigger:
     enabled: true
@@ -117,3 +121,5 @@ change-gui:
 # Support value: GUI, DRAG
 # GUI mode is in EARLY ALPHA TEST, be careful to use!
 apply-item-mode: DRAG
+
+default-apply-item-limit: 1

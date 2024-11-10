@@ -43,4 +43,15 @@ public class TextUtil {
         }
         return resultList;
     }
+
+    public static List<String> getListWithPAPI(List<String> inList, Player player) {
+        List<String> resultList = new ArrayList<>();
+        for (String s : inList) {
+            if (CommonUtil.checkPluginLoad("PlaceholderAPI")) {
+                s = PlaceholderAPI.setPlaceholders(player, s);
+            }
+            resultList.add(s);
+        }
+        return resultList;
+    }
 }

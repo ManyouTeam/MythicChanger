@@ -2,9 +2,9 @@ package cn.superiormc.mythicchanger.objects.changes;
 
 import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.methods.BuildItem;
+import cn.superiormc.mythicchanger.objects.ObjectSingleChange;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
@@ -16,23 +16,21 @@ public class ReplaceRandomItem extends AbstractChangesRule {
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section,
-                               ItemStack original,
-                               ItemStack item,
-                               Player player,
-                               boolean fakeOrReal,
-                               boolean isPlayerInventory) {
-        ConfigurationSection itemSection = section.getConfigurationSection("replace-random-item");
+    public ItemStack setChange(ObjectSingleChange singleChange) {
+        ConfigurationSection itemSection = singleChange.getItemFormatSection("replace-random-item");
+        if (itemSection == null) {
+            return singleChange.getItem();
+        }
         Map<ItemStack, Double> items = new HashMap<>();
         for (String itemKey : itemSection.getKeys(false)) {
-            ItemStack result = BuildItem.buildItemStack(player, itemSection.getConfigurationSection(itemKey));
+            ItemStack result = BuildItem.buildItemStack(singleChange.getPlayer(), itemSection.getConfigurationSection(itemKey));
             if (result.getType() == Material.BARRIER) {
                 continue;
             }
             items.put(result, itemSection.getConfigurationSection(itemKey).getDouble("rate", 1.0));
         }
         if (items.isEmpty()) {
-            return item;
+            return singleChange.getItem();
         }
         return selectRandom(items);
     }

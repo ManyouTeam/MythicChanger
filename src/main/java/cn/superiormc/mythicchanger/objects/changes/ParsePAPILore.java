@@ -1,15 +1,16 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
 import cn.superiormc.mythicchanger.manager.ConfigManager;
+import cn.superiormc.mythicchanger.objects.ObjectSingleChange;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
 import cn.superiormc.mythicchanger.utils.ItemUtil;
 import cn.superiormc.mythicchanger.utils.TextUtil;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ParsePAPILore extends AbstractChangesRule {
 
@@ -18,24 +19,18 @@ public class ParsePAPILore extends AbstractChangesRule {
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section,
-                               ItemStack original,
-                               ItemStack item,
-                               Player player,
-                               boolean fakeOrReal,
-                               boolean isPlayerInventory) {
-        if (!section.getBoolean("parse-papi-lore")) {
-            return item;
+    public ItemStack setChange(ObjectSingleChange singleChange) {
+        if (!singleChange.getBoolean("parse-papi-lore")) {
+            return singleChange.getItem();
         }
-        ItemMeta meta = item.getItemMeta();
+        ItemMeta meta = singleChange.getItemMeta();
         if (!meta.hasLore()) {
-            return item;
+            return singleChange.getItem();
         }
-        List<String> lore = CommonUtil.modifyList(meta.getLore(),
-                "name", ItemUtil.getItemName(item));
-        meta.setLore(TextUtil.getListWithColorAndPAPI(lore, player));
-        item.setItemMeta(meta);
-        return item;
+        List<String> lore = CommonUtil.modifyList(Objects.requireNonNull(meta.getLore()),
+                "name", ItemUtil.getItemName(singleChange.getItem()));
+        meta.setLore(TextUtil.getListWithColorAndPAPI(lore, singleChange.getPlayer()));
+        return singleChange.setItemMeta(meta);
     }
 
     @Override

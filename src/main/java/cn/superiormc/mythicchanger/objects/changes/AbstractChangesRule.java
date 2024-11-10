@@ -1,5 +1,6 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
+import cn.superiormc.mythicchanger.objects.ObjectSingleChange;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -10,12 +11,7 @@ public abstract class AbstractChangesRule implements Comparable<AbstractChangesR
         // Empty...
     }
 
-    public abstract ItemStack setChange(ConfigurationSection section,
-                                        ItemStack original,
-                                        ItemStack item,
-                                        Player player,
-                                        boolean fakeOrReal,
-                                        boolean isPlayerInventory);
+    public abstract ItemStack setChange(ObjectSingleChange singleChange);
 
     public int getWeight() {
         return 0;

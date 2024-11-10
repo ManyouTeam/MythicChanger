@@ -29,19 +29,20 @@ public class CommandManager {
 
     private void registerObjectCommand() {
         if (!MythicChanger.freeVersion) {
-            registeredCommands.put("giveapplyitem", new SubGiveApplyItem());
             if (CommonUtil.checkPluginLoad("NBTAPI")) {
                 registeredCommands.put("viewnbt", new SubViewNBT());
             }
             if (ConfigManager.configManager.getString("apply-item-mode", "DRAG").equalsIgnoreCase("GUI")) {
                 registeredCommands.put("openchangegui", new SubOpenChangeGUI());
             }
+            registeredCommands.put("setlimit", new SubSetLimit());
         }
         registeredCommands.put("help", new SubHelp());
         registeredCommands.put("reload", new SubReload());
         registeredCommands.put("saveitem", new SubSaveItem());
         registeredCommands.put("givesaveitem", new SubGiveSaveItem());
         registeredCommands.put("generateitemformat", new SubGenerateItemFormat());
+        registeredCommands.put("giveapplyitem", new SubGiveApplyItem());
     }
 
     public Map<String, AbstractCommand> getSubCommandsMap() {

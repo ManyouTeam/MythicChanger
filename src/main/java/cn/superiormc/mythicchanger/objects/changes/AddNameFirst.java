@@ -2,11 +2,9 @@ package cn.superiormc.mythicchanger.objects.changes;
 
 import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.manager.ErrorManager;
+import cn.superiormc.mythicchanger.objects.ObjectSingleChange;
 import cn.superiormc.mythicchanger.utils.ItemUtil;
-import cn.superiormc.mythicchanger.utils.TextUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -18,26 +16,21 @@ public class AddNameFirst extends AbstractChangesRule {
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section,
-                               ItemStack original,
-                               ItemStack item,
-                               Player player,
-                               boolean fakeOrReal,
-                               boolean isPlayerInventory) {
-        if (!fakeOrReal && !ConfigManager.configManager.getBoolean("bypass-real-change-limit")) {
+    public ItemStack setChange(ObjectSingleChange singleChange) {
+        if (!singleChange.isFakeOrReal() && !ConfigManager.configManager.getBoolean("bypass-real-change-limit")) {
             ErrorManager.errorManager.sendErrorMessage("§x§9§8§F§B§9§8[MythicChanger] §cError: add-name-first rule only supports" +
                     " fake change, please remove it in real changes from all your rule configs! If you want to bypass this limit, " +
                     "please disable limit check in config.yml file.");
-            return item;
+            return singleChange.getItem();
         }
-        if (ConfigManager.configManager.getBoolean("keep-name-in-anvil") && !isPlayerInventory && player.getOpenInventory().getType().equals(InventoryType.ANVIL)) {
-            return item;
+        if (ConfigManager.configManager.getBoolean("keep-name-in-anvil") && !singleChange.isPlayerInventory() &&
+                singleChange.getPlayer().getOpenInventory().getType().equals(InventoryType.ANVIL)) {
+            return singleChange.getItem();
         }
-        ItemMeta meta = item.getItemMeta();
-        String tempVal1 = TextUtil.parse(section.getString("add-name-first"), player) + ItemUtil.getItemName(item);
+        ItemMeta meta = singleChange.getItemMeta();
+        String tempVal1 = singleChange.getString("add-name-first") + ItemUtil.getItemName(singleChange.getItem());
         meta.setDisplayName(tempVal1);
-        item.setItemMeta(meta);
-        return item;
+        return singleChange.setItemMeta(meta);
     }
 
     @Override

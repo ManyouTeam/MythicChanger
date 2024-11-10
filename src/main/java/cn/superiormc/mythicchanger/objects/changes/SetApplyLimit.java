@@ -1,31 +1,28 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
-import cn.superiormc.mythicchanger.manager.ConfigManager;
+import cn.superiormc.mythicchanger.objects.ObjectApplyItem;
 import cn.superiormc.mythicchanger.objects.ObjectSingleChange;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
-public class SetCustomModelData extends AbstractChangesRule {
+public class SetApplyLimit extends AbstractChangesRule {
 
-    public SetCustomModelData() {
+    public SetApplyLimit() {
         super();
     }
 
     @Override
     public ItemStack setChange(ObjectSingleChange singleChange) {
+        int amount = singleChange.getInt("set-apply-limit");
         ItemMeta meta = singleChange.getItemMeta();
-        meta.setCustomModelData(singleChange.getInt("set-custom-model-data"));
+        meta.getPersistentDataContainer().set(ObjectApplyItem.MYTHICCHANGER_APPLY_LIMIT, PersistentDataType.INTEGER, amount);
         return singleChange.setItemMeta(meta);
     }
 
     @Override
-    public int getWeight() {
-        return ConfigManager.configManager.getRuleWeight("set-custom-model-data", 5);
-    }
-
-    @Override
     public boolean configNotContains(ConfigurationSection section) {
-        return section.getInt("set-custom-model-data", -1) < 0;
+        return !section.contains("set-apply-limit");
     }
 }

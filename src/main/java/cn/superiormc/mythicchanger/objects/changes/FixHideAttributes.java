@@ -1,6 +1,7 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
 import cn.superiormc.mythicchanger.manager.ConfigManager;
+import cn.superiormc.mythicchanger.objects.ObjectSingleChange;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
 import com.google.common.collect.MultimapBuilder;
 import org.bukkit.configuration.ConfigurationSection;
@@ -16,19 +17,13 @@ public class FixHideAttributes extends AbstractChangesRule {
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section,
-                               ItemStack original,
-                               ItemStack item,
-                               Player player,
-                               boolean fakeOrReal,
-                               boolean isPlayerInventory) {
-        ItemMeta meta = item.getItemMeta();
+    public ItemStack setChange(ObjectSingleChange singleChange) {
+        ItemMeta meta = singleChange.getItemMeta();
         if (CommonUtil.getMinorVersion(20, 6) && meta.getItemFlags().contains(ItemFlag.HIDE_ATTRIBUTES)
                 && meta.getAttributeModifiers() == null) {
             meta.setAttributeModifiers(MultimapBuilder.hashKeys().hashSetValues().build());
         }
-        item.setItemMeta(meta);
-        return item;
+        return singleChange.setItemMeta(meta);
     }
 
     @Override

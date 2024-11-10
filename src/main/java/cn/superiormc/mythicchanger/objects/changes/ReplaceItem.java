@@ -2,9 +2,9 @@ package cn.superiormc.mythicchanger.objects.changes;
 
 import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.methods.BuildItem;
+import cn.superiormc.mythicchanger.objects.ObjectSingleChange;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public class ReplaceItem extends AbstractChangesRule {
@@ -14,16 +14,11 @@ public class ReplaceItem extends AbstractChangesRule {
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section,
-                               ItemStack original,
-                               ItemStack item,
-                               Player player,
-                               boolean fakeOrReal,
-                               boolean isPlayerInventory) {
-        ConfigurationSection itemSection = section.getConfigurationSection("replace-item");
-        ItemStack result = BuildItem.buildItemStack(player, itemSection);
+    public ItemStack setChange(ObjectSingleChange singleChange) {
+        ConfigurationSection itemSection = singleChange.getItemFormatSection("replace-item");
+        ItemStack result = BuildItem.buildItemStack(singleChange.getPlayer(), itemSection);
         if (result.getType() == Material.BARRIER) {
-            return item;
+            return singleChange.getItem();
         }
         return result;
     }

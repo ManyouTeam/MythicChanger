@@ -1,6 +1,7 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
 import cn.superiormc.mythicchanger.MythicChanger;
+import cn.superiormc.mythicchanger.objects.ObjectSingleChange;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
@@ -19,34 +20,25 @@ public class DeleteEnchants extends AbstractChangesRule {
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section,
-                               ItemStack original,
-                               ItemStack item,
-                               Player player,
-                               boolean fakeOrReal,
-                               boolean isPlayerInventory) {
-        if (!item.hasItemMeta()) {
-            return item;
-        }
-        ConfigurationSection deleteEnchantsSection = section.getConfigurationSection("delete-enchants");
-        ItemMeta meta = item.getItemMeta();
+    public ItemStack setChange(ObjectSingleChange singleChange) {
+        ConfigurationSection deleteEnchantsSection = singleChange.section.getConfigurationSection("delete-enchants");
+        ItemMeta meta = singleChange.getItemMeta();
         for (String ench : deleteEnchantsSection.getKeys(false)) {
             Enchantment vanillaEnchant = Registry.ENCHANTMENT.get(CommonUtil.parseNamespacedKey(ench.toLowerCase()));
-            if (vanillaEnchant == null || item.getEnchantments().get(vanillaEnchant) == null) {
+            if (vanillaEnchant == null || singleChange.getItem().getEnchantments().get(vanillaEnchant) == null) {
                 continue;
             }
             if (!MythicChanger.freeVersion && deleteEnchantsSection.getString(ench).startsWith("[")) {
-                if (deleteEnchantsSection.getIntegerList(ench).contains(item.getEnchantments().get(vanillaEnchant))) {
+                if (deleteEnchantsSection.getIntegerList(ench).contains(singleChange.getItem().getEnchantments().get(vanillaEnchant))) {
                     meta.removeEnchant(vanillaEnchant);
                 }
             } else {
-                if (item.getEnchantments().get(vanillaEnchant) > section.getInt(ench)) {
+                if (singleChange.getItem().getEnchantments().get(vanillaEnchant) > singleChange.getInt(ench)) {
                     meta.removeEnchant(vanillaEnchant);
                 }
             }
         }
-        item.setItemMeta(meta);
-        return item;
+        return singleChange.setItemMeta(meta);
     }
 
     @Override
