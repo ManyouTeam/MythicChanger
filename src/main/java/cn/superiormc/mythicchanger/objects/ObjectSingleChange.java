@@ -15,6 +15,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -172,7 +173,7 @@ public class ObjectSingleChange extends MemoryConfiguration {
 
     @Override
     public @NotNull List<String> getStringList(@NotNull String path) {
-        return TextUtil.getListWithColorAndPAPI(section.getStringList(path), player);
+        return TextUtil.getListWithColorAndPAPI(parsePlaceholder(section.getStringList(path)), player);
     }
 
     @Override
@@ -206,7 +207,7 @@ public class ObjectSingleChange extends MemoryConfiguration {
         return section.getKeys(deep);
     }
 
-    private String parsePlaceholder(String text) {
+    public String parsePlaceholder(String text) {
         text = CommonUtil.modifyString(text, "amount", String.valueOf(item.getAmount()),
                 "max-stack", String.valueOf(item.getMaxStackSize()),
                 "name", itemName,
@@ -227,6 +228,14 @@ public class ObjectSingleChange extends MemoryConfiguration {
             text = text.replace("{item_" + key + "}", value.toString());
         }
         return text;
+    }
+
+    public List<String> parsePlaceholder(List<String> text) {
+        List<String> result = new ArrayList<>();
+        for (String singleText : text) {
+            result.add(parsePlaceholder(singleText));
+        }
+        return result;
     }
 
     public boolean isFakeOrReal() {

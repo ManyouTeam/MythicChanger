@@ -29,7 +29,7 @@ public class ParsePAPILore extends AbstractChangesRule {
         }
         List<String> lore = CommonUtil.modifyList(Objects.requireNonNull(meta.getLore()),
                 "name", ItemUtil.getItemName(singleChange.getItem()));
-        meta.setLore(TextUtil.getListWithColorAndPAPI(lore, singleChange.getPlayer()));
+        meta.setLore(TextUtil.getListWithColorAndPAPI(singleChange.parsePlaceholder(lore), singleChange.getPlayer()));
         return singleChange.setItemMeta(meta);
     }
 
