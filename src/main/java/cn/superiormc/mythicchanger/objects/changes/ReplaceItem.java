@@ -15,7 +15,7 @@ public class ReplaceItem extends AbstractChangesRule {
 
     @Override
     public ItemStack setChange(ObjectSingleChange singleChange) {
-        ConfigurationSection itemSection = singleChange.getItemFormatSection("replace-item");
+        ConfigurationSection itemSection = singleChange.getConfigurationSection("replace-item");
         ItemStack result = BuildItem.buildItemStack(singleChange.getPlayer(), itemSection);
         if (result.getType() == Material.BARRIER) {
             return singleChange.getItem();

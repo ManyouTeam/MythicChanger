@@ -73,6 +73,7 @@ public class ChangesManager {
             registerNewRule(new AddApplyLimit());
             registerNewRule(new SetApplyLimit());
             registerNewRule(new ResetApplyLimit());
+            registerNewRule(new AddAttributes());
         }
     }
 

@@ -18,7 +18,7 @@ public class ReplaceLore extends AbstractChangesRule {
 
     @Override
     public ItemStack setChange(ObjectSingleChange singleChange) {
-        ConfigurationSection tempVal1 = singleChange.section.getConfigurationSection("replace-lore");
+        ConfigurationSection tempVal1 = singleChange.getConfigurationSection("replace-lore");
         ItemMeta meta = singleChange.getItemMeta();
         if (!meta.hasLore()) {
             return singleChange.getItem();

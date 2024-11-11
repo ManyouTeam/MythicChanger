@@ -17,7 +17,7 @@ public class ReplaceRandomItem extends AbstractChangesRule {
 
     @Override
     public ItemStack setChange(ObjectSingleChange singleChange) {
-        ConfigurationSection itemSection = singleChange.getItemFormatSection("replace-random-item");
+        ConfigurationSection itemSection = singleChange.getConfigurationSection("replace-random-item");
         if (itemSection == null) {
             return singleChange.getItem();
         }

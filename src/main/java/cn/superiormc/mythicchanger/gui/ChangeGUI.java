@@ -6,6 +6,7 @@ import cn.superiormc.mythicchanger.methods.BuildItem;
 import cn.superiormc.mythicchanger.objects.ObjectApplyItem;
 import cn.superiormc.mythicchanger.objects.ObjectSingleRule;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
+import cn.superiormc.mythicchanger.utils.ItemUtil;
 import cn.superiormc.mythicchanger.utils.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
@@ -110,9 +111,11 @@ public class ChangeGUI extends InvGUI {
                     requireItem = applyItem.addRuleID(requireItem, tempVal3);
                     if (applyItem.getApplyRealChange()) {
                         ItemStack changeItem = rule.setRealChange(requireItem.clone(), requireItem, player);
-                        requireItem.setAmount(0);
-                        inv.setItem(ConfigManager.configManager.getInt("change-gui.item-slot", 0),
-                                changeItem);
+                        if (ItemUtil.isValid(changeItem)) {
+                            requireItem.setAmount(0);
+                            inv.setItem(ConfigManager.configManager.getInt("change-gui.item-slot", 0),
+                                    changeItem);
+                        }
                     }
                     LanguageManager.languageManager.sendStringText(player, "apply-item-success");
                 } else {

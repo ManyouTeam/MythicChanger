@@ -3,12 +3,8 @@ package cn.superiormc.mythicchanger.objects.changes;
 import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.methods.BuildItem;
 import cn.superiormc.mythicchanger.objects.ObjectSingleChange;
-import cn.superiormc.mythicchanger.utils.ItemUtil;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.Objects;
 
 public class EditItem extends AbstractChangesRule {
 
@@ -20,8 +16,7 @@ public class EditItem extends AbstractChangesRule {
     public ItemStack setChange(ObjectSingleChange singleChange) {
         return BuildItem.editItemStack(singleChange.getPlayer(),
                 singleChange.getItem(),
-                Objects.requireNonNull(singleChange.getItemFormatSection("edit-item")), "name",
-                ItemUtil.getItemName(singleChange.getItem()));
+                singleChange.getConfigurationSection("edit-item"));
     }
 
     @Override

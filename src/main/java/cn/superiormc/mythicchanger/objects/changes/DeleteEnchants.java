@@ -21,7 +21,7 @@ public class DeleteEnchants extends AbstractChangesRule {
 
     @Override
     public ItemStack setChange(ObjectSingleChange singleChange) {
-        ConfigurationSection deleteEnchantsSection = singleChange.section.getConfigurationSection("delete-enchants");
+        ConfigurationSection deleteEnchantsSection = singleChange.getConfigurationSection("delete-enchants");
         ItemMeta meta = singleChange.getItemMeta();
         for (String ench : deleteEnchantsSection.getKeys(false)) {
             Enchantment vanillaEnchant = Registry.ENCHANTMENT.get(CommonUtil.parseNamespacedKey(ench.toLowerCase()));

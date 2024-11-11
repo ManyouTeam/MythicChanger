@@ -5,17 +5,22 @@ import cn.superiormc.mythicchanger.utils.CommonUtil;
 import cn.superiormc.mythicchanger.utils.ItemUtil;
 import cn.superiormc.mythicchanger.utils.MathUtil;
 import cn.superiormc.mythicchanger.utils.TextUtil;
+import org.bukkit.Bukkit;
+import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemoryConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ObjectSingleChange {
+public class ObjectSingleChange extends MemoryConfiguration {
 
     public ConfigurationSection section;
 
@@ -58,6 +63,21 @@ public class ObjectSingleChange {
         this.originalName = ItemUtil.getItemName(original);
     }
 
+    public ObjectSingleChange(ConfigurationSection section,
+                              ObjectSingleChange change) {
+        this.section = section;
+        this.original = change.getOriginal();
+        this.item = change.getItem();
+        this.itemMeta = change.getItemMeta();
+        this.originalMeta = change.getOriginalMeta();
+        this.debuildItemFormat = change.getDebuildItemFormat();
+        this.player = change.getPlayer();
+        this.fakeOrReal = change.isFakeOrReal();
+        this.isPlayerInventory = change.isPlayerInventory();
+        this.itemName = change.getItemName();
+        this.originalName = change.getOriginalName();
+    }
+
     public ItemMeta getItemMeta() {
         return itemMeta;
     }
@@ -80,7 +100,20 @@ public class ObjectSingleChange {
         return original;
     }
 
-    public int getInt(String path) {
+    public ConfigurationSection getDebuildItemFormat() {
+        return debuildItemFormat;
+    }
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public String getOriginalName() {
+        return originalName;
+    }
+
+    @Override
+    public int getInt(@NotNull String path) {
         Object value = section.get(path);
         if (value == null) {
             return 0;
@@ -91,38 +124,86 @@ public class ObjectSingleChange {
         return MathUtil.doCalculate(TextUtil.withPAPI(parsePlaceholder(value.toString()), player)).intValue();
     }
 
-    public String getString(String path, String... args) {
-        return TextUtil.parse(CommonUtil.modifyString(parsePlaceholder(section.getString(path, "")), args), player);
+    @Override
+    public int getInt(@NotNull String path, int defaultValue) {
+        Object value = section.get(path);
+        if (value == null) {
+            return defaultValue;
+        }
+        if (value instanceof Integer) {
+            return section.getInt(path);
+        }
+        return MathUtil.doCalculate(TextUtil.withPAPI(parsePlaceholder(value.toString()), player)).intValue();
     }
 
-    public List<String> getStringList(String path) {
+    @Override
+    public double getDouble(@NotNull String path) {
+        if (section.isDouble(path)) {
+            return section.getDouble(path);
+        }
+        return MathUtil.doCalculate(TextUtil.withPAPI(parsePlaceholder(section.getString(path)), player)).doubleValue();
+    }
+
+    @Override
+    public double getDouble(@NotNull String path, double defaultValue) {
+        if (section.isDouble(path)) {
+            return section.getDouble(path);
+        }
+        return MathUtil.doCalculate(TextUtil.withPAPI(parsePlaceholder(section.getString(path)), player)).doubleValue();
+    }
+
+    @Override
+    public String getString(@NotNull String path) {
+        String value = section.getString(path);
+        if (value == null) {
+            return null;
+        }
+        return TextUtil.parse(parsePlaceholder(value), player);
+    }
+
+    @Override
+    public String getString(@NotNull String path, String defaultValue) {
+        String value = section.getString(path, defaultValue);
+        if (value == null) {
+            return null;
+        }
+        return TextUtil.parse(parsePlaceholder(value), player);
+    }
+
+    @Override
+    public @NotNull List<String> getStringList(@NotNull String path) {
         return TextUtil.getListWithColorAndPAPI(section.getStringList(path), player);
     }
 
-    public boolean getBoolean(String path) {
+    @Override
+    public @Nullable ObjectSingleChange getConfigurationSection(@NotNull String path) {
+        if (section.getConfigurationSection(path) == null) {
+            return null;
+        }
+        return new ObjectSingleChange(section.getConfigurationSection(path), this);
+    }
+
+    @Override
+    public boolean getBoolean(@NotNull String path) {
         return section.getBoolean(path);
     }
 
-    public ConfigurationSection getItemFormatSection(String path) {
-        ConfigurationSection result = new MemoryConfiguration();
-        ConfigurationSection tempVal1 = section.getConfigurationSection(path);
-        if (tempVal1 == null) {
-            return new MemoryConfiguration();
+    @Override
+    public @Nullable Object get(@NotNull String path) {
+        return section.getBoolean(path);
+    }
+
+    @Override
+    public boolean contains(@NotNull String path) {
+        return section.contains(path);
+    }
+
+    @Override
+    public @NotNull Set<String> getKeys(boolean deep) {
+        for (String k : section.getKeys(deep)) {
+            Bukkit.getConsoleSender().sendMessage(k);
         }
-        for (String key : tempVal1.getKeys(true)) {
-            List<String> listValue = tempVal1.getStringList(key);
-            if (!listValue.isEmpty()) {
-                result.set(key, TextUtil.getListWithColorAndPAPI(section.getStringList(path), player));
-            } else {
-                Object value = tempVal1.get(key);
-                if (value instanceof Number) {
-                    result.set(key, MathUtil.doCalculate(TextUtil.withPAPI(parsePlaceholder(value.toString()), player)).toString());
-                } else {
-                    result.set(key, TextUtil.parse(parsePlaceholder(section.getString(path, "")), player));
-                }
-            }
-        }
-        return result;
+        return section.getKeys(deep);
     }
 
     private String parsePlaceholder(String text) {

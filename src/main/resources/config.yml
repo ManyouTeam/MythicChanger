@@ -58,6 +58,7 @@ check-chests-only: true
 # Please do not modify the value here unless you know what you are doing.
 change-rule-weight:
   add-enchants: 2
+  add-attributes: 5
   add-flags: 3
   add-lore-first: 11
   add-lore-last: 12

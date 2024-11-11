@@ -18,7 +18,7 @@ public class ReplaceEnchants extends AbstractChangesRule {
     @Override
     public ItemStack setChange(ObjectSingleChange singleChange) {
         ItemMeta meta = singleChange.getItemMeta();
-        ConfigurationSection enchantSection = singleChange.section.getConfigurationSection("replace-enchants");
+        ConfigurationSection enchantSection = singleChange.getConfigurationSection("replace-enchants");
         for (String ench : enchantSection.getKeys(false)) {
             Enchantment vanillaEnchant = Registry.ENCHANTMENT.get(CommonUtil.parseNamespacedKey(ench.toLowerCase()));
             if (vanillaEnchant != null && singleChange.getItem().getEnchantments().get(vanillaEnchant) != null) {

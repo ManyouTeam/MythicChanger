@@ -16,7 +16,7 @@ public class ReplaceName extends AbstractChangesRule {
 
     @Override
     public ItemStack setChange(ObjectSingleChange singleChange) {
-        ConfigurationSection tempVal1 = singleChange.section.getConfigurationSection("replace-name");
+        ConfigurationSection tempVal1 = singleChange.getConfigurationSection("replace-name");
         ItemMeta meta = singleChange.getItemMeta();
         if (!meta.hasLore()) {
             return singleChange.getItem();

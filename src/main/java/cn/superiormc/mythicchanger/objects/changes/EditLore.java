@@ -23,7 +23,7 @@ public class EditLore extends AbstractChangesRule {
             if (!meta.hasLore()) {
                 return singleChange.getItem();
             }
-            ConfigurationSection editLoreSection = singleChange.section.getConfigurationSection("edit-lore");
+            ConfigurationSection editLoreSection = singleChange.getConfigurationSection("edit-lore");
             if (editLoreSection == null) {
                 return singleChange.getItem();
             }
@@ -32,7 +32,7 @@ public class EditLore extends AbstractChangesRule {
                 String parsedKey = key.replace("last", String.valueOf(itemLore.size()));
                 int line = Integer.parseInt(parsedKey);
                 if (line > itemLore.size()) {
-                    if (singleChange.section.getBoolean("edit-lore-bypass", false)) {
+                    if (singleChange.getBoolean("edit-lore-bypass", false)) {
                         continue;
                     } else {
                         itemLore.add(TextUtil.parse(CommonUtil.modifyString(editLoreSection.getString(key), "original", "")));

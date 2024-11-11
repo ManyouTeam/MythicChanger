@@ -18,7 +18,7 @@ public class AddEnchants extends AbstractChangesRule {
     @Override
     public ItemStack setChange(ObjectSingleChange singleChange) {
         ItemMeta meta = singleChange.getItemMeta();
-        for (String ench : singleChange.section.getConfigurationSection("add-enchants").getKeys(false)) {
+        for (String ench : singleChange.getConfigurationSection("add-enchants").getKeys(false)) {
             Enchantment vanillaEnchant = Registry.ENCHANTMENT.get(CommonUtil.parseNamespacedKey(ench));
             if (vanillaEnchant != null) {
                 int level = singleChange.getInt("add-enchants." + ench);
