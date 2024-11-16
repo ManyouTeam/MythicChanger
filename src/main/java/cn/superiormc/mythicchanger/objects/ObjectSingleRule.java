@@ -39,7 +39,7 @@ public class ObjectSingleRule implements Comparable<ObjectSingleRule> {
                 PersistentDataType.STRING)) {
             Collection<ObjectApplyItem> applyItems = ObjectApplyItem.getRule(meta);
             for (ObjectApplyItem applyItem : applyItems) {
-                if (applyItem.getRule().id.equals(id)) {
+                if (applyItem.getRule() != null && applyItem.getRule().id.equals(id)) {
                     return true;
                 }
             }

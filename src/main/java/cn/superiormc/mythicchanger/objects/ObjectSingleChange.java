@@ -201,9 +201,6 @@ public class ObjectSingleChange extends MemoryConfiguration {
 
     @Override
     public @NotNull Set<String> getKeys(boolean deep) {
-        for (String k : section.getKeys(deep)) {
-            Bukkit.getConsoleSender().sendMessage(k);
-        }
         return section.getKeys(deep);
     }
 

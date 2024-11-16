@@ -10,7 +10,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
-import java.util.Objects;
 
 public class ParsePAPILore extends AbstractChangesRule {
 
@@ -27,8 +26,7 @@ public class ParsePAPILore extends AbstractChangesRule {
         if (!meta.hasLore()) {
             return singleChange.getItem();
         }
-        List<String> lore = CommonUtil.modifyList(Objects.requireNonNull(meta.getLore()),
-                "name", ItemUtil.getItemName(singleChange.getItem()));
+        List<String> lore = meta.getLore();
         meta.setLore(TextUtil.getListWithColorAndPAPI(singleChange.parsePlaceholder(lore), singleChange.getPlayer()));
         return singleChange.setItemMeta(meta);
     }

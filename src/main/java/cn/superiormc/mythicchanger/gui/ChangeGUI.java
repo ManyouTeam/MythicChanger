@@ -84,7 +84,7 @@ public class ChangeGUI extends InvGUI {
             return;
         }
         ItemStack newItem = requireItem.clone();
-        if (!applyItem.matchItem(newItem)) {
+        if (!applyItem.matchItem(player, newItem)) {
             success = false;
             player.closeInventory();
             LanguageManager.languageManager.sendStringText(player, "do-not-apply");
@@ -117,33 +117,24 @@ public class ChangeGUI extends InvGUI {
                                     changeItem);
                         }
                     }
-                    LanguageManager.languageManager.sendStringText(player, "apply-item-success");
                 } else {
                     applyItem.doFailAction(player, requireItem);
                 }
                 targetItem.setAmount(targetItem.getAmount() - 1);
             }
-        } else if (applyItem.getDeapply()) {
-            if (tempVal3.getPersistentDataContainer().has(
-                    ObjectApplyItem.MYTHICCHANGER_APPLY_RULE, PersistentDataType.STRING
-            )) {
-                tempVal3.getPersistentDataContainer().remove(ObjectApplyItem.MYTHICCHANGER_APPLY_RULE);
-                requireItem.setItemMeta(tempVal3);
-                LanguageManager.languageManager.sendStringText(player, "deapply-item-success");
-                targetItem.setAmount(targetItem.getAmount() - 1);
-            } else {
-                success = false;
-                if (ConfigManager.configManager.getBoolean("change-gui.close-if-fail")) {
-                    player.closeInventory();
-                }
-                LanguageManager.languageManager.sendStringText(player, "do-not-has-rule");
-            }
         } else {
-            success = false;
-            if (ConfigManager.configManager.getBoolean("change-gui.close-if-fail")) {
-                player.closeInventory();
+            if (applyItem.getChance()) {
+                applyItem.doSuccessAction(player, requireItem);
+                ItemStack changeItem = applyItem.setRealChange(targetItem, requireItem.clone(), requireItem, player);
+                if (ItemUtil.isValid(changeItem)) {
+                    requireItem.setAmount(0);
+                    inv.setItem(ConfigManager.configManager.getInt("change-gui.item-slot", 0),
+                            changeItem);
+                }
+            } else {
+                applyItem.doFailAction(player, requireItem);
+                targetItem.setAmount(targetItem.getAmount() - 1);
             }
-            LanguageManager.languageManager.sendStringText(player, "do-not-apply");
         }
         success = false;
     }

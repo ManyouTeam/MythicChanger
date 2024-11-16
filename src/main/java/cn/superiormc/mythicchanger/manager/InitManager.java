@@ -23,8 +23,8 @@ public class InitManager {
     public void init() {
         resourceOutput("languages/en_US.yml", true);
         resourceOutput("rules/example.yml", false);
-        resourceOutput("apply_items/A.yml", false);
-        resourceOutput("apply_items/B.yml", false);
+        resourceOutput("apply_items/ItemSkin.yml", false);
+        resourceOutput("apply_items/Deapply.yml", false);
     }
 
     public boolean isFirstLoad() {
@@ -34,7 +34,7 @@ public class InitManager {
     private void resourceOutput(String fileName, boolean fix) {
         File tempVal1 = new File(MythicChanger.instance.getDataFolder(), fileName);
         if (!tempVal1.exists()) {
-            if (!firstLoad && !fix) {
+            if (!firstLoad && fix) {
                 return;
             }
             File tempVal2 = new File(fileName);

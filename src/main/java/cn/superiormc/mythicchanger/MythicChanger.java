@@ -13,7 +13,7 @@ public class MythicChanger extends JavaPlugin {
 
     public static boolean isPaper = false;
 
-    public static final boolean freeVersion = false;
+    public static final boolean freeVersion = true;
 
     public static int majorVersion;
 

@@ -24,6 +24,6 @@ public class ResetApplyLimit extends AbstractChangesRule {
 
     @Override
     public boolean configNotContains(ConfigurationSection section) {
-        return section.contains("reset-apply-limit");
+        return !section.contains("reset-apply-limit");
     }
 }

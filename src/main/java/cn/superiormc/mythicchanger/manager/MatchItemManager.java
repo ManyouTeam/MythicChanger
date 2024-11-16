@@ -46,6 +46,7 @@ public class MatchItemManager {
             registerNewRule(new HasApply());
             registerNewRule(new ContainsApply());
             registerNewRule(new MaterialTag());
+            registerNewRule(new Enchantable());
         }
     }
 

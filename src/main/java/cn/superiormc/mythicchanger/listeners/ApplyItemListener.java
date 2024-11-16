@@ -55,7 +55,7 @@ public class ApplyItemListener implements Listener {
         }
         ObjectApplyItem applyItem = ConfigManager.configManager.getApplyItemID(extraItem.getItemMeta());
         if (applyItem != null && targetItem.getItemMeta() != null) {
-            if (applyItem.matchItem(targetItem)) {
+            if (applyItem.matchItem(player, targetItem)) {
                 ObjectSingleRule rule = applyItem.getRule();
                 ItemMeta tempVal3 = targetItem.getItemMeta();
                 if (rule != null) {
@@ -76,22 +76,24 @@ public class ApplyItemListener implements Listener {
                                     player.updateInventory();
                                 }
                             }
-                            LanguageManager.languageManager.sendStringText(player, "apply-item-success");
                         } else {
                             applyItem.doFailAction(player, targetItem);
                         }
                         extraItem.setAmount(extraItem.getAmount() - 1);
                     }
-                } else if (applyItem.getDeapply()) {
-                    if (tempVal3.getPersistentDataContainer().has(
-                            ObjectApplyItem.MYTHICCHANGER_APPLY_RULE, PersistentDataType.STRING
-                    )) {
-                        tempVal3.getPersistentDataContainer().remove(ObjectApplyItem.MYTHICCHANGER_APPLY_RULE);
-                        targetItem.setItemMeta(tempVal3);
-                        LanguageManager.languageManager.sendStringText(player, "deapply-item-success");
-                        extraItem.setAmount(extraItem.getAmount() - 1);
+                } else {
+                    if (applyItem.getChance()) {
+                        applyItem.doSuccessAction(player, targetItem);
+                        ItemStack newItem = applyItem.setRealChange(targetItem, targetItem.clone(), targetItem, player);
+                        if (ItemUtil.isValid(newItem) && !newItem.isSimilar(targetItem)) {
+                            targetItem.setAmount(0);
+                            event.setCurrentItem(newItem);
+                            event.setCancelled(true);
+                            player.updateInventory();
+                        }
                     } else {
-                        LanguageManager.languageManager.sendStringText(player, "do-not-has-rule");
+                        applyItem.doFailAction(player, targetItem);
+                        targetItem.setAmount(targetItem.getAmount() - 1);
                     }
                 }
             } else {

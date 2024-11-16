@@ -22,6 +22,6 @@ public class Empty extends AbstractChangesRule {
 
     @Override
     public boolean configNotContains(ConfigurationSection section) {
-        return section.contains("empty");
+        return !section.contains("empty");
     }
 }

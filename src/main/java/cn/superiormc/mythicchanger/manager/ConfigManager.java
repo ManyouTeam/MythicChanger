@@ -88,14 +88,14 @@ public class ConfigManager {
         }
         for (File file : files) {
             if (file.isDirectory()) {
-                loadRules(file); // 递归调用以加载子文件夹内的文件
+                loadApplyItem(file); // 递归调用以加载子文件夹内的文件
             } else {
                 String fileName = file.getName();
                 if (fileName.endsWith(".yml")) {
                     String substring = fileName.substring(0, fileName.length() - 4);
                     if (MythicChanger.freeVersion && itemMap.size() >= 3) {
                         ErrorManager.errorManager.sendErrorMessage("§x§9§8§F§B§9§8[MythicChanger] §cError: Free version can only create up to " +
-                                "3 apply items, if you want to more, please consider purcahse the premium version.");
+                                "3 apply items, if you want to more, please consider purchase the premium version.");
                         break;
                     }
                     if (itemMap.containsKey(substring)) {

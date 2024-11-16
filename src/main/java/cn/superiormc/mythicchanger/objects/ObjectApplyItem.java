@@ -1,10 +1,10 @@
 package cn.superiormc.mythicchanger.objects;
 
 import cn.superiormc.mythicchanger.MythicChanger;
-import cn.superiormc.mythicchanger.manager.ConfigManager;
-import cn.superiormc.mythicchanger.manager.ErrorManager;
-import cn.superiormc.mythicchanger.manager.MatchItemManager;
+import cn.superiormc.mythicchanger.manager.*;
 import cn.superiormc.mythicchanger.methods.BuildItem;
+import cn.superiormc.mythicchanger.utils.CommonUtil;
+import cn.superiormc.mythicchanger.utils.ItemUtil;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -12,6 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Random;
@@ -30,13 +31,13 @@ public class ObjectApplyItem {
 
     private ObjectSingleRule rule;
 
-    private boolean deapply = false;
-
     private final ConfigurationSection section;
 
     private final ObjectAction successAction;
 
     private final ObjectAction failAction;
+
+    private final ObjectCondition condition;
 
     public ObjectApplyItem(String id, ConfigurationSection section) {
         this.id = id;
@@ -49,20 +50,14 @@ public class ObjectApplyItem {
         }
         this.successAction = new ObjectAction(section.getConfigurationSection("success-actions"));
         this.failAction = new ObjectAction(section.getConfigurationSection("fail-actions"));
+        this.condition = new ObjectCondition(section.getConfigurationSection("conditions"));
         String tempVal2 = section.getString("apply-rule");
         if (tempVal2 != null) {
-            if (tempVal2.equals("deapply")) {
-                deapply = true;
-            }
             ObjectSingleRule tempVal1 = ConfigManager.configManager.getRule(tempVal2);
             if (tempVal1 != null) {
                 rule = tempVal1;
             }
         }
-    }
-
-    public boolean getDeapply() {
-        return deapply;
     }
 
     public String getId() {
@@ -78,7 +73,11 @@ public class ObjectApplyItem {
     }
 
     public ItemStack getApplyItem(Player player) {
-        ItemStack applyItem = BuildItem.buildItemStack(player, section);
+        ConfigurationSection itemSection = section.getConfigurationSection("display-item");
+        if (itemSection == null) {
+            itemSection = section;
+        }
+        ItemStack applyItem = BuildItem.buildItemStack(player, itemSection);
         ItemMeta meta = applyItem.getItemMeta();
         if (meta != null) {
             meta.getPersistentDataContainer().set(MYTHICCHANGER_APPLY_ITEM, PersistentDataType.STRING, id);
@@ -89,7 +88,62 @@ public class ObjectApplyItem {
         return applyItem;
     }
 
-    public boolean matchItem(ItemStack item) {
+    public void giveApplyItem(Player player, int amount) {
+        ItemStack targetItem = getApplyItem(player);
+        Collection<ItemStack> result = new ArrayList<>();
+        int leftAmount = 0;
+        // leftAmount 代表物品玩家当前背包可以重复利用的堆叠数量
+        for (ItemStack item : player.getInventory().getStorageContents()) {
+            if (ItemUtil.isValid(item) && item.isSimilar(targetItem)) {
+                leftAmount = leftAmount + targetItem.getMaxStackSize() - item.getAmount();
+                if (leftAmount < 0) {
+                    leftAmount = 0;
+                }
+            }
+        }
+        int requiredSlots = 0;
+        if (amount > leftAmount) {
+            requiredSlots = (int) Math.ceil((double) (amount - leftAmount) / targetItem.getMaxStackSize());
+            boolean first = true;
+            for (int i = 0 ; i < requiredSlots ; i ++) {
+                if (first) {
+                    ItemStack tempVal1 = targetItem.clone();
+                    tempVal1.setAmount(amount - (requiredSlots - 1) * targetItem.getMaxStackSize());
+                    result.add(tempVal1);
+                    first = false;
+                    continue;
+                }
+                ItemStack tempVal1 = targetItem.clone();
+                tempVal1.setAmount(targetItem.getMaxStackSize());
+                result.add(tempVal1);
+            }
+        } else {
+            targetItem.setAmount(amount);
+            result.add(targetItem);
+        }
+        for (ItemStack tempVal1 : result) {
+            CommonUtil.giveOrDrop(player, tempVal1);
+        }
+        LanguageManager.languageManager.sendStringText(player, "plugin.item-gave", "item", id,
+                "player", player.getName(), "amount", String.valueOf(amount));
+    }
+
+    public ItemStack setRealChange(ItemStack applyItem, ItemStack original, ItemStack item, Player player) {
+        if (item == null || item.getType().isAir()) {
+            return null;
+        }
+        ConfigurationSection tempVal1 = section.getConfigurationSection("real-changes");
+        if (tempVal1 == null || tempVal1.getKeys(false).isEmpty()) {
+            return null;
+        }
+        applyItem.setAmount(applyItem.getAmount() - 1);
+        return ChangesManager.changesManager.setRealChange(new ObjectAction(), tempVal1, original, item, player);
+    }
+
+    public boolean matchItem(Player player, ItemStack item) {
+        if (!condition.getAllBoolean(player, item, item)) {
+            return false;
+        }
         ConfigurationSection matchItemSection = section.getConfigurationSection("match-item");
         if (matchItemSection == null) {
             return true;
