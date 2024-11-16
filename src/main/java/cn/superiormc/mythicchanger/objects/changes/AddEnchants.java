@@ -1,12 +1,11 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
 import cn.superiormc.mythicchanger.manager.ConfigManager;
+import cn.superiormc.mythicchanger.objects.ObjectSingleChange;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
-import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -17,24 +16,18 @@ public class AddEnchants extends AbstractChangesRule {
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section,
-                               ItemStack original,
-                               ItemStack item,
-                               Player player,
-                               boolean fakeOrReal,
-                               boolean isPlayerInventory) {
-        ItemMeta meta = item.getItemMeta();
-        for (String ench : section.getConfigurationSection("add-enchants").getKeys(false)) {
-            Enchantment vanillaEnchant = Registry.ENCHANTMENT.get(CommonUtil.parseNamespacedKey(ench.toLowerCase()));
+    public ItemStack setChange(ObjectSingleChange singleChange) {
+        ItemMeta meta = singleChange.getItemMeta();
+        for (String ench : singleChange.getConfigurationSection("add-enchants").getKeys(false)) {
+            Enchantment vanillaEnchant = Registry.ENCHANTMENT.get(CommonUtil.parseNamespacedKey(ench));
             if (vanillaEnchant != null) {
-                int level = section.getConfigurationSection("add-enchants").getInt(ench);
+                int level = singleChange.getInt("add-enchants." + ench);
                 if (meta.getEnchants().get(vanillaEnchant) == null || meta.getEnchants().get(vanillaEnchant) < level) {
                     meta.addEnchant(vanillaEnchant, level, true);
                 }
             }
         }
-        item.setItemMeta(meta);
-        return item;
+        return singleChange.setItemMeta(meta);
     }
 
     @Override

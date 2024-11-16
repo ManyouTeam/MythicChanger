@@ -6,6 +6,7 @@ import cn.superiormc.mythicchanger.methods.BuildItem;
 import cn.superiormc.mythicchanger.objects.ObjectApplyItem;
 import cn.superiormc.mythicchanger.objects.ObjectSingleRule;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
+import cn.superiormc.mythicchanger.utils.ItemUtil;
 import cn.superiormc.mythicchanger.utils.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
@@ -56,7 +57,7 @@ public class ChangeGUI extends InvGUI {
             if (item == null || item.getType().isAir()) {
                 return true;
             }
-            return ConfigManager.configManager.getApplyItemID(item) == null;
+            return ConfigManager.configManager.getApplyItemID(item.getItemMeta()) == null;
         }
         return true;
     }
@@ -77,13 +78,13 @@ public class ChangeGUI extends InvGUI {
             success = false;
             return;
         }
-        ObjectApplyItem applyItem = ConfigManager.configManager.getApplyItemID(targetItem);
+        ObjectApplyItem applyItem = ConfigManager.configManager.getApplyItemID(targetItem.getItemMeta());
         if (applyItem == null) {
             success = false;
             return;
         }
         ItemStack newItem = requireItem.clone();
-        if (!applyItem.matchItem(newItem)) {
+        if (!applyItem.matchItem(player, newItem)) {
             success = false;
             player.closeInventory();
             LanguageManager.languageManager.sendStringText(player, "do-not-apply");
@@ -98,46 +99,42 @@ public class ChangeGUI extends InvGUI {
                     player.closeInventory();
                 }
                 LanguageManager.languageManager.sendStringText(player, "not-meet-condition");
-            } else if (!tempVal3.getPersistentDataContainer().has(
-                    ObjectApplyItem.MYTHICCHANGER_APPLY_RULE, PersistentDataType.STRING)) {
-                tempVal3.getPersistentDataContainer().set(ObjectApplyItem.MYTHICCHANGER_APPLY_RULE, PersistentDataType.STRING, rule.getId());
-                requireItem.setItemMeta(tempVal3);
-                if (applyItem.getApplyRealChange()) {
-                    ItemStack changeItem = rule.setRealChange(requireItem.clone(), requireItem, player);
+            } else if (ObjectApplyItem.getRule(tempVal3).size() >= ObjectApplyItem.getLimit(tempVal3)) {
+                success = false;
+                if (ConfigManager.configManager.getBoolean("change-gui.close-if-fail")) {
+                    player.closeInventory();
+                }
+                LanguageManager.languageManager.sendStringText(player, "rule-limit-reached");
+            } else {
+                if (applyItem.getChance()) {
+                    applyItem.doSuccessAction(player, requireItem);
+                    requireItem = applyItem.addRuleID(requireItem, tempVal3);
+                    if (applyItem.getApplyRealChange()) {
+                        ItemStack changeItem = rule.setRealChange(requireItem.clone(), requireItem, player);
+                        if (ItemUtil.isValid(changeItem)) {
+                            requireItem.setAmount(0);
+                            inv.setItem(ConfigManager.configManager.getInt("change-gui.item-slot", 0),
+                                    changeItem);
+                        }
+                    }
+                } else {
+                    applyItem.doFailAction(player, requireItem);
+                }
+                targetItem.setAmount(targetItem.getAmount() - 1);
+            }
+        } else {
+            if (applyItem.getChance()) {
+                applyItem.doSuccessAction(player, requireItem);
+                ItemStack changeItem = applyItem.setRealChange(targetItem, requireItem.clone(), requireItem, player);
+                if (ItemUtil.isValid(changeItem)) {
                     requireItem.setAmount(0);
                     inv.setItem(ConfigManager.configManager.getInt("change-gui.item-slot", 0),
                             changeItem);
                 }
-                LanguageManager.languageManager.sendStringText(player, "apply-item-success");
-                targetItem.setAmount(targetItem.getAmount() - 1);
             } else {
-                success = false;
-                if (ConfigManager.configManager.getBoolean("change-gui.close-if-fail")) {
-                    player.closeInventory();
-                }
-                LanguageManager.languageManager.sendStringText(player, "already-has-rule");
-            }
-        } else if (applyItem.getDeapply()) {
-            if (tempVal3.getPersistentDataContainer().has(
-                    ObjectApplyItem.MYTHICCHANGER_APPLY_RULE, PersistentDataType.STRING
-            )) {
-                tempVal3.getPersistentDataContainer().remove(ObjectApplyItem.MYTHICCHANGER_APPLY_RULE);
-                requireItem.setItemMeta(tempVal3);
-                LanguageManager.languageManager.sendStringText(player, "deapply-item-success");
+                applyItem.doFailAction(player, requireItem);
                 targetItem.setAmount(targetItem.getAmount() - 1);
-            } else {
-                success = false;
-                if (ConfigManager.configManager.getBoolean("change-gui.close-if-fail")) {
-                    player.closeInventory();
-                }
-                LanguageManager.languageManager.sendStringText(player, "do-not-has-rule");
             }
-        } else {
-            success = false;
-            if (ConfigManager.configManager.getBoolean("change-gui.close-if-fail")) {
-                player.closeInventory();
-            }
-            LanguageManager.languageManager.sendStringText(player, "do-not-apply");
         }
         success = false;
     }

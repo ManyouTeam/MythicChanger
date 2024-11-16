@@ -2,12 +2,9 @@ package cn.superiormc.mythicchanger.objects.changes;
 
 import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.methods.BuildItem;
-import cn.superiormc.mythicchanger.utils.ItemUtil;
+import cn.superiormc.mythicchanger.objects.ObjectSingleChange;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.Objects;
 
 public class EditItem extends AbstractChangesRule {
 
@@ -16,15 +13,10 @@ public class EditItem extends AbstractChangesRule {
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section,
-                               ItemStack original,
-                               ItemStack item,
-                               Player player,
-                               boolean fakeOrReal,
-                               boolean isPlayerInventory) {
-        return BuildItem.editItemStack(player,
-                item,
-                Objects.requireNonNull(section.getConfigurationSection("edit-item")), "name", ItemUtil.getItemName(item));
+    public ItemStack setChange(ObjectSingleChange singleChange) {
+        return BuildItem.editItemStack(singleChange.getPlayer(),
+                singleChange.getItem(),
+                singleChange.getConfigurationSection("edit-item"));
     }
 
     @Override

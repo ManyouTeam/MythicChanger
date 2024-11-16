@@ -1,8 +1,8 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
 import cn.superiormc.mythicchanger.manager.ConfigManager;
+import cn.superiormc.mythicchanger.objects.ObjectSingleChange;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -14,27 +14,18 @@ public class KeepFlags extends AbstractChangesRule {
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section,
-                               ItemStack original,
-                               ItemStack item,
-                               Player player,
-                               boolean fakeOrReal,
-                               boolean isPlayerInventory) {
-        if (section.getBoolean("keep-flags", false)) {
-            ItemMeta meta = item.getItemMeta();
-            ItemMeta originalMeta = original.getItemMeta();
-            if (meta == null || originalMeta == null) {
-                return item;
-            }
+    public ItemStack setChange(ObjectSingleChange singleChange) {
+        if (singleChange.getBoolean("keep-flags")) {
+            ItemMeta meta = singleChange.getItemMeta();
+            ItemMeta originalMeta = singleChange.getOriginalMeta();
             if (!originalMeta.getItemFlags().isEmpty()) {
                 for (ItemFlag flag : originalMeta.getItemFlags()) {
                     meta.addItemFlags(flag);
                 }
             }
-            item.setItemMeta(meta);
-            return item;
+            return singleChange.setItemMeta(meta);
         }
-        return item;
+        return singleChange.getItem();
     }
 
     @Override

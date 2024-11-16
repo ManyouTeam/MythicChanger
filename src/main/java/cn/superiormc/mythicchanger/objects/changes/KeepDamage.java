@@ -1,8 +1,8 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
 import cn.superiormc.mythicchanger.manager.ConfigManager;
+import cn.superiormc.mythicchanger.objects.ObjectSingleChange;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -14,17 +14,12 @@ public class KeepDamage extends AbstractChangesRule {
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section,
-                               ItemStack original,
-                               ItemStack item,
-                               Player player,
-                               boolean fakeOrReal,
-                               boolean isPlayerInventory) {
-        if (section.getBoolean("keep-damage", false)) {
-            ItemMeta meta = item.getItemMeta();
-            ItemMeta originalMeta = original.getItemMeta();
+    public ItemStack setChange(ObjectSingleChange singleChange) {
+        if (singleChange.getBoolean("keep-damage")) {
+            ItemMeta meta = singleChange.getItemMeta();
+            ItemMeta originalMeta = singleChange.getOriginalMeta();
             if (meta == null || originalMeta == null) {
-                return item;
+                return singleChange.getItem();
             }
             if (meta instanceof Damageable && originalMeta instanceof Damageable) {
                 Damageable damageable = (Damageable) meta;
@@ -32,11 +27,11 @@ public class KeepDamage extends AbstractChangesRule {
                 if (originalDamageable.hasDamage()) {
                     damageable.setDamage(originalDamageable.getDamage());
                 }
-                item.setItemMeta(damageable);
+                return singleChange.setItemMeta(damageable);
             }
-            return item;
+            return singleChange.getItem();
         }
-        return item;
+        return singleChange.getItem();
     }
 
     @Override

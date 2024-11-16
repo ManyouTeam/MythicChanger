@@ -1,9 +1,9 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
 import cn.superiormc.mythicchanger.manager.ConfigManager;
+import cn.superiormc.mythicchanger.objects.ObjectSingleChange;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -14,24 +14,15 @@ public class RemoveAllEnchants extends AbstractChangesRule {
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section,
-                               ItemStack original,
-                               ItemStack item,
-                               Player player,
-                               boolean fakeOrReal,
-                               boolean isPlayerInventory) {
-        if (!item.hasItemMeta()) {
-            return item;
+    public ItemStack setChange(ObjectSingleChange singleChange) {
+        if (!singleChange.getBoolean("remove-all-enchants")) {
+            return singleChange.getItem();
         }
-        if (!section.getBoolean("remove-all-enchants")) {
-            return item;
-        }
-        ItemMeta meta = item.getItemMeta();
-        for (Enchantment enchant : item.getEnchantments().keySet()) {
+        ItemMeta meta = singleChange.getItemMeta();
+        for (Enchantment enchant : singleChange.getItem().getEnchantments().keySet()) {
             meta.removeEnchant(enchant);
         }
-        item.setItemMeta(meta);
-        return item;
+        return singleChange.setItemMeta(meta);
     }
 
     @Override

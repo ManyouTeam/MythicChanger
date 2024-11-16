@@ -1,6 +1,7 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
 import cn.superiormc.mythicchanger.manager.ConfigManager;
+import cn.superiormc.mythicchanger.objects.ObjectSingleChange;
 import cn.superiormc.mythicchanger.utils.TextUtil;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -14,24 +15,18 @@ public class ReplaceName extends AbstractChangesRule {
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section,
-                               ItemStack original,
-                               ItemStack item,
-                               Player player,
-                               boolean fakeOrReal,
-                               boolean isPlayerInventory) {
-        ConfigurationSection tempVal1 = section.getConfigurationSection("replace-name");
-        ItemMeta meta = item.getItemMeta();
+    public ItemStack setChange(ObjectSingleChange singleChange) {
+        ConfigurationSection tempVal1 = singleChange.getConfigurationSection("replace-name");
+        ItemMeta meta = singleChange.getItemMeta();
         if (!meta.hasLore()) {
-            return item;
+            return singleChange.getItem();
         }
         String displayName = meta.getDisplayName();
         for (String requiredName : tempVal1.getKeys(false)) {
-            displayName = displayName.replace(requiredName, TextUtil.parse(tempVal1.getString(requiredName), player));
+            displayName = displayName.replace(requiredName, TextUtil.parse(tempVal1.getString(requiredName), singleChange.getPlayer()));
         }
         meta.setDisplayName(displayName);
-        item.setItemMeta(meta);
-        return item;
+        return singleChange.setItemMeta(meta);
     }
 
     @Override

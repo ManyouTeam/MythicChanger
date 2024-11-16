@@ -1,6 +1,7 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
 import cn.superiormc.mythicchanger.manager.ConfigManager;
+import cn.superiormc.mythicchanger.objects.ObjectSingleChange;
 import com.google.common.base.Enums;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -15,25 +16,16 @@ public class RemoveFlags extends AbstractChangesRule {
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section,
-                               ItemStack original,
-                               ItemStack item,
-                               Player player,
-                               boolean fakeOrReal,
-                               boolean isPlayerInventory) {
-        if (!item.hasItemMeta()) {
-            return item;
-        }
-        ItemMeta meta = item.getItemMeta();
-        for (String flag : section.getStringList("remove-flags")) {
+    public ItemStack setChange(ObjectSingleChange singleChange) {
+        ItemMeta meta = singleChange.getItemMeta();
+        for (String flag : singleChange.getStringList("remove-flags")) {
             flag = flag.toUpperCase();
             ItemFlag itemFlag = Enums.getIfPresent(ItemFlag.class, flag).orNull();
             if (itemFlag != null) {
                 meta.removeItemFlags(itemFlag);
             }
         }
-        item.setItemMeta(meta);
-        return item;
+        return singleChange.setItemMeta(meta);
     }
 
     @Override

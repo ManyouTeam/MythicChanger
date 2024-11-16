@@ -2,6 +2,7 @@ package cn.superiormc.mythicchanger.protolcol.ProtocolLib;
 
 import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.manager.ConfigManager;
+import cn.superiormc.mythicchanger.utils.ItemUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -44,16 +45,12 @@ public class WindowClick implements Listener {
                 }
             }
             ItemStack newItem = ConfigManager.configManager.startRealChange(tempItemStack, player);
-            if (isValid(newItem) && !newItem.isSimilar(tempItemStack)) {
+            if (ItemUtil.isValid(newItem) && !newItem.isSimilar(tempItemStack)) {
                 tempItemStack.setAmount(0);
                 event.setCurrentItem(newItem);
                 event.setCancelled(true);
                 player.updateInventory();
             }
         }
-    }
-
-    private boolean isValid(ItemStack item) {
-        return item != null && !item.getType().isAir();
     }
 }

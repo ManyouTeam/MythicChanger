@@ -2,12 +2,10 @@ package cn.superiormc.mythicchanger.utils;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class TextUtil {
 
@@ -40,6 +38,17 @@ public class TextUtil {
                 s = PlaceholderAPI.setPlaceholders(player, s);
             }
             resultList.add(TextUtil.parse(s));
+        }
+        return resultList;
+    }
+
+    public static List<String> getListWithPAPI(List<String> inList, Player player) {
+        List<String> resultList = new ArrayList<>();
+        for (String s : inList) {
+            if (CommonUtil.checkPluginLoad("PlaceholderAPI")) {
+                s = PlaceholderAPI.setPlaceholders(player, s);
+            }
+            resultList.add(s);
         }
         return resultList;
     }

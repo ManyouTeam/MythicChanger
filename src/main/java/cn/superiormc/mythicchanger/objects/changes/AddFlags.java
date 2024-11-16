@@ -1,6 +1,7 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
 import cn.superiormc.mythicchanger.manager.ConfigManager;
+import cn.superiormc.mythicchanger.objects.ObjectSingleChange;
 import cn.superiormc.mythicchanger.objects.changes.AbstractChangesRule;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
 import com.google.common.base.Enums;
@@ -18,14 +19,9 @@ public class AddFlags extends AbstractChangesRule {
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section,
-                               ItemStack original,
-                               ItemStack item,
-                               Player player,
-                               boolean fakeOrReal,
-                               boolean isPlayerInventory) {
-        ItemMeta meta = item.getItemMeta();
-        for (String flag : section.getStringList("add-flags")) {
+    public ItemStack setChange(ObjectSingleChange singleChange) {
+        ItemMeta meta = singleChange.getItemMeta();
+        for (String flag : singleChange.getStringList("add-flags")) {
             flag = flag.toUpperCase();
             ItemFlag itemFlag = Enums.getIfPresent(ItemFlag.class, flag).orNull();
             if (itemFlag != null) {
@@ -35,8 +31,7 @@ public class AddFlags extends AbstractChangesRule {
                 meta.setAttributeModifiers(MultimapBuilder.hashKeys().hashSetValues().build());
             }
         }
-        item.setItemMeta(meta);
-        return item;
+        return singleChange.setItemMeta(meta);
     }
 
     @Override

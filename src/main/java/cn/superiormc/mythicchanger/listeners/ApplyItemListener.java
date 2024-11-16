@@ -4,6 +4,7 @@ import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.manager.LanguageManager;
 import cn.superiormc.mythicchanger.objects.ObjectApplyItem;
 import cn.superiormc.mythicchanger.objects.ObjectSingleRule;
+import cn.superiormc.mythicchanger.utils.ItemUtil;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -44,9 +45,6 @@ public class ApplyItemListener implements Listener {
         if (meta == null) {
             return;
         }
-        if (!meta.getPersistentDataContainer().has(ObjectApplyItem.MYTHICCHANGER_APPLY_ITEM, PersistentDataType.STRING)) {
-            return;
-        }
         if (player.getGameMode() == GameMode.CREATIVE) {
             LanguageManager.languageManager.sendStringText(player, "error.creative-mode");
             return;
@@ -55,40 +53,47 @@ public class ApplyItemListener implements Listener {
             LanguageManager.languageManager.sendStringText(player, "error.item-only-one");
             return;
         }
-        ObjectApplyItem applyItem = ConfigManager.configManager.getApplyItemID(extraItem);
+        ObjectApplyItem applyItem = ConfigManager.configManager.getApplyItemID(extraItem.getItemMeta());
         if (applyItem != null && targetItem.getItemMeta() != null) {
-            if (applyItem.matchItem(targetItem)) {
+            if (applyItem.matchItem(player, targetItem)) {
                 ObjectSingleRule rule = applyItem.getRule();
                 ItemMeta tempVal3 = targetItem.getItemMeta();
                 if (rule != null) {
                     if (!rule.getCondition().getAllBoolean(player, targetItem, targetItem)) {
                         LanguageManager.languageManager.sendStringText(player, "not-meet-condition");
-                    } else if (!tempVal3.getPersistentDataContainer().has(
-                            ObjectApplyItem.MYTHICCHANGER_APPLY_RULE, PersistentDataType.STRING)) {
-                        tempVal3.getPersistentDataContainer().set(ObjectApplyItem.MYTHICCHANGER_APPLY_RULE, PersistentDataType.STRING, rule.getId());
-                        targetItem.setItemMeta(tempVal3);
-                        if (applyItem.getApplyRealChange()) {
-                            ItemStack newItem = rule.setRealChange(targetItem.clone(), targetItem, player);
+                    } else if (ObjectApplyItem.getRule(tempVal3).size() >= ObjectApplyItem.getLimit(tempVal3)) {
+                        LanguageManager.languageManager.sendStringText(player, "rule-limit-reached");
+                    } else {
+                        if (applyItem.getChance()) {
+                            applyItem.doSuccessAction(player, targetItem);
+                            targetItem = applyItem.addRuleID(targetItem, tempVal3);
+                            if (applyItem.getApplyRealChange()) {
+                                ItemStack newItem = rule.setRealChange(targetItem.clone(), targetItem, player);
+                                if (ItemUtil.isValid(newItem) && !newItem.isSimilar(targetItem)) {
+                                    targetItem.setAmount(0);
+                                    event.setCurrentItem(newItem);
+                                    event.setCancelled(true);
+                                    player.updateInventory();
+                                }
+                            }
+                        } else {
+                            applyItem.doFailAction(player, targetItem);
+                        }
+                        extraItem.setAmount(extraItem.getAmount() - 1);
+                    }
+                } else {
+                    if (applyItem.getChance()) {
+                        applyItem.doSuccessAction(player, targetItem);
+                        ItemStack newItem = applyItem.setRealChange(targetItem, targetItem.clone(), targetItem, player);
+                        if (ItemUtil.isValid(newItem) && !newItem.isSimilar(targetItem)) {
                             targetItem.setAmount(0);
                             event.setCurrentItem(newItem);
                             event.setCancelled(true);
                             player.updateInventory();
                         }
-                        LanguageManager.languageManager.sendStringText(player, "apply-item-success");
-                        extraItem.setAmount(extraItem.getAmount() - 1);
                     } else {
-                        LanguageManager.languageManager.sendStringText(player, "already-has-rule");
-                    }
-                } else if (applyItem.getDeapply()) {
-                    if (tempVal3.getPersistentDataContainer().has(
-                            ObjectApplyItem.MYTHICCHANGER_APPLY_RULE, PersistentDataType.STRING
-                    )) {
-                        tempVal3.getPersistentDataContainer().remove(ObjectApplyItem.MYTHICCHANGER_APPLY_RULE);
-                        targetItem.setItemMeta(tempVal3);
-                        LanguageManager.languageManager.sendStringText(player, "deapply-item-success");
-                        extraItem.setAmount(extraItem.getAmount() - 1);
-                    } else {
-                        LanguageManager.languageManager.sendStringText(player, "do-not-has-rule");
+                        applyItem.doFailAction(player, targetItem);
+                        targetItem.setAmount(targetItem.getAmount() - 1);
                     }
                 }
             } else {

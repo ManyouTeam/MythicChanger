@@ -1,6 +1,7 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
 import cn.superiormc.mythicchanger.manager.ConfigManager;
+import cn.superiormc.mythicchanger.objects.ObjectSingleChange;
 import cn.superiormc.mythicchanger.utils.TextUtil;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -17,28 +18,22 @@ public class AddLorePrefix extends AbstractChangesRule {
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section,
-                               ItemStack original,
-                               ItemStack item,
-                               Player player,
-                               boolean fakeOrReal,
-                               boolean isPlayerInventory) {
-        ItemMeta meta = item.getItemMeta();
+    public ItemStack setChange(ObjectSingleChange singleChange) {
+        ItemMeta meta = singleChange.getItemMeta();
         if (!meta.hasLore()) {
-            return item;
+            return singleChange.getItem();
         }
         List<String> itemLore = meta.getLore();
         List<String> newLore = new ArrayList<>();
         for (String lore : itemLore) {
             if (lore.startsWith("§w")) {
-                newLore.add(lore);
+                newLore.add(TextUtil.parse(lore, singleChange.getPlayer()));
                 continue;
             }
-            newLore.add("§w" + TextUtil.parse(section.getString("add-lore-prefix") + lore, player));
+            newLore.add("§w" + singleChange.getString("add-lore-prefix") + lore);
         }
         meta.setLore(newLore);
-        item.setItemMeta(meta);
-        return item;
+        return singleChange.setItemMeta(meta);
     }
 
     @Override
