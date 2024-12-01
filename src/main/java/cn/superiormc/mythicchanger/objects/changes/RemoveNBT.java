@@ -1,12 +1,11 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
 import cn.superiormc.mythicchanger.manager.ConfigManager;
+import cn.superiormc.mythicchanger.objects.ObjectSingleChange;
 import de.tr7zw.nbtapi.NBTCompound;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
@@ -17,18 +16,9 @@ public class RemoveNBT extends AbstractChangesRule {
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section,
-                               ItemStack original,
-                               ItemStack item,
-                               Player player,
-                               boolean fakeOrReal,
-                               boolean isPlayerInventory) {
-        ItemMeta meta = item.getItemMeta();
-        if (meta == null) {
-            return item;
-        }
-        NBTItem nbtItem = new NBTItem(item.clone());
-        List<String> tempVal1 = section.getStringList("remove-nbt");
+    public ItemStack setChange(ObjectSingleChange singleChange) {
+        NBTItem nbtItem = new NBTItem(singleChange.getItem().clone());
+        List<String> tempVal1 = singleChange.getStringList("remove-nbt");
         big: for (String key : tempVal1) {
             String[] parentKeys = key.split(";;");
             if (parentKeys.length == 1) {

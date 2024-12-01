@@ -45,13 +45,7 @@ public class SubGiveApplyItem extends AbstractCommand {
         if (args.length == 4) {
             amount = Integer.parseInt(args[3]);
         }
-        ItemStack item = applyItem.getApplyItem(player);
-        if (item != null) {
-            item.setAmount(amount);
-            givePlayer.getInventory().addItem(item);
-            LanguageManager.languageManager.sendStringText(player, "plugin.item-gave", "item", args[1],
-                    "player", givePlayer.getName(), "amount", String.valueOf(amount));
-        }
+        applyItem.giveApplyItem(givePlayer, amount);
     }
 
     @Override
@@ -74,13 +68,7 @@ public class SubGiveApplyItem extends AbstractCommand {
         if (args.length == 4) {
             amount = Integer.parseInt(args[3]);
         }
-        ItemStack item = applyItem.getApplyItem(givePlayer);
-        if (item != null) {
-            item.setAmount(amount);
-            givePlayer.getInventory().addItem(item);
-            LanguageManager.languageManager.sendStringText("plugin.item-gave", "item", args[1],
-                    "player", givePlayer.getName(), "amount", String.valueOf(amount));
-        }
+        applyItem.giveApplyItem(givePlayer, amount);
     }
 
     @Override

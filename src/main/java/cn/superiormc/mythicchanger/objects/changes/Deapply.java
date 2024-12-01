@@ -2,6 +2,7 @@ package cn.superiormc.mythicchanger.objects.changes;
 
 import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.objects.ObjectApplyItem;
+import cn.superiormc.mythicchanger.objects.ObjectSingleChange;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -14,18 +15,13 @@ public class Deapply extends AbstractChangesRule {
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section,
-                               ItemStack original,
-                               ItemStack item,
-                               Player player,
-                               boolean fakeOrReal,
-                               boolean isPlayerInventory) {
-        if (section.getBoolean("deapply")) {
-            ItemMeta meta = item.getItemMeta();
+    public ItemStack setChange(ObjectSingleChange singleChange) {
+        if (singleChange.getBoolean("deapply")) {
+            ItemMeta meta = singleChange.getItemMeta();
             meta.getPersistentDataContainer().remove(ObjectApplyItem.MYTHICCHANGER_APPLY_RULE);
-            item.setItemMeta(meta);
+            return singleChange.setItemMeta(meta);
         }
-        return item;
+        return singleChange.getItem();
     }
 
     @Override

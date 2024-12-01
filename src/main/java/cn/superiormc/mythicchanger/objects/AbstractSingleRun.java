@@ -1,13 +1,17 @@
 package cn.superiormc.mythicchanger.objects;
 
+import cn.superiormc.mythicchanger.methods.DebuildItem;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
 import cn.superiormc.mythicchanger.utils.ItemUtil;
 import cn.superiormc.mythicchanger.utils.TextUtil;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.MemoryConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public abstract class AbstractSingleRun {
 
@@ -23,12 +27,33 @@ public abstract class AbstractSingleRun {
                 ,"world", player.getWorld().getName()
                 ,"original-name", ItemUtil.getItemName(original)
                 ,"name", ItemUtil.getItemName(item)
+                ,"amount", String.valueOf(item.getAmount())
+                ,"max-stack", String.valueOf(item.getMaxStackSize())
                 ,"player_x", String.valueOf(player.getLocation().getX())
                 ,"player_y", String.valueOf(player.getLocation().getY())
                 ,"player_z", String.valueOf(player.getLocation().getZ())
                 ,"player_pitch", String.valueOf(player.getLocation().getPitch())
                 ,"player_yaw", String.valueOf(player.getLocation().getYaw())
                 ,"player", player.getName());
+        ConfigurationSection debuildItemFormat = null;
+        Pattern pattern1 = Pattern.compile("\\{item_(.*?)}");
+        Matcher matcher1 = pattern1.matcher(content);
+        while (matcher1.find()) {
+            if (debuildItemFormat == null) {
+                debuildItemFormat = DebuildItem.debuildItem(item, new MemoryConfiguration());
+            }
+            String key = matcher1.group(1);
+            String defaultValue = "";
+            String[] tempVal1 = key.split(";;");
+            if (tempVal1.length >= 2) {
+                defaultValue = tempVal1[1];
+            }
+            Object value = debuildItemFormat.get(tempVal1[0]);
+            if (value == null) {
+                value = defaultValue;
+            }
+            content = content.replace("{item_" + key + "}", value.toString());
+        }
         content = TextUtil.parse(content, player);
         return content;
     }

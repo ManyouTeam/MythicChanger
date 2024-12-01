@@ -1,9 +1,9 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
 import cn.superiormc.mythicchanger.manager.ConfigManager;
+import cn.superiormc.mythicchanger.objects.ObjectSingleChange;
 import cn.superiormc.mythicchanger.utils.TextUtil;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -14,22 +14,16 @@ public class ParsePAPIName extends AbstractChangesRule {
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section,
-                               ItemStack original,
-                               ItemStack item,
-                               Player player,
-                               boolean fakeOrReal,
-                               boolean isPlayerInventory) {
-        if (!section.getBoolean("parse-papi-name")) {
-            return item;
+    public ItemStack setChange(ObjectSingleChange singleChange) {
+        if (!singleChange.getBoolean("parse-papi-name")) {
+            return singleChange.getItem();
         }
-        ItemMeta meta = item.getItemMeta();
+        ItemMeta meta = singleChange.getItemMeta();
         if (!meta.hasDisplayName()) {
-            return item;
+            return singleChange.getItem();
         }
-        meta.setDisplayName(TextUtil.parse(meta.getDisplayName(), player));
-        item.setItemMeta(meta);
-        return item;
+        meta.setDisplayName(TextUtil.parse(meta.getDisplayName(), singleChange.getPlayer()));
+        return singleChange.setItemMeta(meta);
     }
 
     @Override

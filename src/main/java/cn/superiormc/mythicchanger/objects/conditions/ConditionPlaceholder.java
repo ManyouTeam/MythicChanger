@@ -1,6 +1,7 @@
 package cn.superiormc.mythicchanger.objects.conditions;
 
 import cn.superiormc.mythicchanger.manager.ErrorManager;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -14,6 +15,9 @@ public class ConditionPlaceholder extends AbstractCheckCondition {
     @Override
     protected boolean onCheckCondition(ObjectSingleCondition singleCondition, Player player, ItemStack original, ItemStack item) {
         String placeholder = singleCondition.getString("placeholder", player, original, item);
+        if (placeholder.isEmpty()) {
+            return true;
+        }
         String value = singleCondition.getString("value", player, original, item);
         switch (singleCondition.getString("rule")) {
             case ">=":

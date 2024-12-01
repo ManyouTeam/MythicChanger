@@ -7,8 +7,11 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Collection;
 
 public class ObjectSingleRule implements Comparable<ObjectSingleRule> {
 
@@ -31,11 +34,14 @@ public class ObjectSingleRule implements Comparable<ObjectSingleRule> {
         if (!condition.getAllBoolean(player, item, item)) {
             return false;
         }
-        if (fakeOrReal && item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer().has(ObjectApplyItem.MYTHICCHANGER_APPLY_RULE,
+        ItemMeta meta = item.getItemMeta();
+        if (fakeOrReal && item.hasItemMeta() && meta.getPersistentDataContainer().has(ObjectApplyItem.MYTHICCHANGER_APPLY_RULE,
                 PersistentDataType.STRING)) {
-            String id = item.getItemMeta().getPersistentDataContainer().get(ObjectApplyItem.MYTHICCHANGER_APPLY_RULE, PersistentDataType.STRING);
-            if (id != null && id.equals(this.id)) {
-                return true;
+            Collection<ObjectApplyItem> applyItems = ObjectApplyItem.getRule(meta);
+            for (ObjectApplyItem applyItem : applyItems) {
+                if (applyItem.getRule() != null && applyItem.getRule().id.equals(id)) {
+                    return true;
+                }
             }
         }
         ConfigurationSection section = config.getConfigurationSection("match-item");

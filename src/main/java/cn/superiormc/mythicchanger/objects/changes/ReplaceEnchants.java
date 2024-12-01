@@ -1,12 +1,11 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
 import cn.superiormc.mythicchanger.manager.ConfigManager;
+import cn.superiormc.mythicchanger.objects.ObjectSingleChange;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
-import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -17,21 +16,13 @@ public class ReplaceEnchants extends AbstractChangesRule {
     }
 
     @Override
-    public ItemStack setChange(ConfigurationSection section,
-                               ItemStack original,
-                               ItemStack item,
-                               Player player,
-                               boolean fakeOrReal,
-                               boolean isPlayerInventory) {
-        if (!item.hasItemMeta()) {
-            return item;
-        }
-        ItemMeta meta = item.getItemMeta();
-        ConfigurationSection enchantSection = section.getConfigurationSection("replace-enchants");
+    public ItemStack setChange(ObjectSingleChange singleChange) {
+        ItemMeta meta = singleChange.getItemMeta();
+        ConfigurationSection enchantSection = singleChange.getConfigurationSection("replace-enchants");
         for (String ench : enchantSection.getKeys(false)) {
             Enchantment vanillaEnchant = Registry.ENCHANTMENT.get(CommonUtil.parseNamespacedKey(ench.toLowerCase()));
-            if (vanillaEnchant != null && item.getEnchantments().get(vanillaEnchant) != null) {
-                int level = item.getEnchantmentLevel(vanillaEnchant);
+            if (vanillaEnchant != null && singleChange.getItem().getEnchantments().get(vanillaEnchant) != null) {
+                int level = singleChange.getItem().getEnchantmentLevel(vanillaEnchant);
                 meta.removeEnchant(vanillaEnchant);
                 Enchantment addEnchant = Registry.ENCHANTMENT.get(CommonUtil.parseNamespacedKey(ench.toLowerCase()));
                 if (addEnchant != null) {
@@ -39,8 +30,7 @@ public class ReplaceEnchants extends AbstractChangesRule {
                 }
             }
         }
-        item.setItemMeta(meta);
-        return item;
+        return singleChange.setItemMeta(meta);
     }
 
     @Override

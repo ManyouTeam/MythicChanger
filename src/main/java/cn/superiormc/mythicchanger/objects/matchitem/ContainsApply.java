@@ -4,7 +4,8 @@ import cn.superiormc.mythicchanger.objects.ObjectApplyItem;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataType;
+
+import java.util.Collection;
 
 public class ContainsApply extends AbstractMatchItemRule {
     public ContainsApply() {
@@ -13,14 +14,12 @@ public class ContainsApply extends AbstractMatchItemRule {
 
     @Override
     public boolean getMatch(ConfigurationSection section, ItemStack item, ItemMeta meta) {
-        if (!meta.getPersistentDataContainer().has(
-                ObjectApplyItem.MYTHICCHANGER_APPLY_RULE, PersistentDataType.STRING)) {
-            return false;
-        }
-        String id = meta.getPersistentDataContainer().get(ObjectApplyItem.MYTHICCHANGER_APPLY_RULE, PersistentDataType.STRING);
-        for (String requiredLore : section.getStringList("contains-apply")) {
-            if (requiredLore.equals(id)) {
-                return true;
+        Collection<ObjectApplyItem> applyItems = ObjectApplyItem.getRule(meta);
+        for (ObjectApplyItem applyItem : applyItems) {
+            for (String requiredLore : section.getStringList("contains-apply")) {
+                if (requiredLore.equals(applyItem.getId())) {
+                    return true;
+                }
             }
         }
         return false;

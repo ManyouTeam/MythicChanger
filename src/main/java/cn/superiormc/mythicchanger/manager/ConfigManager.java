@@ -35,9 +35,7 @@ public class ConfigManager {
         configManager = this;
         config = MythicChanger.instance.getConfig();
         initRulesConfigs();
-        if (!MythicChanger.freeVersion) {
-            initApplyItemConfigs();
-        }
+        initApplyItemConfigs();
     }
 
     private void initRulesConfigs() {
@@ -90,12 +88,17 @@ public class ConfigManager {
         }
         for (File file : files) {
             if (file.isDirectory()) {
-                loadRules(file); // 递归调用以加载子文件夹内的文件
+                loadApplyItem(file); // 递归调用以加载子文件夹内的文件
             } else {
                 String fileName = file.getName();
                 if (fileName.endsWith(".yml")) {
                     String substring = fileName.substring(0, fileName.length() - 4);
-                    if (ruleMap.containsKey(substring)) {
+                    if (MythicChanger.freeVersion && itemMap.size() >= 3) {
+                        ErrorManager.errorManager.sendErrorMessage("§x§9§8§F§B§9§8[MythicChanger] §cError: Free version can only create up to " +
+                                "3 apply items, if you want to more, please consider purchase the premium version.");
+                        break;
+                    }
+                    if (itemMap.containsKey(substring)) {
                         ErrorManager.errorManager.sendErrorMessage("§x§9§8§F§B§9§8[MythicChanger] §cError: Already loaded a apply item config called: " +
                                 fileName + "!");
                         continue;
@@ -172,9 +175,11 @@ public class ConfigManager {
     }
 
     @Nullable
-    public ObjectApplyItem getApplyItemID(ItemStack item) {
-        ItemMeta meta = item.getItemMeta();
+    public ObjectApplyItem getApplyItemID(ItemMeta meta) {
         if (meta == null) {
+            return null;
+        }
+        if (!meta.getPersistentDataContainer().has(ObjectApplyItem.MYTHICCHANGER_APPLY_ITEM, PersistentDataType.STRING)) {
             return null;
         }
         String id = meta.getPersistentDataContainer().get(ObjectApplyItem.MYTHICCHANGER_APPLY_ITEM, PersistentDataType.STRING);
