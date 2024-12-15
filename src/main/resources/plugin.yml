@@ -2,6 +2,7 @@ name: MythicChanger
 version: '${project.version}'
 main: cn.superiormc.mythicchanger.MythicChanger
 api-version: '1.14'
+folia-supported: true
 author: PQguanfang
 depend:
   - ProtocolLib

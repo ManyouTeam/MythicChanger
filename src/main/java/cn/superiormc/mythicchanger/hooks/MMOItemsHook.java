@@ -1,6 +1,7 @@
 package cn.superiormc.mythicchanger.hooks;
 
 import cn.superiormc.mythicchanger.MythicChanger;
+import cn.superiormc.mythicchanger.utils.SchedulerUtil;
 import net.Indyuce.mmoitems.MMOItems;
 import net.Indyuce.mmoitems.api.Type;
 import net.Indyuce.mmoitems.api.item.template.MMOItemTemplate;
@@ -30,7 +31,7 @@ public class MMOItemsHook {
         //if (using) {
         //    return;
         //}
-        Bukkit.getScheduler().runTask(MythicChanger.instance, () -> {
+        SchedulerUtil.runSync(() -> {
             itemCaches.put(template, template.newBuilder().build().newBuilder().build());
         });
     }

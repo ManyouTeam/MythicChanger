@@ -4,6 +4,7 @@ import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.manager.ChangesManager;
 import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
+import cn.superiormc.mythicchanger.utils.SchedulerUtil;
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
@@ -73,7 +74,7 @@ public class SetSlots extends GeneralPackets {
         ItemStack newItem = ConfigManager.configManager.startRealChange(tempItemStack, player);
         if (newItem != null && !newItem.getType().isAir()) {
             ChangesManager.changesManager.addCooldown(player, slot);
-            Bukkit.getScheduler().runTask(MythicChanger.instance, () -> {
+            SchedulerUtil.runSync(() -> {
                 player.getInventory().setItem(spigotSlot, newItem);
             });
         }

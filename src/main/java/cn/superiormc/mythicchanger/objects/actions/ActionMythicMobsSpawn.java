@@ -1,23 +1,22 @@
 package cn.superiormc.mythicchanger.objects.actions;
 
-import cn.superiormc.mythicchanger.MythicChanger;
+import cn.superiormc.mythicchanger.utils.CommonUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class ActionEntitySpawn extends AbstractRunAction {
+public class ActionMythicMobsSpawn extends AbstractRunAction {
 
-    public ActionEntitySpawn() {
-        super("entity_spawn");
+    public ActionMythicMobsSpawn() {
+        super("mythicmobs_spawn");
         setRequiredArgs("entity");
     }
 
     @Override
     protected void onDoAction(ObjectSingleAction singleAction, Player player, ItemStack original, ItemStack item) {
-        EntityType entity = EntityType.valueOf(singleAction.getString("entity").toUpperCase());
+        String mobName = singleAction.getString("entity");
         String worldName = singleAction.getString("world");
         Location location;
         if (worldName == null) {
@@ -30,10 +29,6 @@ public class ActionEntitySpawn extends AbstractRunAction {
                     singleAction.getDouble("z"));
 
         }
-        if (MythicChanger.isFolia) {
-            Bukkit.getRegionScheduler().run(MythicChanger.instance, location, task -> location.getWorld().spawnEntity(location, entity));
-            return;
-        }
-        location.getWorld().spawnEntity(player.getLocation(), entity);
+        CommonUtil.summonMythicMobs(location, mobName, singleAction.getInt("level", 1));
     }
 }

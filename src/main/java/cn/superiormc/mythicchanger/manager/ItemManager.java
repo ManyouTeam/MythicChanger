@@ -2,6 +2,7 @@ package cn.superiormc.mythicchanger.manager;
 
 import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
+import cn.superiormc.mythicchanger.utils.SchedulerUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -62,7 +63,7 @@ public class ItemManager {
             briefcase.set("item", itemStack);
         }
         String yaml = briefcase.saveToString();
-        Bukkit.getScheduler().runTaskAsynchronously(MythicChanger.instance,() -> {
+        SchedulerUtil.runTaskAsynchronously(() -> {
             Path path = new File(dir.getPath(), key + ".yml").toPath();
             try {
                 Files.write(path, yaml.getBytes(StandardCharsets.UTF_8));

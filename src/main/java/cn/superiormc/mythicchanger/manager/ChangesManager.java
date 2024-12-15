@@ -82,32 +82,40 @@ public class ChangesManager {
     }
 
     public ItemStack setFakeChange(ConfigurationSection section, ItemStack original, ItemStack item, Player player, boolean isPlayerInventory) {
+        ObjectSingleChange singleChange = new ObjectSingleChange(section, original, item, player, true, isPlayerInventory);
         for (AbstractChangesRule rule : rules) {
             if (rule.configNotContains(section)) {
                 continue;
             }
+            if (singleChange.getItemMeta() == null || singleChange.getOriginalMeta() == null) {
+                break;
+            }
             if (ConfigManager.configManager.getBoolean("debug")) {
                 Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fApply fake rule: " + rule.getClass().getName());
             }
-            item = rule.setChange(new ObjectSingleChange(section, original, item, player, true, isPlayerInventory));
+            item = rule.setChange(singleChange);
         }
         return item;
     }
 
     public ItemStack setRealChange(ObjectAction action, ConfigurationSection section, ItemStack original, ItemStack item, Player player) {
         boolean needReturnNewItem = false;
+        ObjectSingleChange singleChange = new ObjectSingleChange(section, original, item, player, false, true);
         for (AbstractChangesRule rule : rules) {
             if (rule.configNotContains(section)) {
                 continue;
+            }
+            if (singleChange.getItemMeta() == null || singleChange.getOriginalMeta() == null) {
+                break;
             }
             if (ConfigManager.configManager.getBoolean("debug")) {
                 Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fApply real rule: " + rule.getClass().getName());
             }
             if (rule.getNeedRewriteItem(section)) {
-                item = rule.setChange(new ObjectSingleChange(section, original, item, player, false, true));
+                item = rule.setChange(singleChange);
                 needReturnNewItem = true;
             } else {
-                rule.setChange(new ObjectSingleChange(section, original, item, player, false, true));
+                rule.setChange(singleChange);
             }
         }
         if (!MythicChanger.freeVersion && !action.isEmpty()) {

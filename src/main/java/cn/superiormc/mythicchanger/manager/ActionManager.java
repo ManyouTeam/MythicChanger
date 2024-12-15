@@ -34,6 +34,7 @@ public class ActionManager {
         registerNewAction("delay", new ActionDelay());
         registerNewAction("any", new ActionAny());
         registerNewAction("conditional", new ActionConditional());
+        registerNewAction("mythicmobs_spawn", new ActionMythicMobsSpawn());
     }
 
     public void registerNewAction(String actionID,

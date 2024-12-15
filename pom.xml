@@ -6,7 +6,7 @@
 
     <groupId>cn.superiormc</groupId>
     <artifactId>MythicChanger</artifactId>
-    <version>2.1.2</version>
+    <version>2.1.5</version>
     <packaging>jar</packaging>
 
     <name>MythicChanger</name>
@@ -166,7 +166,7 @@
         <dependency>
             <groupId>com.willfp</groupId>
             <artifactId>EcoItems</artifactId>
-            <version>5.10.4</version>
+            <version>5.59.2</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -268,6 +268,13 @@
             <artifactId>Crunch</artifactId>
             <version>2.0</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.nexomc</groupId>
+            <artifactId>nexo</artifactId>
+            <version>0.5.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/nexo-0.5.0-dev.jar</systemPath>
         </dependency>
     </dependencies>
 </project>

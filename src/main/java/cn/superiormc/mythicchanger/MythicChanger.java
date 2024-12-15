@@ -4,6 +4,7 @@ import cn.superiormc.mythicchanger.listeners.ApplyItemListener;
 import cn.superiormc.mythicchanger.manager.*;
 import cn.superiormc.mythicchanger.protolcol.ProtocolLib.*;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
+import cn.superiormc.mythicchanger.utils.SchedulerUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -13,11 +14,13 @@ public class MythicChanger extends JavaPlugin {
 
     public static boolean isPaper = false;
 
+    public static boolean isFolia = false;
+
     public static final boolean freeVersion = true;
 
     public static int majorVersion;
 
-    public static int miniorVersion;
+    public static int minorVersion;
 
     public static boolean newSkullMethod;
 
@@ -27,9 +30,19 @@ public class MythicChanger extends JavaPlugin {
         try {
             String[] versionParts = Bukkit.getBukkitVersion().split("-")[0].split("\\.");
             majorVersion = versionParts.length > 1 ? Integer.parseInt(versionParts[1]) : 0;
-            miniorVersion = versionParts.length > 2 ? Integer.parseInt(versionParts[2]) : 0;
+            minorVersion = versionParts.length > 2 ? Integer.parseInt(versionParts[2]) : 0;
         } catch (Throwable throwable) {
             Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §cError: Can not get your Minecraft version! Default set to 1.0.0.");
+        }
+        if (CommonUtil.getClass("com.destroystokyo.paper.PaperConfig")) {
+            Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fPaper is found, enabled Paper only feature!");
+            isPaper = true;
+        }
+        if (CommonUtil.getClass("io.papermc.paper.threadedregions.RegionizedServerInitEvent")) {
+            Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fFolia is found, enabled Folia compatibility feature!");
+            Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §6Warning: Folia support is not fully test, major bugs maybe found! " +
+                    "Please do not use in production environment!");
+            isFolia = true;
         }
         new ErrorManager();
         new InitManager();
@@ -38,12 +51,8 @@ public class MythicChanger extends JavaPlugin {
         new ConfigManager();
         new HookManager();
         new LanguageManager();
-        if (CommonUtil.getClass("com.destroystokyo.paper.PaperConfig")) {
-            Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fPaper is found, enabled Paper only feature!");
-            isPaper = true;
-        }
         if (ConfigManager.configManager.getBoolean("pack-listener", true)) {
-            Bukkit.getScheduler().runTaskAsynchronously(MythicChanger.instance, () -> {
+            SchedulerUtil.runTaskAsynchronously(() -> {
                 new SetSlots();
                 new WindowItem();
                 new WindowClick();
@@ -64,7 +73,7 @@ public class MythicChanger extends JavaPlugin {
             newSkullMethod = true;
             Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fNew AuthLib found, enabled new skull get method!");
         }
-        Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fYour Minecraft version is: 1." + majorVersion + "." + miniorVersion + "!");
+        Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fYour Minecraft version is: 1." + majorVersion + "." + minorVersion + "!");
         Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fPlugin is loaded. Author: PQguanfang.");
     }
 

@@ -4,6 +4,7 @@ import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.manager.LanguageManager;
 import cn.superiormc.mythicchanger.methods.DebuildItem;
 import cn.superiormc.mythicchanger.objects.AbstractCommand;
+import cn.superiormc.mythicchanger.utils.SchedulerUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -28,7 +29,7 @@ public class SubGenerateItemFormat extends AbstractCommand {
         YamlConfiguration itemConfig = new YamlConfiguration();
         DebuildItem.debuildItem(player.getInventory().getItemInMainHand(), itemConfig);
         String yaml = itemConfig.saveToString();
-        Bukkit.getScheduler().runTaskAsynchronously(MythicChanger.instance,() -> {
+        SchedulerUtil.runTaskAsynchronously(() -> {
             Path path = new File(MythicChanger.instance.getDataFolder(), "generated-item-format.yml").toPath();
             try {
                 Files.write(path, yaml.getBytes(StandardCharsets.UTF_8));
