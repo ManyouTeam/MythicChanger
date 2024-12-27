@@ -4,7 +4,7 @@
 
 debug: false
 
-# If you just want to use our apply item system, or just use our match item feature without any need of change item,
+# If you just want to use our match item feature without any need of change item,
 # you can disable this option to improve plugin performance and disable auto item change feature.
 packet-listener: true
 

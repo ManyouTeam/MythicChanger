@@ -51,7 +51,7 @@ public class MythicChanger extends JavaPlugin {
         new ConfigManager();
         new HookManager();
         new LanguageManager();
-        if (ConfigManager.configManager.getBoolean("pack-listener", true)) {
+        if (ConfigManager.configManager.getBoolean("packet-listener", true)) {
             SchedulerUtil.runTaskAsynchronously(() -> {
                 new SetSlots();
                 new WindowItem();

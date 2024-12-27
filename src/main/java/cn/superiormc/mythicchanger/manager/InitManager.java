@@ -12,7 +12,7 @@ public class InitManager {
 
     public InitManager() {
         initManager = this;
-        File file = new File(MythicChanger.instance.getDataFolder() + "config.yml");
+        File file = new File(MythicChanger.instance.getDataFolder(), "config.yml");
         if (!file.exists()) {
             MythicChanger.instance.saveDefaultConfig();
             firstLoad = true;
@@ -34,7 +34,7 @@ public class InitManager {
     private void resourceOutput(String fileName, boolean fix) {
         File tempVal1 = new File(MythicChanger.instance.getDataFolder(), fileName);
         if (!tempVal1.exists()) {
-            if (!firstLoad && fix) {
+            if (!firstLoad && !fix) {
                 return;
             }
             File tempVal2 = new File(fileName);
