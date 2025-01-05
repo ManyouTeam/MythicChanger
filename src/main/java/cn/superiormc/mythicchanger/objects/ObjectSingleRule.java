@@ -48,7 +48,7 @@ public class ObjectSingleRule implements Comparable<ObjectSingleRule> {
         return MatchItemManager.matchItemManager.getMatch(section, item);
     }
 
-    public ItemStack setFakeChange(ItemStack original, ItemStack item, Player player, boolean isPlayerInventory) {
+    public ItemStack setFakeChange(ItemStack item, Player player, boolean isPlayerInventory) {
         if (item == null || item.getType().isAir()) {
             return item;
         }
@@ -56,10 +56,10 @@ public class ObjectSingleRule implements Comparable<ObjectSingleRule> {
         if (section == null || section.getKeys(false).isEmpty()) {
             return item;
         }
-        return ChangesManager.changesManager.setFakeChange(section, original, item, player, isPlayerInventory);
+        return ChangesManager.changesManager.setFakeChange(section, item, player, isPlayerInventory);
     }
 
-    public ItemStack setRealChange(ItemStack original, ItemStack item, Player player) {
+    public ItemStack setRealChange(ItemStack item, Player player) {
         if (item == null || item.getType().isAir()) {
             return null;
         }
@@ -67,7 +67,7 @@ public class ObjectSingleRule implements Comparable<ObjectSingleRule> {
         if (section == null || section.getKeys(false).isEmpty()) {
             return null;
         }
-        return ChangesManager.changesManager.setRealChange(action, section, original, item, player);
+        return ChangesManager.changesManager.setRealChange(action, section, item, player);
     }
 
     public String getId() {

@@ -117,10 +117,9 @@ public class ConfigManager {
         if (ConfigManager.configManager.getBoolean("debug")) {
             Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fStart fake change!");
         }
-        final ItemStack originalItem = item.clone();
         for (ObjectSingleRule rule: ruleCaches) {
             if (rule.getMatchItem(item, true, player) && (!rule.getOnlyInPlayerInventory() || modifyPlayerInInventory(player, isPlayerInventory))) {
-                item = rule.setFakeChange(originalItem, item, player, isPlayerInventory);
+                item = rule.setFakeChange(item, player, isPlayerInventory);
             }
         }
         return item;
@@ -143,10 +142,9 @@ public class ConfigManager {
         }
         int amount = item.getAmount();
         boolean needReturnNewItem = false;
-        ItemStack originalItem = item.clone();
         for (ObjectSingleRule rule: ruleCaches) {
             if (rule.getMatchItem(item, false, player)) {
-                ItemStack tempVal1 = rule.setRealChange(originalItem, item, player);
+                ItemStack tempVal1 = rule.setRealChange(item, player);
                 if (tempVal1 != null) {
                     item = tempVal1;
                     needReturnNewItem = true;

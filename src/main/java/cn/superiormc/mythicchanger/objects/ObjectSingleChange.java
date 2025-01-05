@@ -27,7 +27,7 @@ public class ObjectSingleChange extends MemoryConfiguration {
 
     private final ItemStack original;
 
-    private final ItemStack item;
+    private ItemStack item;
 
     private final Player player;
 
@@ -46,13 +46,12 @@ public class ObjectSingleChange extends MemoryConfiguration {
     private final String originalName;
 
     public ObjectSingleChange(ConfigurationSection section,
-                              ItemStack original,
                               ItemStack item,
                               Player player,
                               boolean fakeOrReal,
                               boolean isPlayerInventory) {
         this.section = section;
-        this.original = original;
+        this.original = item.clone();
         this.item = item;
         this.itemMeta = item.getItemMeta();
         this.originalMeta = original.getItemMeta();
@@ -99,6 +98,15 @@ public class ObjectSingleChange extends MemoryConfiguration {
 
     public ItemStack getOriginal() {
         return original;
+    }
+
+    public void replaceItem(ItemStack item) {
+        this.item = item;
+        this.itemMeta = item.getItemMeta();
+    }
+
+    public void setItem(ItemStack item) {
+        this.item = item;
     }
 
     public ConfigurationSection getDebuildItemFormat() {

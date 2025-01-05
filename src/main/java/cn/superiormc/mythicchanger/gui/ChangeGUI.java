@@ -68,22 +68,22 @@ public class ChangeGUI extends InvGUI {
             return;
         }
         success = true;
-        ItemStack requireItem = inv.getItem(ConfigManager.configManager.getInt("change-gui.item-slot", 0));
-        if (requireItem == null || requireItem.getType().isAir()) {
+        ItemStack usedItemStack = inv.getItem(ConfigManager.configManager.getInt("change-gui.item-slot", 0));
+        if (usedItemStack == null || usedItemStack.getType().isAir()) {
             success = false;
             return;
         }
-        ItemStack targetItem = inv.getItem(ConfigManager.configManager.getInt("change-gui.book-slot", 1));
-        if (targetItem == null || targetItem.getType().isAir()) {
+        ItemStack applyItemStack = inv.getItem(ConfigManager.configManager.getInt("change-gui.book-slot", 1));
+        if (applyItemStack == null || applyItemStack.getType().isAir()) {
             success = false;
             return;
         }
-        ObjectApplyItem applyItem = ConfigManager.configManager.getApplyItemID(targetItem.getItemMeta());
+        ObjectApplyItem applyItem = ConfigManager.configManager.getApplyItemID(applyItemStack.getItemMeta());
         if (applyItem == null) {
             success = false;
             return;
         }
-        ItemStack newItem = requireItem.clone();
+        ItemStack newItem = usedItemStack.clone();
         if (!applyItem.matchItem(player, newItem)) {
             success = false;
             player.closeInventory();
@@ -91,7 +91,7 @@ public class ChangeGUI extends InvGUI {
             return;
         }
         ObjectSingleRule rule = applyItem.getRule();
-        ItemMeta tempVal3 = requireItem.getItemMeta();
+        ItemMeta tempVal3 = usedItemStack.getItemMeta();
         if (rule != null) {
             if (!rule.getCondition().getAllBoolean(player, item, item)) {
                 success = false;
@@ -107,33 +107,33 @@ public class ChangeGUI extends InvGUI {
                 LanguageManager.languageManager.sendStringText(player, "rule-limit-reached");
             } else {
                 if (applyItem.getChance()) {
-                    applyItem.doSuccessAction(player, requireItem);
-                    requireItem = applyItem.addRuleID(requireItem, tempVal3);
+                    applyItem.doSuccessAction(player, usedItemStack);
+                    usedItemStack = applyItem.addRuleID(usedItemStack, tempVal3);
                     if (applyItem.getApplyRealChange()) {
-                        ItemStack changeItem = rule.setRealChange(requireItem.clone(), requireItem, player);
+                        ItemStack changeItem = rule.setRealChange(usedItemStack, player);
                         if (ItemUtil.isValid(changeItem)) {
-                            requireItem.setAmount(0);
+                            usedItemStack.setAmount(0);
                             inv.setItem(ConfigManager.configManager.getInt("change-gui.item-slot", 0),
                                     changeItem);
                         }
                     }
                 } else {
-                    applyItem.doFailAction(player, requireItem);
+                    applyItem.doFailAction(player, usedItemStack);
                 }
-                targetItem.setAmount(targetItem.getAmount() - 1);
+                applyItemStack.setAmount(applyItemStack.getAmount() - 1);
             }
         } else {
             if (applyItem.getChance()) {
-                applyItem.doSuccessAction(player, requireItem);
-                ItemStack changeItem = applyItem.setRealChange(targetItem, requireItem.clone(), requireItem, player);
+                applyItem.doSuccessAction(player, usedItemStack);
+                ItemStack changeItem = applyItem.setRealChange(applyItemStack, usedItemStack, player);
                 if (ItemUtil.isValid(changeItem)) {
-                    requireItem.setAmount(0);
+                    usedItemStack.setAmount(0);
                     inv.setItem(ConfigManager.configManager.getInt("change-gui.item-slot", 0),
                             changeItem);
                 }
             } else {
-                applyItem.doFailAction(player, requireItem);
-                targetItem.setAmount(targetItem.getAmount() - 1);
+                applyItem.doFailAction(player, usedItemStack);
+                applyItemStack.setAmount(applyItemStack.getAmount() - 1);
             }
         }
         success = false;
@@ -142,13 +142,13 @@ public class ChangeGUI extends InvGUI {
     @Override
     public void closeEventHandle(Inventory inventory) {
         if (!success) {
-            ItemStack requireItem = inv.getItem(ConfigManager.configManager.getInt("change-gui.item-slot", 0));
-            if (requireItem != null && !requireItem.getType().isAir()) {
-                CommonUtil.giveOrDrop(player, requireItem);
+            ItemStack usedItemStack = inv.getItem(ConfigManager.configManager.getInt("change-gui.item-slot", 0));
+            if (usedItemStack != null && !usedItemStack.getType().isAir()) {
+                CommonUtil.giveOrDrop(player, usedItemStack);
             }
-            ItemStack targetItem = inv.getItem(ConfigManager.configManager.getInt("change-gui.book-slot", 1));
-            if (targetItem != null && !targetItem.getType().isAir()) {
-                CommonUtil.giveOrDrop(player, targetItem);
+            ItemStack applyItemStack = inv.getItem(ConfigManager.configManager.getInt("change-gui.book-slot", 1));
+            if (applyItemStack != null && !applyItemStack.getType().isAir()) {
+                CommonUtil.giveOrDrop(player, applyItemStack);
             }
         }
     }

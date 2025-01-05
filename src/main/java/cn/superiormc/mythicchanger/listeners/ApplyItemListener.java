@@ -33,67 +33,67 @@ public class ApplyItemListener implements Listener {
             return;
         }
         Player player = (Player)event.getWhoClicked();
-        ItemStack targetItem = event.getCurrentItem();
-        if (targetItem == null || targetItem.getType().isAir()) {
+        ItemStack usedItemStack = event.getCurrentItem();
+        if (usedItemStack == null || usedItemStack.getType().isAir()) {
             return;
         }
-        ItemStack extraItem = event.getCursor();
-        if (extraItem == null || extraItem.getType().isAir()) {
+        ItemStack applyItemStack = event.getCursor();
+        if (applyItemStack == null || applyItemStack.getType().isAir()) {
             return;
         }
-        ItemMeta meta = extraItem.getItemMeta();
+        ItemMeta meta = applyItemStack.getItemMeta();
         if (meta == null) {
             return;
         }
-        ObjectApplyItem applyItem = ConfigManager.configManager.getApplyItemID(extraItem.getItemMeta());
-        if (applyItem != null && targetItem.getItemMeta() != null) {
+        ObjectApplyItem applyItem = ConfigManager.configManager.getApplyItemID(applyItemStack.getItemMeta());
+        if (applyItem != null && usedItemStack.getItemMeta() != null) {
             if (player.getGameMode() == GameMode.CREATIVE) {
                 LanguageManager.languageManager.sendStringText(player, "error.creative-mode");
                 return;
             }
-            if (extraItem.getAmount() != 1) {
+            if (applyItemStack.getAmount() != 1) {
                 LanguageManager.languageManager.sendStringText(player, "error.item-only-one");
                 return;
             }
-            if (applyItem.matchItem(player, targetItem)) {
+            if (applyItem.matchItem(player, usedItemStack)) {
                 ObjectSingleRule rule = applyItem.getRule();
-                ItemMeta tempVal3 = targetItem.getItemMeta();
+                ItemMeta tempVal3 = usedItemStack.getItemMeta();
                 if (rule != null) {
-                    if (!rule.getCondition().getAllBoolean(player, targetItem, targetItem)) {
+                    if (!rule.getCondition().getAllBoolean(player, usedItemStack, usedItemStack)) {
                         LanguageManager.languageManager.sendStringText(player, "not-meet-condition");
                     } else if (ObjectApplyItem.getRule(tempVal3).size() >= ObjectApplyItem.getLimit(tempVal3)) {
                         LanguageManager.languageManager.sendStringText(player, "rule-limit-reached");
                     } else {
                         if (applyItem.getChance()) {
-                            applyItem.doSuccessAction(player, targetItem);
-                            targetItem = applyItem.addRuleID(targetItem, tempVal3);
+                            applyItem.doSuccessAction(player, usedItemStack);
+                            usedItemStack = applyItem.addRuleID(usedItemStack, tempVal3);
                             if (applyItem.getApplyRealChange()) {
-                                ItemStack newItem = rule.setRealChange(targetItem.clone(), targetItem, player);
-                                if (ItemUtil.isValid(newItem) && !newItem.isSimilar(targetItem)) {
-                                    targetItem.setAmount(0);
+                                ItemStack newItem = rule.setRealChange(usedItemStack, player);
+                                if (ItemUtil.isValid(newItem) && !newItem.isSimilar(usedItemStack)) {
+                                    usedItemStack.setAmount(0);
                                     event.setCurrentItem(newItem);
                                     event.setCancelled(true);
                                     player.updateInventory();
                                 }
                             }
                         } else {
-                            applyItem.doFailAction(player, targetItem);
+                            applyItem.doFailAction(player, usedItemStack);
                         }
-                        extraItem.setAmount(extraItem.getAmount() - 1);
+                        applyItemStack.setAmount(applyItemStack.getAmount() - 1);
                     }
                 } else {
                     if (applyItem.getChance()) {
-                        applyItem.doSuccessAction(player, targetItem);
-                        ItemStack newItem = applyItem.setRealChange(targetItem, targetItem.clone(), targetItem, player);
-                        if (ItemUtil.isValid(newItem) && !newItem.isSimilar(targetItem)) {
-                            targetItem.setAmount(0);
+                        applyItem.doSuccessAction(player, usedItemStack);
+                        ItemStack newItem = applyItem.setRealChange(applyItemStack, usedItemStack, player);
+                        if (ItemUtil.isValid(newItem) && !newItem.isSimilar(usedItemStack)) {
+                            usedItemStack.setAmount(0);
                             event.setCurrentItem(newItem);
                             event.setCancelled(true);
                             player.updateInventory();
                         }
                     } else {
-                        applyItem.doFailAction(player, targetItem);
-                        targetItem.setAmount(targetItem.getAmount() - 1);
+                        applyItem.doFailAction(player, usedItemStack);
+                        applyItemStack.setAmount(applyItemStack.getAmount() - 1);
                     }
                 }
             } else {

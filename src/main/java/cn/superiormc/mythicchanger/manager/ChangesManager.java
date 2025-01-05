@@ -81,8 +81,8 @@ public class ChangesManager {
         rules.add(rule);
     }
 
-    public ItemStack setFakeChange(ConfigurationSection section, ItemStack original, ItemStack item, Player player, boolean isPlayerInventory) {
-        ObjectSingleChange singleChange = new ObjectSingleChange(section, original, item, player, true, isPlayerInventory);
+    public ItemStack setFakeChange(ConfigurationSection section, ItemStack item, Player player, boolean isPlayerInventory) {
+        ObjectSingleChange singleChange = new ObjectSingleChange(section, item, player, true, isPlayerInventory);
         for (AbstractChangesRule rule : rules) {
             if (rule.configNotContains(section)) {
                 continue;
@@ -93,14 +93,18 @@ public class ChangesManager {
             if (ConfigManager.configManager.getBoolean("debug")) {
                 Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fApply fake rule: " + rule.getClass().getName());
             }
-            item = rule.setChange(singleChange);
+            if (rule.getNeedRewriteItem(section)) {
+                singleChange.replaceItem(rule.setChange(singleChange));
+            } else {
+                singleChange.setItem(rule.setChange(singleChange));
+            }
         }
-        return item;
+        return singleChange.getItem();
     }
 
-    public ItemStack setRealChange(ObjectAction action, ConfigurationSection section, ItemStack original, ItemStack item, Player player) {
+    public ItemStack setRealChange(ObjectAction action, ConfigurationSection section, ItemStack item, Player player) {
         boolean needReturnNewItem = false;
-        ObjectSingleChange singleChange = new ObjectSingleChange(section, original, item, player, false, true);
+        ObjectSingleChange singleChange = new ObjectSingleChange(section, item, player, false, true);
         for (AbstractChangesRule rule : rules) {
             if (rule.configNotContains(section)) {
                 continue;
@@ -112,17 +116,17 @@ public class ChangesManager {
                 Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fApply real rule: " + rule.getClass().getName());
             }
             if (rule.getNeedRewriteItem(section)) {
-                item = rule.setChange(singleChange);
+                singleChange.replaceItem(rule.setChange(singleChange));
                 needReturnNewItem = true;
             } else {
                 rule.setChange(singleChange);
             }
         }
         if (!MythicChanger.freeVersion && !action.isEmpty()) {
-            action.runAllActions(player, original, item);
+            action.runAllActions(player, item, singleChange.getItem());
         }
         if (needReturnNewItem) {
-            return item;
+            return singleChange.getItem();
         }
         return null;
     }

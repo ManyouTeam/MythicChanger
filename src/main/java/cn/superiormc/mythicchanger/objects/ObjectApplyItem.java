@@ -5,6 +5,7 @@ import cn.superiormc.mythicchanger.manager.*;
 import cn.superiormc.mythicchanger.methods.BuildItem;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
 import cn.superiormc.mythicchanger.utils.ItemUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -128,7 +129,7 @@ public class ObjectApplyItem {
                 "player", player.getName(), "amount", String.valueOf(amount));
     }
 
-    public ItemStack setRealChange(ItemStack applyItem, ItemStack original, ItemStack item, Player player) {
+    public ItemStack setRealChange(ItemStack applyItem, ItemStack item, Player player) {
         if (item == null || item.getType().isAir()) {
             return null;
         }
@@ -137,7 +138,7 @@ public class ObjectApplyItem {
             return null;
         }
         applyItem.setAmount(applyItem.getAmount() - 1);
-        return ChangesManager.changesManager.setRealChange(new ObjectAction(), tempVal1, original, item, player);
+        return ChangesManager.changesManager.setRealChange(new ObjectAction(), tempVal1, item, player);
     }
 
     public boolean matchItem(Player player, ItemStack item) {
@@ -181,10 +182,7 @@ public class ObjectApplyItem {
     public boolean getChance() {
         Random random = new Random();
         double rollNumber = random.nextDouble() * 100;
-        if (chance > rollNumber) {
-            return true;
-        }
-        return false;
+        return chance > rollNumber;
     }
 
     public static Collection<ObjectApplyItem> getRule(ItemMeta meta) {
