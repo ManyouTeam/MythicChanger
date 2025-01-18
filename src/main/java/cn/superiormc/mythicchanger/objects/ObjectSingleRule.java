@@ -1,7 +1,6 @@
 package cn.superiormc.mythicchanger.objects;
 
 import cn.superiormc.mythicchanger.manager.ChangesManager;
-import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.manager.MatchItemManager;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;

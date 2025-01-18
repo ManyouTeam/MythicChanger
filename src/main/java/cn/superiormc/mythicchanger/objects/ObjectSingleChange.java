@@ -5,8 +5,6 @@ import cn.superiormc.mythicchanger.utils.CommonUtil;
 import cn.superiormc.mythicchanger.utils.ItemUtil;
 import cn.superiormc.mythicchanger.utils.MathUtil;
 import cn.superiormc.mythicchanger.utils.TextUtil;
-import org.bukkit.Bukkit;
-import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemoryConfiguration;
 import org.bukkit.entity.Player;
@@ -101,6 +99,9 @@ public class ObjectSingleChange extends MemoryConfiguration {
     }
 
     public void replaceItem(ItemStack item) {
+        if (item == null) {
+            return;
+        }
         this.item = item;
         this.itemMeta = item.getItemMeta();
     }

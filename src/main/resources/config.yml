@@ -80,6 +80,7 @@ change-rule-weight:
   edit-lore: 14
   parse-papi-lore: 500
   parse-papi-name: 501
+  random-change: 1002
   remove-all-enchants: -198
   remove-enchants: -197
   remove-flags: -196
@@ -121,6 +122,7 @@ change-gui:
 # Premium version only.
 # Support value: GUI, DRAG
 # GUI mode is in EARLY ALPHA TEST, be careful to use!
+# Require server restart.
 apply-item-mode: DRAG
 
 default-apply-item-limit: 1
