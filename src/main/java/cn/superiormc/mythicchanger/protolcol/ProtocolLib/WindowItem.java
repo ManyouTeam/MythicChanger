@@ -23,7 +23,7 @@ public class WindowItem extends GeneralPackets {
 
     @Override
     protected void initPacketAdapter() {
-        packetAdapter = new PacketAdapter(MythicChanger.instance, ListenerPriority.LOWEST, PacketType.Play.Server.WINDOW_ITEMS) {
+        packetAdapter = new PacketAdapter(MythicChanger.instance, ConfigManager.configManager.getPriority(), PacketType.Play.Server.WINDOW_ITEMS) {
             @Override
             public void onPacketSending(PacketEvent event) {
                 if (event.getPlayer() == null) {

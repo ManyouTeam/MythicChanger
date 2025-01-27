@@ -21,7 +21,7 @@ public class WindowMerchant extends GeneralPackets {
 
     @Override
     protected void initPacketAdapter() {
-        packetAdapter = new PacketAdapter(MythicChanger.instance, ListenerPriority.LOWEST, PacketType.Play.Server.OPEN_WINDOW_MERCHANT) {
+        packetAdapter = new PacketAdapter(MythicChanger.instance, ConfigManager.configManager.getPriority(), PacketType.Play.Server.OPEN_WINDOW_MERCHANT) {
             @Override
             public void onPacketSending(PacketEvent event) {
                 PacketContainer packet = event.getPacket();

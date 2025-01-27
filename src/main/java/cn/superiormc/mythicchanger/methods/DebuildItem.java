@@ -192,7 +192,7 @@ public class DebuildItem {
         // Glow
         if (CommonUtil.getMinorVersion(20, 5)) {
             if (meta.hasEnchantmentGlintOverride()) {
-                section.set("hide-tool-tip", "true");
+                section.set("glow", "true");
             }
         }
 
@@ -556,12 +556,12 @@ public class DebuildItem {
 
             // Item Model
             if (meta.hasItemModel()) {
-                section.set("item-model", meta.getItemModel());
+                section.set("item-model", meta.getItemModel().asString());
             }
 
             // Tooltip Style
             if (meta.hasTooltipStyle()) {
-                section.set("tooltip-style", meta.getTooltipStyle());
+                section.set("tooltip-style", meta.getTooltipStyle().asString());
             }
 
             // Item Cooldown

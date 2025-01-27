@@ -280,7 +280,7 @@ public class BuildItem {
 
         // Glow
         if (CommonUtil.getMinorVersion(20, 5)) {
-            if (section.get("glow") != null) {
+            if (section.contains("glow")) {
                 meta.setEnchantmentGlintOverride(section.getBoolean("glow"));
             }
         }

@@ -23,7 +23,7 @@ public class SetSlots extends GeneralPackets {
     }
     @Override
     protected void initPacketAdapter(){
-        packetAdapter = new PacketAdapter(MythicChanger.instance, ListenerPriority.LOWEST, PacketType.Play.Server.SET_SLOT) {
+        packetAdapter = new PacketAdapter(MythicChanger.instance, ConfigManager.configManager.getPriority(), PacketType.Play.Server.SET_SLOT) {
             @Override
             public void onPacketSending(PacketEvent event) {
                 Player player = event.getPlayer();

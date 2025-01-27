@@ -8,6 +8,16 @@ debug: false
 # you can disable this option to improve plugin performance and disable auto item change feature.
 packet-listener: true
 
+# ProtocolLib Support value:
+#    LOWEST(0),
+#    LOW(1),
+#    NORMAL(2),
+#    HIGH(3),
+#    HIGHEST(4),
+#    MONITOR(5)
+# The value after the value just a number help you know it's level, do not type them in option.
+packet-listener-priority: LOWEST
+
 config-files:
   language: en_US
   # Premium version only.
