@@ -1,10 +1,8 @@
 package cn.superiormc.mythicchanger.objects;
 
+import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.methods.DebuildItem;
-import cn.superiormc.mythicchanger.utils.CommonUtil;
-import cn.superiormc.mythicchanger.utils.ItemUtil;
-import cn.superiormc.mythicchanger.utils.MathUtil;
-import cn.superiormc.mythicchanger.utils.TextUtil;
+import cn.superiormc.mythicchanger.utils.*;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemoryConfiguration;
 import org.bukkit.entity.Player;
@@ -218,20 +216,39 @@ public class ObjectSingleChange extends MemoryConfiguration {
                 "max-stack", String.valueOf(item.getMaxStackSize()),
                 "name", itemName,
                 "original-name", originalName);
-        Pattern pattern1 = Pattern.compile("\\{item_(.*?)}");
-        Matcher matcher1 = pattern1.matcher(text);
-        while (matcher1.find()) {
-            String key = matcher1.group(1);
-            String defaultValue = "";
-            String[] tempVal1 = key.split(";;");
-            if (tempVal1.length >= 2) {
-                defaultValue = tempVal1[1];
+        if (!MythicChanger.freeVersion) {
+            Pattern pattern1 = Pattern.compile("\\{item_(.*?)}");
+            Matcher matcher1 = pattern1.matcher(text);
+            while (matcher1.find()) {
+                String key = matcher1.group(1);
+                String defaultValue = "";
+                String[] tempVal1 = key.split(";;");
+                if (tempVal1.length >= 2) {
+                    defaultValue = tempVal1[1];
+                }
+                Object value = debuildItemFormat.get(tempVal1[0]);
+                if (value == null) {
+                    value = defaultValue;
+                }
+                text = text.replace("{item_" + key + "}", value.toString());
             }
-            Object value = debuildItemFormat.get(tempVal1[0]);
-            if (value == null) {
-                value = defaultValue;
+            if (CommonUtil.checkPluginLoad("NBTAPI")) {
+                Pattern pattern2 = Pattern.compile("\\{nbt_(.*?)}");
+                Matcher matcher2 = pattern2.matcher(text);
+                while (matcher2.find()) {
+                    String key = matcher2.group(1);
+                    String defaultValue = "";
+                    String[] tempVal1 = key.split(";;");
+                    if (tempVal1.length >= 2) {
+                        defaultValue = tempVal1[tempVal1.length - 1];
+                    }
+                    Object value = NBTUtil.parseNBT(item, tempVal1[0]);
+                    if (value == null) {
+                        value = defaultValue;
+                    }
+                    text = text.replace("{nbt_" + key + "}", value.toString());
+                }
             }
-            text = text.replace("{item_" + key + "}", value.toString());
         }
         return text;
     }

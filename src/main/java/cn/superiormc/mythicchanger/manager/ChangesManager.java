@@ -75,6 +75,11 @@ public class ChangesManager {
             registerNewRule(new ResetApplyLimit());
             registerNewRule(new AddAttributes());
             registerNewRule(new RandomChange());
+            registerNewRule(new RemoveName());
+            registerNewRule(new RemoveAllLore());
+            if (CommonUtil.checkPluginLoad("MMOItems")) {
+                registerNewRule(new MIUpdateLore());
+            }
         }
     }
 

@@ -48,5 +48,4 @@ public class ItemUtil {
     public static boolean isValid(ItemStack item) {
         return item != null && !item.getType().isAir();
     }
-
 }

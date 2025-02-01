@@ -1,5 +1,6 @@
 package cn.superiormc.mythicchanger.objects;
 
+import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.manager.ChangesManager;
 import cn.superiormc.mythicchanger.manager.MatchItemManager;
 import org.bukkit.configuration.ConfigurationSection;
@@ -30,7 +31,7 @@ public class ObjectSingleRule implements Comparable<ObjectSingleRule> {
     }
 
     public boolean getMatchItem(ItemStack item, boolean fakeOrReal, Player player) {
-        if (!condition.getAllBoolean(player, item, item)) {
+        if (!condition.getAllBoolean(player, item, item) && !MythicChanger.freeVersion) {
             return false;
         }
         ItemMeta meta = item.getItemMeta();

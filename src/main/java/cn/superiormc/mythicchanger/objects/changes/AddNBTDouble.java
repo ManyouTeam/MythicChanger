@@ -2,6 +2,7 @@ package cn.superiormc.mythicchanger.objects.changes;
 
 import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.objects.ObjectSingleChange;
+import cn.superiormc.mythicchanger.utils.MathUtil;
 import de.tr7zw.nbtapi.NBTCompound;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.configuration.ConfigurationSection;
@@ -22,7 +23,7 @@ public class AddNBTDouble extends AbstractChangesRule {
         for (String key : tempVal1) {
             String[] parentKeys = key.split(";;");
             if (parentKeys.length == 2) {
-                nbtItem.setDouble(parentKeys[0], Double.parseDouble(parentKeys[1]));
+                nbtItem.setDouble(parentKeys[0], MathUtil.doCalculate(parentKeys[1]).doubleValue());
             } else if (parentKeys.length > 2) {
                 NBTCompound nbtCompound = null;
                 String lastElement = parentKeys[parentKeys.length - 1];
@@ -41,7 +42,7 @@ public class AddNBTDouble extends AbstractChangesRule {
                     }
                 }
                 if (nbtCompound != null) {
-                    nbtCompound.setDouble(last2Element, Double.parseDouble(lastElement));
+                    nbtCompound.setDouble(last2Element, MathUtil.doCalculate(lastElement).doubleValue());
                 }
             }
         }

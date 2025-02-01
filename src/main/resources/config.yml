@@ -63,6 +63,9 @@ keep-name-in-anvil: true
 # Whether only-in-player-inventory option in each rule only checks chest UI.
 check-chests-only: true
 
+# Whether contains name and contains lore match rule will ignore color codes.
+ignore-color-code: false
+
 # You can override the weight values set by the plugin for each rule here. The higher the weight value, the earlier the rule will be executed.
 # The default value of the plugin is a carefully considered and reasonably configured value.
 # Please do not modify the value here unless you know what you are doing.
@@ -91,6 +94,8 @@ change-rule-weight:
   parse-papi-lore: 500
   parse-papi-name: 501
   random-change: 1002
+  remove-name: -300
+  remove-all-lore: -301
   remove-all-enchants: -198
   remove-enchants: -197
   remove-flags: -196
@@ -107,6 +112,7 @@ change-rule-weight:
   set-type: 60
   set-amount: 59
   deapply: 61
+  mi-update-lore: 115
 
 # Premium version only.
 change-gui:

@@ -28,7 +28,12 @@ public class AddNameFirst extends AbstractChangesRule {
             return singleChange.getItem();
         }
         ItemMeta meta = singleChange.getItemMeta();
-        String tempVal1 = singleChange.getString("add-name-first") + ItemUtil.getItemName(singleChange.getItem());
+        String tempVal1;
+        if (!meta.hasDisplayName()) {
+            tempVal1 = "§f" + singleChange.getString("add-name-first") + ItemUtil.getItemName(singleChange.getItem());
+        } else {
+            tempVal1 = singleChange.getString("add-name-first") + ItemUtil.getItemName(singleChange.getItem());
+        }
         meta.setDisplayName(tempVal1);
         return singleChange.setItemMeta(meta);
     }

@@ -1,5 +1,8 @@
 package cn.superiormc.mythicchanger.objects.matchitem;
 
+import cn.superiormc.mythicchanger.manager.ConfigManager;
+import cn.superiormc.mythicchanger.utils.ColorParser;
+import cn.superiormc.mythicchanger.utils.TextUtil;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -15,8 +18,14 @@ public class ContainsName extends AbstractMatchItemRule {
             return false;
         }
         for (String requiredName : section.getStringList("contains-name")) {
-            if (meta.getDisplayName().contains(requiredName)) {
-                return true;
+            if (ConfigManager.configManager.getBoolean("ignore-color-code")) {
+                if (ColorParser.clear(meta.getDisplayName()).contains(requiredName)) {
+                    return true;
+                }
+            } else {
+                if (meta.getDisplayName().contains(TextUtil.parse(requiredName))) {
+                    return true;
+                }
             }
         }
         return false;

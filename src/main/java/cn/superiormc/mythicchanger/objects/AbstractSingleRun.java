@@ -1,8 +1,10 @@
 package cn.superiormc.mythicchanger.objects;
 
+import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.methods.DebuildItem;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
 import cn.superiormc.mythicchanger.utils.ItemUtil;
+import cn.superiormc.mythicchanger.utils.NBTUtil;
 import cn.superiormc.mythicchanger.utils.TextUtil;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemoryConfiguration;
@@ -16,7 +18,6 @@ import java.util.regex.Pattern;
 public abstract class AbstractSingleRun {
 
     protected ConfigurationSection section;
-
 
     public AbstractSingleRun(ConfigurationSection section) {
         this.section = section;
@@ -36,23 +37,42 @@ public abstract class AbstractSingleRun {
                 ,"player_yaw", String.valueOf(player.getLocation().getYaw())
                 ,"player", player.getName());
         ConfigurationSection debuildItemFormat = null;
-        Pattern pattern1 = Pattern.compile("\\{item_(.*?)}");
-        Matcher matcher1 = pattern1.matcher(content);
-        while (matcher1.find()) {
-            if (debuildItemFormat == null) {
-                debuildItemFormat = DebuildItem.debuildItem(item, new MemoryConfiguration());
+        if (!MythicChanger.freeVersion) {
+            Pattern pattern1 = Pattern.compile("\\{item_(.*?)}");
+            Matcher matcher1 = pattern1.matcher(content);
+            while (matcher1.find()) {
+                if (debuildItemFormat == null) {
+                    debuildItemFormat = DebuildItem.debuildItem(item, new MemoryConfiguration());
+                }
+                String key = matcher1.group(1);
+                String defaultValue = "";
+                String[] tempVal1 = key.split(";;");
+                if (tempVal1.length >= 2) {
+                    defaultValue = tempVal1[1];
+                }
+                Object value = debuildItemFormat.get(tempVal1[0]);
+                if (value == null) {
+                    value = defaultValue;
+                }
+                content = content.replace("{item_" + key + "}", value.toString());
             }
-            String key = matcher1.group(1);
-            String defaultValue = "";
-            String[] tempVal1 = key.split(";;");
-            if (tempVal1.length >= 2) {
-                defaultValue = tempVal1[1];
+            if (CommonUtil.checkPluginLoad("NBTAPI")) {
+                Pattern pattern2 = Pattern.compile("\\{nbt_(.*?)}");
+                Matcher matcher2 = pattern2.matcher(content);
+                while (matcher2.find()) {
+                    String key = matcher2.group(1);
+                    String defaultValue = "";
+                    String[] tempVal1 = key.split(";;");
+                    if (tempVal1.length >= 2) {
+                        defaultValue = tempVal1[tempVal1.length - 1];
+                    }
+                    Object value = NBTUtil.parseNBT(item, tempVal1[0]);
+                    if (value == null) {
+                        value = defaultValue;
+                    }
+                    content = content.replace("{nbt_" + key + "}", value.toString());
+                }
             }
-            Object value = debuildItemFormat.get(tempVal1[0]);
-            if (value == null) {
-                value = defaultValue;
-            }
-            content = content.replace("{item_" + key + "}", value.toString());
         }
         content = TextUtil.parse(content, player);
         return content;

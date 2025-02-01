@@ -1,5 +1,7 @@
 weight: 15
 
+only-in-player-inventory: false
+
 # If you want to all item apply this rule, just delete whole match-item section.
 match-item:
   items:

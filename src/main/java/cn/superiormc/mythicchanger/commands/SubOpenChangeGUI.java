@@ -8,7 +8,6 @@ import org.bukkit.entity.Player;
 
 public class SubOpenChangeGUI extends AbstractCommand {
 
-
     public SubOpenChangeGUI() {
         this.id = "openchangegui";
         this.requiredPermission =  "mythicchanger." + id;

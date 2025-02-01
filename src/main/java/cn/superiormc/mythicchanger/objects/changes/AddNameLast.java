@@ -28,7 +28,13 @@ public class AddNameLast extends AbstractChangesRule {
             return singleChange.getItem();
         }
         ItemMeta meta = singleChange.getItemMeta();
-        meta.setDisplayName(ItemUtil.getItemName(singleChange.getItem()) + singleChange.getString("add-name-last"));
+        String tempVal1;
+        if (!meta.hasDisplayName()) {
+            tempVal1 = "§f" + ItemUtil.getItemName(singleChange.getItem()) + singleChange.getString("add-name-last");
+        } else {
+            tempVal1 = ItemUtil.getItemName(singleChange.getItem()) + singleChange.getString("add-name-last");
+        }
+        meta.setDisplayName(tempVal1);
         return singleChange.setItemMeta(meta);
     }
 

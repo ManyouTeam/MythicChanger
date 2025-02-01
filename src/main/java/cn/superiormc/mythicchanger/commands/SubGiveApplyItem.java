@@ -13,7 +13,6 @@ import java.util.List;
 
 public class SubGiveApplyItem extends AbstractCommand {
 
-
     public SubGiveApplyItem() {
         this.id = "giveapplyitem";
         this.requiredPermission =  "mythicchanger." + id;

@@ -11,7 +11,6 @@ import java.util.Set;
 
 public class SubViewNBT extends AbstractCommand {
 
-
     public SubViewNBT() {
         this.id = "viewnbt";
         this.requiredPermission =  "mythicchanger." + id;
@@ -49,7 +48,6 @@ public class SubViewNBT extends AbstractCommand {
                 player.sendMessage(display.toString());
                 parseNBT(player, nbtCompound.getCompound(key), b + 1);
             } else {
-                //Bukkit.getConsoleSender().sendMessage(key + "  " +  nbtCompound.getType(key));
                 //if (nbtCompound.hasTag(key, NBTType.NBTTagList)) {
                 //    if (nbtCompound.getCompoundList(key) != null) {
                 //        StringBuilder display = new StringBuilder("  ");
