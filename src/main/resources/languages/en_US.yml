@@ -13,24 +13,30 @@ plugin:
   reloaded: "&#98FB98[MythicChanger] &fPlugin reloaded!"
   saved: "&#98FB98[MythicChanger] &fItem Saved!"
   item-gave: "&#98FB98[MythicChanger] &aGave {player} apply item {item} x{amount}!"
-  generated: "&#98FB98[MythicChanger] &fGenerated hold item's item format at plugin config folder, please copy them into your menu or shop configs!"
+  generated: "&#98FB98[MythicChanger] &fGenerated hold item's item format at plugin config folder!"
 
 # All messages also support multi lines, just do it like this!
 help:
   main: |
     &#98FB98&lMythicChanger &7Made by @PQguanfang
     &f/mythicchanger help &7- View help.
+    &f/mythicchanger openchangegui &7- Open Change GUI. &c(Premium, require enable in config.yml)
   main-admin: |
     &#98FB98&lMythicChanger &7Made by @PQguanfang
     &f/mythicchanger help &7- View help.
     &f/mythicchanger generateitemformat &7- Generate Item Format for hold item.
     &f/mythicchanger saveitem <item> &7- Save hold item.
+    &f/mythicchanger givesaveitem <itemID> <player> <amount> &7- Give saved item to players.
+    &f/mythicchanger setlimit <amount> &7- Set hold item apply limit. &c(Premium)
+    &f/mythicchanger viewnbt &7- Check custom NBT data of hold item. &c(Premium)
+    &f/mythicchanger openchangegui &7- Open Change GUI. &c(Premium, require enable in config.yml)
     &f/mythicchanger reload &7- Reload the plugin.
     &f/mythicchanger giveapplyitem <item> <player> <amount> &7- Give apply item for specified players.
   main-console: |
     &#98FB98&lMythicChanger &7Made by @PQguanfang
     &f/mythicchanger help &7- View help.
     &f/mythicchanger generateitemformat &7- Generate Item Format for hold item.
+    &f/mythicchanger givesaveitem <itemID> <player> <amount> &7- Give saved item to players.
     &f/mythicchanger reload &7- Reload the plugin.
     &f/mythicchanger giveapplyitem <item> <player> <amount> &7- Give apply item for specified players.
 

@@ -22,6 +22,7 @@ public class InitManager {
 
     public void init() {
         resourceOutput("languages/en_US.yml", true);
+        resourceOutput("languages/zh_CN.yml", true);
         resourceOutput("rules/example.yml", false);
         resourceOutput("apply_items/ItemSkin.yml", false);
         resourceOutput("apply_items/Deapply.yml", false);

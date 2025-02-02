@@ -1,0 +1,43 @@
+error:
+  args: "&#98FB98[MythicChanger] &c指令使用错误，如需帮助，请使用 /mchanger help!"
+  in-game: "&#98FB98[MythicChanger] &c您必须在游戏内使用此指令!"
+  miss-permission: "&#98FB98[MythicChanger] &c您没有足够的权限使用此指令!"
+  item-not-found: "&#98FB98[MythicChanger] &c找不到名称为 {item} 的物品!"
+  save-item-not-found: "&#98FB98[MythicChanger] &c找不到名称为 {item} 的保存物品!"
+  player-not-found: "&#98FB98[MythicChanger] &c找不到名称为 {player} 的玩家!"
+  creative-mode: "&#98FB98[MythicChanger] &c此功能暂不支持创造模式!"
+  item-only-one: "&#98FB98[MythicChanger] &c您的更改物品堆叠不能超过一个!"
+  item-empty: "&#98FB98[MythicChanger] &c您手持的是空的物品!"
+
+plugin:
+  reloaded: "&#98FB98[MythicChanger] &f插件已重启!"
+  saved: "&#98FB98[MythicChanger] &f物品已保存!"
+  item-gave: "&#98FB98[MythicChanger] &a给予玩家 {player} 名称为 {item} 的更改物品 x{amount} 个!"
+  generated: "&#98FB98[MythicChanger] &f已生成 ItemFormat 在插件根目录下!"
+
+# All messages also support multi lines, just do it like this!
+help:
+  main: |
+    &#98FB98&lMythicChanger &7Made by @PQguanfang
+    &f/mythicchanger help &7- 查看帮助.
+  main-admin: |
+    &#98FB98&lMythicChanger &7Made by @PQguanfang
+    &f/mythicchanger help &7- 查看帮助.
+    &f/mythicchanger generateitemformat &7- 为手持物品生成 ItemFormat.
+    &f/mythicchanger saveitem <item> &7- 保存手持物品.
+    &f/mythicchanger viewnbt &7- 查看手持物品的自定义 NBT 信息.
+    &f/mythicchanger reload &7- 重启插件.
+    &f/mythicchanger giveapplyitem <item> <player> <amount> &7- 将更改物品给予指定玩家.
+  main-console: |
+    &#98FB98&lMythicChanger &7Made by @PQguanfang
+    &f/mythicchanger help &7- 查看帮助.
+    &f/mythicchanger generateitemformat &7- 为手持物品生成 ItemFormat.
+    &f/mythicchanger reload &7- 重启插件.
+    &f/mythicchanger giveapplyitem <item> <player> <amount> &7- 将更改物品给予指定玩家.
+
+nbt-view-empty: "&#98FB98[MythicChanger] &f该物品不包含任何自定义NBT信息!"
+nbt-view: "&#98FB98[MythicChanger] &f该物品包含如下自定义NBT:"
+rule-limit-reached: "&#98FB98[MythicChanger] &f该物品已达到其使用更改物品上限!"
+do-not-apply: "&#98FB98[MythicChanger] &f该更改物品无法适用于此物品!"
+success-set-limit: "&#98FB98[MythicChanger] &f成功设置更改物品使用上限为 {limit}!"
+not-meet-condition: "&#98FB98[MythicChanger] &f您无法使用此更改物品，因为您未满足相关条件!"

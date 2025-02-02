@@ -31,7 +31,7 @@ public class ObjectSingleRule implements Comparable<ObjectSingleRule> {
     }
 
     public boolean getMatchItem(ItemStack item, boolean fakeOrReal, Player player) {
-        if (!condition.getAllBoolean(player, item, item) && !MythicChanger.freeVersion) {
+        if (!MythicChanger.freeVersion && !condition.getAllBoolean(player, item, item)) {
             return false;
         }
         ItemMeta meta = item.getItemMeta();
