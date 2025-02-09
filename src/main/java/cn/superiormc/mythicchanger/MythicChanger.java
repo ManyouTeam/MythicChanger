@@ -4,7 +4,6 @@ import cn.superiormc.mythicchanger.listeners.ApplyItemListener;
 import cn.superiormc.mythicchanger.manager.*;
 import cn.superiormc.mythicchanger.protolcol.ProtocolLib.*;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
-import cn.superiormc.mythicchanger.utils.SchedulerUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -52,12 +51,10 @@ public class MythicChanger extends JavaPlugin {
         new HookManager();
         new LanguageManager();
         if (ConfigManager.configManager.getBoolean("packet-listener", true)) {
-            SchedulerUtil.runTaskAsynchronously(() -> {
-                new SetSlots();
-                new WindowItem();
-                new WindowClick();
-                new WindowMerchant();
-            });
+           new SetSlots();
+           new WindowItem();
+           new WindowClick();
+           new WindowMerchant();
         }
         new ItemManager();
         new ChangesManager();

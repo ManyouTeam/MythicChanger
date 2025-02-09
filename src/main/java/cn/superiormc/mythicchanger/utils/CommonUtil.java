@@ -165,10 +165,10 @@ public class CommonUtil {
         return resultList;
     }
 
-    public static boolean inPlayerInventory(Player player, int slot) {
+    public static boolean inPlayerInventory(Player player, int slot, int windowID) {
         int topSize = player.getOpenInventory().getTopInventory().getSize();
-        if (player.getOpenInventory().getTopInventory() instanceof CraftingInventory &&
-                player.getOpenInventory().getTopInventory().getSize() == 5) {
+        if (windowID == 0 || (player.getOpenInventory().getTopInventory() instanceof CraftingInventory &&
+                player.getOpenInventory().getTopInventory().getSize() == 5)) {
             return slot >= 5 && slot <= 44;
         }
         return slot >= topSize;
@@ -203,7 +203,7 @@ public class CommonUtil {
             return spigotSlot;
         } else {
             int topSize = player.getOpenInventory().getTopInventory().getSize();
-            if (topSize == 5 && CommonUtil.inPlayerInventory(player, slot)) {
+            if (topSize == 5 && CommonUtil.inPlayerInventory(player, slot, windowID)) {
                 topSize = 9;
             }
             if (slot < topSize || slot > topSize + 36) {

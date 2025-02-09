@@ -29,7 +29,7 @@ public class SubGiveSaveItem extends AbstractCommand {
     public void executeCommandInGame(String[] args, Player player) {
         ItemStack item = ItemManager.itemManager.getItemByKey(args[1]);
         if (item == null) {
-            LanguageManager.languageManager.sendStringText(player, "error.save-item-not-found");
+            LanguageManager.languageManager.sendStringText(player, "error.save-item-not-found", "item", args[1]);
             return;
         }
         Player target = null;
@@ -61,7 +61,7 @@ public class SubGiveSaveItem extends AbstractCommand {
     public void executeCommandInConsole(String[] args) {
         ItemStack item = ItemManager.itemManager.getItemByKey(args[1]);
         if (item == null) {
-            LanguageManager.languageManager.sendStringText("error.save-item-not-found");
+            LanguageManager.languageManager.sendStringText("error.save-item-not-found", "item", args[1]);
             return;
         }
         if (args.length < 3) {

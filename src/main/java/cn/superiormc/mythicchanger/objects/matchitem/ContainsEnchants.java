@@ -1,7 +1,6 @@
 package cn.superiormc.mythicchanger.objects.matchitem;
 
 import cn.superiormc.mythicchanger.utils.CommonUtil;
-import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
@@ -24,7 +23,7 @@ public class ContainsEnchants extends AbstractMatchItemRule {
             if (containsEnchantsSection.getString(ench).startsWith("[")) {
                 return containsEnchantsSection.getIntegerList(ench).contains(item.getEnchantments().get(vanillaEnchant));
             } else {
-                return item.getEnchantments().get(vanillaEnchant) > section.getInt(ench);
+                return item.getEnchantments().get(vanillaEnchant) > containsEnchantsSection.getInt(ench);
             }
         }
         return false;

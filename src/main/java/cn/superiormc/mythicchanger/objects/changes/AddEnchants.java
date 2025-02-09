@@ -22,7 +22,8 @@ public class AddEnchants extends AbstractChangesRule {
             Enchantment vanillaEnchant = Registry.ENCHANTMENT.get(CommonUtil.parseNamespacedKey(ench));
             if (vanillaEnchant != null) {
                 int level = singleChange.getInt("add-enchants." + ench);
-                if (meta.getEnchants().get(vanillaEnchant) == null || meta.getEnchants().get(vanillaEnchant) < level) {
+                if (meta.getEnchants().get(vanillaEnchant) == null || (meta.getEnchants().get(vanillaEnchant) < level ||
+                        singleChange.getBoolean("add-enchants-ignore-level"))) {
                     meta.addEnchant(vanillaEnchant, level, true);
                 }
             }

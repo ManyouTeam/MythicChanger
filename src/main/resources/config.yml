@@ -53,9 +53,7 @@ real-change-trigger:
 # Like: 'Good Good Good Good Good Diamond Sword' if you set add-name-first: 'Good' and interact with this item 5 times.
 bypass-real-change-limit: false
 
-# Some change rules have incompatibility issues with other packet-based item plugins.
-# Like our EnchantmentSlots, and Auxilor plugins (EcoItems, EcoEnchants, ect.)
-ignore-fake-change-warning: false
+ignore-warning: false
 
 # Whether we keep item name to original in anvil name.
 keep-name-in-anvil: true

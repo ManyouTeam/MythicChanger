@@ -4,14 +4,13 @@ import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.manager.ChangesManager;
 import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
+import cn.superiormc.mythicchanger.utils.ItemUtil;
 import cn.superiormc.mythicchanger.utils.SchedulerUtil;
 import com.comphenix.protocol.PacketType;
-import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.reflect.StructureModifier;
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -34,6 +33,7 @@ public class SetSlots extends GeneralPackets {
                     return;
                 }
                 PacketContainer packet = event.getPacket();
+                int windowID = packet.getIntegers().read(0);
                 StructureModifier<ItemStack> itemStackStructureModifier = packet.getItemModifier();
                 ItemStack serverItemStack = itemStackStructureModifier.read(0);
                 if (serverItemStack == null || serverItemStack.getType().isAir()) {
@@ -44,19 +44,19 @@ public class SetSlots extends GeneralPackets {
                     ChangesManager.changesManager.removeCooldown(player, slot);
                 } else {
                     ItemStack clientItemStack = ConfigManager.configManager.startFakeChange(serverItemStack, player,
-                            CommonUtil.inPlayerInventory(player, slot));
+                            CommonUtil.inPlayerInventory(player, slot, windowID));
                     // client 是加过 Lore 的，server 是没加过的！
                     itemStackStructureModifier.write(0, clientItemStack);
                     if (ConfigManager.configManager.getBoolean("real-change-trigger.SetSlotPacket.enabled", true)) {
-                        startRealChange(slot, player);
+                        startRealChange(slot, windowID, player);
                     }
                 }
             }
         };
     }
 
-    public void startRealChange(int slot, Player player) {
-        if (!CommonUtil.inPlayerInventory(player, slot)) {
+    public void startRealChange(int slot, int windowID, Player player) {
+        if (!CommonUtil.inPlayerInventory(player, slot, windowID)) {
             return;
         }
         int spigotSlot;
@@ -71,12 +71,10 @@ public class SetSlots extends GeneralPackets {
         if (tempItemStack == null || tempItemStack.getType().isAir()) {
             return;
         }
+        ChangesManager.changesManager.addCooldown(player, slot);
         ItemStack newItem = ConfigManager.configManager.startRealChange(tempItemStack, player);
-        if (newItem != null && !newItem.getType().isAir()) {
-            ChangesManager.changesManager.addCooldown(player, slot);
-            SchedulerUtil.runSync(() -> {
-                player.getInventory().setItem(spigotSlot, newItem);
-            });
+        if (ItemUtil.isValid(newItem)) {
+            SchedulerUtil.runSync(() -> player.getInventory().setItem(spigotSlot, newItem));
         }
     }
 }
