@@ -63,7 +63,7 @@ public class MythicChanger extends JavaPlugin {
         if (LocateManager.enableThis()) {
             new LocateManager();
         }
-        if (!MythicChanger.freeVersion && ConfigManager.configManager.getString("apply-item-mode", "DRAG").equalsIgnoreCase("DRAG")) {
+        if (ConfigManager.configManager.getString("apply-item-mode", "DRAG").equalsIgnoreCase("DRAG")) {
             Bukkit.getPluginManager().registerEvents(new ApplyItemListener(), this);
         }
         if (!CommonUtil.checkClass("com.mojang.authlib.properties.Property", "getValue") && CommonUtil.getMinorVersion(21, 1)) {

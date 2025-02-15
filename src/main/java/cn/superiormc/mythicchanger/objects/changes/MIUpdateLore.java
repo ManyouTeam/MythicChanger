@@ -19,8 +19,7 @@ public class MIUpdateLore extends AbstractChangesRule {
 
     @Override
     public ItemStack setChange(ObjectSingleChange singleChange) {
-        String itemName = ItemUtil.getItemName(singleChange.getItem());
-        if (singleChange.getBoolean("mi-update-lore")) {
+       if (singleChange.getBoolean("mi-update-lore")) {
             String id = MMOItems.getID(singleChange.getItem());
             if (id != null && !id.isEmpty()) {
                 MMOItem mmoItem = new LiveMMOItem(singleChange.getItem());
@@ -29,11 +28,12 @@ public class MIUpdateLore extends AbstractChangesRule {
                 if (meta == null) {
                     return singleChange.getItem();
                 }
-                if (meta.hasDisplayName()) {
-                    meta.setDisplayName(itemName);
+                ItemMeta originalMeta = singleChange.getItemMeta();
+                if (meta.hasLore()) {
+                    originalMeta.setLore(meta.getLore());
                 }
-                result.setItemMeta(meta);
-                return result;
+                singleChange.setItemMeta(originalMeta);
+                return singleChange.getItem();
             } else {
                 if (!ConfigManager.configManager.getBoolean("ignore-warning")) {
                     ErrorManager.errorManager.sendErrorMessage("§x§9§8§F§B§9§8[MythicChanger] §6Warning: mi-update-lore rule only working for " +
@@ -43,11 +43,6 @@ public class MIUpdateLore extends AbstractChangesRule {
             }
         }
         return singleChange.getItem();
-    }
-
-    @Override
-    public boolean getNeedRewriteItem(ConfigurationSection section) {
-        return true;
     }
 
     @Override
