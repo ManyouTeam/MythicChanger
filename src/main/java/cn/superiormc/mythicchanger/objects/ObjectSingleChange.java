@@ -217,6 +217,8 @@ public class ObjectSingleChange extends MemoryConfiguration {
                 "name", itemName,
                 "original-name", originalName);
         if (!MythicChanger.freeVersion) {
+            text = CommonUtil.modifyString(text, "raw-name", ColorParser.clear(itemName),
+                    "raw-original-name", ColorParser.clear(originalName));
             Pattern pattern1 = Pattern.compile("\\{item_(.*?)}");
             Matcher matcher1 = pattern1.matcher(text);
             while (matcher1.find()) {

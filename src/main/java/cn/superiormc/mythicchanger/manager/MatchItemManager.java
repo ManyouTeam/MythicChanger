@@ -41,6 +41,7 @@ public class MatchItemManager {
                 registerNewRule(new Rarity());
             }
             registerNewRule(new ContainsEnchants());
+            registerNewRule(new ContainsEnchantsAmount());
             registerNewRule(new ItemFormat());
             registerNewRule(new Any());
             registerNewRule(new HasApply());

@@ -1,5 +1,6 @@
 package cn.superiormc.mythicchanger.objects.matchitem;
 
+import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
@@ -16,6 +17,9 @@ public class HasEnchants extends AbstractMatchItemRule {
     @Override
     public boolean getMatch(ConfigurationSection section, ItemStack item, ItemMeta meta) {
         for (String ench : section.getStringList("has-enchants")) {
+            if (!MythicChanger.freeVersion && ench.equals("*")) {
+                return !meta.getEnchants().isEmpty();
+            }
             Enchantment vanillaEnchant = Registry.ENCHANTMENT.get(CommonUtil.parseNamespacedKey(ench.toLowerCase()));
             if (vanillaEnchant != null && meta.getEnchants().containsKey(vanillaEnchant)) {
                 return true;

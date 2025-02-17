@@ -17,13 +17,13 @@ public class ContainsEnchants extends AbstractMatchItemRule {
         ConfigurationSection containsEnchantsSection = section.getConfigurationSection("contains-enchants");
         for (String ench : containsEnchantsSection.getKeys(false)) {
             Enchantment vanillaEnchant = Registry.ENCHANTMENT.get(CommonUtil.parseNamespacedKey(ench.toLowerCase()));
-            if (vanillaEnchant == null || item.getEnchantments().get(vanillaEnchant) == null) {
+            if (vanillaEnchant == null || meta.getEnchants().get(vanillaEnchant) == null) {
                 continue;
             }
             if (containsEnchantsSection.getString(ench).startsWith("[")) {
-                return containsEnchantsSection.getIntegerList(ench).contains(item.getEnchantments().get(vanillaEnchant));
+                return containsEnchantsSection.getIntegerList(ench).contains(meta.getEnchants().get(vanillaEnchant));
             } else {
-                return item.getEnchantments().get(vanillaEnchant) > containsEnchantsSection.getInt(ench);
+                return meta.getEnchants().get(vanillaEnchant) > containsEnchantsSection.getInt(ench);
             }
         }
         return false;

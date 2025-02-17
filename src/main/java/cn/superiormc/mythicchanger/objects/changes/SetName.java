@@ -23,7 +23,7 @@ public class SetName extends AbstractChangesRule {
                     " If you want to ignore this warning, please disable warning display in config.yml file.");
         }
         ItemMeta meta = singleChange.getItemMeta();
-        meta.setDisplayName(CommonUtil.modifyString(singleChange.getString("set-name"), "name", ItemUtil.getItemName(singleChange.getItem())));
+        meta.setDisplayName(singleChange.getString("set-name"));
         return singleChange.setItemMeta(meta);
     }
 
