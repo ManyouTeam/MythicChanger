@@ -24,8 +24,7 @@ public class SubReload extends AbstractCommand {
         MythicChanger.instance.reloadConfig();
         new ConfigManager();
         new ItemManager();
-        new ChangesManager();
-        new MatchItemManager();
+        ChangesManager.changesManager.clearCooldown();
         LanguageManager.languageManager.sendStringText(player, "plugin.reloaded");
     }
 
@@ -34,8 +33,7 @@ public class SubReload extends AbstractCommand {
         MythicChanger.instance.reloadConfig();
         new ConfigManager();
         new ItemManager();
-        new ChangesManager();
-        new MatchItemManager();
+        ChangesManager.changesManager.clearCooldown();
         LanguageManager.languageManager.sendStringText("plugin.reloaded");
     }
 }

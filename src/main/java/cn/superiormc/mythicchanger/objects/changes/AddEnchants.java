@@ -7,6 +7,7 @@ import org.bukkit.Registry;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class AddEnchants extends AbstractChangesRule {
@@ -24,7 +25,12 @@ public class AddEnchants extends AbstractChangesRule {
                 int level = singleChange.getInt("add-enchants." + ench);
                 if (meta.getEnchants().get(vanillaEnchant) == null || (meta.getEnchants().get(vanillaEnchant) < level ||
                         singleChange.getBoolean("add-enchants-ignore-level"))) {
-                    meta.addEnchant(vanillaEnchant, level, true);
+                    if (meta instanceof EnchantmentStorageMeta) {
+                        EnchantmentStorageMeta enchantmentStorageMeta = (EnchantmentStorageMeta) meta;
+                        enchantmentStorageMeta.addStoredEnchant(vanillaEnchant, level, true);
+                    } else {
+                        meta.addEnchant(vanillaEnchant, level, true);
+                    }
                 }
             }
         }

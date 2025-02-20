@@ -23,6 +23,10 @@ public class ChangesManager {
 
     public ChangesManager() {
         changesManager = this;
+        initRules();
+    }
+
+    private void initRules() {
         registerNewRule(new AddEnchants());
         registerNewRule(new AddFlags());
         registerNewRule(new AddLoreFirst());
@@ -167,6 +171,10 @@ public class ChangesManager {
         if (itemCooldown.get(player) != null) {
             itemCooldown.get(player).remove(slot);
         }
+    }
+
+    public void clearCooldown() {
+        itemCooldown.clear();
     }
 
 }

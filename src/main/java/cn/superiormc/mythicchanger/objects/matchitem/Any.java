@@ -32,7 +32,6 @@ public class Any extends AbstractMatchItemRule {
                 }
                 return true;
             }
-            return false;
         } else {
             for (AbstractMatchItemRule rule : MatchItemManager.matchItemManager.getRules()) {
                 if (rule.configNotContains(anySection)) {
@@ -42,12 +41,12 @@ public class Any extends AbstractMatchItemRule {
                     return true;
                 }
             }
-            return false;
         }
+        return false;
     }
 
     @Override
     public boolean configNotContains(ConfigurationSection section) {
-        return section.getConfigurationSection("any") == null;
+        return !section.contains("any");
     }
 }

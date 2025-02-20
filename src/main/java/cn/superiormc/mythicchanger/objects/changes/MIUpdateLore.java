@@ -32,8 +32,7 @@ public class MIUpdateLore extends AbstractChangesRule {
                 if (meta.hasLore()) {
                     originalMeta.setLore(meta.getLore());
                 }
-                singleChange.setItemMeta(originalMeta);
-                return singleChange.getItem();
+                return singleChange.setItemMeta(originalMeta);
             } else {
                 if (!ConfigManager.configManager.getBoolean("ignore-warning")) {
                     ErrorManager.errorManager.sendErrorMessage("§x§9§8§F§B§9§8[MythicChanger] §6Warning: mi-update-lore rule only working for " +

@@ -19,6 +19,10 @@ public class MatchItemManager {
 
     public MatchItemManager() {
         matchItemManager = this;
+        initRules();
+    }
+
+    private void initRules() {
         registerNewRule(new ContainsLore());
         registerNewRule(new ContainsName());
         registerNewRule(new HasEnchants());

@@ -57,7 +57,6 @@ public class SetSlots extends GeneralPackets {
     }
 
     public void startRealChange(int slot, int windowID, Player player) {
-        Bukkit.getConsoleSender().sendMessage(windowID + "---" + slot);
         if (!CommonUtil.inPlayerInventory(player, slot, windowID)) {
             return;
         }
