@@ -2,7 +2,6 @@ package cn.superiormc.mythicchanger.utils;
 
 import cn.superiormc.mythicchanger.manager.LocateManager;
 import org.bukkit.inventory.ItemStack;
-import pers.neige.neigeitems.utils.ItemUtils;
 
 public class ItemUtil {
 
@@ -20,9 +19,6 @@ public class ItemUtil {
         }
         if (LocateManager.enableThis() && LocateManager.locateManager != null) {
             return LocateManager.locateManager.getLocateName(displayItem);
-        }
-        if (CommonUtil.checkPluginLoad("NeigeItems")) {
-            return ItemUtils.getItemName(displayItem);
         }
         return getItemNameWithoutVanilla(displayItem);
     }

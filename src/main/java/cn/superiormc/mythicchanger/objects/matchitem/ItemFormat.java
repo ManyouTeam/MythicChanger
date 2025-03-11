@@ -9,7 +9,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Map;
 
-public class ItemFormat extends AbstractMatchItemRule{
+public class ItemFormat extends AbstractMatchItemRule {
     public ItemFormat() {
         super();
     }
@@ -18,7 +18,7 @@ public class ItemFormat extends AbstractMatchItemRule{
     public boolean getMatch(ConfigurationSection section, ItemStack item, ItemMeta meta) {
         Map<String, Object> item1Result = DebuildItem.debuildItem(item, new MemoryConfiguration()).getValues(true);
         Map<String, Object> item2Result = section.getConfigurationSection("item-format").getValues(true);
-        if (section.getBoolean("item-format.require-same-key")) {
+        if (section.getBoolean("item-format-settings.require-same-key")) {
             for (String key : item1Result.keySet()) {
                 if (canIgnore(key, section)) {
                     continue;
@@ -58,7 +58,7 @@ public class ItemFormat extends AbstractMatchItemRule{
         if (key.equals("amount")) {
             return true;
         }
-        for (String tempVal1 : section.getStringList("item-format.ignore-key")) {
+        for (String tempVal1 : section.getStringList("item-format-settings.ignore-key")) {
             if (tempVal1.equals(key) || key.startsWith(tempVal1 + ".")) {
                 return true;
             }

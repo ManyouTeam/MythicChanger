@@ -3,12 +3,15 @@ package cn.superiormc.mythicchanger.objects.changes;
 import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.objects.ObjectSingleChange;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
+import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.List;
 
 public class DeleteEnchants extends AbstractChangesRule {
 
@@ -25,30 +28,13 @@ public class DeleteEnchants extends AbstractChangesRule {
             if (vanillaEnchant == null || singleChange.getItem().getEnchantments().get(vanillaEnchant) == null) {
                 continue;
             }
-            int level;
-            if (meta instanceof EnchantmentStorageMeta) {
-                EnchantmentStorageMeta enchantmentStorageMeta = (EnchantmentStorageMeta) meta;
-                level = enchantmentStorageMeta.getStoredEnchantLevel(vanillaEnchant);
-            } else {
-                level = meta.getEnchantLevel(vanillaEnchant);
-            }
             if (!MythicChanger.freeVersion && deleteEnchantsSection.getString(ench).startsWith("[")) {
-                if (deleteEnchantsSection.getIntegerList(ench).contains(level)) {
-                    if (meta instanceof EnchantmentStorageMeta) {
-                        EnchantmentStorageMeta enchantmentStorageMeta = (EnchantmentStorageMeta) meta;
-                        enchantmentStorageMeta.removeStoredEnchant(vanillaEnchant);
-                    } else {
-                        meta.removeEnchant(vanillaEnchant);
-                    }
+                if (deleteEnchantsSection.getIntegerList(ench).contains(singleChange.getItem().getEnchantments().get(vanillaEnchant))) {
+                    meta.removeEnchant(vanillaEnchant);
                 }
             } else {
-                if (singleChange.getItem().getEnchantments().get(vanillaEnchant) > level) {
-                    if (meta instanceof EnchantmentStorageMeta) {
-                        EnchantmentStorageMeta enchantmentStorageMeta = (EnchantmentStorageMeta) meta;
-                        enchantmentStorageMeta.removeStoredEnchant(vanillaEnchant);
-                    } else {
-                        meta.removeEnchant(vanillaEnchant);
-                    }
+                if (singleChange.getItem().getEnchantments().get(vanillaEnchant) > singleChange.getInt(ench)) {
+                    meta.removeEnchant(vanillaEnchant);
                 }
             }
         }

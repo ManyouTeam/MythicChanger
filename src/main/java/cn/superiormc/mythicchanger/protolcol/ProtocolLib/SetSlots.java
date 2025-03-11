@@ -68,7 +68,7 @@ public class SetSlots extends GeneralPackets {
         } else {
             spigotSlot = slot;
         }
-        ItemStack tempItemStack = player.getInventory().getItem(spigotSlot);
+        ItemStack tempItemStack = CommonUtil.getItemFromSlot(player, spigotSlot);
         if (tempItemStack == null || tempItemStack.getType().isAir()) {
             return;
         }

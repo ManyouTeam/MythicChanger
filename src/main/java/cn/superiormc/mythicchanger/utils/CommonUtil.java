@@ -11,6 +11,7 @@ import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.CraftingInventory;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.json.JSONObject;
 
@@ -172,6 +173,21 @@ public class CommonUtil {
             return slot >= 5 && slot <= 44;
         }
         return slot >= topSize;
+    }
+
+    public static ItemStack getItemFromSlot(Player player, int slot) {
+        if (slot == 36) {
+            return player.getInventory().getItem(EquipmentSlot.HAND);
+        } else if (slot == 37) {
+            return player.getInventory().getItem(EquipmentSlot.CHEST);
+        } else if (slot == 38) {
+            return player.getInventory().getItem(EquipmentSlot.LEGS);
+        } else if (slot == 39) {
+            return player.getInventory().getItem(EquipmentSlot.FEET);
+        } else if (slot == 40) {
+            return player.getInventory().getItem(EquipmentSlot.OFF_HAND);
+        }
+        return player.getInventory().getItem(slot);
     }
 
     public static void mkDir(File dir) {

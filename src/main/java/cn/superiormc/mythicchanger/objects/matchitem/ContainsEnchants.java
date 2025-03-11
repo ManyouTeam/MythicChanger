@@ -18,7 +18,7 @@ public class ContainsEnchants extends AbstractMatchItemRule {
         ConfigurationSection containsEnchantsSection = section.getConfigurationSection("contains-enchants");
         for (String ench : containsEnchantsSection.getKeys(false)) {
             Enchantment vanillaEnchant = Registry.ENCHANTMENT.get(CommonUtil.parseNamespacedKey(ench.toLowerCase()));
-            if (vanillaEnchant == null || meta.getEnchants().get(vanillaEnchant) == null) {
+            if (vanillaEnchant == null) {
                 continue;
             }
             int level;
