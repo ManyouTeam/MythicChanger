@@ -1,53 +1,40 @@
 package cn.superiormc.mythicchanger.protolcol.ProtocolLib;
 
-import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.manager.ConfigManager;
-import com.comphenix.protocol.PacketType;
-import com.comphenix.protocol.events.ListenerPriority;
-import com.comphenix.protocol.events.PacketAdapter;
-import com.comphenix.protocol.events.PacketContainer;
-import com.comphenix.protocol.events.PacketEvent;
+import com.github.retrooper.packetevents.event.PacketListener;
+import com.github.retrooper.packetevents.event.PacketSendEvent;
+import com.github.retrooper.packetevents.protocol.packettype.PacketType;
+import com.github.retrooper.packetevents.protocol.recipe.data.MerchantOffer;
+import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerMerchantOffers;
+import io.github.retrooper.packetevents.util.SpigotConversionUtil;
+import org.bukkit.GameMode;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.MerchantRecipe;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class WindowMerchant extends GeneralPackets {
-
-    public WindowMerchant() {
-        super();
-    }
+public class WindowMerchant implements PacketListener {
 
     @Override
-    protected void initPacketAdapter() {
-        packetAdapter = new PacketAdapter(MythicChanger.instance, ConfigManager.configManager.getPriority(), PacketType.Play.Server.OPEN_WINDOW_MERCHANT) {
-            @Override
-            public void onPacketSending(PacketEvent event) {
-                PacketContainer packet = event.getPacket();
-                List<MerchantRecipe> list = new ArrayList<>();
-                packet.getMerchantRecipeLists().read(0).forEach(recipe -> {
-                    ItemStack serverItemStack1 = recipe.getResult();
-                    List<ItemStack> serverItemStack2List = recipe.getIngredients();
-                    MerchantRecipe merchantRecipe = new MerchantRecipe(ConfigManager.configManager.startFakeChange(
-                            serverItemStack1, event.getPlayer(), false),
-                            recipe.getUses(), recipe.getMaxUses(),
-                            recipe.hasExperienceReward(),
-                            recipe.getVillagerExperience(),
-                            recipe.getPriceMultiplier(),
-                            recipe.getDemand(),
-                            recipe.getSpecialPrice());
-                    for (ItemStack serverItemStack2 : serverItemStack2List) {
-                        merchantRecipe.addIngredient(ConfigManager.configManager.startFakeChange(
-                                serverItemStack2,
-                                event.getPlayer(),
-                                false));
-                    }
-                    list.add(merchantRecipe);
-                });
-
-                packet.getMerchantRecipeLists().write(0, list);
+    public void onPacketSend(PacketSendEvent event) {
+        if (event.getPacketType().equals(PacketType.Play.Server.MERCHANT_OFFERS)) {
+            Player player = event.getPlayer();
+            if (player == null) {
+                return;
             }
-        };
+            if (player.getGameMode() == GameMode.CREATIVE) {
+                return;
+            }
+            WrapperPlayServerMerchantOffers merchantOffers = new WrapperPlayServerMerchantOffers(event);
+            List<MerchantOffer> merchantOfferList = merchantOffers.getMerchantOffers();
+            for (MerchantOffer recipe : merchantOfferList) {
+                ItemStack item1 = SpigotConversionUtil.toBukkitItemStack(recipe.getOutputItem());
+                ItemStack item2 = SpigotConversionUtil.toBukkitItemStack(recipe.getFirstInputItem());
+                ItemStack item3 = SpigotConversionUtil.toBukkitItemStack(recipe.getSecondInputItem());
+                recipe.setOutputItem(SpigotConversionUtil.fromBukkitItemStack(ConfigManager.configManager.startFakeChange(item1, event.getPlayer(), false)));
+                recipe.setFirstInputItem(SpigotConversionUtil.fromBukkitItemStack(ConfigManager.configManager.startFakeChange(item2, event.getPlayer(), false)));
+                recipe.setSecondInputItem(SpigotConversionUtil.fromBukkitItemStack(ConfigManager.configManager.startFakeChange(item3, event.getPlayer(), false)));
+            }
+        }
     }
 }

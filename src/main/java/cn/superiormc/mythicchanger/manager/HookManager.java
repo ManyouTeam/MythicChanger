@@ -89,11 +89,15 @@ public class HookManager {
         if (CommonUtil.checkPluginLoad("Nexo")) {
             registerNewItemHook("Nexo", new ItemNexoHook());
         }
+        if (CommonUtil.checkPluginLoad("CraftEngine")) {
+            registerNewItemHook("CraftEngine", new ItemCraftEngineHook());
+        }
     }
 
     public void registerNewItemHook(String pluginName,
                                     AbstractItemHook itemHook) {
         if (!itemHooks.containsKey(pluginName)) {
+            Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fHooking into " + pluginName + "...");
             itemHooks.put(pluginName, itemHook);
         }
     }

@@ -4,6 +4,7 @@ import cn.superiormc.mythicchanger.listeners.ApplyItemListener;
 import cn.superiormc.mythicchanger.manager.*;
 import cn.superiormc.mythicchanger.protolcol.ProtocolLib.*;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
+import com.github.retrooper.packetevents.PacketEvents;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -51,10 +52,10 @@ public class MythicChanger extends JavaPlugin {
         new HookManager();
         new LanguageManager();
         if (ConfigManager.configManager.getBoolean("packet-listener", true)) {
-           new SetSlots();
-           new WindowItem();
+            PacketEvents.getAPI().getEventManager().registerListener(new SetSlots(), ConfigManager.configManager.getPriority());
+            PacketEvents.getAPI().getEventManager().registerListener(new WindowItem(), ConfigManager.configManager.getPriority());
+            PacketEvents.getAPI().getEventManager().registerListener(new WindowMerchant(), ConfigManager.configManager.getPriority());
            new WindowClick();
-           new WindowMerchant();
         }
         new ItemManager();
         new ChangesManager();

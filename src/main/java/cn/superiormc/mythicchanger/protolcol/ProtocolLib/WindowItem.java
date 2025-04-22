@@ -1,65 +1,58 @@
 package cn.superiormc.mythicchanger.protolcol.ProtocolLib;
 
-import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.manager.ConfigManager;
-import com.comphenix.protocol.PacketType;
-import com.comphenix.protocol.events.ListenerPriority;
-import com.comphenix.protocol.events.PacketAdapter;
-import com.comphenix.protocol.events.PacketContainer;
-import com.comphenix.protocol.events.PacketEvent;
-import com.comphenix.protocol.reflect.StructureModifier;
+import cn.superiormc.mythicchanger.utils.ItemUtil;
+import com.github.retrooper.packetevents.event.PacketListener;
+import com.github.retrooper.packetevents.event.PacketSendEvent;
+import com.github.retrooper.packetevents.protocol.packettype.PacketType;
+import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerWindowItems;
+import io.github.retrooper.packetevents.util.SpigotConversionUtil;
 import org.bukkit.GameMode;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 // 服务端发给客户端
-public class WindowItem extends GeneralPackets {
-
-    public WindowItem() {
-        super();
-    }
+public class WindowItem implements PacketListener {
 
     @Override
-    protected void initPacketAdapter() {
-        packetAdapter = new PacketAdapter(MythicChanger.instance, ConfigManager.configManager.getPriority(), PacketType.Play.Server.WINDOW_ITEMS) {
-            @Override
-            public void onPacketSending(PacketEvent event) {
-                if (event.getPlayer() == null) {
-                    return;
-                }
-                if (event.getPlayer().getGameMode() == GameMode.CREATIVE) {
-                    return;
-                }
-                PacketContainer packet = event.getPacket();
-
-                StructureModifier<ItemStack> singleItemStackStructureModifier = packet.getItemModifier();
-                if (singleItemStackStructureModifier.size() != 0) {
-                    ItemStack serverItemStack = singleItemStackStructureModifier.read(0);
-                    ItemStack clientItemStack = ConfigManager.configManager.startFakeChange(serverItemStack, event.getPlayer(), true);
-                    // client 是加过 Lore 的，server 是没加过的！
-                    singleItemStackStructureModifier.write(0, clientItemStack);
-                }
-                StructureModifier<List<ItemStack>> itemStackStructureModifier = packet.getItemListModifier();
-                List<ItemStack> serverItemStack = itemStackStructureModifier.read(0);
-                List<ItemStack> clientItemStack = new ArrayList<>();
-                int index = 1;
-                for (ItemStack itemStack : serverItemStack) {
-                    if (itemStack.getType().isAir()) {
-                        clientItemStack.add(itemStack);
-                        index ++;
-                        continue;
-                    }
-                    boolean isPlayerInventory = event.getPacket().getIntegers().read(0) == 0 || index > serverItemStack.size() - 36;
-                    clientItemStack.add(ConfigManager.configManager.startFakeChange(itemStack,
-                            event.getPlayer(), isPlayerInventory
-                            ));
-                    index ++;
-                }
-                // client 是加过 Lore 的，server 是没加过的！
-                itemStackStructureModifier.write(0, clientItemStack);
+    public void onPacketSend(PacketSendEvent event) {
+        if (event.getPacketType().equals(PacketType.Play.Server.WINDOW_ITEMS)) {
+            Player player = event.getPlayer();
+            if (player == null) {
+                return;
             }
-        };
+            if (player.getGameMode() == GameMode.CREATIVE) {
+                return;
+            }
+            WrapperPlayServerWindowItems windowItems = new WrapperPlayServerWindowItems(event);
+            Optional<com.github.retrooper.packetevents.protocol.item.ItemStack> optionalCarriedItem = windowItems.getCarriedItem();
+            if (optionalCarriedItem.isPresent()) {
+                ItemStack carriedItem = SpigotConversionUtil.toBukkitItemStack(optionalCarriedItem.get());
+                if (ItemUtil.isValid(carriedItem)) {
+                    ItemStack clientItemStack = ConfigManager.configManager.startFakeChange(carriedItem, event.getPlayer(), true);
+                    windowItems.setCarriedItem(SpigotConversionUtil.fromBukkitItemStack(clientItemStack));
+                }
+            }
+            List<com.github.retrooper.packetevents.protocol.item.ItemStack> tempItems = windowItems.getItems();
+            List<com.github.retrooper.packetevents.protocol.item.ItemStack> clientItemStack = new ArrayList<>();
+            int index = 1;
+            for (com.github.retrooper.packetevents.protocol.item.ItemStack item : tempItems) {
+                if (item.isEmpty()) {
+                    clientItemStack.add(item);
+                    index ++;
+                    continue;
+                }
+                boolean isPlayerInventory = windowItems.getWindowId() == 0 || index > windowItems.getItems().size() - 36;
+                clientItemStack.add(SpigotConversionUtil.fromBukkitItemStack(ConfigManager.configManager.startFakeChange(SpigotConversionUtil.toBukkitItemStack(item),
+                        event.getPlayer(), isPlayerInventory
+                )));
+                index ++;
+            }
+            windowItems.setItems(clientItemStack);
+        }
     }
 }

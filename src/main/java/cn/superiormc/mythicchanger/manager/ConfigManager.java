@@ -3,7 +3,7 @@ package cn.superiormc.mythicchanger.manager;
 import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.objects.ObjectApplyItem;
 import cn.superiormc.mythicchanger.objects.ObjectSingleRule;
-import com.comphenix.protocol.events.ListenerPriority;
+import com.github.retrooper.packetevents.event.PacketListenerPriority;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemoryConfiguration;
@@ -228,8 +228,8 @@ public class ConfigManager {
         return config.getInt("change-rule-weight." + ruleID, defaultValue);
     }
 
-    public ListenerPriority getPriority() {
-        return ListenerPriority.valueOf(ConfigManager.configManager.getString(
+    public PacketListenerPriority getPriority() {
+        return PacketListenerPriority.valueOf(ConfigManager.configManager.getString(
                 "packet-listener-priority", "LOWEST").toUpperCase());
     }
 
