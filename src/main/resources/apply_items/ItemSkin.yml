@@ -1,7 +1,8 @@
-material: PAPER
-name: '&fItem Skin &8(Diamond Sword)'
-lore:
-  - '&7Drag this item onto the item you want to apply.'
+display-item:
+  material: PAPER
+  name: '&fItem Skin &8(Diamond Sword)'
+  lore:
+    - '&7Drag this item onto the item you want to apply.'
 apply-rule: example
 apply-real-change: true
 match-item:

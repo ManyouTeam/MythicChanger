@@ -32,6 +32,6 @@ public class KeepLore extends AbstractChangesRule {
 
     @Override
     public boolean configNotContains(ConfigurationSection section) {
-        return section.get("keep-lore") == null;
+        return !section.contains("keep-lore");
     }
 }

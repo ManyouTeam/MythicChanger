@@ -33,6 +33,6 @@ public class ParsePAPIName extends AbstractChangesRule {
 
     @Override
     public boolean configNotContains(ConfigurationSection section) {
-        return section.get("parse-papi-name") == null;
+        return !section.contains("parse-papi-name");
     }
 }

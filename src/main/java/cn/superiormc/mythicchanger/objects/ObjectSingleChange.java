@@ -198,7 +198,7 @@ public class ObjectSingleChange extends MemoryConfiguration {
 
     @Override
     public @Nullable Object get(@NotNull String path) {
-        return section.getBoolean(path);
+        return section.get(path);
     }
 
     @Override

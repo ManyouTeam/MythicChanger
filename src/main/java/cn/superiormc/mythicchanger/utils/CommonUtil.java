@@ -177,7 +177,7 @@ public class CommonUtil {
 
     public static ItemStack getItemFromSlot(Player player, int slot) {
         if (slot == 36) {
-            return player.getInventory().getItem(EquipmentSlot.HAND);
+            return player.getInventory().getItem(EquipmentSlot.HEAD);
         } else if (slot == 37) {
             return player.getInventory().getItem(EquipmentSlot.CHEST);
         } else if (slot == 38) {
@@ -186,6 +186,8 @@ public class CommonUtil {
             return player.getInventory().getItem(EquipmentSlot.FEET);
         } else if (slot == 40) {
             return player.getInventory().getItem(EquipmentSlot.OFF_HAND);
+        } else if (slot == -10000) {
+            return player.getInventory().getItem(EquipmentSlot.HAND);
         }
         return player.getInventory().getItem(slot);
     }
@@ -206,7 +208,7 @@ public class CommonUtil {
     public static int convertNMSSlotToBukkitSlot(int slot, int windowID, Player player) {
         if (windowID == 0) {
             if (slot < 5 || slot > 44) {
-                return -1;
+                return -10000;
             }
             int spigotSlot;
             if (slot >= 36) {

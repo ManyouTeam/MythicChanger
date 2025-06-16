@@ -1,7 +1,8 @@
-material: BOOK
-name: '&fRollback book'
-lore:
-  - '&7Drag this item onto the item you want to rollback its apply.'
+display-item:
+  material: BOOK
+  name: '&fRollback book'
+  lore:
+    - '&7Drag this item onto the item you want to rollback its apply.'
 real-changes:
   deapply: true
 match-item:

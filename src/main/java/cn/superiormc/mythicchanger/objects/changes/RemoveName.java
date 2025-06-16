@@ -32,6 +32,6 @@ public class RemoveName extends AbstractChangesRule {
 
     @Override
     public boolean configNotContains(ConfigurationSection section) {
-        return section.get("remove-name") == null;
+        return !section.contains("remove-name");
     }
 }

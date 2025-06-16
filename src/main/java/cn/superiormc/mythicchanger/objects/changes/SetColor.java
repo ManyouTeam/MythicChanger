@@ -32,6 +32,6 @@ public class SetColor extends AbstractChangesRule {
 
     @Override
     public boolean configNotContains(ConfigurationSection section) {
-        return section.get("set-color") == null;
+        return !section.contains("set-color");
     }
 }

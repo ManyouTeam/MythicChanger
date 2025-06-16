@@ -61,6 +61,6 @@ public class AddNBTDouble extends AbstractChangesRule {
 
     @Override
     public boolean configNotContains(ConfigurationSection section) {
-        return section.get("add-nbt-double") == null;
+        return !section.contains("add-nbt-double");
     }
 }

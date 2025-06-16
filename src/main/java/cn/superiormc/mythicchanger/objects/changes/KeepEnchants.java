@@ -27,6 +27,6 @@ public class KeepEnchants extends AbstractChangesRule {
 
     @Override
     public boolean configNotContains(ConfigurationSection section) {
-        return section.get("keep-enchants") == null;
+        return !section.contains("keep-enchants");
     }
 }

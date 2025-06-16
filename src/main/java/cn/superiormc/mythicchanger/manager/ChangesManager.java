@@ -5,6 +5,7 @@ import cn.superiormc.mythicchanger.objects.ObjectAction;
 import cn.superiormc.mythicchanger.objects.ObjectSingleChange;
 import cn.superiormc.mythicchanger.objects.changes.*;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
+import cn.superiormc.mythicchanger.utils.SchedulerUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -141,9 +142,9 @@ public class ChangesManager {
             }
         }
         if (!MythicChanger.freeVersion && !action.isEmpty()) {
-            action.runAllActions(singleChange.getPlayer(), singleChange.getOriginal(), singleChange.getItem());
+            SchedulerUtil.runSync(() -> action.runAllActions(singleChange.getPlayer(), singleChange.getOriginal(), singleChange.getItem()));
         }
-        if (needReturnNewItem) {
+        if (needReturnNewItem ) {
             return singleChange.getItem();
         }
         return null;

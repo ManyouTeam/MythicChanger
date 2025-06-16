@@ -61,6 +61,6 @@ public class AddNBTByte extends AbstractChangesRule {
 
     @Override
     public boolean configNotContains(ConfigurationSection section) {
-        return section.get("add-nbt-byte") == null;
+        return !section.contains("add-nbt-byte");
     }
 }

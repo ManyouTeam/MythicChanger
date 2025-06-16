@@ -66,6 +66,6 @@ public class NBTInt extends AbstractMatchItemRule {
 
     @Override
     public boolean configNotContains(ConfigurationSection section) {
-        return section.get("nbt-int") == null;
+        return !section.contains("nbt-int");
     }
 }

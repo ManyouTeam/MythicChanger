@@ -32,6 +32,6 @@ public class RemoveAllEnchants extends AbstractChangesRule {
 
     @Override
     public boolean configNotContains(ConfigurationSection section) {
-        return section.get("remove-all-enchants") == null;
+        return !section.contains("remove-all-enchants");
     }
 }

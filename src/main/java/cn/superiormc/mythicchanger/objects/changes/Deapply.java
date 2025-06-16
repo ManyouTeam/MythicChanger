@@ -31,6 +31,6 @@ public class Deapply extends AbstractChangesRule {
 
     @Override
     public boolean configNotContains(ConfigurationSection section) {
-        return section.get("deapply") == null;
+        return !section.contains("deapply");
     }
 }

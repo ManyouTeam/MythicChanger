@@ -38,6 +38,6 @@ public class ParsePAPILore extends AbstractChangesRule {
 
     @Override
     public boolean configNotContains(ConfigurationSection section) {
-        return section.get("parse-papi-lore") == null;
+        return !section.contains("parse-papi-lore");
     }
 }

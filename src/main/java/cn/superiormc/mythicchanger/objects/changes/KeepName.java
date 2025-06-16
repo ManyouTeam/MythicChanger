@@ -32,6 +32,6 @@ public class KeepName extends AbstractChangesRule {
 
     @Override
     public boolean configNotContains(ConfigurationSection section) {
-        return section.get("keep-name") == null;
+        return !section.contains("keep-name");
     }
 }

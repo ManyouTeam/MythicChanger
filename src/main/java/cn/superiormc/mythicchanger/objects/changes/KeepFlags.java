@@ -35,6 +35,6 @@ public class KeepFlags extends AbstractChangesRule {
 
     @Override
     public boolean configNotContains(ConfigurationSection section) {
-        return section.get("keep-flags") == null;
+        return !section.contains("keep-flags");
     }
 }

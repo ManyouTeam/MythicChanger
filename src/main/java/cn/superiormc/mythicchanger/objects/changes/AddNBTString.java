@@ -60,6 +60,6 @@ public class AddNBTString extends AbstractChangesRule {
 
     @Override
     public boolean configNotContains(ConfigurationSection section) {
-        return section.get("add-nbt-string") == null;
+        return !section.contains("add-nbt-string");
     }
 }

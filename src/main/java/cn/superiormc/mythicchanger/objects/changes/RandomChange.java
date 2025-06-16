@@ -4,6 +4,7 @@ import cn.superiormc.mythicchanger.manager.ChangesManager;
 import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.objects.ObjectAction;
 import cn.superiormc.mythicchanger.objects.ObjectSingleChange;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 
@@ -25,8 +26,7 @@ public class RandomChange extends AbstractChangesRule {
         }
         Map<ObjectSingleChange, Double> items = new HashMap<>();
         for (String itemKey : itemSection.getKeys(false)) {
-            ObjectSingleChange newSingleChange = new ObjectSingleChange(itemSection.getConfigurationSection(itemKey),
-                    singleChange);
+            ObjectSingleChange newSingleChange = new ObjectSingleChange(itemSection.getConfigurationSection(itemKey), singleChange);
             items.put(newSingleChange, itemSection.getConfigurationSection(itemKey).getDouble("rate", 1.0));
         }
         if (items.isEmpty()) {
@@ -46,11 +46,6 @@ public class RandomChange extends AbstractChangesRule {
     @Override
     public int getWeight() {
         return ConfigManager.configManager.getRuleWeight("random-change", 1002);
-    }
-
-    @Override
-    public boolean getNeedRewriteItem(ConfigurationSection section) {
-        return true;
     }
 
     @Override

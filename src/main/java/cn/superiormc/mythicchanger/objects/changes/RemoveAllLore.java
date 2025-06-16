@@ -33,6 +33,6 @@ public class RemoveAllLore extends AbstractChangesRule {
 
     @Override
     public boolean configNotContains(ConfigurationSection section) {
-        return section.get("remove-all-lore") == null;
+        return !section.contains("remove-all-lore");
     }
 }

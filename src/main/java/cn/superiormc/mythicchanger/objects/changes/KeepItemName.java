@@ -33,6 +33,6 @@ public class KeepItemName extends AbstractChangesRule {
 
     @Override
     public boolean configNotContains(ConfigurationSection section) {
-        return section.get("keep-item-name") == null && CommonUtil.getMinorVersion(20, 5);
+        return !section.contains("keep-item-name") && CommonUtil.getMinorVersion(20, 5);
     }
 }

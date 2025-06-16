@@ -3,6 +3,8 @@ package cn.superiormc.mythicchanger.objects.changes;
 import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.objects.ObjectSingleChange;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.Registry;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
@@ -18,7 +20,9 @@ public class AddEnchants extends AbstractChangesRule {
     @Override
     public ItemStack setChange(ObjectSingleChange singleChange) {
         ItemMeta meta = singleChange.getItemMeta();
+
         for (String ench : singleChange.getConfigurationSection("add-enchants").getKeys(false)) {
+            Bukkit.getConsoleSender().sendMessage(ench);
             Enchantment vanillaEnchant = Registry.ENCHANTMENT.get(CommonUtil.parseNamespacedKey(ench));
             if (vanillaEnchant != null) {
                 int level = singleChange.getInt("add-enchants." + ench);

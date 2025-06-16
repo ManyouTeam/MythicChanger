@@ -65,6 +65,6 @@ public class NBTDouble extends AbstractMatchItemRule {
 
     @Override
     public boolean configNotContains(ConfigurationSection section) {
-        return section.get("nbt-double") == null;
+        return !section.contains("nbt-double");
     }
 }

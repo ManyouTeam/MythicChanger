@@ -41,6 +41,6 @@ public class KeepDamage extends AbstractChangesRule {
 
     @Override
     public boolean configNotContains(ConfigurationSection section) {
-        return section.get("keep-damage") == null;
+        return !section.contains("keep-damage");
     }
 }
