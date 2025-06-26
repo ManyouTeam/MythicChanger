@@ -1,7 +1,6 @@
 package cn.superiormc.mythicchanger.objects.matchitem;
 
 import cn.superiormc.mythicchanger.manager.ConfigManager;
-import cn.superiormc.mythicchanger.utils.ColorParser;
 import cn.superiormc.mythicchanger.utils.TextUtil;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
@@ -20,7 +19,7 @@ public class ContainsLore extends AbstractMatchItemRule {
         for (String hasLore : meta.getLore()) {
             for (String requiredLore : section.getStringList("contains-lore")) {
                 if (ConfigManager.configManager.getBoolean("ignore-color-code")) {
-                    if (ColorParser.clear(hasLore).contains(requiredLore)) {
+                    if (TextUtil.clear(hasLore).contains(requiredLore)) {
                         return true;
                     }
                 } else {

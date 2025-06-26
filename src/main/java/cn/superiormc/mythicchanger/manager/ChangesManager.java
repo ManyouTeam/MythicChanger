@@ -6,6 +6,7 @@ import cn.superiormc.mythicchanger.objects.ObjectSingleChange;
 import cn.superiormc.mythicchanger.objects.changes.*;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
 import cn.superiormc.mythicchanger.utils.SchedulerUtil;
+import cn.superiormc.mythicchanger.utils.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -50,7 +51,6 @@ public class ChangesManager {
         registerNewRule(new SetAmount());
         registerNewRule(new FixHideAttributes());
         if (!MythicChanger.freeVersion) {
-            Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fRegistering PREMIUM change rules...");
             registerNewRule(new SetColor());
             if (CommonUtil.checkPluginLoad("NBTAPI")) {
                 registerNewRule(new AddNBTString());
@@ -106,7 +106,7 @@ public class ChangesManager {
                 break;
             }
             if (ConfigManager.configManager.getBoolean("debug")) {
-                Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fApply fake rule: " + rule.getClass().getName());
+                Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §fApply fake rule: " + rule.getClass().getName());
             }
             if (rule.getNeedRewriteItem(singleChange.section)) {
                 singleChange.replaceItem(rule.setChange(singleChange));
@@ -132,7 +132,7 @@ public class ChangesManager {
                 break;
             }
             if (ConfigManager.configManager.getBoolean("debug")) {
-                Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fApply real rule: " + rule.getClass().getName());
+                Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §fApply real rule: " + rule.getClass().getName());
             }
             if (rule.getNeedRewriteItem(singleChange.section)) {
                 singleChange.replaceItem(rule.setChange(singleChange));

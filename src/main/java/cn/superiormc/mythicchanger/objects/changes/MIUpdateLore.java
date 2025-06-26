@@ -35,7 +35,7 @@ public class MIUpdateLore extends AbstractChangesRule {
                 return singleChange.setItemMeta(originalMeta);
             } else {
                 if (!ConfigManager.configManager.getBoolean("ignore-warning")) {
-                    ErrorManager.errorManager.sendErrorMessage("§x§9§8§F§B§9§8[MythicChanger] §6Warning: mi-update-lore rule only working for " +
+                    ErrorManager.errorManager.sendErrorMessage("§6Warning: mi-update-lore rule only working for " +
                             "items from MMOItems plugin, please adjust your match-item configuration to ensure that only items from MMOItems will use this rule." +
                             " If you want to ignore this warning, please disable warning display in config.yml file.");
                 }

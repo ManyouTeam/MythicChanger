@@ -43,7 +43,7 @@ public class ConditionPlaceholder extends AbstractCheckCondition {
             case "!=*":
                 return !value.contains(placeholder);
             default:
-                ErrorManager.errorManager.sendErrorMessage("§x§9§8§F§B§9§8[MythicChanger] §cError: Your placeholder condition can not being correctly load.");
+                ErrorManager.errorManager.sendErrorMessage("§cError: Your placeholder condition can not being correctly load.");
                 return true;
         }
     }

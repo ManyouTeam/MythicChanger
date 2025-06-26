@@ -20,13 +20,13 @@ public class ItemMMOItemsHook extends AbstractItemHook {
     public ItemStack getHookItemByID(Player player, String hookItemID) {
         Type type = MMOItems.plugin.getTypes().get(hookItemID.split(";;")[0]);
         if (type == null) {
-            ErrorManager.errorManager.sendErrorMessage("§x§9§8§F§B§9§8[MythicChanger] §cError: Can not get "
+            ErrorManager.errorManager.sendErrorMessage("§cError: Can not get "
                     + pluginName + " item: " + hookItemID + "!");
             return null;
         } else {
             MMOItemTemplate template = MMOItems.plugin.getTemplates().getTemplate(type, hookItemID.split(";;")[1]);
             if (template == null) {
-                ErrorManager.errorManager.sendErrorMessage("§x§9§8§F§B§9§8[MythicChanger] §cError: Can not get "
+                ErrorManager.errorManager.sendErrorMessage("§cError: Can not get "
                         + pluginName + " item: " + hookItemID + "!");
                 return null;
             }

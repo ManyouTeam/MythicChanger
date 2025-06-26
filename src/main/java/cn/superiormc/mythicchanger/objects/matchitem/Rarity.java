@@ -1,6 +1,7 @@
 package cn.superiormc.mythicchanger.objects.matchitem;
 
 import cn.superiormc.mythicchanger.manager.ConfigManager;
+import cn.superiormc.mythicchanger.utils.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemRarity;
@@ -23,7 +24,7 @@ public class Rarity extends AbstractMatchItemRule {
             result = "NONE";
         }
         if (ConfigManager.configManager.getBoolean("debug")) {
-            Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §cRarity: " + result);
+            Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §cRarity: " + result);
         }
         return result.equalsIgnoreCase(section.getString("rarity"));
     }

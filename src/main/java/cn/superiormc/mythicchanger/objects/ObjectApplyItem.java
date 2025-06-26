@@ -83,7 +83,7 @@ public class ObjectApplyItem {
             meta.getPersistentDataContainer().set(MYTHICCHANGER_APPLY_ITEM, PersistentDataType.STRING, id);
             applyItem.setItemMeta(meta);
         } else {
-            ErrorManager.errorManager.sendErrorMessage("§x§9§8§F§B§9§8[MythicChanger] §cFailed to generate apply item ID: " + id);
+            ErrorManager.errorManager.sendErrorMessage("§cFailed to generate apply item ID: " + id);
         }
         return applyItem;
     }

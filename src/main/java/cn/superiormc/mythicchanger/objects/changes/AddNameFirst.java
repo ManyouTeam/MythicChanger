@@ -18,7 +18,7 @@ public class AddNameFirst extends AbstractChangesRule {
     @Override
     public ItemStack setChange(ObjectSingleChange singleChange) {
         if (!singleChange.isFakeOrReal() && !ConfigManager.configManager.getBoolean("bypass-real-change-limit")) {
-            ErrorManager.errorManager.sendErrorMessage("§x§9§8§F§B§9§8[MythicChanger] §cError: add-name-first rule only supports" +
+            ErrorManager.errorManager.sendErrorMessage("§cError: add-name-first rule only supports" +
                     " fake change, please remove it in real changes from all your rule configs! If you want to bypass this limit, " +
                     "please disable limit check in config.yml file.");
             return singleChange.getItem();

@@ -225,7 +225,7 @@ public class CommonUtil {
                 topSize = 9;
             }
             if (slot < topSize || slot > topSize + 36) {
-                return -1;
+                return -10000;
             }
             int spigotSlot;
             // 如果是最后9个格子

@@ -18,7 +18,7 @@ public class SetName extends AbstractChangesRule {
     @Override
     public ItemStack setChange(ObjectSingleChange singleChange) {
         if (singleChange.isFakeOrReal() && !ConfigManager.configManager.getBoolean("ignore-warning")) {
-            ErrorManager.errorManager.sendErrorMessage("§x§9§8§F§B§9§8[MythicChanger] §6Warning: set-name rule has incompatibility issues with" +
+            ErrorManager.errorManager.sendErrorMessage("§6Warning: set-name rule has incompatibility issues with" +
                     " other packet based item plugins, it is recommend that remove it in fake changes from all your rule configs!" +
                     " If you want to ignore this warning, please disable warning display in config.yml file.");
         }

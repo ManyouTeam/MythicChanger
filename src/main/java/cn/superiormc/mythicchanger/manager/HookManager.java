@@ -5,6 +5,7 @@ import cn.superiormc.mythicchanger.hooks.MMOItemsHook;
 import cn.superiormc.mythicchanger.hooks.items.*;
 import cn.superiormc.mythicchanger.listeners.QuickShopListener;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
+import cn.superiormc.mythicchanger.utils.TextUtil;
 import com.loohp.interactivechat.api.InteractiveChatAPI;
 import com.loohp.interactivechat.objectholders.ICPlayer;
 import com.loohp.interactivechat.objectholders.ICPlayerFactory;
@@ -30,28 +31,28 @@ public class HookManager {
 
     private void initNormalHook() {
         if (CommonUtil.checkPluginLoad("InteractiveChat")) {
-            Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fHooking into InteractiveChat...");
+            Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §fHooking into InteractiveChat...");
             InteractiveChatAPI.registerItemStackTransformProvider(MythicChanger.instance, 10, (itemStack, uuid) -> {
                 ICPlayer icPlayer = ICPlayerFactory.getICPlayer(uuid);
                 return ConfigManager.configManager.startFakeChange(itemStack, icPlayer.getLocalPlayer(), true);
             });
         }
         if (CommonUtil.checkPluginLoad("TrChat")) {
-            Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fHooking into TrChat...");
+            Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §fHooking into TrChat...");
             HookPlugin.INSTANCE.registerDisplayItemHook("EnchantmentSlots", (itemStack, player) -> ConfigManager.configManager.startFakeChange(itemStack, player, true));
         }
         if (CommonUtil.checkPluginLoad("QuickShop-Hikari")) {
-            Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fHooking into QuickShop-Hikari...");
+            Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §fHooking into QuickShop-Hikari...");
             Bukkit.getPluginManager().registerEvents(new QuickShopListener(), MythicChanger.instance);
         }
         if (CommonUtil.checkPluginLoad("MMOItems")) {
             try {
-                Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fRegistering special item register manager" +
+                Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §fRegistering special item register manager" +
                         " for MMOItems because it does not support async...");
                 MMOItemsHook.generateNewCache();
                 new ListenerManager();
             } catch (Throwable throwable) {
-                ErrorManager.errorManager.sendErrorMessage("§x§9§8§F§B§9§8[MythicChanger] §cError: Failed to register MMOItems hook, consider update " +
+                ErrorManager.errorManager.sendErrorMessage("§cError: Failed to register MMOItems hook, consider update " +
                         "your MMOItems to latest dev version!");
             }
         }
@@ -97,7 +98,7 @@ public class HookManager {
     public void registerNewItemHook(String pluginName,
                                     AbstractItemHook itemHook) {
         if (!itemHooks.containsKey(pluginName)) {
-            Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[MythicChanger] §fHooking into " + pluginName + "...");
+            Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §fHooking into " + pluginName + "...");
             itemHooks.put(pluginName, itemHook);
         }
     }
@@ -120,7 +121,7 @@ public class HookManager {
             return null;
         }
         if (!itemHooks.containsKey(pluginName)) {
-            ErrorManager.errorManager.sendErrorMessage("§x§9§8§F§B§9§8[MythicChanger] §cError: Can not hook into "
+            ErrorManager.errorManager.sendErrorMessage("§cError: Can not hook into "
                     + pluginName + " plugin, maybe we do not support this plugin, or your server didn't correctly load " +
                     "this plugin!");
             return null;
@@ -141,7 +142,7 @@ public class HookManager {
 
     public ItemStack getHookItem(Player player, String pluginName, String itemID) {
         if (!itemHooks.containsKey(pluginName)) {
-            ErrorManager.errorManager.sendErrorMessage("§x§9§8§F§B§9§8[MythicChanger] §cError: Can not hook into "
+            ErrorManager.errorManager.sendErrorMessage("§cError: Can not hook into "
                     + pluginName + " plugin, maybe we do not support this plugin, or your server didn't correctly load " +
                     "this plugin!");
             return null;
