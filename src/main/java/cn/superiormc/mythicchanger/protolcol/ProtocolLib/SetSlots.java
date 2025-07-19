@@ -5,11 +5,13 @@ import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
 import cn.superiormc.mythicchanger.utils.ItemUtil;
 import cn.superiormc.mythicchanger.utils.SchedulerUtil;
+import cn.superiormc.mythicchanger.utils.TextUtil;
 import com.github.retrooper.packetevents.event.PacketListener;
 import com.github.retrooper.packetevents.event.PacketSendEvent;
 import com.github.retrooper.packetevents.protocol.packettype.PacketType;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerSetSlot;
 import io.github.retrooper.packetevents.util.SpigotConversionUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -27,18 +29,21 @@ public class SetSlots implements PacketListener {
             if (player.getGameMode() == GameMode.CREATIVE) {
                 return;
             }
+            if (ConfigManager.configManager.getBoolean("debug")) {
+                Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §fSetSlot pack found!");
+            }
             int windowID = serverSetSlot.getWindowId();
             ItemStack item = SpigotConversionUtil.toBukkitItemStack(serverSetSlot.getItem());
             if (!ItemUtil.isValid(item)) {
                 return;
             }
             int slot = serverSetSlot.getSlot();
+            ItemStack clientItemStack = ConfigManager.configManager.startFakeChange(item, player,
+                    CommonUtil.inPlayerInventory(player, slot, windowID));
+            serverSetSlot.setItem(SpigotConversionUtil.fromBukkitItemStack(clientItemStack));
             if (ChangesManager.changesManager.getItemCooldown(player, slot)) {
                 ChangesManager.changesManager.removeCooldown(player, slot);
             } else {
-                ItemStack clientItemStack = ConfigManager.configManager.startFakeChange(item, player,
-                        CommonUtil.inPlayerInventory(player, slot, windowID));
-                serverSetSlot.setItem(SpigotConversionUtil.fromBukkitItemStack(clientItemStack));
                 if (ConfigManager.configManager.getBoolean("real-change-trigger.SetSlotPacket.enabled", true)) {
                     startRealChange(slot, windowID, player);
                 }

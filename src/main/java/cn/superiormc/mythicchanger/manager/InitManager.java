@@ -26,6 +26,14 @@ public class InitManager {
         resourceOutput("rules/example.yml", false);
         resourceOutput("apply_items/ItemSkin.yml", false);
         resourceOutput("apply_items/Deapply.yml", false);
+        resourceOutput("apply_items/attributescroll/attributescroll_attackdamage.yml", false);
+        resourceOutput("apply_items/enchantscroll/enchantscroll_fortune.yml", false);
+        resourceOutput("apply_items/enchantscroll/enchantscroll_looting.yml", false);
+        resourceOutput("apply_items/enchantscroll/enchantscroll_power.yml", false);
+        resourceOutput("apply_items/enchantscroll/enchantscroll_protection.yml", false);
+        resourceOutput("apply_items/enchantscroll/enchantscroll_respiration.yml", false);
+        resourceOutput("apply_items/enchantscroll/enchantscroll_sharpness.yml", false);
+        resourceOutput("apply_items/enchantscroll/enchantscroll_unbreaking.yml", false);
     }
 
     public boolean isFirstLoad() {

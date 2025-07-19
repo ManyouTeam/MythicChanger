@@ -37,6 +37,7 @@ paper-api:
     # Only for Item Format for now, does not support item modify in rule.
     item: false
 
+# Premium version only.
 math:
   enabled: true
   scale: 2

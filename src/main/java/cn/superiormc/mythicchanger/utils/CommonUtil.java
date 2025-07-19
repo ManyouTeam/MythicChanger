@@ -244,7 +244,10 @@ public class CommonUtil {
         if (keySplit.length == 1) {
             return NamespacedKey.minecraft(key.toLowerCase());
         }
-        return NamespacedKey.fromString(key);
+        if (CommonUtil.getMajorVersion(16)) {
+            return NamespacedKey.fromString(key);
+        }
+        return new NamespacedKey("mythicchanger", "unknown");
     }
 
     public static Color parseColor(String color) {

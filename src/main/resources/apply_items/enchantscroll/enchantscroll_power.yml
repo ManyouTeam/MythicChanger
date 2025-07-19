@@ -1,0 +1,47 @@
+# PREMIUM VERSION ONLY
+
+# Display Item
+display-item:
+  material: PAPER
+  name: '&#e0e194Enchantment Scroll &7(Power &a+1&7)'
+  lore:
+    - '&8Scroll'
+    - ''
+    - '&d✦ &#cbccc2Drag any &cenchantable item &#cbccc2onto this item to'
+    - '&7make its &bPower &#cbccc2level &a+1&#cbccc2.'
+    - '&c■ &#cbccc2Up to level &#e957ca10&#cbccc2 can be upgraded.'
+    - ''
+    - '&#d9afd9Success Rate: &#55c572100%'
+    - '&f&lCommon'
+  max-stack: 1
+  
+# Chance, Up to 100
+chance: 100
+  
+# Rule Configs
+real-changes:
+  add-enchants:
+    power: '{item_enchants.power;;0} + 1'
+
+# Match Item
+match-item:
+  enchantable:
+    - power
+
+# Conditions
+conditions:
+  1:
+    type: placeholder
+    rule: '<'
+    placeholder: '{item_enchants.power}'
+    value: 10
+    
+# Actions
+success-actions:
+  1:
+    type: message
+    message: '&d✦ &fCool, it looks like magic is showing off, your {name} &fis more powerful now!'
+fail-actions:
+  1:
+    type: message
+    message: '&c☹ &fOh, no! Seems that this time you are now very lucky, the scroll broken, nothing changed!'

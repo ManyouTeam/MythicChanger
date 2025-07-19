@@ -2,11 +2,13 @@ package cn.superiormc.mythicchanger.protolcol.ProtocolLib;
 
 import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.utils.ItemUtil;
+import cn.superiormc.mythicchanger.utils.TextUtil;
 import com.github.retrooper.packetevents.event.PacketListener;
 import com.github.retrooper.packetevents.event.PacketSendEvent;
 import com.github.retrooper.packetevents.protocol.packettype.PacketType;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerWindowItems;
 import io.github.retrooper.packetevents.util.SpigotConversionUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -28,6 +30,9 @@ public class WindowItem implements PacketListener {
             if (player.getGameMode() == GameMode.CREATIVE) {
                 return;
             }
+            if (ConfigManager.configManager.getBoolean("debug")) {
+                Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §fWindowItems pack found!");
+            }
             WrapperPlayServerWindowItems windowItems = new WrapperPlayServerWindowItems(event);
             Optional<com.github.retrooper.packetevents.protocol.item.ItemStack> optionalCarriedItem = windowItems.getCarriedItem();
             if (optionalCarriedItem.isPresent()) {
@@ -35,6 +40,7 @@ public class WindowItem implements PacketListener {
                 if (ItemUtil.isValid(carriedItem)) {
                     ItemStack clientItemStack = ConfigManager.configManager.startFakeChange(carriedItem, event.getPlayer(), true);
                     windowItems.setCarriedItem(SpigotConversionUtil.fromBukkitItemStack(clientItemStack));
+                    player.getInventory().addItem(clientItemStack);
                 }
             }
             List<com.github.retrooper.packetevents.protocol.item.ItemStack> tempItems = windowItems.getItems();

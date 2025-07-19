@@ -1,0 +1,51 @@
+# PREMIUM VERSION ONLY
+
+# Display Item
+display-item:
+  material: PAPER
+  name: '&#da8f87Attribute Scroll &7(Attack Damage &a+0.5&7)'
+  lore:
+    - '&8Scroll'
+    - ''
+    - '&d✦ &#cbccc2Drag any &cswords or axes &#cbccc2onto this item to'
+    - '&7make its &bAttack Damage &#cbccc2value &a+0.5&#cbccc2.'
+    - '&c■ &#cbccc2Up to value &#e957ca10&#cbccc2 can be upgraded.'
+    - ''
+    - '&#d9afd9Success Rate: &#55c57250%'
+    - '&a&lRare'
+  max-stack: 1
+  
+# Chance, Up to 100
+chance: 50
+  
+# Rule Configs
+real-changes:
+  add-attributes:
+    ATTACK_DAMAGE: 
+      name: attack_damage 
+      amount: '0.5'
+      operation: ADD_NUMBER 
+      slot: HAND 
+
+# Match Item
+match-item:
+  material-tag:
+    - swords
+
+# Conditions
+conditions:
+  1:
+    type: placeholder
+    rule: '<'
+    placeholder: '{item_attributes.ATTACK_DAMAGE.amount;;0}'
+    value: 10
+    
+# Actions
+success-actions:
+  1:
+    type: message
+    message: '&d✦ &fCool, it looks like magic is showing off, your {name} &fis more powerful now!'
+fail-actions:
+  1:
+    type: message
+    message: '&c☹ &fOh, no! Seems that this time you are now very lucky, the scroll broken, nothing changed!'

@@ -22,7 +22,6 @@ public class AddEnchants extends AbstractChangesRule {
         ItemMeta meta = singleChange.getItemMeta();
 
         for (String ench : singleChange.getConfigurationSection("add-enchants").getKeys(false)) {
-            Bukkit.getConsoleSender().sendMessage(ench);
             Enchantment vanillaEnchant = Registry.ENCHANTMENT.get(CommonUtil.parseNamespacedKey(ench));
             if (vanillaEnchant != null) {
                 int level = singleChange.getInt("add-enchants." + ench);

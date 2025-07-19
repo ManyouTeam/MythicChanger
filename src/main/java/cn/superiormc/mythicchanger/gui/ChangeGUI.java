@@ -39,7 +39,13 @@ public class ChangeGUI extends InvGUI {
         ConfigurationSection customItemSection = ConfigManager.configManager.getSection("change-gui.custom-item");
         if (customItemSection != null) {
             for (String key : customItemSection.getKeys(false)){
-                inv.setItem(Integer.parseInt(key), BuildItem.buildItemStack(player, customItemSection.getConfigurationSection(key)));
+                ConfigurationSection itemSection = customItemSection.getConfigurationSection(key);
+                if (itemSection == null) {
+                    continue;
+                }
+                itemSection.addDefault("name", null);
+                itemSection.addDefault("lore", null);
+                inv.setItem(Integer.parseInt(key), BuildItem.buildItemStack(player, itemSection));
             }
         }
     }
@@ -48,8 +54,7 @@ public class ChangeGUI extends InvGUI {
     public boolean clickEventHandle(Inventory inventory, ItemStack item, int slot) {
         if (slot == ConfigManager.configManager.getInt("change-gui.item-slot", 0)) {
             return false;
-        }
-        else if (slot == ConfigManager.configManager.getInt("change-gui.book-slot", 1)) {
+        } else if (slot == ConfigManager.configManager.getInt("change-gui.book-slot", 1)) {
             ItemStack targetItem = inv.getItem(ConfigManager.configManager.getInt("change-gui.book-slot", 0));
             if (targetItem != null && !targetItem.getType().isAir()) {
                 return false;
