@@ -1,0 +1,132 @@
+# MythicChanger by @PQguanfang
+#
+# Read the Wiki here: https://mythicchanger.superiormc.cn/
+
+debug: false
+
+# If you just want to use our match item feature without any need of change item,
+# you can disable this option to improve plugin performance and disable auto item change feature.
+packet-listener: true
+
+# ProtocolLib Support value:
+#    LOWEST(0),
+#    LOW(1),
+#    NORMAL(2),
+#    HIGH(3),
+#    HIGHEST(4),
+#    MONITOR(5)
+# The value after the value just a number help you know it's level, do not type them in option.
+packet-listener-priority: LOWEST
+
+config-files:
+  language: en_US
+  force-parse-mini-message: true
+  # Premium version only.
+  minecraft-locate-file:
+    # After enable, we will autoload Minecraft locate file when we need know an item's locate name.
+    # It will make server little lag when loading this file because this file is very large.
+    enabled: true
+    generate-new-one: false
+    file: 'zh_cn.json'
+
+# Premium version only.
+math:
+  enabled: true
+  scale: 2
+
+real-change-trigger:
+  SetSlotTrigger:
+    enabled: true
+  InventoryClickEvent:
+    enabled: true
+
+# Some change rules do not support real change perfectly.
+# For example, add-name-first rule require you also set contains-name rule.
+# Otherwise, each time you interact with this item, the name of it will have additional content added due to this rule.
+# Like: 'Good Good Good Good Good Diamond Sword' if you set add-name-first: 'Good' and interact with this item 5 times.
+bypass-real-change-limit: false
+
+ignore-warning: false
+
+# Whether we keep item name to original in anvil name.
+keep-name-in-anvil: true
+
+# Whether only-in-player-inventory option in each rule only checks chest UI.
+check-chests-only: true
+
+# You can override the weight values set by the plugin for each rule here. The higher the weight value, the earlier the rule will be executed.
+# The default value of the plugin is a carefully considered and reasonably configured value.
+# Please do not modify the value here unless you know what you are doing.
+change-rule-weight:
+  add-enchants: 2
+  add-attributes: 5
+  add-flags: 3
+  add-lore-first: 11
+  add-lore-last: 12
+  add-lore-prefix: 13
+  add-name-first: 21
+  add-name-last: 22
+  add-nbt-byte: 203
+  add-nbt-double: 202
+  add-nbt-int: 201
+  add-nbt-string: 200
+  edit-item: 1
+  fix-hide-attributes: 1500
+  keep-damage: -250
+  keep-enchants: -251
+  keep-flags: -252
+  keep-item-name: -253
+  keep-lore: -254
+  keep-name: -255
+  edit-lore: 14
+  parse-papi-lore: 500
+  parse-papi-name: 501
+  random-change: 1002
+  remove-name: -300
+  remove-all-lore: -301
+  remove-all-enchants: -198
+  remove-enchants: -197
+  remove-flags: -196
+  remove-nbt: -199
+  replace-enchants: -203
+  replace-item: 1000
+  replace-random-item: 1001
+  replace-lore: 9
+  replace-name: 8
+  set-color: 150
+  set-custom-model-data: 5
+  set-lore: 6
+  set-name: 7
+  set-type: 60
+  set-amount: 59
+  deapply: 61
+  mi-update-lore: 115
+
+# Premium version only.
+change-gui:
+  title: 'Change your item!'
+  size: 27
+  item-slot: 11
+  book-slot: 15
+  confirm-slot: 22
+  confirm-item:
+    material: ANVIL
+    name: '&eConfirm'
+    lore:
+      - '&7Click to confirm change the item!'
+  custom-item:
+    2:
+      material: PAPER
+      name: '&bDrag the item you want change below.'
+    6:
+      material: BOOK
+      name: '&bDrag the apply item below.'
+  close-if-fail: true
+
+# Premium version only.
+# Support value: GUI, DRAG
+# GUI mode is in EARLY ALPHA TEST, be careful to use!
+# Require server restart.
+apply-item-mode: DRAG
+
+default-apply-item-limit: 1
