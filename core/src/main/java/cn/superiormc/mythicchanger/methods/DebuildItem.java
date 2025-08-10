@@ -1,7 +1,6 @@
 package cn.superiormc.mythicchanger.methods;
 
 import cn.superiormc.mythicchanger.MythicChanger;
-import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.manager.ErrorManager;
 import cn.superiormc.mythicchanger.manager.HookManager;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
@@ -9,9 +8,7 @@ import cn.superiormc.mythicchanger.utils.NBTUtil;
 import com.google.common.collect.Multimap;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
-import org.bukkit.Color;
-import org.bukkit.FireworkEffect;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.block.BlockState;
@@ -20,32 +17,29 @@ import org.bukkit.block.CreatureSpawner;
 import org.bukkit.block.ShulkerBox;
 import org.bukkit.block.banner.Pattern;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.damage.DamageType;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.*;
-import org.bukkit.inventory.meta.components.FoodComponent;
-import org.bukkit.inventory.meta.components.JukeboxPlayableComponent;
-import org.bukkit.inventory.meta.components.ToolComponent;
-import org.bukkit.inventory.meta.components.UseCooldownComponent;
+import org.bukkit.inventory.meta.components.*;
 import org.bukkit.inventory.meta.trim.ArmorTrim;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionType;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class DebuildItem {
 
     public static ConfigurationSection debuildItem(ItemStack itemStack, ConfigurationSection section) {
 
-        if (HookManager.hookManager.getHookItemPluginAndID(itemStack) != null) {
-            section.set("hook-plugin", HookManager.hookManager.getHookItemPluginAndID(itemStack)[0]);
-            section.set("hook-item", HookManager.hookManager.getHookItemPluginAndID(itemStack)[1]);
+        String[] tempVal1 = HookManager.hookManager.getHookItemPluginAndID(itemStack);
+        if (tempVal1 != null) {
+            section.set("hook-plugin", tempVal1[0]);
+            section.set("hook-item", tempVal1[1]);
         } else {
             // Material
             section.set("material", itemStack.getType().name());
@@ -67,13 +61,13 @@ public class DebuildItem {
         // Item Name
         if (CommonUtil.getMinorVersion(20, 5)) {
             if (meta.hasItemName()) {
-                section.set("name", MythicChanger.methodUtil.getItemItemName(meta));
+                section.set("item-name", MythicChanger.methodUtil.getItemItemName(meta));
             }
         }
 
         // Lore
         if (meta.hasLore()) {
-            section.set("name", MythicChanger.methodUtil.getItemLore(meta));
+            section.set("lore", MythicChanger.methodUtil.getItemLore(meta));
         }
 
         // Custom Model Data
@@ -110,7 +104,7 @@ public class DebuildItem {
                 List<String> effects = new ArrayList<>();
                 for (FoodComponent.FoodEffect foodEffect : foodComponent.getEffects()) {
                     if (CommonUtil.getMajorVersion(18)) {
-                        effects.add(foodEffect.getEffect().getType().getKey() + ", " + foodEffect.getEffect().getDuration() + ", " +
+                        effects.add(foodEffect.getEffect().getType().getKey().getKey() + ", " + foodEffect.getEffect().getDuration() + ", " +
                                 foodEffect.getEffect().getAmplifier() + ", " + foodEffect.getEffect().isAmbient() + ", " +
                                 foodEffect.getEffect().hasParticles() + ", " + foodEffect.getEffect().hasIcon() + ", " +
                                 foodEffect.getProbability());
@@ -160,8 +154,8 @@ public class DebuildItem {
         // Jukebox Playable
         if (CommonUtil.getMajorVersion(21)) {
             JukeboxPlayableComponent jukeboxPlayableComponent = meta.getJukeboxPlayable();
-            if (!jukeboxPlayableComponent.isShowInTooltip()) {
-            section.set("show-song", jukeboxPlayableComponent.isShowInTooltip());
+            if (!CommonUtil.getMinorVersion(21, 5) && !jukeboxPlayableComponent.isShowInTooltip()) {
+                section.set("show-song", jukeboxPlayableComponent.isShowInTooltip());
             }
             if (!jukeboxPlayableComponent.getSongKey().toString().equals("minecraft:13")) {
                 section.set("song", jukeboxPlayableComponent.getSongKey().toString());
@@ -276,7 +270,7 @@ public class DebuildItem {
             List<String> effects = new ArrayList<>();
             for (PotionEffect effect : potion.getCustomEffects()) {
                 if (CommonUtil.getMajorVersion(18)) {
-                    effects.add(effect.getType().getKey() + ", " + effect.getDuration() + ", " + effect.getAmplifier() + ", " +
+                    effects.add(effect.getType().getKey().getKey() + ", " + effect.getDuration() + ", " + effect.getAmplifier() + ", " +
                             effect.getAmplifier() + ", " + effect.isAmbient() + ", " +
                             effect.hasParticles() + ", " + effect.hasIcon());
                 } else {
@@ -291,7 +285,7 @@ public class DebuildItem {
             if (CommonUtil.getMinorVersion(20, 5)) {
                 PotionType potionType = potion.getBasePotionType();
                 if (potionType != null) {
-                    section.set("base-effect", potionType.getKey().toString());
+                    section.set("base-effect", potionType.getKey().getKey());
                 }
             } else {
                 PotionData potionData = potion.getBasePotionData();
@@ -380,7 +374,7 @@ public class DebuildItem {
                     }
                 } catch (Exception exception) {
                     exception.printStackTrace();
-                    ErrorManager.errorManager.sendErrorMessage("§x§9§8§F§B§9§8[ManyouItems] §cError: Can not parse skull texture in a item!");
+                    ErrorManager.errorManager.sendErrorMessage("§cError: Can not parse skull texture in a item!");
                 }
             }
         }
@@ -418,23 +412,25 @@ public class DebuildItem {
             FireworkEffectMeta fireworkEffectMeta = (FireworkEffectMeta) meta;
             if (fireworkEffectMeta.hasEffect()) {
                 FireworkEffect fireworkEffect = fireworkEffectMeta.getEffect();
-                section.set("firework.type", fireworkEffect.getType().name());
-                section.set("firework.flicker", fireworkEffect);
-                section.set("firework.trail", fireworkEffect.hasTrail());
+                if (fireworkEffect != null) {
+                    section.set("firework.type", fireworkEffect.getType().name());
+                    section.set("firework.flicker", fireworkEffect);
+                    section.set("firework.trail", fireworkEffect.hasTrail());
 
-                List<Integer> baseColors = new ArrayList<>();
-                List<Integer> fadeColors = new ArrayList<>();
+                    List<Integer> baseColors = new ArrayList<>();
+                    List<Integer> fadeColors = new ArrayList<>();
 
-                ConfigurationSection colors = section.createSection("firework.colors");
-                for (Color color : fireworkEffect.getColors()) {
-                    baseColors.add(color.asRGB());
+                    ConfigurationSection colors = section.createSection("firework.colors");
+                    for (Color color : fireworkEffect.getColors()) {
+                        baseColors.add(color.asRGB());
+                    }
+                    colors.set("base", baseColors);
+
+                    for (Color color : fireworkEffect.getFadeColors()) {
+                        fadeColors.add(color.asRGB());
+                    }
+                    colors.set("fade", fadeColors);
                 }
-                colors.set("base", baseColors);
-
-                for (Color color : fireworkEffect.getFadeColors()) {
-                    fadeColors.add(color.asRGB());
-                }
-                colors.set("fade", fadeColors);
             }
         }
 
@@ -445,7 +441,7 @@ public class DebuildItem {
 
             for (PotionEffect effect : stew.getCustomEffects()) {
                 if (CommonUtil.getMajorVersion(18)) {
-                    effects.add(effect.getType().getKey() + ", " + effect.getDuration() + ", " + effect.getAmplifier());
+                    effects.add(effect.getType().getKey().getKey() + ", " + effect.getDuration() + ", " + effect.getAmplifier());
                 } else {
                     effects.add(effect.getType().getName() + ", " + effect.getDuration() + ", " + effect.getAmplifier());
                 }
@@ -519,7 +515,7 @@ public class DebuildItem {
         }
 
         // Music Instrument
-        if (CommonUtil.getMinorVersion(1, 3)) {
+        if (CommonUtil.getMinorVersion(19, 3)) {
             if (meta instanceof MusicInstrumentMeta) {
                 MusicInstrumentMeta musicInstrumentMeta = (MusicInstrumentMeta) meta;
                 if (musicInstrumentMeta.getInstrument() != null) {
@@ -549,12 +545,12 @@ public class DebuildItem {
 
             // Item Model
             if (meta.hasItemModel()) {
-                section.set("item-model", meta.getItemModel().asString());
+                section.set("item-model", meta.getItemModel().toString());
             }
 
             // Tooltip Style
             if (meta.hasTooltipStyle()) {
-                section.set("tooltip-style", meta.getTooltipStyle().asString());
+                section.set("tooltip-style", meta.getTooltipStyle().toString());
             }
 
             // Item Cooldown
@@ -562,6 +558,45 @@ public class DebuildItem {
                 UseCooldownComponent useCooldownComponent = meta.getUseCooldown();
                 section.set("use-cooldown.cooldown-group", useCooldownComponent.getCooldownGroup());
                 section.set("use-cooldown.cooldown-seconds", useCooldownComponent.getCooldownSeconds());
+            }
+
+            // Equippable
+            if (meta.hasEquippable()) {
+                EquippableComponent equippableComponent = meta.getEquippable();
+                Collection<EntityType> entities = equippableComponent.getAllowedEntities();
+                if (entities != null && !entities.isEmpty()) {
+                    section.set("equippable.entities", entities);
+                }
+                if (!equippableComponent.isDamageOnHurt()) {
+                    section.set("equippable.damage-on-hurt", equippableComponent.isDamageOnHurt());
+                }
+                if (!equippableComponent.isDispensable()) {
+                    section.set("equippable.dispensable", equippableComponent.isDispensable());
+                }
+                if (!equippableComponent.isSwappable()) {
+                    section.set("equippable.swappable", equippableComponent.isSwappable());
+                }
+                NamespacedKey cameraOverlay = equippableComponent.getCameraOverlay();
+                if (cameraOverlay != null) {
+                    section.set("equippable.camera-overlay", cameraOverlay.toString());
+                }
+                NamespacedKey model = equippableComponent.getModel();
+                if (model != null) {
+                    section.set("equippable.model", model.toString());
+                }
+                section.set("equippable.equipment-slot", equippableComponent.getSlot().name());
+                Sound equipSound = equippableComponent.getEquipSound();
+                if (!equipSound.getKey().toString().equals("minecraft:item.armor.equip_generic")) {
+                    section.set("equippable.sound", equipSound.getKey().toString());
+                }
+            }
+
+            // Damage
+            if (meta.hasDamageResistant()) {
+                Tag<DamageType> damageTypeTag = meta.getDamageResistant();
+                if (damageTypeTag != null) {
+                    section.set("damage-resistant", damageTypeTag.getKey().toString());
+                }
             }
         }
 

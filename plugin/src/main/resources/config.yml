@@ -2,13 +2,15 @@
 #
 # Read the Wiki here: https://mythicchanger.superiormc.cn/
 
+# Some options require restart the server to make effect.
+
 debug: false
 
 # If you just want to use our match item feature without any need of change item,
 # you can disable this option to improve plugin performance and disable auto item change feature.
 packet-listener: true
 
-# ProtocolLib Support value:
+# packetevents Support value:
 #    LOWEST(0),
 #    LOW(1),
 #    NORMAL(2),
@@ -35,7 +37,7 @@ math:
   scale: 2
 
 real-change-trigger:
-  SetSlotTrigger:
+  SetSlotPacket:
     enabled: true
   InventoryClickEvent:
     enabled: true

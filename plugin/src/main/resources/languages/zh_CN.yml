@@ -38,6 +38,7 @@ help:
     &f/mythicchanger reload &7- 重启插件.
     &f/mythicchanger giveapplyitem <item> <player> <amount> &7- 将更改物品给予指定玩家.
 
+give-save-item: "&#98FB98[MythicChanger] &f给予玩家 {player} 保存物品 {item} x{amount}!"
 nbt-view-empty: "&#98FB98[MythicChanger] &f该物品不包含任何自定义NBT信息!"
 nbt-view: "&#98FB98[MythicChanger] &f该物品包含如下自定义NBT:"
 rule-limit-reached: "&#98FB98[MythicChanger] &f该物品已达到其使用更改物品上限!"

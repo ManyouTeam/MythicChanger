@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.ItemStack;
 
 public class WindowClick implements Listener {
@@ -50,6 +51,9 @@ public class WindowClick implements Listener {
                 event.setCancelled(true);
                 player.updateInventory();
             }
+        }
+        if (event.getClickedInventory() instanceof AnvilInventory && ConfigManager.configManager.getBoolean("keep-name-in-anvil")) {
+            player.updateInventory();
         }
     }
 }

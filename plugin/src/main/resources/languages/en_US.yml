@@ -43,6 +43,7 @@ help:
     &f/mythicchanger reload &7- Reload the plugin.
     &f/mythicchanger giveapplyitem <item> <player> <amount> &7- Give apply item for specified players.
 
+give-save-item: "&#98FB98[MythicChanger] &fGive {player} save item {item} x{amount}!"
 nbt-view-empty: "&#98FB98[MythicChanger] &fThis item does not has any custom NBT!"
 nbt-view: "&#98FB98[MythicChanger] &fThis item has those NBT content:"
 rule-limit-reached: "&#98FB98[MythicChanger] &fThis item reached it's apply item rule limit!"

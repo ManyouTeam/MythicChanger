@@ -38,13 +38,13 @@ public class SetSlots implements PacketListener {
                 return;
             }
             int slot = serverSetSlot.getSlot();
-            ItemStack clientItemStack = ConfigManager.configManager.startFakeChange(item, player,
-                    CommonUtil.inPlayerInventory(player, slot, windowID));
+            boolean isPlayerInventory = CommonUtil.inPlayerInventory(player, slot, windowID);
+            ItemStack clientItemStack = ConfigManager.configManager.startFakeChange(item, player, isPlayerInventory);
             serverSetSlot.setItem(SpigotConversionUtil.fromBukkitItemStack(clientItemStack));
             if (ChangesManager.changesManager.getItemCooldown(player, slot)) {
                 ChangesManager.changesManager.removeCooldown(player, slot);
             } else {
-                if (ConfigManager.configManager.getBoolean("real-change-trigger.SetSlotPacket.enabled", true)) {
+                if (ConfigManager.configManager.getBoolean("real-change-trigger.SetSlotPacket.enabled", true) && isPlayerInventory) {
                     startRealChange(slot, windowID, player);
                 }
             }

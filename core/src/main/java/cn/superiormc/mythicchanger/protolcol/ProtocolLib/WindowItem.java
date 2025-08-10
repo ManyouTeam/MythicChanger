@@ -1,6 +1,7 @@
 package cn.superiormc.mythicchanger.protolcol.ProtocolLib;
 
 import cn.superiormc.mythicchanger.manager.ConfigManager;
+import cn.superiormc.mythicchanger.utils.CommonUtil;
 import cn.superiormc.mythicchanger.utils.ItemUtil;
 import cn.superiormc.mythicchanger.utils.TextUtil;
 import com.github.retrooper.packetevents.event.PacketListener;
@@ -40,7 +41,6 @@ public class WindowItem implements PacketListener {
                 if (ItemUtil.isValid(carriedItem)) {
                     ItemStack clientItemStack = ConfigManager.configManager.startFakeChange(carriedItem, event.getPlayer(), true);
                     windowItems.setCarriedItem(SpigotConversionUtil.fromBukkitItemStack(clientItemStack));
-                    player.getInventory().addItem(clientItemStack);
                 }
             }
             List<com.github.retrooper.packetevents.protocol.item.ItemStack> tempItems = windowItems.getItems();
