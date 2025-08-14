@@ -85,6 +85,10 @@ public class ChangesManager {
             if (CommonUtil.checkPluginLoad("MMOItems")) {
                 registerNewRule(new MIUpdateLore());
             }
+            if (CommonUtil.getClass("cn.superiormc.ultimateshop.UltimateShop")) {
+                MythicChanger.methodUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fHooking into UltimateShop...");
+                registerNewRule(new AddPriceLore());
+            }
         }
     }
 

@@ -194,5 +194,12 @@
             <version>2.6.0</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>cn.superiormc</groupId>
+            <artifactId>UltimateShop</artifactId>
+            <version>3.9.4</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/UltimateShop-3.9.4.jar</systemPath>
+        </dependency>
     </dependencies>
 </project>

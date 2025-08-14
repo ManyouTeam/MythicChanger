@@ -17,7 +17,6 @@ import org.bukkit.persistence.PersistentDataType;
 
 public class ApplyItemListener implements Listener {
 
-
     @EventHandler
     public void onItemClick(InventoryClickEvent event) {
         if (!(event.getClickedInventory() instanceof PlayerInventory)) {
