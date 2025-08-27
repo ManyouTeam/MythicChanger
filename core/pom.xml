@@ -7,7 +7,7 @@
     <parent>
         <groupId>cn.superiormc</groupId>
         <artifactId>MythicChanger</artifactId>
-        <version>2.6.1</version>
+        <version>2.6.2</version>
     </parent>
 
     <artifactId>core</artifactId>
@@ -15,10 +15,10 @@
     <dependencies>
         <dependency>
             <groupId>cn.superiormc</groupId>
-            <artifactId>ManyouItems</artifactId>
+            <artifactId>LegacyCodesCompatibility</artifactId>
             <version>1.0.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/ManyouItems-1.0.0.jar</systemPath>
+            <systemPath>${project.basedir}/lib/LegacyCodesCompatibility.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>io.papermc.paper</groupId>
@@ -39,11 +39,10 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>net.Indyuce.me</groupId>
+            <groupId>net.Indyuce</groupId>
             <artifactId>MMOItems-API</artifactId>
-            <version>6.9.3-20230407.131648-1</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/MMOItems-6.9.4.jar</systemPath>
+            <version>6.9.5-20231202.120258-16</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>io.lumine</groupId>
@@ -172,9 +171,14 @@
         <dependency>
             <groupId>com.nexomc</groupId>
             <artifactId>nexo</artifactId>
-            <version>0.5.0</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/nexo-0.5.0-dev.jar</systemPath>
+            <version>1.0.0</version>
+            <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>net.momirealms</groupId>
@@ -199,7 +203,7 @@
             <artifactId>UltimateShop</artifactId>
             <version>3.9.4</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/UltimateShop-3.9.4.jar</systemPath>
+            <systemPath>${project.basedir}/lib/UltimateShop-3.10.1.jar</systemPath>
         </dependency>
     </dependencies>
 </project>

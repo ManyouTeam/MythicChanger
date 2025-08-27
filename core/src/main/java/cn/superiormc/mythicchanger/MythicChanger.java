@@ -92,7 +92,7 @@ public class MythicChanger extends JavaPlugin {
             newSkullMethod = true;
             Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §fNew AuthLib found, enabled new skull get method!");
         }
-        Bukkit.getPluginManager().registerEvents(new ServerLoadListener(), this);
+        //Bukkit.getPluginManager().registerEvents(new ServerLoadListener(), this);
         Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §fYour Minecraft version is: 1." + majorVersion + "." + minorVersion + "!");
         Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §fPlugin is loaded. Author: PQguanfang.");
     }

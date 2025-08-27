@@ -2,18 +2,17 @@ package cn.superiormc.mythicchanger.objects.changes;
 
 import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.objects.ObjectSingleChange;
-import cn.superiormc.ultimateshop.managers.CacheManager;
-import cn.superiormc.ultimateshop.managers.ConfigManager;
+import cn.superiormc.ultimateshop.api.ShopHelper;
 import cn.superiormc.ultimateshop.objects.buttons.ObjectItem;
-import cn.superiormc.ultimateshop.objects.caches.ObjectUseTimesCache;
-import cn.superiormc.ultimateshop.objects.items.GiveResult;
-import cn.superiormc.ultimateshop.objects.items.prices.ObjectPrices;
 import cn.superiormc.ultimateshop.utils.CommonUtil;
-import cn.superiormc.ultimateshop.utils.ItemUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AddPriceLore extends AbstractChangesRule {
@@ -24,10 +23,25 @@ public class AddPriceLore extends AbstractChangesRule {
 
     @Override
     public ItemStack setChange(ObjectSingleChange singleChange) {
-        String price = getPrice(singleChange);
-        if (price == null) {
+        ItemStack[] items = new ItemStack[]{singleChange.getItem()};
+        Inventory inventory = Bukkit.createInventory(singleChange.getPlayer(), InventoryType.CHEST);
+        inventory.setStorageContents(items);
+
+        ObjectItem objectItem = ShopHelper.getTargetItem(items, singleChange.getPlayer());
+        if (objectItem == null) {
             return singleChange.getItem();
         }
+
+        String singleSellPrice = ShopHelper.getSellPricesDisplay(items, singleChange.getPlayer(), 1);
+        String singleBuyPrice = ShopHelper.getBuyPricesDisplay(items, singleChange.getPlayer(), 1);
+
+        String totalSellPrice = ShopHelper.getSellPricesDisplay(items,
+                singleChange.getPlayer(),
+                objectItem.getReward().getMaxAbleSellAmount(inventory,
+                        singleChange.getPlayer(),
+                        ShopHelper.getSellUseTimes(objectItem, singleChange.getPlayer()),
+                        1,
+                        singleChange.getItem().getMaxStackSize()).getMaxAmount());
 
         ItemMeta meta = singleChange.getItemMeta();
         List<String> itemLore = singleChange.getStringList("add-price-lore");
@@ -35,37 +49,33 @@ public class AddPriceLore extends AbstractChangesRule {
             itemLore.addAll(MythicChanger.methodUtil.getItemLore(meta));
         }
 
-        itemLore = CommonUtil.modifyList(singleChange.getPlayer(), itemLore, "price", price);
+        List<String> modifiedLore = new ArrayList<>();
 
-        MythicChanger.methodUtil.setItemLore(meta, itemLore, singleChange.getPlayer());
+        for (String singleLore : itemLore) {
+            if (singleLore.contains("{buy-price}") && (singleBuyPrice == null || singleBuyPrice.isEmpty())) {
+                continue;
+            }
+            if (singleLore.contains("{sell-price}") && (singleSellPrice == null || singleSellPrice.isEmpty())) {
+                continue;
+            }
+            if (singleLore.contains("{total-price}") && (singleSellPrice == null || singleSellPrice.isEmpty())) {
+                continue;
+            }
+            modifiedLore.add(singleLore);
+        }
+
+        modifiedLore = CommonUtil.modifyList(singleChange.getPlayer(), modifiedLore,
+                "price", singleSellPrice,
+                "buy-price", singleBuyPrice,
+                "sell-price", singleSellPrice,
+                "total-price", totalSellPrice);
+
+        MythicChanger.methodUtil.setItemLore(meta, modifiedLore, singleChange.getPlayer());
         return singleChange.setItemMeta(meta);
     }
 
     @Override
     public boolean configNotContains(ConfigurationSection section) {
         return !section.contains("add-price-lore");
-    }
-
-    private String getPrice(ObjectSingleChange singleChange) {
-        for (String shop : ConfigManager.configManager.shopConfigs.keySet()) {
-            for (ObjectItem products : ConfigManager.configManager.getShop(shop).getProductList()) {
-                if (ItemUtil.isSameItem(singleChange.getItem(), products.getDisplayItem(singleChange.getPlayer()))) {
-                    ObjectUseTimesCache cache = CacheManager.cacheManager.getPlayerCache(singleChange.getPlayer()).getUseTimesCache().get(products);
-                    if (cache == null) {
-                        CacheManager.cacheManager.getPlayerCache(singleChange.getPlayer()).createUseTimesCache(products);
-                    }
-                    if (cache != null) {
-                        GiveResult giveResult = products.getSellPrice().giveSingleThing(singleChange.getPlayer(), cache.getSellUseTimes(), 1);
-                        return ObjectPrices.getDisplayNameInLine(singleChange.getPlayer(),
-                                1,
-                                giveResult.getResultMap(),
-                                products.getSellPrice().getMode(),
-                                !ConfigManager.configManager.getBoolean("placeholder.status.can-used-everywhere"));
-                    }
-
-                }
-            }
-        }
-        return null;
     }
 }
