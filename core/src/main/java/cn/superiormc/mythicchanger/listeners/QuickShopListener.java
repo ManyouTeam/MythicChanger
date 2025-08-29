@@ -1,7 +1,7 @@
 package cn.superiormc.mythicchanger.listeners;
 
 import cn.superiormc.mythicchanger.manager.ConfigManager;
-import com.ghostchu.quickshop.api.event.ItemPreviewComponentPrePopulateEvent;
+import com.ghostchu.quickshop.api.event.display.ItemPreviewComponentPrePopulateEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
