@@ -60,6 +60,25 @@ public class ObjectSingleChange extends MemoryConfiguration {
     }
 
     public ObjectSingleChange(ConfigurationSection section,
+                              ItemStack item,
+                              ItemStack original,
+                              Player player,
+                              boolean fakeOrReal,
+                              boolean isPlayerInventory) {
+        this.section = section;
+        this.original = original;
+        this.item = item;
+        this.itemMeta = item.getItemMeta();
+        this.originalMeta = original.getItemMeta();
+        this.debuildItemFormat = DebuildItem.debuildItem(item, new MemoryConfiguration());
+        this.player = player;
+        this.fakeOrReal = fakeOrReal;
+        this.isPlayerInventory = isPlayerInventory;
+        this.itemName = ItemUtil.getItemName(item);
+        this.originalName = ItemUtil.getItemName(original);
+    }
+
+    public ObjectSingleChange(ConfigurationSection section,
                               ObjectSingleChange change) {
         this.section = section;
         this.original = change.getOriginal();

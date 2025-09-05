@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MaterialTag extends AbstractMatchItemRule {
+
     public MaterialTag() {
         super();
     }

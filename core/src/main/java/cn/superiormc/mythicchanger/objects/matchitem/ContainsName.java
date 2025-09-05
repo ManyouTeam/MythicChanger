@@ -8,6 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class ContainsName extends AbstractMatchItemRule {
+
     public ContainsName() {
         super();
     }

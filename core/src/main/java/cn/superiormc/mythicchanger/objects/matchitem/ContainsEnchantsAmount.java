@@ -6,6 +6,7 @@ import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class ContainsEnchantsAmount extends AbstractMatchItemRule {
+
     public ContainsEnchantsAmount() {
         super();
     }

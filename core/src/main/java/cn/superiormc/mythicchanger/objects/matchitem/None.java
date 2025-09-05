@@ -5,6 +5,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class None extends AbstractMatchItemRule {
+
     public None() {
         super();
     }

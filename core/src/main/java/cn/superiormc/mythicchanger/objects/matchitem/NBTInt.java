@@ -11,6 +11,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.List;
 
 public class NBTInt extends AbstractMatchItemRule {
+
     public NBTInt() {
         super();
     }

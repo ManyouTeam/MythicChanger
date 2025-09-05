@@ -2,8 +2,14 @@ package cn.superiormc.mythicchanger.objects.changes;
 
 import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.objects.ObjectSingleChange;
+import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Map;
 
 public class KeepEnchants extends AbstractChangesRule {
 
@@ -13,8 +19,14 @@ public class KeepEnchants extends AbstractChangesRule {
 
     @Override
     public ItemStack setChange(ObjectSingleChange singleChange) {
-        if (singleChange.getBoolean("keep-enchants") && !singleChange.getOriginal().getEnchantments().isEmpty()) {
-            singleChange.getItem().addUnsafeEnchantments(singleChange.getOriginal().getEnchantments());
+        ItemMeta meta = singleChange.getItemMeta();
+        ItemMeta originalMeta = singleChange.getOriginalMeta();
+        Map<Enchantment, Integer> enchants = originalMeta.getEnchants();
+        if (singleChange.getBoolean("keep-enchants") && !enchants.isEmpty()) {
+            for (Enchantment enchantment : enchants.keySet()) {
+                meta.addEnchant(enchantment, enchants.get(enchantment), true);
+            }
+            singleChange.setItemMeta(meta);
             return singleChange.getItem();
         }
         return singleChange.getItem();

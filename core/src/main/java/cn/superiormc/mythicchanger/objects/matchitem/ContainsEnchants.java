@@ -9,6 +9,7 @@ import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class ContainsEnchants extends AbstractMatchItemRule {
+
     public ContainsEnchants() {
         super();
     }

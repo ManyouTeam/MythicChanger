@@ -3,6 +3,7 @@ package cn.superiormc.mythicchanger.objects;
 import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.manager.ChangesManager;
 import cn.superiormc.mythicchanger.manager.MatchItemManager;
+import org.bukkit.GameMode;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;

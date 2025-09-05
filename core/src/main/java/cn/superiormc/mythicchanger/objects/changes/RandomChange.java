@@ -1,4 +1,4 @@
-    package cn.superiormc.mythicchanger.objects.changes;
+package cn.superiormc.mythicchanger.objects.changes;
 
 import cn.superiormc.mythicchanger.manager.ChangesManager;
 import cn.superiormc.mythicchanger.manager.ConfigManager;
@@ -24,22 +24,27 @@ public class RandomChange extends AbstractChangesRule {
         if (itemSection == null) {
             return singleChange.getItem();
         }
-        Map<ObjectSingleChange, Double> items = new HashMap<>();
+        Map<String, Double> items = new HashMap<>();
         for (String itemKey : itemSection.getKeys(false)) {
-            ObjectSingleChange newSingleChange = new ObjectSingleChange(itemSection.getConfigurationSection(itemKey), singleChange);
-            items.put(newSingleChange, itemSection.getConfigurationSection(itemKey).getDouble("rate", 1.0));
+            ConfigurationSection subSection = itemSection.getConfigurationSection(itemKey);
+            items.put(itemKey, subSection.getDouble("rate", 1.0));
         }
         if (items.isEmpty()) {
             return singleChange.getItem();
         }
-        ObjectSingleChange pickedSingleChange = selectRandom(items);
+        String pickedSingleChange = selectRandom(items);
         if (pickedSingleChange == null) {
             return singleChange.getItem();
         }
+        ConfigurationSection pickedSection = itemSection.getConfigurationSection(pickedSingleChange);
+        if (pickedSection == null) {
+            return singleChange.getItem();
+        }
+        ObjectSingleChange newSingleChange = new ObjectSingleChange(pickedSection, singleChange);
         if (singleChange.isFakeOrReal()) {
-            return ChangesManager.changesManager.setFakeChange(pickedSingleChange);
+            return ChangesManager.changesManager.setFakeChange(newSingleChange);
         } else {
-            return ChangesManager.changesManager.setRealChange(new ObjectAction(), pickedSingleChange);
+            return ChangesManager.changesManager.setRealChange(new ObjectAction(pickedSection.getConfigurationSection("actions")), newSingleChange);
         }
     }
 
@@ -53,14 +58,14 @@ public class RandomChange extends AbstractChangesRule {
         return section.getConfigurationSection("random-change") == null;
     }
 
-    private ObjectSingleChange selectRandom(Map<ObjectSingleChange, Double> probabilityMap) {
+    private String selectRandom(Map<String, Double> probabilityMap) {
         double totalWeight = 0.0;
         for (Double weight : probabilityMap.values()) {
             totalWeight += weight;
         }
 
         double randomValue = new Random().nextDouble() * totalWeight;
-        for (Map.Entry<ObjectSingleChange, Double> entry : probabilityMap.entrySet()) {
+        for (Map.Entry<String, Double> entry : probabilityMap.entrySet()) {
             randomValue -= entry.getValue();
             if (randomValue <= 0) {
                 return entry.getKey();

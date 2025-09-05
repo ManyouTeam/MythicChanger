@@ -9,6 +9,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.List;
 
 public class ContainsNBT extends AbstractMatchItemRule {
+
     public ContainsNBT() {
         super();
     }

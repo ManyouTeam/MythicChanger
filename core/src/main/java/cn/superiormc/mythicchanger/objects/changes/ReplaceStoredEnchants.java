@@ -7,42 +7,53 @@ import org.bukkit.Registry;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class ReplaceEnchants extends AbstractChangesRule {
+public class ReplaceStoredEnchants extends AbstractChangesRule {
 
-    public ReplaceEnchants() {
+    public ReplaceStoredEnchants() {
         super();
     }
 
     @Override
     public ItemStack setChange(ObjectSingleChange singleChange) {
         ItemMeta meta = singleChange.getItemMeta();
-        ConfigurationSection enchantSection = singleChange.getConfigurationSection("replace-enchants");
+
+        // 必须是附魔书
+        if (!(meta instanceof EnchantmentStorageMeta)) {
+            return singleChange.getItem();
+        }
+
+        EnchantmentStorageMeta storageMeta = (EnchantmentStorageMeta) meta;
+        ConfigurationSection enchantSection = singleChange.getConfigurationSection("replace-stored-enchants");
         if (enchantSection == null) {
             return singleChange.getItem();
         }
+
         for (String ench : enchantSection.getKeys(false)) {
             Enchantment vanillaEnchant = Registry.ENCHANTMENT.get(CommonUtil.parseNamespacedKey(ench.toLowerCase()));
-            if (vanillaEnchant != null && singleChange.getItemMeta().getEnchants().get(vanillaEnchant) != null) {
-                int level = singleChange.getItemMeta().getEnchantLevel(vanillaEnchant);
-                meta.removeEnchant(vanillaEnchant);
+            if (vanillaEnchant != null && storageMeta.hasStoredEnchant(vanillaEnchant)) {
+                int level = storageMeta.getStoredEnchants().get(vanillaEnchant);
+                storageMeta.removeStoredEnchant(vanillaEnchant);
+
                 Enchantment addEnchant = Registry.ENCHANTMENT.get(CommonUtil.parseNamespacedKey(enchantSection.getString(ench, ench)));
                 if (addEnchant != null) {
-                    meta.addEnchant(addEnchant, level, false);
+                    storageMeta.addStoredEnchant(addEnchant, level, false);
                 }
             }
         }
-        return singleChange.setItemMeta(meta);
+
+        return singleChange.setItemMeta(storageMeta);
     }
 
     @Override
     public int getWeight() {
-        return ConfigManager.configManager.getRuleWeight("replace-enchants", -203);
+        return ConfigManager.configManager.getRuleWeight("replace-stored-enchants", -203);
     }
 
     @Override
     public boolean configNotContains(ConfigurationSection section) {
-        return section.getConfigurationSection("replace-enchants") == null;
+        return section.getConfigurationSection("replace-stored-enchants") == null;
     }
 }

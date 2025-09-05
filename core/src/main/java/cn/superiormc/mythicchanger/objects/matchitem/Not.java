@@ -5,7 +5,8 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class Not extends AbstractMatchItemRule{
+public class Not extends AbstractMatchItemRule {
+
     public Not() {
         super();
     }

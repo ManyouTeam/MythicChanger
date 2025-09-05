@@ -8,6 +8,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.Set;
 
 public class Any extends AbstractMatchItemRule {
+
     public Any() {
         super();
     }

@@ -52,11 +52,13 @@ public class MatchItemManager {
             registerNewRule(new ContainsApply());
             registerNewRule(new MaterialTag());
             registerNewRule(new Enchantable());
+            registerNewRule(new HasStoredEnchants());
         }
     }
 
     public void registerNewRule(AbstractMatchItemRule rule) {
         rules.add(rule);
+        MythicChanger.methodUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fLoaded match rule: " + rule.getClass().getSimpleName() + "!");
     }
 
     public boolean getMatch(ConfigurationSection section, ItemStack item) {

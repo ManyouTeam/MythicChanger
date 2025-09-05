@@ -85,6 +85,11 @@ public class ChangesManager {
             if (CommonUtil.checkPluginLoad("MMOItems")) {
                 registerNewRule(new MIUpdateLore());
             }
+            registerNewRule(new AddStoredEnchants());
+            registerNewRule(new RemoveAllStoredEnchants());
+            registerNewRule(new RemoveStoredEnchants());
+            registerNewRule(new ReplaceStoredEnchants());
+            registerNewRule(new SubChange());
         }
         if (CommonUtil.getClass("cn.superiormc.ultimateshop.UltimateShop")) {
             MythicChanger.methodUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fHooking into UltimateShop...");
@@ -94,10 +99,16 @@ public class ChangesManager {
 
     public void registerNewRule(AbstractChangesRule rule) {
         rules.add(rule);
+        MythicChanger.methodUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fLoaded change rule: " + rule.getClass().getSimpleName() + "!");
     }
 
     public ItemStack setFakeChange(ConfigurationSection section, ItemStack item, Player player, boolean isPlayerInventory) {
         ObjectSingleChange singleChange = new ObjectSingleChange(section, item, player, true, isPlayerInventory);
+        return setFakeChange(singleChange);
+    }
+
+    public ItemStack setFakeChange(ConfigurationSection section, ItemStack item, ItemStack original, Player player, boolean isPlayerInventory) {
+        ObjectSingleChange singleChange = new ObjectSingleChange(section, item, original, player, true, isPlayerInventory);
         return setFakeChange(singleChange);
     }
 
@@ -126,17 +137,25 @@ public class ChangesManager {
         return setRealChange(action, singleChange);
     }
 
+    public ItemStack setRealChange(ObjectAction action, ConfigurationSection section, ItemStack item, ItemStack original, Player player) {
+        ObjectSingleChange singleChange = new ObjectSingleChange(section, item, original, player, false, true);
+        return setRealChange(action, singleChange);
+    }
+
     public ItemStack setRealChange(ObjectAction action, ObjectSingleChange singleChange) {
         boolean needReturnNewItem = false;
         for (AbstractChangesRule rule : rules) {
             if (rule.configNotContains(singleChange.section)) {
+                if (ConfigManager.configManager.getBoolean("debug")) {
+                    Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §f" + rule.getClass().getSimpleName() +  " skipped!");
+                }
                 continue;
             }
             if (singleChange.getItemMeta() == null || singleChange.getOriginalMeta() == null) {
                 break;
             }
             if (ConfigManager.configManager.getBoolean("debug")) {
-                Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §fApply real rule: " + rule.getClass().getName());
+                Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §fApply real rule: " + rule.getClass().getSimpleName());
             }
             if (rule.getNeedRewriteItem(singleChange.section)) {
                 singleChange.replaceItem(rule.setChange(singleChange));

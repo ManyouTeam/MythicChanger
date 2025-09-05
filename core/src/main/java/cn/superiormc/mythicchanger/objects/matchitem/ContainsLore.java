@@ -7,6 +7,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class ContainsLore extends AbstractMatchItemRule {
+
     public ContainsLore() {
         super();
     }

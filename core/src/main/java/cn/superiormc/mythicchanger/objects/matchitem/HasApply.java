@@ -7,6 +7,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 public class HasApply extends AbstractMatchItemRule {
+
     public HasApply() {
         super();
     }

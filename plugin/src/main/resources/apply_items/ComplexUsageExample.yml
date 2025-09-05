@@ -1,0 +1,84 @@
+# PREMIUM VERSION ONLY
+
+# Display Item
+display-item:
+  material: PAPER
+  name: '&#da8f87Luck or Bad Scroll'
+  lore:
+    - '&8Scroll'
+    - ''
+    - '&d✦ &#cbccc2Drag &cdiamond sword or golden sword &#cbccc2onto this item to'
+    - '&7add enchantment for it.'
+    - '&c■ &#cbccc2Has &#e957ca9%&#cbccc2 chance failed.'
+    - '&c■ &#cbccc2Has &#e957ca1%&#cbccc2 chance break your sword.'
+    - ''
+    - '&#d9afd9Be careful!'
+    - '&a&lRare'
+  max-stack: 1
+
+chance: 100
+
+# Rule Configs
+real-changes:
+  sub-change:
+    1:
+      match-item:
+        material:
+          - diamond_sword
+      changes:
+        random-change:
+          1:
+            add-enchants:
+              knockback: 1
+            actions:
+              1:
+                type: message
+                message: '&d✦ &fCool, the enchantment added!'
+            rate: 3
+          2:
+            empty: true
+            actions:
+              1:
+                type: message
+                message: '&c☹ Bad, nothing happened!'
+            rate: 9
+          3:
+            set-amount: 0
+            actions:
+              1:
+                type: message
+                message: '&c☹ Too bad, the item even disappear!'
+            rate: 1
+    2:
+      match-item:
+        material:
+          - golden_sword
+      changes:
+        random-change:
+          1:
+            add-enchants:
+            unbreaking: 1
+            actions:
+              1:
+                type: message
+                message: '&d✦ &fCool, the enchantment added!'
+            rate: 90
+          2:
+            empty: true
+            actions:
+              1:
+                type: message
+                message: '&c☹ Bad, nothing happened!'
+            rate: 9
+          3:
+            set-amount: 0
+            actions:
+              1:
+                type: message
+                message: '&c☹ Too bad, the item even disappear!'
+            rate: 1
+
+# Match Item
+match-item:
+  material-tag:
+    - 'swords'

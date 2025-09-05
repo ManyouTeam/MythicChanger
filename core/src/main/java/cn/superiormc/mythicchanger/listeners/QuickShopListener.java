@@ -10,7 +10,6 @@ public class QuickShopListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onItemPreviewPreparing(final ItemPreviewComponentPrePopulateEvent event) {
-
         if (event.getPlayer() == null) {
             return;
         }

@@ -60,18 +60,23 @@ check-chests-only: true
 # The default value of the plugin is a carefully considered and reasonably configured value.
 # Please do not modify the value here unless you know what you are doing.
 change-rule-weight:
+  add-apply-limit: 410
   add-enchants: 2
+  add-stored-enchants: 15
   add-attributes: 5
   add-flags: 3
   add-lore-first: 11
   add-lore-last: 12
   add-lore-prefix: 13
+  add-lore-suffix: 14
   add-name-first: 21
   add-name-last: 22
   add-nbt-byte: 203
   add-nbt-double: 202
   add-nbt-int: 201
   add-nbt-string: 200
+  delete-enchants: 401
+  delete-stored-enchants: 400
   edit-item: 1
   fix-hide-attributes: 1500
   keep-damage: -250
@@ -87,7 +92,9 @@ change-rule-weight:
   remove-name: -300
   remove-all-lore: -301
   remove-all-enchants: -198
+  remove-all-stored-enchants: -200
   remove-enchants: -197
+  remove-stored-enchants: -202
   remove-flags: -196
   remove-nbt: -199
   replace-enchants: -203
@@ -101,6 +108,7 @@ change-rule-weight:
   set-name: 7
   set-type: 60
   set-amount: 59
+  sub-change: 1977
   deapply: 61
   mi-update-lore: 115
   add-price-lore: 200

@@ -10,6 +10,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.List;
 
 public class NBTByte extends AbstractMatchItemRule {
+
     public NBTByte() {
         super();
     }

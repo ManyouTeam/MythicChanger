@@ -10,6 +10,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.Map;
 
 public class ItemFormat extends AbstractMatchItemRule {
+
     public ItemFormat() {
         super();
     }
