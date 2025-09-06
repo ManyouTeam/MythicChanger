@@ -46,17 +46,13 @@ public class AddNBTDouble extends AbstractChangesRule {
                 }
             }
         }
+        singleChange.setNeedRewriteItem();
         return nbtItem.getItem();
     }
 
     @Override
     public int getWeight() {
         return ConfigManager.configManager.getRuleWeight("add-nbt-double", 202);
-    }
-
-    @Override
-    public boolean getNeedRewriteItem(ConfigurationSection section) {
-        return true;
     }
 
     @Override

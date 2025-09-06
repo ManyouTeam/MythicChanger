@@ -45,17 +45,13 @@ public class AddNBTString extends AbstractChangesRule {
                 }
             }
         }
+        singleChange.setNeedRewriteItem();
         return nbtItem.getItem();
     }
 
     @Override
     public int getWeight() {
         return ConfigManager.configManager.getRuleWeight("add-nbt-string", 200);
-    }
-
-    @Override
-    public boolean getNeedRewriteItem(ConfigurationSection section) {
-        return true;
     }
 
     @Override

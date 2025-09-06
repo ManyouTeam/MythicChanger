@@ -2,7 +2,6 @@ package cn.superiormc.mythicchanger.objects.changes;
 
 import cn.superiormc.mythicchanger.objects.ObjectSingleChange;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public abstract class AbstractChangesRule implements Comparable<AbstractChangesRule> {
@@ -17,6 +16,7 @@ public abstract class AbstractChangesRule implements Comparable<AbstractChangesR
         return 0;
     }
 
+    @Deprecated
     public boolean getNeedRewriteItem(ConfigurationSection section) {
         return false;
     }

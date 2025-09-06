@@ -32,17 +32,13 @@ public class ReplaceRandomItem extends AbstractChangesRule {
         if (items.isEmpty()) {
             return singleChange.getItem();
         }
+        singleChange.setNeedRewriteItem();
         return selectRandom(items);
     }
 
     @Override
     public int getWeight() {
         return ConfigManager.configManager.getRuleWeight("replace-random-item", 1001);
-    }
-
-    @Override
-    public boolean getNeedRewriteItem(ConfigurationSection section) {
-        return true;
     }
 
     @Override

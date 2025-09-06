@@ -14,6 +14,9 @@ public class EditItem extends AbstractChangesRule {
 
     @Override
     public ItemStack setChange(ObjectSingleChange singleChange) {
+        if (singleChange.getBoolean("edit-item.replace-item", false)) {
+            singleChange.setNeedRewriteItem();
+        }
         return BuildItem.editItemStack(singleChange.getPlayer(),
                 singleChange.getItem(),
                 singleChange.getConfigurationSection("edit-item"));
@@ -22,11 +25,6 @@ public class EditItem extends AbstractChangesRule {
     @Override
     public int getWeight() {
         return ConfigManager.configManager.getRuleWeight("edit-item", 1);
-    }
-
-    @Override
-    public boolean getNeedRewriteItem(ConfigurationSection section) {
-        return section.getBoolean("edit-item.replace-item", false);
     }
 
     @Override

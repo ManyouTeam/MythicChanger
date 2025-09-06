@@ -49,17 +49,13 @@ public class RemoveNBT extends AbstractChangesRule {
                 }
             }
         }
+        singleChange.setNeedRewriteItem();
         return nbtItem.getItem();
     }
 
     @Override
     public int getWeight() {
         return ConfigManager.configManager.getRuleWeight("remove-nbt", -199);
-    }
-
-    @Override
-    public boolean getNeedRewriteItem(ConfigurationSection section) {
-        return true;
     }
 
     @Override

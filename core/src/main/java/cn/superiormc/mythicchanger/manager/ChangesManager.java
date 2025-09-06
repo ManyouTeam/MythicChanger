@@ -123,10 +123,11 @@ public class ChangesManager {
             if (ConfigManager.configManager.getBoolean("debug")) {
                 Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §fApply fake rule: " + rule.getClass().getName());
             }
-            if (rule.getNeedRewriteItem(singleChange.section)) {
-                singleChange.replaceItem(rule.setChange(singleChange));
+            ItemStack result = rule.setChange(singleChange);
+            if (singleChange.isNeedRewriteItem()) {
+                singleChange.replaceItem(result);
             } else {
-                singleChange.setItem(rule.setChange(singleChange));
+                singleChange.setItem(result);
             }
         }
         return singleChange.getItem();
@@ -147,7 +148,7 @@ public class ChangesManager {
         for (AbstractChangesRule rule : rules) {
             if (rule.configNotContains(singleChange.section)) {
                 if (ConfigManager.configManager.getBoolean("debug")) {
-                    Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §f" + rule.getClass().getSimpleName() +  " skipped!");
+                    Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §c" + rule.getClass().getSimpleName() +  " skipped!");
                 }
                 continue;
             }
@@ -157,8 +158,9 @@ public class ChangesManager {
             if (ConfigManager.configManager.getBoolean("debug")) {
                 Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §fApply real rule: " + rule.getClass().getSimpleName());
             }
-            if (rule.getNeedRewriteItem(singleChange.section)) {
-                singleChange.replaceItem(rule.setChange(singleChange));
+            ItemStack result = rule.setChange(singleChange);
+            if (singleChange.isNeedRewriteItem()) {
+                singleChange.replaceItem(result);
                 needReturnNewItem = true;
             } else {
                 rule.setChange(singleChange);
@@ -167,7 +169,7 @@ public class ChangesManager {
         if (!MythicChanger.freeVersion && !action.isEmpty()) {
             SchedulerUtil.runSync(() -> action.runAllActions(singleChange.getPlayer(), singleChange.getOriginal(), singleChange.getItem()));
         }
-        if (needReturnNewItem ) {
+        if (needReturnNewItem) {
             return singleChange.getItem();
         }
         return null;

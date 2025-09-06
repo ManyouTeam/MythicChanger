@@ -46,17 +46,13 @@ public class AddNBTByte extends AbstractChangesRule {
                 }
             }
         }
+        singleChange.setNeedRewriteItem();
         return nbtItem.getItem();
     }
 
     @Override
     public int getWeight() {
         return ConfigManager.configManager.getRuleWeight("add-nbt-byte", 203);
-    }
-
-    @Override
-    public boolean getNeedRewriteItem(ConfigurationSection section) {
-        return true;
     }
 
     @Override

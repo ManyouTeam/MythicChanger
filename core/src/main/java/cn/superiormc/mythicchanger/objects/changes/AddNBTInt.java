@@ -46,17 +46,13 @@ public class AddNBTInt extends AbstractChangesRule {
                 }
             }
         }
+        singleChange.setNeedRewriteItem();
         return nbtItem.getItem();
     }
 
     @Override
     public int getWeight() {
         return ConfigManager.configManager.getRuleWeight("add-nbt-int", 201);
-    }
-
-    @Override
-    public boolean getNeedRewriteItem(ConfigurationSection section) {
-        return true;
     }
 
     @Override

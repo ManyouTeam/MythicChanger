@@ -41,6 +41,10 @@ public class ObjectSingleChange extends MemoryConfiguration {
 
     private final String originalName;
 
+    private boolean needRewriteItem;
+
+    private ObjectSingleChange parentSingleChange;
+
     public ObjectSingleChange(ConfigurationSection section,
                               ItemStack item,
                               Player player,
@@ -57,6 +61,7 @@ public class ObjectSingleChange extends MemoryConfiguration {
         this.isPlayerInventory = isPlayerInventory;
         this.itemName = ItemUtil.getItemName(item);
         this.originalName = ItemUtil.getItemName(original);
+        this.needRewriteItem = false;
     }
 
     public ObjectSingleChange(ConfigurationSection section,
@@ -76,6 +81,7 @@ public class ObjectSingleChange extends MemoryConfiguration {
         this.isPlayerInventory = isPlayerInventory;
         this.itemName = ItemUtil.getItemName(item);
         this.originalName = ItemUtil.getItemName(original);
+        this.needRewriteItem = false;
     }
 
     public ObjectSingleChange(ConfigurationSection section,
@@ -91,6 +97,15 @@ public class ObjectSingleChange extends MemoryConfiguration {
         this.isPlayerInventory = change.isPlayerInventory();
         this.itemName = change.getItemName();
         this.originalName = change.getOriginalName();
+        this.needRewriteItem = change.isNeedRewriteItem();
+        this.parentSingleChange = change;
+    }
+
+    public void setNeedRewriteItem() {
+        this.needRewriteItem = true;
+        if (parentSingleChange != null && !parentSingleChange.isNeedRewriteItem()) {
+            parentSingleChange.setNeedRewriteItem();
+        }
     }
 
     public ItemMeta getItemMeta() {
@@ -292,5 +307,9 @@ public class ObjectSingleChange extends MemoryConfiguration {
 
     public boolean isPlayerInventory() {
         return isPlayerInventory;
+    }
+
+    public boolean isNeedRewriteItem() {
+        return needRewriteItem;
     }
 }

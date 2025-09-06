@@ -57,7 +57,7 @@ real-changes:
         random-change:
           1:
             add-enchants:
-            unbreaking: 1
+              unbreaking: 1
             actions:
               1:
                 type: message
