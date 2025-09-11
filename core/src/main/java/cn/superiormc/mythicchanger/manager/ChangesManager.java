@@ -145,10 +145,11 @@ public class ChangesManager {
 
     public ItemStack setRealChange(ObjectAction action, ObjectSingleChange singleChange) {
         boolean needReturnNewItem = false;
+        boolean changedItem = false;
         for (AbstractChangesRule rule : rules) {
             if (rule.configNotContains(singleChange.section)) {
                 if (ConfigManager.configManager.getBoolean("debug")) {
-                    Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §c" + rule.getClass().getSimpleName() +  " skipped!");
+                    //Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §c" + rule.getClass().getSimpleName() +  " skipped!");
                 }
                 continue;
             }
@@ -158,15 +159,14 @@ public class ChangesManager {
             if (ConfigManager.configManager.getBoolean("debug")) {
                 Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §fApply real rule: " + rule.getClass().getSimpleName());
             }
+            changedItem = true;
             ItemStack result = rule.setChange(singleChange);
             if (singleChange.isNeedRewriteItem()) {
                 singleChange.replaceItem(result);
                 needReturnNewItem = true;
-            } else {
-                rule.setChange(singleChange);
             }
         }
-        if (!MythicChanger.freeVersion && !action.isEmpty()) {
+        if (!MythicChanger.freeVersion && !action.isEmpty() && changedItem) {
             SchedulerUtil.runSync(() -> action.runAllActions(singleChange.getPlayer(), singleChange.getOriginal(), singleChange.getItem()));
         }
         if (needReturnNewItem) {

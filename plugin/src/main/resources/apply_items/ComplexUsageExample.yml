@@ -34,7 +34,7 @@ real-changes:
               1:
                 type: message
                 message: '&d✦ &fCool, the enchantment added!'
-            rate: 3
+            rate: 90
           2:
             empty: true
             actions:
