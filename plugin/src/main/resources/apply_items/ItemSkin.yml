@@ -1,10 +1,30 @@
+# PREMIUM VERSION ONLY
+
 display-item:
   material: PAPER
   name: '&fItem Skin &8(Diamond Sword)'
   lore:
     - '&7Drag this item onto the item you want to apply.'
-apply-rule: example
-apply-real-change: true
+fake-changes:
+  edit-item:
+    custom-model-data: 15
 match-item:
-  items:
-    - 'diamond_sword'
+  item-format:
+    material: diamond_sword
+  item-format-settings:
+    require-same-key: false
+  not:
+    contains-apply:
+      - ItemSkin
+  not-match-actions:
+    1:
+      type: message
+      message: 'Your sword type is not diamond sword!'
+#conditions:
+#  not-meet-actions:
+#      1:
+#        type: message
+#        message: 'You must use this apply item in world!'
+#  1:
+#    type: world
+#    world: 'test'

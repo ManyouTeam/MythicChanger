@@ -124,6 +124,9 @@ public class ConfigManager {
                 item = rule.setFakeChange(item, player, isPlayerInventory);
             }
         }
+        for (ObjectApplyItem applyItem : ObjectApplyItem.getRule(item.getItemMeta())) {
+            item = applyItem.setFakeChange(item, player, isPlayerInventory);
+        }
         return item;
     }
 

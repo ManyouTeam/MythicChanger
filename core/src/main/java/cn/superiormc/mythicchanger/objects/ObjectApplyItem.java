@@ -39,6 +39,8 @@ public class ObjectApplyItem {
 
     private final ObjectCondition condition;
 
+    private final boolean hasFakeChanges;
+
     public ObjectApplyItem(String id, ConfigurationSection section) {
         this.id = id;
         this.section = section;
@@ -51,11 +53,17 @@ public class ObjectApplyItem {
         this.successAction = new ObjectAction(section.getConfigurationSection("success-actions"));
         this.failAction = new ObjectAction(section.getConfigurationSection("fail-actions"));
         this.condition = new ObjectCondition(section.getConfigurationSection("conditions"));
+        ConfigurationSection tempVal1 = section.getConfigurationSection("fake-changes");
+        if (tempVal1 == null || tempVal1.getKeys(false).isEmpty()) {
+            hasFakeChanges = false;
+        } else {
+            hasFakeChanges = true;
+        }
         String tempVal2 = section.getString("apply-rule");
         if (tempVal2 != null) {
-            ObjectSingleRule tempVal1 = ConfigManager.configManager.getRule(tempVal2);
-            if (tempVal1 != null) {
-                rule = tempVal1;
+            ObjectSingleRule tempVal3 = ConfigManager.configManager.getRule(tempVal2);
+            if (tempVal3 != null) {
+                rule = tempVal3;
             }
         }
     }
@@ -66,6 +74,10 @@ public class ObjectApplyItem {
 
     public ObjectSingleRule getRule() {
         return rule;
+    }
+
+    public boolean hasFakeChanges() {
+        return hasFakeChanges;
     }
 
     public boolean getApplyRealChange() {
@@ -124,8 +136,14 @@ public class ObjectApplyItem {
         for (ItemStack tempVal1 : result) {
             CommonUtil.giveOrDrop(player, tempVal1);
         }
-        LanguageManager.languageManager.sendStringText(player, "plugin.item-gave", "item", id,
-                "player", player.getName(), "amount", String.valueOf(amount));
+        LanguageManager.languageManager.sendStringText(player, "plugin.item-gave", "item", id, "player", player.getName(), "amount", String.valueOf(amount));
+    }
+
+    public ItemStack setFakeChange(ItemStack item, Player player, boolean isPlayerInventory) {
+        if (!hasFakeChanges || item == null || item.getType().isAir()) {
+            return item;
+        }
+        return ChangesManager.changesManager.setFakeChange(section.getConfigurationSection("fake-changes"), item, player, isPlayerInventory);
     }
 
     public ItemStack setRealChange(ItemStack applyItem, ItemStack item, Player player) {
@@ -148,7 +166,7 @@ public class ObjectApplyItem {
         if (matchItemSection == null) {
             return true;
         } else {
-            return MatchItemManager.matchItemManager.getMatch(matchItemSection, item);
+            return MatchItemManager.matchItemManager.getMatch(matchItemSection, player, item);
         }
     }
 

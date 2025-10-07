@@ -83,12 +83,17 @@ public class ApplyItemListener implements Listener {
                 } else {
                     if (applyItem.getChance()) {
                         applyItem.doSuccessAction(player, usedItemStack);
+                        if (applyItem.hasFakeChanges()) {
+                            usedItemStack = applyItem.addRuleID(usedItemStack, tempVal3);
+                        }
                         ItemStack newItem = applyItem.setRealChange(applyItemStack, usedItemStack, player);
                         if (ItemUtil.isValid(newItem) && !newItem.isSimilar(usedItemStack)) {
                             usedItemStack.setAmount(0);
                             event.setCurrentItem(newItem);
                             event.setCancelled(true);
                             player.updateInventory();
+                        } else if (applyItem.hasFakeChanges()) {
+                            applyItemStack.setAmount(applyItemStack.getAmount() - 1);
                         }
                     } else {
                         applyItem.doFailAction(player, usedItemStack);

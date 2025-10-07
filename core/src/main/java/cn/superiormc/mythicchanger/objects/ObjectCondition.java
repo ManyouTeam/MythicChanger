@@ -1,5 +1,6 @@
 package cn.superiormc.mythicchanger.objects;
 
+import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.objects.conditions.ObjectSingleCondition;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemoryConfiguration;
@@ -45,6 +46,10 @@ public class ObjectCondition {
         }
         for (ObjectSingleCondition singleCondition : conditions){
             if (!singleCondition.checkBoolean(player, original, item)) {
+                if (!MythicChanger.freeVersion) {
+                    ObjectAction action = new ObjectAction(section.getConfigurationSection("not-meet-actions"));
+                    action.runAllActions(player, original, item);
+                }
                 return false;
             }
         }
@@ -59,6 +64,10 @@ public class ObjectCondition {
             if (singleCondition.checkBoolean(player, original, item)) {
                 return true;
             }
+        }
+        if (!MythicChanger.freeVersion) {
+            ObjectAction action = new ObjectAction(section.getConfigurationSection("not-meet-actions"));
+            action.runAllActions(player, original, item);
         }
         return false;
     }

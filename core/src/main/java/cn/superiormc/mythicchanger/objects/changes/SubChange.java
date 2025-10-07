@@ -26,7 +26,7 @@ public class SubChange extends AbstractChangesRule {
             if (subSection == null) {
                 continue;
             }
-            if (!MatchItemManager.matchItemManager.getMatch(subSection.getConfigurationSection("match-item"), singleChange.getItem())) {
+            if (!MatchItemManager.matchItemManager.getMatch(subSection.getConfigurationSection("match-item"), singleChange.getPlayer(), singleChange.getItem())) {
                 continue;
             }
             ObjectSingleChange newSingleChange = new ObjectSingleChange(subSection.getConfigurationSection("changes"), singleChange);

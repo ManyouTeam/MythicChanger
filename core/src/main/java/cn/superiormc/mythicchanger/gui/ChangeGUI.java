@@ -128,6 +128,9 @@ public class ChangeGUI extends InvGUI {
         } else {
             if (applyItem.getChance()) {
                 applyItem.doSuccessAction(player, usedItemStack);
+                if (applyItem.hasFakeChanges()) {
+                    usedItemStack = applyItem.addRuleID(usedItemStack, tempVal3);
+                }
                 ItemStack changeItem = applyItem.setRealChange(applyItemStack, usedItemStack, player);
                 if (ItemUtil.isValid(changeItem)) {
                     usedItemStack.setAmount(0);
@@ -136,8 +139,8 @@ public class ChangeGUI extends InvGUI {
                 }
             } else {
                 applyItem.doFailAction(player, usedItemStack);
-                applyItemStack.setAmount(applyItemStack.getAmount() - 1);
             }
+            applyItemStack.setAmount(applyItemStack.getAmount() - 1);
         }
         success = false;
     }

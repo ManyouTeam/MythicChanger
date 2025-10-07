@@ -1,11 +1,13 @@
 package cn.superiormc.mythicchanger.manager;
 
 import cn.superiormc.mythicchanger.MythicChanger;
+import cn.superiormc.mythicchanger.objects.ObjectAction;
 import cn.superiormc.mythicchanger.objects.matchitem.*;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
 import cn.superiormc.mythicchanger.utils.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -61,7 +63,7 @@ public class MatchItemManager {
         MythicChanger.methodUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fLoaded match rule: " + rule.getClass().getSimpleName() + "!");
     }
 
-    public boolean getMatch(ConfigurationSection section, ItemStack item) {
+    public boolean getMatch(ConfigurationSection section, Player player, ItemStack item) {
         if (section == null) {
             return true;
         }
@@ -77,6 +79,10 @@ public class MatchItemManager {
                 continue;
             }
             if (!rule.getMatch(section, item, meta)) {
+                if (!MythicChanger.freeVersion) {
+                    ObjectAction action = new ObjectAction(section.getConfigurationSection("not-match-actions"));
+                    action.runAllActions(player, item, item);
+                }
                 return false;
             }
         }

@@ -41,6 +41,13 @@ public class ItemFormat extends AbstractMatchItemRule {
                 continue;
             }
             if (!object.equals(item2Result.get(key))) {
+                if (object instanceof String && item2Result.get(key) instanceof String) {
+                    String tempVal1 = (String) object;
+                    String tempVal2 = (String) item2Result.get(key);
+                    if (tempVal1.equalsIgnoreCase(tempVal2)) {
+                        continue;
+                    }
+                }
                 return false;
             }
         }

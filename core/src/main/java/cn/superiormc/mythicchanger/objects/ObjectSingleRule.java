@@ -46,7 +46,7 @@ public class ObjectSingleRule implements Comparable<ObjectSingleRule> {
             }
         }
         ConfigurationSection section = config.getConfigurationSection("match-item");
-        return MatchItemManager.matchItemManager.getMatch(section, item);
+        return MatchItemManager.matchItemManager.getMatch(section, player, item);
     }
 
     public ItemStack setFakeChange(ItemStack item, Player player, boolean isPlayerInventory) {
