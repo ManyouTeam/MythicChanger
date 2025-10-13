@@ -24,9 +24,9 @@ public class ActionMythicMobsSpawn extends AbstractRunAction {
         } else {
             World world = Bukkit.getWorld(worldName);
             location = new Location(world,
-                    singleAction.getDouble("x"),
-                    singleAction.getDouble("y"),
-                    singleAction.getDouble("z"));
+                    singleAction.getDouble("x", player, original, item),
+                    singleAction.getDouble("y", player, original, item),
+                    singleAction.getDouble("z", player, original, item));
 
         }
         CommonUtil.summonMythicMobs(location, mobName, singleAction.getInt("level", 1));

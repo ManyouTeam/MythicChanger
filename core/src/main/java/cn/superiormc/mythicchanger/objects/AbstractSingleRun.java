@@ -98,6 +98,10 @@ public abstract class AbstractSingleRun {
         return section.getDouble(path);
     }
 
+    public double getDouble(String path, Player player, ItemStack original, ItemStack item) {
+        return Double.parseDouble(replacePlaceholder(section.getString(path), player, original, item));
+    }
+
     public boolean getBoolean(String path, boolean defaultValue) {
         return section.getBoolean(path, defaultValue);
     }

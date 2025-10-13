@@ -25,9 +25,9 @@ public class ActionEntitySpawn extends AbstractRunAction {
         } else {
             World world = Bukkit.getWorld(worldName);
             location = new Location(world,
-                    singleAction.getDouble("x"),
-                    singleAction.getDouble("y"),
-                    singleAction.getDouble("z"));
+                    singleAction.getDouble("x", player, original, item),
+                    singleAction.getDouble("y", player, original, item),
+                    singleAction.getDouble("z", player, original, item));
 
         }
         MythicChanger.methodUtil.spawnEntity(location, entity);

@@ -1,6 +1,7 @@
 package cn.superiormc.mythicchanger;
 
 import cn.superiormc.mythicchanger.listeners.ApplyItemListener;
+import cn.superiormc.mythicchanger.listeners.PlayerCacheListener;
 import cn.superiormc.mythicchanger.listeners.ServerLoadListener;
 import cn.superiormc.mythicchanger.manager.*;
 import cn.superiormc.mythicchanger.protolcol.ProtocolLib.*;
@@ -75,6 +76,7 @@ public class MythicChanger extends JavaPlugin {
             PacketEvents.getAPI().getEventManager().registerListener(new WindowMerchant(), ConfigManager.configManager.getPriority());
             if (CommonUtil.getMinorVersion(21, 5)) {
                 PacketEvents.getAPI().getEventManager().registerListener(new SetCursorItem(), ConfigManager.configManager.getPriority());
+                PacketEvents.getAPI().getEventManager().registerListener(new ContainerClick(), ConfigManager.configManager.getPriority());
             }
             new WindowClick();
         }
@@ -85,6 +87,7 @@ public class MythicChanger extends JavaPlugin {
         if (LocateManager.enableThis()) {
             new LocateManager();
         }
+        Bukkit.getPluginManager().registerEvents(new PlayerCacheListener(), this);
         if (ConfigManager.configManager.getString("apply-item-mode", "DRAG").equalsIgnoreCase("DRAG")) {
             Bukkit.getPluginManager().registerEvents(new ApplyItemListener(), this);
         }

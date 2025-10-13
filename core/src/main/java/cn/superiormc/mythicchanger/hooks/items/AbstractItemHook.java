@@ -1,6 +1,6 @@
 package cn.superiormc.mythicchanger.hooks.items;
 
-import cn.superiormc.ultimateshop.managers.ErrorManager;
+import cn.superiormc.mythicchanger.manager.ErrorManager;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 

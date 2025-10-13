@@ -16,9 +16,9 @@ public class ActionTeleport extends AbstractRunAction {
     @Override
     protected void onDoAction(ObjectSingleAction singleAction, Player player, ItemStack original, ItemStack item) {
         Location loc = new Location(Bukkit.getWorld(singleAction.getString("world")),
-                    singleAction.getDouble("x"),
-                    singleAction.getDouble("y"),
-                    singleAction.getDouble("z"),
+                    singleAction.getDouble("x", player, original, item),
+                    singleAction.getDouble("y", player, original, item),
+                    singleAction.getDouble("z", player, original, item),
                     singleAction.getInt("yaw", (int) player.getLocation().getYaw()),
                     singleAction.getInt("pitch", (int) player.getLocation().getPitch()));
         MythicChanger.methodUtil.playerTeleport(player, loc);
