@@ -37,11 +37,18 @@ public class ChangesManager {
         registerNewRule(new AddLoreSuffix());
         registerNewRule(new AddNameFirst());
         registerNewRule(new AddNameLast());
+        registerNewRule(new AddAttributes());
+        registerNewRule(new AddStoredEnchants());
         registerNewRule(new DeleteEnchants());
         registerNewRule(new Empty());
+        registerNewRule(new RemoveName());
+        registerNewRule(new RemoveAllLore());
         registerNewRule(new RemoveAllEnchants());
+        registerNewRule(new RemoveAllStoredEnchants());
         registerNewRule(new RemoveFlags());
         registerNewRule(new RemoveEnchants());
+        registerNewRule(new RemoveStoredEnchants());
+        registerNewRule(new ReplaceName());
         registerNewRule(new ReplaceItem());
         registerNewRule(new ReplaceLore());
         registerNewRule(new SetCustomModelData());
@@ -50,8 +57,11 @@ public class ChangesManager {
         registerNewRule(new SetType());
         registerNewRule(new SetAmount());
         registerNewRule(new FixHideAttributes());
+        registerNewRule(new SetColor());
+        registerNewRule(new ParsePAPIName());
+        registerNewRule(new ParsePAPILore());
+        registerNewRule(new EditItem());
         if (!MythicChanger.freeVersion) {
-            registerNewRule(new SetColor());
             if (CommonUtil.checkPluginLoad("NBTAPI")) {
                 registerNewRule(new AddNBTString());
                 registerNewRule(new AddNBTByte());
@@ -59,9 +69,6 @@ public class ChangesManager {
                 registerNewRule(new AddNBTDouble());
                 registerNewRule(new RemoveNBT());
             }
-            registerNewRule(new ParsePAPIName());
-            registerNewRule(new ParsePAPILore());
-            registerNewRule(new EditItem());
             registerNewRule(new KeepEnchants());
             registerNewRule(new KeepDamage());
             registerNewRule(new KeepName());
@@ -70,25 +77,18 @@ public class ChangesManager {
             if (CommonUtil.getMinorVersion(20, 5)) {
                 registerNewRule(new KeepItemName());
             }
-            registerNewRule(new ReplaceEnchants());
             registerNewRule(new EditLore());
+            registerNewRule(new ReplaceEnchants());
+            registerNewRule(new ReplaceStoredEnchants());
             registerNewRule(new ReplaceRandomItem());
-            registerNewRule(new ReplaceName());
             registerNewRule(new Deapply());
             registerNewRule(new AddApplyLimit());
             registerNewRule(new SetApplyLimit());
             registerNewRule(new ResetApplyLimit());
-            registerNewRule(new AddAttributes());
             registerNewRule(new RandomChange());
-            registerNewRule(new RemoveName());
-            registerNewRule(new RemoveAllLore());
             if (CommonUtil.checkPluginLoad("MMOItems")) {
                 registerNewRule(new MIUpdateLore());
             }
-            registerNewRule(new AddStoredEnchants());
-            registerNewRule(new RemoveAllStoredEnchants());
-            registerNewRule(new RemoveStoredEnchants());
-            registerNewRule(new ReplaceStoredEnchants());
             registerNewRule(new SubChange());
         }
         if (CommonUtil.getClass("cn.superiormc.ultimateshop.UltimateShop")) {

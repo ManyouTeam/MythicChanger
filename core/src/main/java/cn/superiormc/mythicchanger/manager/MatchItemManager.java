@@ -28,6 +28,7 @@ public class MatchItemManager {
     private void initRules() {
         registerNewRule(new ContainsLore());
         registerNewRule(new ContainsName());
+        registerNewRule(new HasStoredEnchants());
         registerNewRule(new HasEnchants());
         registerNewRule(new HasLore());
         registerNewRule(new HasName());
@@ -35,6 +36,7 @@ public class MatchItemManager {
         registerNewRule(new Not());
         registerNewRule(new Material());
         registerNewRule(new None());
+        registerNewRule(new ItemFormat());
         if (!MythicChanger.freeVersion) {
             if (CommonUtil.checkPluginLoad("NBTAPI")) {
                 registerNewRule(new ContainsNBT());
@@ -46,15 +48,13 @@ public class MatchItemManager {
             if (CommonUtil.getMinorVersion(20, 5)) {
                 registerNewRule(new Rarity());
             }
-            registerNewRule(new ContainsEnchants());
-            registerNewRule(new ContainsEnchantsAmount());
-            registerNewRule(new ItemFormat());
             registerNewRule(new Any());
             registerNewRule(new HasApply());
+            registerNewRule(new ContainsEnchants());
+            registerNewRule(new ContainsEnchantsAmount());
             registerNewRule(new ContainsApply());
             registerNewRule(new MaterialTag());
             registerNewRule(new Enchantable());
-            registerNewRule(new HasStoredEnchants());
         }
     }
 
