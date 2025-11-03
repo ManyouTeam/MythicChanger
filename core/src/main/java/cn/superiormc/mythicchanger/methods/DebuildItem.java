@@ -1,6 +1,7 @@
 package cn.superiormc.mythicchanger.methods;
 
 import cn.superiormc.mythicchanger.MythicChanger;
+import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.manager.ErrorManager;
 import cn.superiormc.mythicchanger.manager.HookManager;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
@@ -344,10 +345,12 @@ public class DebuildItem {
         // Skull
         if (meta instanceof SkullMeta) {
             SkullMeta skullMeta = (SkullMeta) meta;
-            if (skullMeta.hasOwner() && skullMeta.getOwningPlayer().getName() != null) {
-                section.set("skull", skullMeta.getOwningPlayer().getName());
-            } else {
-                try {
+            try {
+                if (skullMeta.hasOwner() && skullMeta.getOwningPlayer() != null) {
+                    if (skullMeta.getOwningPlayer().getName() != null) {
+                        section.set("skull", skullMeta.getOwningPlayer().getName());
+                    }
+                } else {
                     Field field = skullMeta.getClass().getDeclaredField("profile");
                     field.setAccessible(true);
                     if (MythicChanger.newSkullMethod) {
@@ -372,10 +375,12 @@ public class DebuildItem {
                             section.set("skull", field3.get(property));
                         }
                     }
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                    ErrorManager.errorManager.sendErrorMessage("§cError: Can not parse skull texture in a item!");
                 }
+            } catch (Throwable throwable) {
+                if (ConfigManager.configManager.getBoolean("debug")) {
+                throwable.printStackTrace();
+                }
+                ErrorManager.errorManager.sendErrorMessage("§cError: Can not parse skull texture in a item!");
             }
         }
 

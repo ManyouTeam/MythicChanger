@@ -13,11 +13,10 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 public class SetCursorItem implements PacketListener {
 
-    public static Map<Player, Optional<HashedStack>> hashedStackMap = new HashMap<>();
+    public static Map<Player, HashedStack> hashedStackMap = new HashMap<>();
 
     @Override
     public void onPacketSend(PacketSendEvent event) {

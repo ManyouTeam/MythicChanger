@@ -2,6 +2,7 @@ package cn.superiormc.mythicchanger;
 
 import cn.superiormc.mythicchanger.listeners.ApplyItemListener;
 import cn.superiormc.mythicchanger.listeners.PlayerCacheListener;
+import cn.superiormc.mythicchanger.listeners.ServerLoadListener;
 import cn.superiormc.mythicchanger.manager.*;
 import cn.superiormc.mythicchanger.protolcol.ProtocolLib.*;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
@@ -94,7 +95,9 @@ public class MythicChanger extends JavaPlugin {
             newSkullMethod = true;
             Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §fNew AuthLib found, enabled new skull get method!");
         }
-        //Bukkit.getPluginManager().registerEvents(new ServerLoadListener(), this);
+        if (CommonUtil.getMinorVersion(16, 5) && !ChangesManager.changesManager.containsLog("UltimateShop")) {
+            Bukkit.getPluginManager().registerEvents(new ServerLoadListener(), this);
+        }
         Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §fYour Minecraft version is: 1." + majorVersion + "." + minorVersion + "!");
         Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §fPlugin is loaded. Author: PQguanfang.");
     }

@@ -13,9 +13,12 @@ public class ServerLoadListener implements Listener {
 
     @EventHandler
     public void onServerLoad(ServerLoadEvent event) {
-        if (CommonUtil.checkPluginLoad("UltimateShop")) {
-            MythicChanger.methodUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fHooking into UltimateShop...");
-            ChangesManager.changesManager.registerNewRule(new AddPriceLore());
+        if (event.getType() == ServerLoadEvent.LoadType.STARTUP) {
+            if (CommonUtil.getClass("cn.superiormc.ultimateshop.UltimateShop")) {
+                MythicChanger.methodUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fHooking into UltimateShop...");
+                ChangesManager.changesManager.registerNewRule(new AddPriceLore());
+                ChangesManager.changesManager.addLog("UltimateShop");
+            }
         }
     }
 }

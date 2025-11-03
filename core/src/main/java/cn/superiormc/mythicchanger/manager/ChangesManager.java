@@ -23,6 +23,8 @@ public class ChangesManager {
 
     private final Collection<AbstractChangesRule> rules = new TreeSet<>();
 
+    private final Collection<String> loggedRules = new HashSet<>();
+
     public ChangesManager() {
         changesManager = this;
         initRules();
@@ -93,10 +95,18 @@ public class ChangesManager {
         }
         if (CommonUtil.getClass("cn.superiormc.ultimateshop.UltimateShop")) {
             MythicChanger.methodUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fHooking into UltimateShop...");
+            addLog("UltimateShop");
             registerNewRule(new AddPriceLore());
         }
     }
 
+    public void addLog(String log) {
+        loggedRules.add(log);
+    }
+
+    public boolean containsLog(String log) {
+        return loggedRules.contains(log);
+    }
     public void registerNewRule(AbstractChangesRule rule) {
         rules.add(rule);
         MythicChanger.methodUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fLoaded change rule: " + rule.getClass().getSimpleName() + "!");
