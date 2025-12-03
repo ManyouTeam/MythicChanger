@@ -1,5 +1,7 @@
 # PREMIUM VERSION ONLY
 
+apply-item-mode: GENERAL
+
 # Display Item
 display-item:
   material: PAPER

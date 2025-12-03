@@ -54,7 +54,7 @@ public class ApplyItemListener implements Listener {
                 LanguageManager.languageManager.sendStringText(player, "error.item-only-one");
                 return;
             }
-            if (applyItem.matchItem(player, usedItemStack)) {
+            if (applyItem.matchItem(player, usedItemStack, "DRAG")) {
                 ObjectSingleRule rule = applyItem.getRule();
                 ItemMeta tempVal3 = usedItemStack.getItemMeta();
                 if (rule != null) {

@@ -25,6 +25,8 @@ public class ObjectApplyItem {
 
     public static final NamespacedKey MYTHICCHANGER_APPLY_RULE = new NamespacedKey(MythicChanger.instance, "rule_id");
 
+    public static Collection<String> customModes = new ArrayList<>();
+
     private double chance;
 
     private final String id;
@@ -40,6 +42,8 @@ public class ObjectApplyItem {
     private final ObjectCondition condition;
 
     private final boolean hasFakeChanges;
+
+    private String mode;
 
     public ObjectApplyItem(String id, ConfigurationSection section) {
         this.id = id;
@@ -59,6 +63,10 @@ public class ObjectApplyItem {
         } else {
             hasFakeChanges = true;
         }
+        this.mode = section.getString("apply-item-mode", "GENERAL");
+        if (!mode.equalsIgnoreCase("DRAG") && !mode.equalsIgnoreCase("GUI") && !mode.equalsIgnoreCase("GENERAL")) {
+            customModes.add(mode);
+        }
         String tempVal2 = section.getString("apply-rule");
         if (tempVal2 != null) {
             ObjectSingleRule tempVal3 = ConfigManager.configManager.getRule(tempVal2);
@@ -70,6 +78,10 @@ public class ObjectApplyItem {
 
     public String getId() {
         return id;
+    }
+
+    public String getMode() {
+        return mode;
     }
 
     public ObjectSingleRule getRule() {
@@ -159,6 +171,13 @@ public class ObjectApplyItem {
     }
 
     public boolean matchItem(Player player, ItemStack item) {
+        return matchItem(player, item, "GENERAL");
+    }
+
+    public boolean matchItem(Player player, ItemStack item, String mode) {
+        if (!this.mode.equalsIgnoreCase(mode) && !this.mode.equalsIgnoreCase("GENERAL")) {
+            return false;
+        }
         if (!condition.getAllBoolean(player, item, item)) {
             return false;
         }

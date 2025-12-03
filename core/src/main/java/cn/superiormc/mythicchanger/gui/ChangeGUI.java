@@ -16,25 +16,50 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Objects;
 
-
 public class ChangeGUI extends InvGUI {
 
     private boolean success = false;
 
+    private final String customMode;
+
+    private String optionKey;
+
     public ChangeGUI(Player player) {
         super(player);
+        this.customMode = "GUI";
+        initOptionKey();
         constructGUI();
+    }
+
+    public ChangeGUI(Player player, String customMode) {
+        super(player);
+        this.customMode = customMode;
+        initOptionKey();
+        constructGUI();
+    }
+
+    private void initOptionKey() {
+        if (customMode.equalsIgnoreCase("GUI") || customMode.equalsIgnoreCase("MODE") ||
+        customMode.equalsIgnoreCase("GENERAL")) {
+            optionKey = "change-gui.";
+        } else {
+            if (ConfigManager.configManager.config.contains(customMode)) {
+                optionKey = customMode + ".";
+            } else {
+                optionKey = "change-gui.";
+            }
+        }
     }
 
     @Override
     protected void constructGUI() {
         if (Objects.isNull(inv)) {
-            inv = MythicChanger.methodUtil.createNewInv(player, ConfigManager.configManager.getInt("change-gui.size", 54),
-                    ConfigManager.configManager.getString("change-gui.title"));
+            String title = ConfigManager.configManager.getString(optionKey + "title", "", "mode", customMode);
+            inv = MythicChanger.methodUtil.createNewInv(player, ConfigManager.configManager.getInt(optionKey + "size", 54), title);
         }
-        inv.setItem(ConfigManager.configManager.getInt("change-gui.confirm-slot", 2), BuildItem.buildItemStack(player,
-                ConfigManager.configManager.getSection("change-gui.confirm-item")));
-        ConfigurationSection customItemSection = ConfigManager.configManager.getSection("change-gui.custom-item");
+        inv.setItem(ConfigManager.configManager.getInt(optionKey + "confirm-slot", 2), BuildItem.buildItemStack(player,
+                ConfigManager.configManager.getSection(optionKey + "confirm-item")));
+        ConfigurationSection customItemSection = ConfigManager.configManager.getSection(optionKey + "custom-item");
         if (customItemSection != null) {
             for (String key : customItemSection.getKeys(false)){
                 ConfigurationSection itemSection = customItemSection.getConfigurationSection(key);
@@ -50,10 +75,10 @@ public class ChangeGUI extends InvGUI {
 
     @Override
     public boolean clickEventHandle(Inventory inventory, ItemStack item, int slot) {
-        if (slot == ConfigManager.configManager.getInt("change-gui.item-slot", 0)) {
+        if (slot == ConfigManager.configManager.getInt(optionKey + "item-slot", 0)) {
             return false;
-        } else if (slot == ConfigManager.configManager.getInt("change-gui.book-slot", 1)) {
-            ItemStack targetItem = inv.getItem(ConfigManager.configManager.getInt("change-gui.book-slot", 0));
+        } else if (slot == ConfigManager.configManager.getInt(optionKey + "book-slot", 1)) {
+            ItemStack targetItem = inv.getItem(ConfigManager.configManager.getInt(optionKey + "book-slot", 0));
             if (targetItem != null && !targetItem.getType().isAir()) {
                 return false;
             }
@@ -67,16 +92,16 @@ public class ChangeGUI extends InvGUI {
 
     @Override
     public void afterClickEventHandle(ItemStack item, ItemStack currentItem, int slot) {
-        if (slot != ConfigManager.configManager.getInt("change-gui.confirm-slot", 2)) {
+        if (slot != ConfigManager.configManager.getInt(optionKey + "confirm-slot", 2)) {
             return;
         }
         success = true;
-        ItemStack usedItemStack = inv.getItem(ConfigManager.configManager.getInt("change-gui.item-slot", 0));
+        ItemStack usedItemStack = inv.getItem(ConfigManager.configManager.getInt(optionKey + "item-slot", 0));
         if (usedItemStack == null || usedItemStack.getType().isAir()) {
             success = false;
             return;
         }
-        ItemStack applyItemStack = inv.getItem(ConfigManager.configManager.getInt("change-gui.book-slot", 1));
+        ItemStack applyItemStack = inv.getItem(ConfigManager.configManager.getInt(optionKey + "book-slot", 1));
         if (applyItemStack == null || applyItemStack.getType().isAir()) {
             success = false;
             return;
@@ -87,9 +112,11 @@ public class ChangeGUI extends InvGUI {
             return;
         }
         ItemStack newItem = usedItemStack.clone();
-        if (!applyItem.matchItem(player, newItem)) {
+        if (!applyItem.matchItem(player, newItem, customMode)) {
             success = false;
-            player.closeInventory();
+            if (ConfigManager.configManager.getBoolean(optionKey + "close-if-fail")) {
+                player.closeInventory();
+            }
             LanguageManager.languageManager.sendStringText(player, "do-not-apply");
             return;
         }
@@ -98,13 +125,13 @@ public class ChangeGUI extends InvGUI {
         if (rule != null) {
             if (!rule.getCondition().getAllBoolean(player, item, item)) {
                 success = false;
-                if (ConfigManager.configManager.getBoolean("change-gui.close-if-fail")) {
+                if (ConfigManager.configManager.getBoolean(optionKey + "close-if-fail")) {
                     player.closeInventory();
                 }
                 LanguageManager.languageManager.sendStringText(player, "not-meet-condition");
             } else if (ObjectApplyItem.getRule(tempVal3).size() >= ObjectApplyItem.getLimit(tempVal3)) {
                 success = false;
-                if (ConfigManager.configManager.getBoolean("change-gui.close-if-fail")) {
+                if (ConfigManager.configManager.getBoolean(optionKey + "close-if-fail")) {
                     player.closeInventory();
                 }
                 LanguageManager.languageManager.sendStringText(player, "rule-limit-reached");
@@ -116,7 +143,7 @@ public class ChangeGUI extends InvGUI {
                         ItemStack changeItem = rule.setRealChange(usedItemStack, player);
                         if (ItemUtil.isValid(changeItem)) {
                             usedItemStack.setAmount(0);
-                            inv.setItem(ConfigManager.configManager.getInt("change-gui.item-slot", 0),
+                            inv.setItem(ConfigManager.configManager.getInt(optionKey + "item-slot", 0),
                                     changeItem);
                         }
                     }
@@ -134,13 +161,13 @@ public class ChangeGUI extends InvGUI {
                 ItemStack changeItem = applyItem.setRealChange(applyItemStack, usedItemStack, player);
                 if (ItemUtil.isValid(changeItem)) {
                     usedItemStack.setAmount(0);
-                    inv.setItem(ConfigManager.configManager.getInt("change-gui.item-slot", 0),
+                    inv.setItem(ConfigManager.configManager.getInt(optionKey + "item-slot", 0),
                             changeItem);
                 }
             } else {
+                applyItemStack.setAmount(applyItemStack.getAmount() - 1);
                 applyItem.doFailAction(player, usedItemStack);
             }
-            applyItemStack.setAmount(applyItemStack.getAmount() - 1);
         }
         success = false;
     }
@@ -148,11 +175,11 @@ public class ChangeGUI extends InvGUI {
     @Override
     public void closeEventHandle(Inventory inventory) {
         if (!success) {
-            ItemStack usedItemStack = inv.getItem(ConfigManager.configManager.getInt("change-gui.item-slot", 0));
+            ItemStack usedItemStack = inv.getItem(ConfigManager.configManager.getInt(optionKey + "item-slot", 0));
             if (usedItemStack != null && !usedItemStack.getType().isAir()) {
                 CommonUtil.giveOrDrop(player, usedItemStack);
             }
-            ItemStack applyItemStack = inv.getItem(ConfigManager.configManager.getInt("change-gui.book-slot", 1));
+            ItemStack applyItemStack = inv.getItem(ConfigManager.configManager.getInt(optionKey + "book-slot", 1));
             if (applyItemStack != null && !applyItemStack.getType().isAir()) {
                 CommonUtil.giveOrDrop(player, applyItemStack);
             }

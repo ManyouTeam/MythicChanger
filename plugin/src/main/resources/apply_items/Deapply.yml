@@ -1,3 +1,4 @@
+apply-item-mode: GENERAL
 display-item:
   material: BOOK
   name: '&fRollback book'

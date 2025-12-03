@@ -1,5 +1,6 @@
 # PREMIUM VERSION ONLY
 
+apply-item-mode: GENERAL
 display-item:
   material: PAPER
   name: '&fItem Skin &8(Diamond Sword)'

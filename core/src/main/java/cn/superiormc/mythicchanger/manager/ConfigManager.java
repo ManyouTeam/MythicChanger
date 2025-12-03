@@ -84,6 +84,7 @@ public class ConfigManager {
     }
 
     private void loadApplyItem(File folder) {
+        ObjectApplyItem.customModes.clear();
         File[] files = folder.listFiles();
         if (files == null) {
             return;

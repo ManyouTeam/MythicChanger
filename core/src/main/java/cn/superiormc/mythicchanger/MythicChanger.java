@@ -88,7 +88,8 @@ public class MythicChanger extends JavaPlugin {
             new LocateManager();
         }
         Bukkit.getPluginManager().registerEvents(new PlayerCacheListener(), this);
-        if (ConfigManager.configManager.getString("apply-item-mode", "DRAG").equalsIgnoreCase("DRAG")) {
+        if (!ConfigManager.configManager.getString("apply-item-mode", "DRAG").equalsIgnoreCase("GUI") ||
+        ConfigManager.configManager.getBoolean("apply-item-mode.drag-enabled", true)) {
             Bukkit.getPluginManager().registerEvents(new ApplyItemListener(), this);
         }
         if (!CommonUtil.checkClass("com.mojang.authlib.properties.Property", "getValue") && CommonUtil.getMinorVersion(21, 1)) {

@@ -107,6 +107,7 @@ public class ChangesManager {
     public boolean containsLog(String log) {
         return loggedRules.contains(log);
     }
+
     public void registerNewRule(AbstractChangesRule rule) {
         rules.add(rule);
         MythicChanger.methodUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fLoaded change rule: " + rule.getClass().getSimpleName() + "!");

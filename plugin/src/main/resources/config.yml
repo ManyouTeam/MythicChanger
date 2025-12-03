@@ -134,10 +134,30 @@ change-gui:
       name: '&bDrag the apply item below.'
   close-if-fail: true
 
-# Premium version only.
-# Support value: GUI, DRAG
-# GUI mode is in EARLY ALPHA TEST, be careful to use!
-# Require server restart.
-apply-item-mode: DRAG
+# MY_CUSTOM:
+#   title: 'Change your item!'
+#   size: 27
+#   item-slot: 11
+#   book-slot: 15
+#   confirm-slot: 22
+#   confirm-item:
+#     material: ANVIL
+#     name: '&eConfirm'
+#     lore:
+#       - '&7Click to confirm change the item!'
+#   custom-item:
+#     2:
+#       material: PAPER
+#       name: '&bDrag the item you want change below.'
+#     6:
+#       material: BOOK
+#       name: '&bDrag the apply item below.'
+#   close-if-fail: true
+
+apply-item-mode:
+  drag-enabled: true
+  # GUI mode is in EARLY ALPHA TEST, be careful to use!
+  # Premium version only.
+  gui-enabled: true
 
 default-apply-item-limit: 1
