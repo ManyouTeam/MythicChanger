@@ -79,6 +79,7 @@ public class ChangesManager {
             if (CommonUtil.getMinorVersion(20, 5)) {
                 registerNewRule(new KeepItemName());
             }
+            registerNewRule(new KeepItemFormat());
             registerNewRule(new EditLore());
             registerNewRule(new ReplaceEnchants());
             registerNewRule(new ReplaceStoredEnchants());

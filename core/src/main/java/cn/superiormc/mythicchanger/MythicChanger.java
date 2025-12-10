@@ -88,7 +88,7 @@ public class MythicChanger extends JavaPlugin {
             new LocateManager();
         }
         Bukkit.getPluginManager().registerEvents(new PlayerCacheListener(), this);
-        if (!ConfigManager.configManager.getString("apply-item-mode", "DRAG").equalsIgnoreCase("GUI") ||
+        if (!ConfigManager.configManager.getString("apply-item-mode", "").equalsIgnoreCase("GUI") ||
         ConfigManager.configManager.getBoolean("apply-item-mode.drag-enabled", true)) {
             Bukkit.getPluginManager().registerEvents(new ApplyItemListener(), this);
         }

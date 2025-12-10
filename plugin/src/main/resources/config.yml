@@ -85,6 +85,7 @@ change-rule-weight:
   keep-item-name: -253
   keep-lore: -254
   keep-name: -255
+  keep-item-format: -259
   edit-lore: 14
   parse-papi-lore: 500
   parse-papi-name: 501
