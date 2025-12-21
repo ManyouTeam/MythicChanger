@@ -1,4 +1,4 @@
-package cn.superiormc.mythicchanger.protolcol.ProtocolLib;
+package cn.superiormc.mythicchanger.protolcol.pacetevents;
 
 import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.manager.ConfigManager;

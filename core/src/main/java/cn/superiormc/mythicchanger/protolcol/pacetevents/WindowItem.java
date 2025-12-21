@@ -1,7 +1,6 @@
-package cn.superiormc.mythicchanger.protolcol.ProtocolLib;
+package cn.superiormc.mythicchanger.protolcol.pacetevents;
 
 import cn.superiormc.mythicchanger.manager.ConfigManager;
-import cn.superiormc.mythicchanger.utils.CommonUtil;
 import cn.superiormc.mythicchanger.utils.ItemUtil;
 import cn.superiormc.mythicchanger.utils.TextUtil;
 import com.github.retrooper.packetevents.event.PacketListener;

@@ -1,6 +1,6 @@
 package cn.superiormc.mythicchanger.listeners;
 
-import cn.superiormc.mythicchanger.protolcol.ProtocolLib.SetCursorItem;
+import cn.superiormc.mythicchanger.protolcol.pacetevents.SetCursorItem;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;

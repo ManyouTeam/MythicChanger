@@ -14,7 +14,7 @@ public class ListenerManager {
         registerListeners();
     }
 
-    private void registerListeners(){
+    private void registerListeners() {
         if (CommonUtil.checkPluginLoad("MMOItems")) {
             Bukkit.getPluginManager().registerEvents(new MMOItemsReloadListener(), MythicChanger.instance);
         }

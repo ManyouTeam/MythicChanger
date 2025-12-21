@@ -47,8 +47,6 @@ public class HookManager {
         }
         if (CommonUtil.checkPluginLoad("MMOItems")) {
             try {
-                Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §fRegistering special item register manager" +
-                        " for MMOItems because it does not support async...");
                 MMOItemsHook.generateNewCache();
                 new ListenerManager();
             } catch (Throwable throwable) {

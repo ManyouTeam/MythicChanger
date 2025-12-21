@@ -2,6 +2,7 @@ package cn.superiormc.mythicchanger.hooks;
 
 import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.utils.SchedulerUtil;
+import cn.superiormc.mythicchanger.utils.TextUtil;
 import net.Indyuce.mmoitems.MMOItems;
 import net.Indyuce.mmoitems.api.Type;
 import net.Indyuce.mmoitems.api.item.template.MMOItemTemplate;
@@ -19,6 +20,8 @@ public class MMOItemsHook {
     //private static boolean using;
 
     public static void generateNewCache() {
+        MythicChanger.methodUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fRegistering special item register manager" +
+                " for MMOItems because it does not support async...");
         itemCaches = new ConcurrentHashMap<>();
         for (Type type : MMOItems.plugin.getTypes().getAll()) {
             for (MMOItemTemplate template : MMOItems.plugin.getTemplates().getTemplates(type)) {

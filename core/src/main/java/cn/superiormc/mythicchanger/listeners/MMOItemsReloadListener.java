@@ -1,16 +1,15 @@
 package cn.superiormc.mythicchanger.listeners;
 
 import cn.superiormc.mythicchanger.hooks.MMOItemsHook;
+import cn.superiormc.mythicchanger.utils.SchedulerUtil;
+import net.Indyuce.mmoitems.api.event.MMOItemsReloadEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 public class MMOItemsReloadListener implements Listener {
 
     @EventHandler
-    public void onReloadMMOItems(PlayerCommandPreprocessEvent event) {
-        if (event.getMessage().contains("mmoitems reload") || event.getMessage().contains("mi reload")) {
-            MMOItemsHook.generateNewCache();
-        }
+    public void onReloadMMOItems(MMOItemsReloadEvent event) {
+        SchedulerUtil.runTaskLater(MMOItemsHook::generateNewCache, 1L);
     }
 }

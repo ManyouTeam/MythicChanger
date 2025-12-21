@@ -4,7 +4,7 @@ import cn.superiormc.mythicchanger.listeners.ApplyItemListener;
 import cn.superiormc.mythicchanger.listeners.PlayerCacheListener;
 import cn.superiormc.mythicchanger.listeners.ServerLoadListener;
 import cn.superiormc.mythicchanger.manager.*;
-import cn.superiormc.mythicchanger.protolcol.ProtocolLib.*;
+import cn.superiormc.mythicchanger.protolcol.pacetevents.*;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
 import cn.superiormc.mythicchanger.utils.SpecialMethodUtil;
 import cn.superiormc.mythicchanger.utils.TextUtil;

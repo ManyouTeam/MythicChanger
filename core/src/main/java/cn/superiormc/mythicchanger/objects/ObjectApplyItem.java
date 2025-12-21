@@ -5,6 +5,7 @@ import cn.superiormc.mythicchanger.manager.*;
 import cn.superiormc.mythicchanger.methods.BuildItem;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
 import cn.superiormc.mythicchanger.utils.ItemUtil;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -102,6 +103,10 @@ public class ObjectApplyItem {
             itemSection = section;
         }
         ItemStack applyItem = BuildItem.buildItemStack(player, itemSection);
+        if (applyItem.getType() == Material.BARRIER) {
+            ErrorManager.errorManager.sendErrorMessage("§cFailed to build apply item: " + id);
+            applyItem = new ItemStack(Material.STONE);
+        }
         ItemMeta meta = applyItem.getItemMeta();
         if (meta != null) {
             meta.getPersistentDataContainer().set(MYTHICCHANGER_APPLY_ITEM, PersistentDataType.STRING, id);

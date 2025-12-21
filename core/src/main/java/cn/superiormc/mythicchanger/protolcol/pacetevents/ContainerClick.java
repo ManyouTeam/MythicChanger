@@ -1,4 +1,4 @@
-package cn.superiormc.mythicchanger.protolcol.ProtocolLib;
+package cn.superiormc.mythicchanger.protolcol.pacetevents;
 
 import com.github.retrooper.packetevents.event.PacketListener;
 import com.github.retrooper.packetevents.event.PacketReceiveEvent;
