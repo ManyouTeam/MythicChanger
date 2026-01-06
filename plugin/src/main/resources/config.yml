@@ -22,6 +22,8 @@ packet-listener-priority: LOWEST
 
 config-files:
   language: en_US
+  # Premium version only.
+  per-player-language: true
   force-parse-mini-message: true
   # Premium version only.
   minecraft-locate-file:
@@ -116,23 +118,26 @@ change-rule-weight:
 
 # Premium version only.
 change-gui:
-  title: 'Change your item!'
+  title: '{lang:change_gui.title}'
   size: 27
   item-slot: 11
   book-slot: 15
   confirm-slot: 22
+
   confirm-item:
     material: ANVIL
-    name: '&eConfirm'
+    name: '{lang:change_gui.confirm.name}'
     lore:
-      - '&7Click to confirm change the item!'
+      - '{lang:change_gui.confirm.lore}'
+
   custom-item:
     2:
       material: PAPER
-      name: '&bDrag the item you want change below.'
+      name: '{lang:change_gui.custom.item}'
     6:
       material: BOOK
-      name: '&bDrag the apply item below.'
+      name: '{lang:change_gui.custom.book}'
+
   close-if-fail: true
 
 # MY_CUSTOM:

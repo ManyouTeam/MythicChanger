@@ -31,7 +31,7 @@ public class WindowItem implements PacketListener {
                 return;
             }
             if (ConfigManager.configManager.getBoolean("debug")) {
-                Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §fWindowItems pack found!");
+                TextUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fWindowItems pack found!");
             }
             WrapperPlayServerWindowItems windowItems = new WrapperPlayServerWindowItems(event);
             Optional<com.github.retrooper.packetevents.protocol.item.ItemStack> optionalCarriedItem = windowItems.getCarriedItem();

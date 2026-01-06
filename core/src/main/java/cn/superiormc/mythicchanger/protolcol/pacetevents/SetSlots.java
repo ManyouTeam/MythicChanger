@@ -30,7 +30,7 @@ public class SetSlots implements PacketListener {
                 return;
             }
             if (ConfigManager.configManager.getBoolean("debug")) {
-                Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §fSetSlot pack found!");
+                TextUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fSetSlot pack found!");
             }
             int windowID = serverSetSlot.getWindowId();
             ItemStack item = SpigotConversionUtil.toBukkitItemStack(serverSetSlot.getItem());

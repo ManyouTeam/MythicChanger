@@ -6,7 +6,6 @@ import cn.superiormc.mythicchanger.utils.TextUtil;
 import net.Indyuce.mmoitems.MMOItems;
 import net.Indyuce.mmoitems.api.Type;
 import net.Indyuce.mmoitems.api.item.template.MMOItemTemplate;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -20,7 +19,7 @@ public class MMOItemsHook {
     //private static boolean using;
 
     public static void generateNewCache() {
-        MythicChanger.methodUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fRegistering special item register manager" +
+        MythicChanger.methodUtil.sendChat(null, TextUtil.pluginPrefix() + " §fRegistering special item register manager" +
                 " for MMOItems because it does not support async...");
         itemCaches = new ConcurrentHashMap<>();
         for (Type type : MMOItems.plugin.getTypes().getAll()) {

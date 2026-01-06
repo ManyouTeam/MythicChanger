@@ -50,3 +50,13 @@ rule-limit-reached: "&#98FB98[MythicChanger] &fThis item reached it's apply item
 do-not-apply: "&#98FB98[MythicChanger] &fThis apply item does not work on this item!"
 success-set-limit: "&#98FB98[MythicChanger] &fSuccessfully set this item apply limit to {limit}!"
 not-meet-condition: "&#98FB98[MythicChanger] &fYou can't use this item because you didn't meet the condition of the rule the item related to!"
+
+override-lang:
+  change_gui:
+    title: 'Change your item!'
+    confirm:
+      name: '&eConfirm'
+      lore: '&7Click to confirm change the item!'
+    custom:
+      item: '&bDrag the item you want to change below.'
+      book: '&bDrag the apply item below.'

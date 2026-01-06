@@ -24,7 +24,7 @@ public class Rarity extends AbstractMatchItemRule {
             result = "NONE";
         }
         if (ConfigManager.configManager.getBoolean("debug")) {
-            Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §cRarity: " + result);
+            TextUtil.sendMessage(null, TextUtil.pluginPrefix() + " §cRarity: " + result);
         }
         return result.equalsIgnoreCase(section.getString("rarity"));
     }

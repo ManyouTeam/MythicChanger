@@ -1,6 +1,6 @@
 package cn.superiormc.mythicchanger.objects.actions;
 
-import cn.superiormc.mythicchanger.MythicChanger;
+import cn.superiormc.mythicchanger.utils.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -18,7 +18,7 @@ public class ActionAnnouncement extends AbstractRunAction {
     protected void onDoAction(ObjectSingleAction singleAction, Player player, ItemStack original, ItemStack item) {
         Collection<? extends Player> players = Bukkit.getOnlinePlayers();
         for (Player p : players) {
-            MythicChanger.methodUtil.sendMessage(p, singleAction.getString("message", player, original, item));
+            TextUtil.sendMessage(p, singleAction.getString("message", player, original, item));
         }
     }
 }

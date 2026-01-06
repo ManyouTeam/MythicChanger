@@ -68,7 +68,7 @@ public class ConfigManager {
                     ObjectSingleRule rule = new ObjectSingleRule(substring, YamlConfiguration.loadConfiguration(file));
                     ruleCaches.add(rule);
                     ruleMap.put(substring, rule);
-                    Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §fLoaded rule: " +
+                    TextUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fLoaded rule: " +
                             fileName + "!");
                 }
             }
@@ -107,7 +107,7 @@ public class ConfigManager {
                         continue;
                     }
                     itemMap.put(substring, new ObjectApplyItem(substring, YamlConfiguration.loadConfiguration(file)));
-                    Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §fLoaded apply item: " + substring + "!");
+                    TextUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fLoaded apply item: " + substring + "!");
                 }
             }
         }
@@ -118,7 +118,7 @@ public class ConfigManager {
             return item;
         }
         if (ConfigManager.configManager.getBoolean("debug")) {
-            Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §fStart fake change!");
+            TextUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fStart fake change!");
         }
         for (ObjectSingleRule rule: ruleCaches) {
             if (rule.getMatchItem(item, true, player) && (!rule.getOnlyInPlayerInventory() || modifyPlayerInInventory(player, isPlayerInventory))) {
@@ -144,7 +144,7 @@ public class ConfigManager {
             return null;
         }
         if (ConfigManager.configManager.getBoolean("debug")) {
-            Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §fStart real change!");
+            TextUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fStart real change!");
         }
         int amount = item.getAmount();
         boolean needReturnNewItem = false;

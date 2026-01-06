@@ -2,7 +2,6 @@ package cn.superiormc.mythicchanger.manager;
 
 import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.utils.TextUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -11,144 +10,176 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class LanguageManager {
 
     public static LanguageManager languageManager;
 
-    private YamlConfiguration messageFile;
+    private String serverLanguage = null;
+
+    private final Map<String, YamlConfiguration> languageFiles = new HashMap<>();
 
     private YamlConfiguration tempMessageFile;
 
-    private File file;
-
-    private File tempFile;
-
     public LanguageManager() {
         languageManager = this;
-        initLanguage();
+        initLanguages();
     }
 
-    private void initLanguage() {
-        this.file = new File(MythicChanger.instance.getDataFolder() + "/languages/" + ConfigManager.configManager.getString("config-files.language", "en_US") + ".yml");
-        if (!file.exists()){
-            this.file = new File(MythicChanger.instance.getDataFolder(), "message.yml");
-            if (!file.exists()) {
-                Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §cWe can not found your message file, " +
-                        "please try restart your server!");
+    protected String getPlayerLanguage(Player player) {
+        if (player == null) {
+            return serverLanguage.toLowerCase();
+        }
+        try {
+            if (ConfigManager.configManager.getBoolean("config-files.per-player-language") && !MythicChanger.freeVersion) {
+                return player.getLocale().toLowerCase();
+            } else {
+                return serverLanguage.toLowerCase();
+            }
+        } catch (NoSuchMethodError | NoClassDefFoundError e) {
+            return serverLanguage.toLowerCase();
+        }
+    }
+
+    private void initLanguages() {
+        File langFolder = new File(MythicChanger.instance.getDataFolder(), "languages");
+        if (!langFolder.exists()) {
+            langFolder.mkdirs();
+        }
+
+        // 加载默认 en_US.yml 作为临时文件
+        InputStream is = MythicChanger.instance.getResource("languages/en_US.yml");
+        if (is != null) {
+            try {
+                File tempFile = new File(MythicChanger.instance.getDataFolder(), "tempMessage.yml");
+                Files.copy(is, tempFile.toPath());
+                tempMessageFile = YamlConfiguration.loadConfiguration(tempFile);
+                tempFile.delete();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            tempMessageFile = new YamlConfiguration();
+        }
+
+        // 加载 languages 下所有 yml 文件
+        File[] files = langFolder.listFiles((dir, name) -> name.endsWith(".yml"));
+        if (files != null) {
+            for (File file : files) {
+                String lang = file.getName().replace(".yml", "");
+                YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
+                languageFiles.put(lang.toLowerCase(), config);
+                TextUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fLoaded language: " + lang + ".yml!");
             }
         }
-        else {
-            this.messageFile = YamlConfiguration.loadConfiguration(file);
+
+        if (!languageFiles.containsKey("en_US")) {
+            languageFiles.put("en_US".toLowerCase(), tempMessageFile);
         }
-        InputStream is = MythicChanger.instance.getResource("languages/en_US.yml");
-        if (is == null) {
-            return;
+        serverLanguage = ConfigManager.configManager.getString("config-files.language", "en-US");
+        if (!languageFiles.containsKey(serverLanguage)) {
+            serverLanguage = "en_US";
         }
-        this.tempFile = new File(MythicChanger.instance.getDataFolder(), "tempMessage.yml");
+    }
+
+    private String getMessage(Player player, String key, String... args) {
+        String lang = getPlayerLanguage(player);
+
+        YamlConfiguration config = languageFiles.getOrDefault(lang, tempMessageFile);
+        String text = config.getString(key);
+
+
+        if (text == null) {
+            if (tempMessageFile.getString(key) != null) {
+                text = tempMessageFile.getString(key);
+                config.set(key, text);
+                saveLanguageFile(lang, config);
+                TextUtil.sendMessage(null, TextUtil.pluginPrefix() + " §cAdded new language key: " + key + " for " + lang);
+            } else {
+                if (args.length == 0) {
+                    text = "§cLanguage key not found: " + key;
+                } else {
+                    text = args[0];
+                }
+            }
+            if (text == null) {
+                text = "§cLanguage key not found: " + key;
+            }
+        }
+
+        for (int i = 1 ; i < args.length ; i += 2) {
+            String var = "{" + args[i] + "}";
+            if (args[i + 1] == null) {
+                text = text.replace(var, "");
+            } else {
+                text = text.replace(var, args[i + 1]);
+            }
+        }
+        text = text.replace("{plugin_folder}", String.valueOf(MythicChanger.instance.getDataFolder()));
+        return text;
+    }
+
+    private void saveLanguageFile(String lang, YamlConfiguration config) {
+        File file = new File(MythicChanger.instance.getDataFolder(), "languages/" + lang + ".yml");
         try {
-            Files.copy(is, tempFile.toPath());
+            config.save(file);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        this.tempMessageFile = YamlConfiguration.loadConfiguration(tempFile);
-        if (messageFile == null) {
-            messageFile = tempMessageFile;
-        }
-        this.tempFile.delete();
     }
 
     public void sendStringText(CommandSender sender, String... args) {
-        if (sender instanceof Player) {
-            sendStringText((Player) sender, args);
-        }
-        else {
-            sendStringText(args);
+        if (sender instanceof Player player) {
+            sendStringText(player, args);
+        } else {
+            sendStringText(null, args);
         }
     }
 
     public void sendStringText(String... args) {
-        String text = this.messageFile.getString(args[0]);
-        if (text == null) {
-            if (this.tempMessageFile.getString(args[0]) == null) {
-                Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §cCan not found language key: " + args[0] + "!");
-                return;
-            }
-            else {
-                Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §cUpdated your language file, added " +
-                        "new language key and it's default value: " + args[0] + "!");
-                text = this.tempMessageFile.getString(args[0]);
-                messageFile.set(args[0], text);
-                try {
-                    messageFile.save(file);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
-        for (int i = 1 ; i < args.length ; i += 2) {
-            String var = "{" + args[i] + "}";
-            if (args[i + 1] == null) {
-                text = text.replace(var, "");
-            }
-            else {
-                text = text.replace(var, args[i + 1]);
-            }
-        }
-        if (text.length() != 0) {
-            MythicChanger.methodUtil.sendMessage(null, text);
-        }
+        sendStringText(null, args);
     }
 
     public void sendStringText(Player player, String... args) {
-        String text = this.messageFile.getString(args[0]);
-        if (text == null) {
-            if (this.tempMessageFile.getString(args[0]) == null) {
-                player.sendMessage(TextUtil.pluginPrefix() + " §cCan not found language key: " + args[0] + "!");
-                return;
-            }
-            else {
-                Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §cUpdated your language file, added " +
-                        "new language key and it's default value: " + args[0] + "!");
-                text = this.tempMessageFile.getString(args[0]);
-                messageFile.set(args[0], text);
-                try {
-                    messageFile.save(file);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
+        if (args.length == 0) {
+            return;
         }
-        for (int i = 1 ; i < args.length ; i += 2) {
+        String text = getMessage(player, args[0]);
+
+        // 替换变量 {key}
+        for (int i = 1; i < args.length; i += 2) {
             String var = "{" + args[i] + "}";
-            if (args[i + 1] == null) {
-                text = text.replace(var, "");
-            }
-            else {
-                text = text.replace(var, args[i + 1]);
-            }
+            text = text.replace(var, i + 1 < args.length ? (args[i + 1] == null ? "" : args[i + 1]) : "");
         }
-        if (text.length() != 0) {
-            MythicChanger.methodUtil.sendMessage(player, text);
+
+        if (!text.isEmpty()) {
+            TextUtil.sendMessage(player, text);
         }
     }
 
-    public String getStringText(String path) {
-        if (this.messageFile.getString(path) == null) {
-            if (this.tempMessageFile.getString(path) == null) {
-                return "§cCan not found language key: " + path + "!";
-            }
-            MythicChanger.methodUtil.sendMessage(null, TextUtil.pluginPrefix() + " §cUpdated your language file, added " +
-                    "new language key and it's default value: " + path + "!");
-            messageFile.set(path, this.tempMessageFile.getString(path));
-            try {
-                messageFile.save(file);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            return this.tempMessageFile.getString(path);
-        }
-        return this.messageFile.getString(path);
+    public String getStringText(Player player, String path, String... args) {
+        return getMessage(player, path, args);
     }
 
+    public List<String> getStringListText(Player player, String path) {
+        String lang = getPlayerLanguage(player);
+        YamlConfiguration config = languageFiles.getOrDefault(lang, tempMessageFile);
+
+        List<String> list = config.getStringList(path);
+        if (list.isEmpty()) {
+            List<String> temp = tempMessageFile.getStringList(path);
+            if (!temp.isEmpty()) {
+                config.set(path, temp);
+                saveLanguageFile(lang, config);
+                return temp;
+            } else {
+                temp.add("§cLanguage key not found: " + path);
+                return temp;
+            }
+        }
+        return list;
+    }
 }

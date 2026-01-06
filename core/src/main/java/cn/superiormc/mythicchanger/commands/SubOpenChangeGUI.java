@@ -58,7 +58,7 @@ public class SubOpenChangeGUI extends AbstractCommand {
     }
 
     @Override
-    public List<String> getTabResult(int length) {
+    public List<String> getTabResult(int length, Player player) {
         List<String> tempVal1 = new ArrayList<>();
         switch (length) {
             case 2:

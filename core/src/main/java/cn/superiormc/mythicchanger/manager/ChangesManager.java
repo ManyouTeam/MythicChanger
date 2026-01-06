@@ -95,7 +95,7 @@ public class ChangesManager {
             registerNewRule(new SubChange());
         }
         if (CommonUtil.getClass("cn.superiormc.ultimateshop.UltimateShop")) {
-            MythicChanger.methodUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fHooking into UltimateShop...");
+            MythicChanger.methodUtil.sendChat(null, TextUtil.pluginPrefix() + " §fHooking into UltimateShop...");
             addLog("UltimateShop");
             registerNewRule(new AddPriceLore());
         }
@@ -111,7 +111,7 @@ public class ChangesManager {
 
     public void registerNewRule(AbstractChangesRule rule) {
         rules.add(rule);
-        MythicChanger.methodUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fLoaded change rule: " + rule.getClass().getSimpleName() + "!");
+        MythicChanger.methodUtil.sendChat(null, TextUtil.pluginPrefix() + " §fLoaded change rule: " + rule.getClass().getSimpleName() + "!");
     }
 
     public ItemStack setFakeChange(ConfigurationSection section, ItemStack item, Player player, boolean isPlayerInventory) {
@@ -133,7 +133,7 @@ public class ChangesManager {
                 break;
             }
             if (ConfigManager.configManager.getBoolean("debug")) {
-                Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §fApply fake rule: " + rule.getClass().getName());
+                TextUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fApply fake rule: " + rule.getClass().getName());
             }
             ItemStack result = rule.setChange(singleChange);
             if (singleChange.isNeedRewriteItem()) {
@@ -161,7 +161,7 @@ public class ChangesManager {
         for (AbstractChangesRule rule : rules) {
             if (rule.configNotContains(singleChange.section)) {
                 if (ConfigManager.configManager.getBoolean("debug")) {
-                    //Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §c" + rule.getClass().getSimpleName() +  " skipped!");
+                    //TextUtil.sendMessage(null, TextUtil.pluginPrefix() + " §c" + rule.getClass().getSimpleName() +  " skipped!");
                 }
                 continue;
             }
@@ -169,7 +169,7 @@ public class ChangesManager {
                 break;
             }
             if (ConfigManager.configManager.getBoolean("debug")) {
-                Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §fApply real rule: " + rule.getClass().getSimpleName());
+                TextUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fApply real rule: " + rule.getClass().getSimpleName());
             }
             changedItem = true;
             ItemStack result = rule.setChange(singleChange);

@@ -31,18 +31,18 @@ public class HookManager {
 
     private void initNormalHook() {
         if (CommonUtil.checkPluginLoad("InteractiveChat")) {
-            Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §fHooking into InteractiveChat...");
+            TextUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fHooking into InteractiveChat...");
             InteractiveChatAPI.registerItemStackTransformProvider(MythicChanger.instance, 10, (itemStack, uuid) -> {
                 ICPlayer icPlayer = ICPlayerFactory.getICPlayer(uuid);
                 return ConfigManager.configManager.startFakeChange(itemStack, icPlayer.getLocalPlayer(), true);
             });
         }
         if (CommonUtil.checkPluginLoad("TrChat")) {
-            Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §fHooking into TrChat...");
+            TextUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fHooking into TrChat...");
             HookPlugin.INSTANCE.registerDisplayItemHook("EnchantmentSlots", (itemStack, player) -> ConfigManager.configManager.startFakeChange(itemStack, player, true));
         }
         if (CommonUtil.checkPluginLoad("QuickShop-Hikari")) {
-            Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §fHooking into QuickShop-Hikari...");
+            TextUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fHooking into QuickShop-Hikari...");
             Bukkit.getPluginManager().registerEvents(new QuickShopListener(), MythicChanger.instance);
         }
         if (CommonUtil.checkPluginLoad("MMOItems")) {
@@ -96,7 +96,7 @@ public class HookManager {
     public void registerNewItemHook(String pluginName,
                                     AbstractItemHook itemHook) {
         if (!itemHooks.containsKey(pluginName)) {
-            Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §fHooking into " + pluginName + "...");
+            TextUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fHooking into " + pluginName + "...");
             itemHooks.put(pluginName, itemHook);
         }
     }

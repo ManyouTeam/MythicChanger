@@ -17,7 +17,7 @@ public class Items extends AbstractMatchItemRule {
     @Override
     public boolean getMatch(ConfigurationSection section, ItemStack item, ItemMeta meta) {
         if (ConfigManager.configManager.getBoolean("debug")) {
-            Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §cItem ID: " +
+            TextUtil.sendMessage(null, TextUtil.pluginPrefix() + " §cItem ID: " +
                     HookManager.hookManager.parseItemID(item, section.getBoolean("use-tier-identify", false)));
         }
         return section.getStringList("items").contains(

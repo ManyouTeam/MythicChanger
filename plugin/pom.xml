@@ -8,7 +8,7 @@
     <parent>
         <groupId>cn.superiormc</groupId>
         <artifactId>MythicChanger</artifactId>
-        <version>3.0.3</version>
+        <version>3.0.4</version>
         <relativePath>../pom.xml</relativePath> <!-- 如果 plugin 和根目录同级 -->
     </parent>
 
@@ -17,7 +17,7 @@
     </build>
 
     <artifactId>plugin</artifactId>
-    <version>3.0.3</version>
+    <version>3.0.4</version>
     <packaging>jar</packaging>
     <name>MythicChanger</name>
 

@@ -47,7 +47,7 @@ public abstract class AbstractCommand {
         return false;
     }
 
-    public List<String> getTabResult(int length) {
+    public List<String> getTabResult(int length, Player player) {
         return new ArrayList<>();
     }
 }

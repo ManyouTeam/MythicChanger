@@ -2,12 +2,16 @@ package cn.superiormc.mythicchanger.spigot;
 
 import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.manager.ErrorManager;
+import cn.superiormc.mythicchanger.utils.SchedulerUtil;
 import cn.superiormc.mythicchanger.utils.SpecialMethodUtil;
 import cn.superiormc.mythicchanger.utils.TextUtil;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.boss.BarColor;
+import org.bukkit.boss.BarStyle;
+import org.bukkit.boss.BossBar;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -147,7 +151,7 @@ public class SpigotMethodUtil implements SpecialMethodUtil {
     }
 
     @Override
-    public void sendMessage(Player player, String text) {
+    public void sendChat(Player player, String text) {
         if (player == null) {
             Bukkit.getConsoleSender().sendMessage(TextUtil.parse(text));
         } else {
@@ -157,7 +161,43 @@ public class SpigotMethodUtil implements SpecialMethodUtil {
 
     @Override
     public void sendTitle(Player player, String title, String subTitle, int fadeIn, int stay, int fadeOut) {
-        player.sendTitle(title, subTitle, fadeIn, stay, fadeOut);
+        if (player == null) {
+            return;
+        }
+        player.sendTitle(TextUtil.parse(title, player), TextUtil.parse(subTitle, player), fadeIn, stay, fadeOut);
+    }
+
+    @Override
+    public void sendActionBar(Player player, String message) {
+        if (player == null) {
+            return;
+        }
+        player.spigot().sendMessage(
+                net.md_5.bungee.api.ChatMessageType.ACTION_BAR,
+                net.md_5.bungee.api.chat.TextComponent.fromLegacyText(TextUtil.parse(message, player))
+        );
+    }
+
+    @Override
+    public void sendBossBar(Player player,
+                            String title,
+                            float progress,
+                            String color,
+                            String style) {
+        if (player == null) {
+            return;
+        }
+        BossBar bar = Bukkit.createBossBar(
+                title,
+                color == null ? BarColor.WHITE : BarColor.valueOf(color.toUpperCase()),
+                style == null ? BarStyle.SOLID : BarStyle.valueOf(style.toUpperCase())
+        );
+
+        bar.setProgress(Math.max(0.0, Math.min(1.0, progress)));
+        bar.addPlayer(player);
+        bar.setVisible(true);
+
+        SchedulerUtil.runTaskLater(bar::removeAll, 60);
     }
 
     @Override

@@ -6,7 +6,7 @@
     <parent>
         <groupId>cn.superiormc</groupId>
         <artifactId>MythicChanger</artifactId>
-        <version>3.0.3</version>
+        <version>3.0.4</version>
     </parent>
 
     <artifactId>paper</artifactId>
@@ -27,7 +27,7 @@
         <dependency>
             <groupId>cn.superiormc</groupId>
             <artifactId>core</artifactId>
-            <version>3.0.3</version>
+            <version>3.0.4</version>
             <optional>true</optional>
         </dependency>
     </dependencies>

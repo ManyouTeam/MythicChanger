@@ -45,3 +45,13 @@ rule-limit-reached: "&#98FB98[MythicChanger] &f该物品已达到其使用更改
 do-not-apply: "&#98FB98[MythicChanger] &f该更改物品无法适用于此物品!"
 success-set-limit: "&#98FB98[MythicChanger] &f成功设置更改物品使用上限为 {limit}!"
 not-meet-condition: "&#98FB98[MythicChanger] &f您无法使用此更改物品，因为您未满足相关条件!"
+
+override-lang:
+  change_gui:
+    title: '更换物品'
+    confirm:
+      name: '&e确认'
+      lore: '&7点击确认以更换该物品'
+    custom:
+      item: '&b请将需要更换的物品拖入下方'
+      book: '&b请将应用物品拖入下方'
