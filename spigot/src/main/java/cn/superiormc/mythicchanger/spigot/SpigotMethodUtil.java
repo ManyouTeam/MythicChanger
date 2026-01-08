@@ -137,7 +137,7 @@ public class SpigotMethodUtil implements SpecialMethodUtil {
         }
         List<String> newLore = new ArrayList<>();
         for (String lore : lores) {
-            for (String singleLore : lore.split("\n")) {
+            for (String singleLore : lore.split("\\\\n")) {
                 if (singleLore.isEmpty()) {
                     newLore.add(" ");
                     continue;
@@ -230,5 +230,10 @@ public class SpigotMethodUtil implements SpecialMethodUtil {
     @Override
     public ItemStack editItemStack(ItemStack item, Player player, ConfigurationSection section, int amount, String... args) {
         return item;
+    }
+
+    @Override
+    public ConfigurationSection serializeItemStack(ItemStack item) {
+        return null;
     }
 }

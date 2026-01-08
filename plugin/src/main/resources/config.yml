@@ -33,6 +33,8 @@ config-files:
     generate-new-one: false
     file: 'zh_cn.json'
 
+debuild-item-method: 'LEGACY'
+
 # Premium version only.
 math:
   enabled: true

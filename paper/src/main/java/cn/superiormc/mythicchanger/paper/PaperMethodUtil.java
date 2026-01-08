@@ -3,6 +3,8 @@ package cn.superiormc.mythicchanger.paper;
 import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.manager.ErrorManager;
+import cn.superiormc.mythicchanger.paper.methods.BuildItemPaper;
+import cn.superiormc.mythicchanger.paper.methods.DebuildItemPaper;
 import cn.superiormc.mythicchanger.paper.utils.PaperTextUtil;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
 import cn.superiormc.mythicchanger.utils.SchedulerUtil;
@@ -151,7 +153,7 @@ public class PaperMethodUtil implements SpecialMethodUtil {
     public void setItemLore(ItemMeta meta, List<String> lores, Player player) {
         List<Component> veryNewLore = new ArrayList<>();
         for (String lore : lores) {
-            for (String singleLore : lore.split("\n")) {
+            for (String singleLore : lore.split("\\\\n")) {
                 singleLore = TextUtil.withPAPI(singleLore, player);
                 if (PaperTextUtil.containsLegacyCodes(singleLore)) {
                     singleLore = "<!i>" + singleLore;
@@ -251,10 +253,17 @@ public class PaperMethodUtil implements SpecialMethodUtil {
 
     @Override
     public ItemStack editItemStack(ItemStack item, Player player, ConfigurationSection section, int amount, String... args) {
-        if (!CommonUtil.getMinorVersion(21, 5) || MythicChanger.freeVersion) {
+        if (!CommonUtil.getMinorVersion(21, 6) || MythicChanger.freeVersion) {
             return item;
         }
         return BuildItemPaper.editItemStack(item, player, section, amount, args);
     }
 
+    @Override
+    public ConfigurationSection serializeItemStack(ItemStack item) {
+        if (!CommonUtil.getMinorVersion(21, 5) || MythicChanger.freeVersion) {
+            return null;
+        }
+        return DebuildItemPaper.serializeItemStack(item);
+    }
 }
