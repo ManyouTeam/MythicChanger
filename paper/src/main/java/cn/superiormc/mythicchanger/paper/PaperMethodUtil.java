@@ -261,7 +261,7 @@ public class PaperMethodUtil implements SpecialMethodUtil {
 
     @Override
     public ConfigurationSection serializeItemStack(ItemStack item) {
-        if (!CommonUtil.getMinorVersion(21, 5) || MythicChanger.freeVersion) {
+        if (!CommonUtil.getMinorVersion(21, 6) || MythicChanger.freeVersion) {
             return null;
         }
         return DebuildItemPaper.serializeItemStack(item);

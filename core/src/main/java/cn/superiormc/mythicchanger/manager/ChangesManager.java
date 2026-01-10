@@ -126,6 +126,10 @@ public class ChangesManager {
 
     public ItemStack setFakeChange(ObjectSingleChange singleChange) {
         for (AbstractChangesRule rule : rules) {
+            if (singleChange.section == null) {
+                ErrorManager.errorManager.sendErrorMessage("§cError: Your change section is not exist, maybe your config formatting is wrong.");
+                break;
+            }
             if (rule.configNotContains(singleChange.section)) {
                 continue;
             }
@@ -159,6 +163,10 @@ public class ChangesManager {
         boolean needReturnNewItem = false;
         boolean changedItem = false;
         for (AbstractChangesRule rule : rules) {
+            if (singleChange.section == null) {
+                ErrorManager.errorManager.sendErrorMessage("§cError: Your change section is not exist, maybe your config formatting is wrong.");
+                break;
+            }
             if (rule.configNotContains(singleChange.section)) {
                 if (ConfigManager.configManager.getBoolean("debug")) {
                     //TextUtil.sendMessage(null, TextUtil.pluginPrefix() + " §c" + rule.getClass().getSimpleName() +  " skipped!");

@@ -193,24 +193,10 @@ public class TextUtil {
         }
     }
 
-    public static List<String> getListWithColorAndPAPI(List<String> inList, Player player) {
-        List<String> resultList = new ArrayList<>();
-        for (String s : inList) {
-            if (CommonUtil.checkPluginLoad("PlaceholderAPI")) {
-                s = PlaceholderAPI.setPlaceholders(player, s);
-            }
-            resultList.add(TextUtil.parse(s));
-        }
-        return resultList;
-    }
-
     public static List<String> getListWithPAPI(List<String> inList, Player player) {
         List<String> resultList = new ArrayList<>();
         for (String s : inList) {
-            if (CommonUtil.checkPluginLoad("PlaceholderAPI")) {
-                s = PlaceholderAPI.setPlaceholders(player, s);
-            }
-            resultList.add(s);
+            resultList.add(TextUtil.withPAPI(s, player));
         }
         return resultList;
     }
