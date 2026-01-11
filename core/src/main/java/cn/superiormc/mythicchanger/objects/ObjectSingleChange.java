@@ -246,12 +246,12 @@ public class ObjectSingleChange extends MemoryConfiguration {
     }
 
     public String parsePlaceholder(String text) {
-        text = CommonUtil.modifyString(text, "amount", String.valueOf(item.getAmount()),
+        text = CommonUtil.modifyString(player, text, "amount", String.valueOf(item.getAmount()),
                 "max-stack", String.valueOf(item.getMaxStackSize()),
                 "name", itemName,
                 "original-name", originalName);
         if (!MythicChanger.freeVersion) {
-            text = CommonUtil.modifyString(text, "raw-name", TextUtil.clear(itemName),
+            text = CommonUtil.modifyString(player, text, "raw-name", TextUtil.clear(itemName),
                     "raw-original-name", TextUtil.clear(originalName));
             Pattern pattern1 = Pattern.compile("\\{item_(.*?)}");
             Matcher matcher1 = pattern1.matcher(text);

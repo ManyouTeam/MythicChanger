@@ -36,10 +36,10 @@ public class EditLore extends AbstractChangesRule {
                     if (singleChange.getBoolean("edit-lore-bypass", false)) {
                         continue;
                     } else {
-                        itemLore.add(CommonUtil.modifyString(editLoreSection.getString(key), "original", ""));
+                        itemLore.add(CommonUtil.modifyString(singleChange.getPlayer(), editLoreSection.getString(key), "original", ""));
                     }
                 } else {
-                    itemLore.set(line - 1, CommonUtil.modifyString(editLoreSection.getString(key), "original", itemLore.get(line - 1)));
+                    itemLore.set(line - 1, CommonUtil.modifyString(singleChange.getPlayer(), editLoreSection.getString(key), "original", itemLore.get(line - 1)));
                 }
                 MythicChanger.methodUtil.setItemLore(meta, itemLore, singleChange.getPlayer());
                 return singleChange.setItemMeta(meta);

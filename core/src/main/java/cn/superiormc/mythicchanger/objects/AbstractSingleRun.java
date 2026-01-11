@@ -24,7 +24,7 @@ public abstract class AbstractSingleRun {
     }
 
     protected String replacePlaceholder(String content, Player player, ItemStack original, ItemStack item) {
-        content = CommonUtil.modifyString(content
+        content = CommonUtil.modifyString(player, content
                 ,"world", player.getWorld().getName()
                 ,"original-name", ItemUtil.getItemName(original)
                 ,"name", ItemUtil.getItemName(item)

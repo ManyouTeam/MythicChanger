@@ -1,6 +1,8 @@
 package cn.superiormc.mythicchanger.utils;
 
 import cn.superiormc.mythicchanger.MythicChanger;
+import cn.superiormc.mythicchanger.manager.LanguageManager;
+import cn.superiormc.ultimateshop.utils.TextUtil;
 import io.lumine.mythic.api.mobs.MythicMob;
 import io.lumine.mythic.bukkit.BukkitAdapter;
 import io.lumine.mythic.bukkit.MythicBukkit;
@@ -22,6 +24,8 @@ import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CommonUtil {
 
@@ -85,39 +89,52 @@ public class CommonUtil {
         }
     }
 
-    public static String modifyString(String text, String... args) {
+    public static String modifyString(Player player, String text, String... args) {
+        text = CommonUtil.parseLang(player, text);
         for (int i = 0 ; i < args.length ; i += 2) {
-            String var = "{" + args[i] + "}";
+            String var1 = "{" + args[i] + "}";
+            String var2 = "%" + args[i] + "%";
             if (args[i + 1] == null) {
-                text = text.replace(var, "");
-            }
-            else {
-                text = text.replace(var, args[i + 1]);
+                text = text.replace(var1, "").replace(var2, "");
+            } else {
+                text = text.replace(var1, args[i + 1]).replace(var2, args[i + 1]);
             }
         }
         return text;
     }
 
-    public static List<String> modifyList(List<String> config, String... args) {
+    public static List<String> modifyList(Player player, List<String> config, String... args) {
         List<String> resultList = new ArrayList<>();
         for (String s : config) {
+            s = CommonUtil.parseLang(player, s);
             for (int i = 0 ; i < args.length ; i += 2) {
                 String var = "{" + args[i] + "}";
                 if (args[i + 1] == null) {
                     s = s.replace(var, "");
-                }
-                else {
+                } else {
                     s = s.replace(var, args[i + 1]);
                 }
             }
             String[] tempVal1 = s.split(";;");
             if (tempVal1.length > 1) {
-                Collections.addAll(resultList, tempVal1);
+                for (String string : tempVal1) {
+                    resultList.add(TextUtil.withPAPI(string, player));
+                }
                 continue;
             }
-            resultList.add(s);
+            resultList.add(TextUtil.withPAPI(s, player));
         }
         return resultList;
+    }
+
+    public static String parseLang(Player player, String text) {
+        Pattern pattern8 = Pattern.compile("\\{lang:(.*?)}");
+        Matcher matcher8 = pattern8.matcher(text);
+        while (matcher8.find()) {
+            String placeholder = matcher8.group(1);
+            text = text.replace("{lang:" + placeholder + "}", LanguageManager.languageManager.getStringText(player, "override-lang." + placeholder));
+        }
+        return text;
     }
 
     public static boolean inPlayerInventory(Player player, int slot, int windowID) {

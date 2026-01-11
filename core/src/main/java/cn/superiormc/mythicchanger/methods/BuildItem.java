@@ -92,21 +92,21 @@ public class BuildItem {
         // Custom Name
         String displayNameKey = section.getString("name", section.getString("display"));
         if (displayNameKey != null) {
-            MythicChanger.methodUtil.setItemName(meta, CommonUtil.modifyString(displayNameKey, args), player);
+            MythicChanger.methodUtil.setItemName(meta, CommonUtil.modifyString(player, displayNameKey, args), player);
         }
 
         // Item Name
         if (CommonUtil.getMinorVersion(20, 5)) {
             String itemNameKey = section.getString("item-name");
             if (itemNameKey != null) {
-                MythicChanger.methodUtil.setItemItemName(meta, CommonUtil.modifyString(itemNameKey, args), player);
+                MythicChanger.methodUtil.setItemItemName(meta, CommonUtil.modifyString(player, itemNameKey, args), player);
             }
         }
 
         // Lore
         List<String> lores = section.getStringList("lore");
         if (!lores.isEmpty()) {
-            MythicChanger.methodUtil.setItemLore(meta, CommonUtil.modifyList(lores, args), player);
+            MythicChanger.methodUtil.setItemLore(meta, CommonUtil.modifyList(player, lores, args), player);
         }
 
 
