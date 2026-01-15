@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>cn.superiormc</groupId>
+        <groupId>cn.superiormc.mythicchanger</groupId>
         <artifactId>MythicChanger</artifactId>
         <version>3.0.7</version>
     </parent>
@@ -39,7 +39,7 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>cn.superiormc</groupId>
+            <groupId>cn.superiormc.mythicchanger</groupId>
             <artifactId>core</artifactId>
             <version>3.0.7</version>
             <optional>true</optional>

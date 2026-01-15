@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>cn.superiormc</groupId>
+        <groupId>cn.superiormc.mythicchanger</groupId>
         <artifactId>MythicChanger</artifactId>
         <version>3.0.7</version>
     </parent>
@@ -14,7 +14,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>cn.superiormc</groupId>
+            <groupId>cn.superiormc.mythicchanger</groupId>
             <artifactId>LegacyCodesCompatibility</artifactId>
             <version>1.0.0</version>
             <scope>system</scope>
@@ -45,27 +45,23 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>net.Indyuce</groupId>
-            <artifactId>MMOItems-API</artifactId>
-            <version>6.9.5-20231202.120258-16</version>
-            <scope>provided</scope>
+            <groupId>io.lumine</groupId>
+            <artifactId>MythicLib</artifactId>
+            <version>1.7.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/MythicLib-dist-1.7.1-20251205.145545-63.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>io.lumine</groupId>
-            <artifactId>MythicLib-dist</artifactId>
-            <version>1.6.2-SNAPSHOT</version>
-            <scope>provided</scope>
+            <groupId>net.Indyuce</groupId>
+            <artifactId>MMOItems-API</artifactId>
+            <version>6.10.1-SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/MMOItems-API-6.10.1-20251204.191337-43.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.github.LoneDev6</groupId>
             <artifactId>api-itemsadder</artifactId>
             <version>2.3.8</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.lumine.xikage</groupId>
-            <artifactId>MythicMobs</artifactId>
-            <version>4.11.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -107,7 +103,7 @@
         <dependency>
             <groupId>io.lumine</groupId>
             <artifactId>Mythic-Dist</artifactId>
-            <version>5.2.3</version>
+            <version>5.9.5</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>
@@ -205,11 +201,10 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>cn.superiormc</groupId>
-            <artifactId>UltimateShop</artifactId>
-            <version>3.9.4</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/UltimateShop-3.10.1.jar</systemPath>
+            <groupId>cn.superiormc.ultimateshop</groupId>
+            <artifactId>plugin</artifactId>
+            <version>4.2.3</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
     <build>

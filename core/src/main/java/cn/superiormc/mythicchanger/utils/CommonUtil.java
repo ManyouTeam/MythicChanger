@@ -6,7 +6,6 @@ import cn.superiormc.ultimateshop.utils.TextUtil;
 import io.lumine.mythic.api.mobs.MythicMob;
 import io.lumine.mythic.bukkit.BukkitAdapter;
 import io.lumine.mythic.bukkit.MythicBukkit;
-import io.lumine.xikage.mythicmobs.MythicMobs;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -75,17 +74,9 @@ public class CommonUtil {
     }
 
     public static void summonMythicMobs(Location location, String mobID, int level) {
-        try {
-            MythicMob mob = MythicBukkit.inst().getMobManager().getMythicMob(mobID).orElse(null);
-            if (mob != null) {
-                mob.spawn(BukkitAdapter.adapt(location), level);
-            }
-        }
-        catch (NoClassDefFoundError ep) {
-            io.lumine.xikage.mythicmobs.mobs.MythicMob mob = MythicMobs.inst().getMobManager().getMythicMob(mobID);
-            if (mob != null) {
-                mob.spawn(io.lumine.xikage.mythicmobs.adapters.bukkit.BukkitAdapter.adapt(location), level);
-            }
+        MythicMob mob = MythicBukkit.inst().getMobManager().getMythicMob(mobID).orElse(null);
+        if (mob != null) {
+            mob.spawn(BukkitAdapter.adapt(location), level);
         }
     }
 
