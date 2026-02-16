@@ -64,12 +64,16 @@ public class CommonUtil {
         }
     }
 
+    public static boolean getYearVersion(int year, int majorVersion, int minorVersion) {
+        return MythicChanger.yearVersion > year || (MythicChanger.yearVersion == year && MythicChanger.majorVersion >= majorVersion && MythicChanger.minorVersion >= minorVersion);
+    }
+
     public static boolean getMajorVersion(int version) {
-        return MythicChanger.majorVersion >= version;
+        return MythicChanger.yearVersion > 1 || MythicChanger.majorVersion >= version;
     }
 
     public static boolean getMinorVersion(int majorVersion, int minorVersion) {
-        return MythicChanger.majorVersion > majorVersion || (MythicChanger.majorVersion == majorVersion &&
+        return MythicChanger.yearVersion > 1 || MythicChanger.majorVersion > majorVersion || (MythicChanger.majorVersion == majorVersion &&
                 MythicChanger.minorVersion >= minorVersion);
     }
 

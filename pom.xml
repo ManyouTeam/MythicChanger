@@ -6,7 +6,7 @@
 
     <groupId>cn.superiormc.mythicchanger</groupId>
     <artifactId>MythicChanger</artifactId>
-    <version>3.0.7</version>
+    <version>3.0.8</version>
     <packaging>pom</packaging>
 
     <modules>

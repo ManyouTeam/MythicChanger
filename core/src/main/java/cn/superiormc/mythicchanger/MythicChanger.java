@@ -22,6 +22,8 @@ public class MythicChanger extends JavaPlugin {
 
     public static SpecialMethodUtil methodUtil;
 
+    public static int yearVersion;
+
     public static int majorVersion;
 
     public static int minorVersion;
@@ -33,6 +35,7 @@ public class MythicChanger extends JavaPlugin {
         instance = this;
         try {
             String[] versionParts = Bukkit.getBukkitVersion().split("-")[0].split("\\.");
+            yearVersion = versionParts.length > 0 ? Integer.parseInt(versionParts[0]) : 1;
             majorVersion = versionParts.length > 1 ? Integer.parseInt(versionParts[1]) : 0;
             minorVersion = versionParts.length > 2 ? Integer.parseInt(versionParts[2]) : 0;
         } catch (Throwable throwable) {
@@ -99,7 +102,7 @@ public class MythicChanger extends JavaPlugin {
         if (CommonUtil.getMinorVersion(16, 5) && !ChangesManager.changesManager.containsLog("UltimateShop")) {
             Bukkit.getPluginManager().registerEvents(new ServerLoadListener(), this);
         }
-        TextUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fYour Minecraft version is: 1." + majorVersion + "." + minorVersion + "!");
+        TextUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fYour Minecraft version is: " + yearVersion + "." + majorVersion + "." + minorVersion + "!");
         TextUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fPlugin is loaded. Author: PQguanfang.");
     }
 
