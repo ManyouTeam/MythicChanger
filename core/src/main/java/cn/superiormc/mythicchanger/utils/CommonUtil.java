@@ -2,7 +2,6 @@ package cn.superiormc.mythicchanger.utils;
 
 import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.manager.LanguageManager;
-import cn.superiormc.ultimateshop.utils.TextUtil;
 import io.lumine.mythic.api.mobs.MythicMob;
 import io.lumine.mythic.bukkit.BukkitAdapter;
 import io.lumine.mythic.bukkit.MythicBukkit;
