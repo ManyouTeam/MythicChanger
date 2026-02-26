@@ -1,6 +1,7 @@
 package cn.superiormc.mythicchanger.objects.conditions;
 
 import cn.superiormc.mythicchanger.manager.ErrorManager;
+import cn.superiormc.ultimateshop.utils.MathUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -21,15 +22,15 @@ public class ConditionPlaceholder extends AbstractCheckCondition {
         String value = singleCondition.getString("value", player, original, item);
         switch (singleCondition.getString("rule")) {
             case ">=":
-                return Double.parseDouble(placeholder) >= Double.parseDouble(value);
+                return MathUtil.doCalculate(placeholder).doubleValue() >= MathUtil.doCalculate(value).doubleValue();
             case ">":
-                return Double.parseDouble(placeholder) > Double.parseDouble(value);
+                return MathUtil.doCalculate(placeholder).doubleValue() > MathUtil.doCalculate(value).doubleValue();
             case "=":
-                return Double.parseDouble(placeholder) == Double.parseDouble(value);
+                return MathUtil.doCalculate(placeholder).doubleValue() == MathUtil.doCalculate(value).doubleValue();
             case "<":
-                return Double.parseDouble(placeholder) < Double.parseDouble(value);
+                return MathUtil.doCalculate(placeholder).doubleValue() < MathUtil.doCalculate(value).doubleValue();
             case "<=":
-                return Double.parseDouble(placeholder) <= Double.parseDouble(value);
+                return MathUtil.doCalculate(placeholder).doubleValue() <= MathUtil.doCalculate(value).doubleValue();
             case "==":
                 return placeholder.equals(value);
             case "!=":

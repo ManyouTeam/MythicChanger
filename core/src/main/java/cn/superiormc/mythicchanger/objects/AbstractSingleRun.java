@@ -2,10 +2,7 @@ package cn.superiormc.mythicchanger.objects;
 
 import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.methods.DebuildItem;
-import cn.superiormc.mythicchanger.utils.CommonUtil;
-import cn.superiormc.mythicchanger.utils.ItemUtil;
-import cn.superiormc.mythicchanger.utils.NBTUtil;
-import cn.superiormc.mythicchanger.utils.TextUtil;
+import cn.superiormc.mythicchanger.utils.*;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemoryConfiguration;
 import org.bukkit.entity.Player;
@@ -95,11 +92,11 @@ public abstract class AbstractSingleRun {
     }
 
     public double getDouble(String path) {
-        return section.getDouble(path);
+        return MathUtil.doCalculate(section.getString(path)).doubleValue();
     }
 
     public double getDouble(String path, Player player, ItemStack original, ItemStack item) {
-        return Double.parseDouble(replacePlaceholder(section.getString(path), player, original, item));
+        return MathUtil.doCalculate(replacePlaceholder(section.getString(path), player, original, item)).doubleValue();
     }
 
     public boolean getBoolean(String path, boolean defaultValue) {

@@ -1,5 +1,6 @@
 package cn.superiormc.mythicchanger.objects.matchitem;
 
+import cn.superiormc.mythicchanger.utils.MathUtil;
 import de.tr7zw.nbtapi.NBTCompound;
 import de.tr7zw.nbtapi.NBTItem;
 import de.tr7zw.nbtapi.NBTType;
@@ -51,15 +52,15 @@ public class NBTDouble extends AbstractMatchItemRule {
     private boolean getResult(String lastElement, String last2Element, String last3Element, NBTCompound nbtCompound) {
         switch (last2Element) {
             case ">=":
-                return nbtCompound.getDouble(last3Element) >= Double.parseDouble(lastElement);
+                return nbtCompound.getDouble(last3Element) >= MathUtil.doCalculate(lastElement).doubleValue();
             case ">":
-                return nbtCompound.getDouble(last3Element) > Double.parseDouble(lastElement);
+                return nbtCompound.getDouble(last3Element) > MathUtil.doCalculate(lastElement).doubleValue();
             case "<=":
-                return nbtCompound.getDouble(last3Element) <= Double.parseDouble(lastElement);
+                return nbtCompound.getDouble(last3Element) <= MathUtil.doCalculate(lastElement).doubleValue();
             case "<":
-                return nbtCompound.getDouble(last3Element) < Double.parseDouble(lastElement);
+                return nbtCompound.getDouble(last3Element) < MathUtil.doCalculate(lastElement).doubleValue();
             case "==":
-                return nbtCompound.getDouble(last3Element) == Double.parseDouble(lastElement);
+                return nbtCompound.getDouble(last3Element) == MathUtil.doCalculate(lastElement).doubleValue();
         }
         return false;
     }
