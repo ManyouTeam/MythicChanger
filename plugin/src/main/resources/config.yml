@@ -122,6 +122,7 @@ change-rule-weight:
 change-gui:
   title: '{lang:change_gui.title}'
   size: 27
+  ignore-click-outside: false
   item-slot: 11
   book-slot: 15
   confirm-slot: 22

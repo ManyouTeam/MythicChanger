@@ -1,10 +1,12 @@
 package cn.superiormc.mythicchanger.listeners;
 
 import cn.superiormc.mythicchanger.gui.InvGUI;
+import cn.superiormc.mythicchanger.manager.ConfigManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
@@ -28,9 +30,13 @@ public class GUIListener implements Listener {
         try {
             if (e.getWhoClicked().equals(player)) {
                 if (!Objects.equals(e.getClickedInventory(), gui.getInv())) {
-                    if (e.getClick().isShiftClick()) {
+                    if (e.getClick().isShiftClick() || e.getClick() == ClickType.DOUBLE_CLICK || ConfigManager.configManager.getBoolean("change-gui.ignore-click-outside", true)) {
                         e.setCancelled(true);
                     }
+                    return;
+                }
+                if (e.getClick() == ClickType.DOUBLE_CLICK) {
+                    e.setCancelled(true);
                     return;
                 }
                 if (gui.clickEventHandle(e.getClickedInventory(), e.getCursor(), e.getSlot())) {

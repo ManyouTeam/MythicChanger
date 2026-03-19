@@ -6,7 +6,7 @@
     <parent>
         <groupId>cn.superiormc.mythicchanger</groupId>
         <artifactId>MythicChanger</artifactId>
-        <version>3.0.11</version>
+        <version>3.1.0</version>
     </parent>
 
     <packaging>jar</packaging>
@@ -41,7 +41,7 @@
         <dependency>
             <groupId>cn.superiormc.mythicchanger</groupId>
             <artifactId>core</artifactId>
-            <version>3.0.11</version>
+            <version>3.1.0</version>
             <optional>true</optional>
         </dependency>
     </dependencies>

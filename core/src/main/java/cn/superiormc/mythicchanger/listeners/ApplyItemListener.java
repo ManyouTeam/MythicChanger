@@ -18,7 +18,7 @@ import org.bukkit.persistence.PersistentDataType;
 public class ApplyItemListener implements Listener {
 
     @EventHandler
-    public void onItemClick(InventoryClickEvent event) {
+    public void onApplyItemUse(InventoryClickEvent event) {
         if (!(event.getClickedInventory() instanceof PlayerInventory)) {
             return;
         }
@@ -54,6 +54,7 @@ public class ApplyItemListener implements Listener {
                 LanguageManager.languageManager.sendStringText(player, "error.item-only-one");
                 return;
             }
+            event.setCancelled(true);
             if (applyItem.matchItem(player, usedItemStack, "DRAG")) {
                 ObjectSingleRule rule = applyItem.getRule();
                 ItemMeta tempVal3 = usedItemStack.getItemMeta();
