@@ -7,7 +7,7 @@
     <parent>
         <groupId>cn.superiormc.mythicchanger</groupId>
         <artifactId>MythicChanger</artifactId>
-        <version>3.1.0</version>
+        <version>${revision}</version>
     </parent>
 
     <artifactId>core</artifactId>

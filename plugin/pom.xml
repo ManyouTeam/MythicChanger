@@ -8,18 +8,22 @@
     <parent>
         <groupId>cn.superiormc.mythicchanger</groupId>
         <artifactId>MythicChanger</artifactId>
-        <version>3.1.0</version>
+        <version>${revision}</version>
         <relativePath>../pom.xml</relativePath> <!-- 如果 plugin 和根目录同级 -->
     </parent>
 
     <build>
-        <finalName>${project.name}-${project.version}</finalName>
+        <finalName>${name}-${revision}</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
     </build>
 
     <artifactId>plugin</artifactId>
-    <version>3.1.0</version>
     <packaging>jar</packaging>
-    <name>MythicChanger</name>
 
     <dependencies>
         <!-- Core module -->

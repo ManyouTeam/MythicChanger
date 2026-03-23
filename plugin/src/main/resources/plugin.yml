@@ -1,5 +1,5 @@
 name: MythicChanger
-version: '${project.version}'
+version: '${revision}'
 main: cn.superiormc.mythicchanger.MythicChanger
 api-version: '1.14'
 folia-supported: true
