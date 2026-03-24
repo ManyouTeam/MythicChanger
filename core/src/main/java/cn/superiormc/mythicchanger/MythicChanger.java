@@ -28,8 +28,6 @@ public class MythicChanger extends JavaPlugin {
 
     public static int minorVersion;
 
-    public static boolean newSkullMethod;
-
     @Override
     public void onEnable() {
         instance = this;
@@ -94,10 +92,6 @@ public class MythicChanger extends JavaPlugin {
         if (!ConfigManager.configManager.getString("apply-item-mode", "").equalsIgnoreCase("GUI") ||
         ConfigManager.configManager.getBoolean("apply-item-mode.drag-enabled", true)) {
             Bukkit.getPluginManager().registerEvents(new ApplyItemListener(), this);
-        }
-        if (!CommonUtil.checkClass("com.mojang.authlib.properties.Property", "getValue") && CommonUtil.getMinorVersion(21, 1)) {
-            newSkullMethod = true;
-            TextUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fNew AuthLib found, enabled new skull get method!");
         }
         if (CommonUtil.getMinorVersion(16, 5) && !ChangesManager.changesManager.containsLog("UltimateShop")) {
             Bukkit.getPluginManager().registerEvents(new ServerLoadListener(), this);
