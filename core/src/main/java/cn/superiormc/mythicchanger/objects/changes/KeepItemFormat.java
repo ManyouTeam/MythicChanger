@@ -15,12 +15,12 @@ public class KeepItemFormat extends AbstractChangesRule {
 
     @Override
     public ItemStack setChange(ObjectSingleChange singleChange) {
-        if (singleChange.getBoolean("keep-item-format.replace-item", false)) {
-            singleChange.setNeedRewriteItem();
-        }
         ConfigurationSection debuildSection = singleChange.getDebuildItemFormat();
         ConfigurationSection keepSection = new MemoryConfiguration();
         for (String key : singleChange.getStringList("keep-item-format")) {
+            if (key.startsWith("nbt")) {
+                singleChange.setNeedRewriteItem();
+            }
             if (debuildSection.contains(key)) {
                 keepSection.set(key, debuildSection.get(key));
             }

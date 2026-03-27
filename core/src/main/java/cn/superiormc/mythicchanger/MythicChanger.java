@@ -96,7 +96,7 @@ public class MythicChanger extends JavaPlugin {
         if (CommonUtil.getMinorVersion(16, 5) && !ChangesManager.changesManager.containsLog("UltimateShop")) {
             Bukkit.getPluginManager().registerEvents(new ServerLoadListener(), this);
         }
-        TextUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fYour Minecraft version is: " + yearVersion + "." + majorVersion + "." + minorVersion + "!");
+        TextUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fYour server version is: " + yearVersion + "." + majorVersion + "." + minorVersion + "!");
         TextUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fPlugin is loaded. Author: PQguanfang.");
     }
 

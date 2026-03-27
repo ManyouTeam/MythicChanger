@@ -26,10 +26,9 @@ public class WindowClick implements Listener {
         if (event.isCancelled()) {
             return;
         }
-        if (!(event.getWhoClicked() instanceof Player)) {
+        if (!(event.getWhoClicked() instanceof Player player)) {
             return;
         }
-        Player player = (Player) event.getWhoClicked();
         if (event.getClickedInventory() == null) {
             return;
         }

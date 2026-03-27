@@ -141,13 +141,13 @@ public class CommonUtil {
     }
 
     public static ItemStack getItemFromSlot(Player player, int slot) {
-        if (slot == 36) {
+        if (slot == 39) {
             return player.getInventory().getItem(EquipmentSlot.HEAD);
-        } else if (slot == 37) {
-            return player.getInventory().getItem(EquipmentSlot.CHEST);
         } else if (slot == 38) {
+            return player.getInventory().getItem(EquipmentSlot.CHEST);
+        } else if (slot == 37) {
             return player.getInventory().getItem(EquipmentSlot.LEGS);
-        } else if (slot == 39) {
+        } else if (slot == 36) {
             return player.getInventory().getItem(EquipmentSlot.FEET);
         } else if (slot == 40) {
             return player.getInventory().getItem(EquipmentSlot.OFF_HAND);
