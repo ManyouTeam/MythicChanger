@@ -4,7 +4,6 @@ import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
 import cn.superiormc.mythicchanger.utils.ItemUtil;
 import cn.superiormc.mythicchanger.utils.TextUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -12,7 +11,9 @@ import org.json.JSONTokener;
 
 import java.io.*;
 import java.net.HttpURLConnection;
+import java.net.SocketTimeoutException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,22 +51,22 @@ public class LocateManager {
             return;
         }
         TextUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fDownloading Minecraft locate file, this will cost some time...");
-        String MINECRAFT_VERSION = MythicChanger.yearVersion + "." + MythicChanger.majorVersion + "." + MythicChanger.minorVersion;
-        if (MINECRAFT_VERSION.endsWith(".0")) {
-            MINECRAFT_VERSION = MINECRAFT_VERSION.substring(0, MINECRAFT_VERSION.length() -2);
+        String minecraftVersion = MythicChanger.yearVersion + "." + MythicChanger.majorVersion + "." + MythicChanger.minorVersion;
+        if (minecraftVersion.endsWith(".0")) {
+            minecraftVersion = minecraftVersion.substring(0, minecraftVersion.length() - 2);
         }
         if (languageFileName == null) {
             return;
         }
         try {
-            String VERSION_MANIFEST_URL = "https://launchermeta.mojang.com/mc/game/version_manifest.json";
-            JSONObject versionManifest = CommonUtil.fetchJson(VERSION_MANIFEST_URL);
+            String versionManifestUrl = "https://launchermeta.mojang.com/mc/game/version_manifest.json";
+            JSONObject versionManifest = CommonUtil.fetchJson(versionManifestUrl);
 
             JSONArray versions = versionManifest.getJSONArray("versions");
             JSONObject targetVersion = null;
             for (int i = 0; i < versions.length(); i++) {
                 JSONObject version = versions.getJSONObject(i);
-                if (version.getString("id").equals(MINECRAFT_VERSION)) {
+                if (version.getString("id").equals(minecraftVersion)) {
                     targetVersion = version;
                     break;
                 }
@@ -89,53 +90,64 @@ public class LocateManager {
             }
 
             String languageFileHash = objects.getJSONObject("minecraft/lang/" + languageFileName).getString("hash");
-
             String downloadUrl = "https://resources.download.minecraft.net/"
                     + languageFileHash.substring(0, 2) + "/" + languageFileHash;
 
             URL url = new URL(downloadUrl);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
+            connection.setConnectTimeout(10000);
+            connection.setReadTimeout(15000);
+            connection.setRequestProperty("Accept-Charset", StandardCharsets.UTF_8.name());
+            connection.setRequestProperty("User-Agent", "UltimateShop Locate Downloader");
 
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                 FileOutputStream fos = new FileOutputStream(new File(MythicChanger.instance.getDataFolder(), languageFileName))) {
-
-                String inputLine;
-                while ((inputLine = reader.readLine()) != null) {
-                    fos.write(inputLine.getBytes());
-                }
+            int responseCode = connection.getResponseCode();
+            if (responseCode < 200 || responseCode >= 300) {
+                connection.disconnect();
+                throw new IOException("HTTP " + responseCode);
             }
+
+            try (var inputStream = connection.getInputStream();
+                 FileOutputStream fos = new FileOutputStream(new File(MythicChanger.instance.getDataFolder(), languageFileName))) {
+                byte[] buffer = new byte[8192];
+                int length;
+                while ((length = inputStream.read(buffer)) != -1) {
+                    fos.write(buffer, 0, length);
+                }
+            } finally {
+                connection.disconnect();
+            }
+        } catch (SocketTimeoutException e) {
+            ErrorManager.errorManager.sendErrorMessage("§cError: Failed to download Minecraft locate file. Reason: Connection timed out!");
         } catch (Throwable throwable) {
-            ErrorManager.errorManager.sendErrorMessage("§x§9§8§F§B§9§8[UltimateShop] §cError: Failed to download Minecraft locate file. Reason: Internet problem!");
+            ErrorManager.errorManager.sendErrorMessage("§cError: Failed to download Minecraft locate file. Reason: Internet problem!");
             throwable.fillInStackTrace();
         }
     }
 
     public void loadLocateFile() {
-
         try {
             FileInputStream fis = new FileInputStream(new File(MythicChanger.instance.getDataFolder(), languageFileName));
             this.fileContent = new JSONObject(new JSONTokener(fis));
             fis.close();
+            this.enabled = true;
         } catch (FileNotFoundException e) {
+            this.enabled = false;
             ErrorManager.errorManager.sendErrorMessage("§cError: Failed to load Minecraft locate file. Reason: Can not find locate file: " + languageFileName + "!");
         } catch (Throwable throwable) {
+            this.enabled = false;
             ErrorManager.errorManager.sendErrorMessage("§cError: Failed to load Minecraft locate file. Reason: " + throwable.getMessage() + "!");
             throwable.fillInStackTrace();
         }
-
     }
 
     public String getLocateName(ItemStack item) {
-        if (!enabled) {
+        if (!enabled || fileContent == null) {
             return ItemUtil.getItemNameWithoutVanilla(item);
         }
-        
-        if (!locateMap.containsKey(item.getTranslationKey())) {
-            // 根据用户输入的路径查找值
-            Object value = getValueFromJson(fileContent, item.getTranslationKey());
 
-            // 输出结果
+        if (!locateMap.containsKey(item.getTranslationKey())) {
+            Object value = getValueFromJson(fileContent, item.getTranslationKey());
             if (value != null) {
                 locateMap.put(item.getTranslationKey(), String.valueOf(value));
             } else {
@@ -166,3 +178,4 @@ public class LocateManager {
         return CommonUtil.getMajorVersion(16) && !MythicChanger.freeVersion && ConfigManager.configManager.getBoolean("config-files.minecraft-locate-file.enabled");
     }
 }
+

@@ -1,8 +1,7 @@
 package cn.superiormc.mythicchanger.objects.conditions;
 
 import cn.superiormc.mythicchanger.manager.ErrorManager;
-import cn.superiormc.ultimateshop.utils.MathUtil;
-import org.bukkit.Bukkit;
+import cn.superiormc.mythicchanger.utils.MathUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
