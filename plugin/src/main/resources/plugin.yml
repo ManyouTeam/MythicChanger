@@ -7,16 +7,20 @@ author: PQguanfang
 depend:
   - packetevents
 softdepend:
+  # Item
+  - MMOItems
+  - ItemsAdder
+  - Oraxen
+  - Nexo
   - EcoItems
   - EcoArmor
   - MythicMobs
-  - MMOItems
-  - NeigeItems
-  - ItemsAdder
-  - Oraxen
   - ExecutableItems
-  - NBTAPI
+  - CraftEngine
+  - NeigeItems
   - eco
+  # Others
+  - NBTAPI
   - QuickShop-Hikari
   - InteractiveChat
   - TrChat

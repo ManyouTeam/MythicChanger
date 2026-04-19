@@ -99,7 +99,7 @@ public class LocateManager {
             connection.setConnectTimeout(10000);
             connection.setReadTimeout(15000);
             connection.setRequestProperty("Accept-Charset", StandardCharsets.UTF_8.name());
-            connection.setRequestProperty("User-Agent", "UltimateShop Locate Downloader");
+            connection.setRequestProperty("User-Agent", "MythicChanger Locate Downloader");
 
             int responseCode = connection.getResponseCode();
             if (responseCode < 200 || responseCode >= 300) {

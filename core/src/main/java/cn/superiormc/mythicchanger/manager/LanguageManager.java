@@ -50,7 +50,7 @@ public class LanguageManager {
             langFolder.mkdirs();
         }
 
-        serverLanguage = cn.superiormc.ultimateshop.managers.ConfigManager.configManager.getString("config-files.language", "en-US");
+        serverLanguage = ConfigManager.configManager.getString("config-files.language", "en-US");
         tempMessageFile = loadInternalLanguage(serverLanguage);
         if (tempMessageFile == null) {
             tempMessageFile = new YamlConfiguration();
