@@ -21,7 +21,7 @@
     <properties>
         <java.version>16</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <revision>3.1.5</revision>
+        <revision>3.1.6</revision>
         <name>MythicChanger</name>
     </properties>
 
@@ -151,7 +151,7 @@
         </repository>
         <repository>
             <id>momirealms repo</id>
-            <url>https://repo.momirealms.net/releases/</url>
+            <url>https://repo.momirealms.net/snapshots/</url>
         </repository>
         <repository>
             <id>nexo-repo</id>
