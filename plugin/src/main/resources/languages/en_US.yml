@@ -50,6 +50,7 @@ rule-limit-reached: "&#98FB98[MythicChanger] &fThis item reached it's apply item
 do-not-apply: "&#98FB98[MythicChanger] &fThis apply item does not work on this item!"
 success-set-limit: "&#98FB98[MythicChanger] &fSuccessfully set this item apply limit to {limit}!"
 not-meet-condition: "&#98FB98[MythicChanger] &fYou can't use this item because you didn't meet the condition of the rule the item related to!"
+dupe-removed: "&#98FB98[UltimateShop] &fA illegal item from your inventory has been removed!"
 
 override-lang:
   change_gui:

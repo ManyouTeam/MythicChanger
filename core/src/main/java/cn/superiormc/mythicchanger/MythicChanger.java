@@ -1,14 +1,10 @@
 package cn.superiormc.mythicchanger;
 
-import cn.superiormc.mythicchanger.listeners.ApplyItemListener;
-import cn.superiormc.mythicchanger.listeners.PlayerCacheListener;
-import cn.superiormc.mythicchanger.listeners.ServerLoadListener;
 import cn.superiormc.mythicchanger.manager.*;
 import cn.superiormc.mythicchanger.protolcol.pacetevents.*;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
 import cn.superiormc.mythicchanger.utils.SpecialMethodUtil;
 import cn.superiormc.mythicchanger.utils.TextUtil;
-import com.github.retrooper.packetevents.PacketEvents;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -71,30 +67,13 @@ public class MythicChanger extends JavaPlugin {
         new ConfigManager();
         new HookManager();
         new LanguageManager();
-        if (ConfigManager.configManager.getBoolean("packet-listener", true)) {
-            PacketEvents.getAPI().getEventManager().registerListener(new SetSlots(), ConfigManager.configManager.getPriority());
-            PacketEvents.getAPI().getEventManager().registerListener(new WindowItem(), ConfigManager.configManager.getPriority());
-            PacketEvents.getAPI().getEventManager().registerListener(new WindowMerchant(), ConfigManager.configManager.getPriority());
-            if (CommonUtil.getMinorVersion(21, 5)) {
-                PacketEvents.getAPI().getEventManager().registerListener(new SetCursorItem(), ConfigManager.configManager.getPriority());
-                PacketEvents.getAPI().getEventManager().registerListener(new ContainerClick(), ConfigManager.configManager.getPriority());
-            }
-            new WindowClick();
-        }
+        new ListenerManager();
         new ItemManager();
         new ChangesManager();
         new MatchItemManager();
         new CommandManager();
         if (LocateManager.enableThis()) {
             new LocateManager();
-        }
-        Bukkit.getPluginManager().registerEvents(new PlayerCacheListener(), this);
-        if (!ConfigManager.configManager.getString("apply-item-mode", "").equalsIgnoreCase("GUI") ||
-        ConfigManager.configManager.getBoolean("apply-item-mode.drag-enabled", true)) {
-            Bukkit.getPluginManager().registerEvents(new ApplyItemListener(), this);
-        }
-        if (CommonUtil.getMinorVersion(16, 5) && !ChangesManager.changesManager.containsLog("UltimateShop")) {
-            Bukkit.getPluginManager().registerEvents(new ServerLoadListener(), this);
         }
         TextUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fYour server version is: " + yearVersion + "." + majorVersion + "." + minorVersion + "!");
         TextUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fPlugin is loaded. Author: PQguanfang.");

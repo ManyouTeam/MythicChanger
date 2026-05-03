@@ -1,5 +1,8 @@
 package cn.superiormc.mythicchanger.manager;
 
+import cn.gtemc.itembridge.api.ItemBridge;
+import cn.gtemc.itembridge.api.util.Pair;
+import cn.gtemc.itembridge.core.BukkitItemBridge;
 import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.hooks.MMOItemsHook;
 import cn.superiormc.mythicchanger.hooks.items.*;
@@ -16,6 +19,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class HookManager {
 
@@ -23,10 +27,19 @@ public class HookManager {
 
     private Map<String, AbstractItemHook> itemHooks;
 
+    private ItemBridge<ItemStack, Player> itemBridgeHook = null;
+
     public HookManager() {
         hookManager = this;
         initNormalHook();
-        initItemHook();
+        if (ConfigManager.configManager.getString("hook-item-method").equalsIgnoreCase("DEFAULT")) {
+            initItemHook();
+        } else {
+            itemBridgeHook = BukkitItemBridge.builder()
+                    .onHookSuccess(p -> cn.superiormc.ultimateshop.utils.TextUtil.sendMessage(null, cn.superiormc.ultimateshop.utils.TextUtil.pluginPrefix() + " §fUSItemBridge successfully hook into " + p + "."))
+                    .detectSupportedPlugins()
+                    .build();
+        }
     }
 
     private void initNormalHook() {
@@ -48,7 +61,6 @@ public class HookManager {
         if (CommonUtil.checkPluginLoad("MMOItems")) {
             try {
                 MMOItemsHook.generateNewCache();
-                new ListenerManager();
             } catch (Throwable throwable) {
                 ErrorManager.errorManager.sendErrorMessage("§cError: Failed to register MMOItems hook, consider update " +
                         "your MMOItems to latest dev version!");
@@ -105,6 +117,12 @@ public class HookManager {
         if (!hookItem.hasItemMeta()) {
             return hookItem.getType().name().toLowerCase();
         }
+        if (itemBridgeHook != null) {
+            Pair<String, String> tempVal1 = itemBridgeHook.getFirstId(hookItem);
+            if (tempVal1 != null) {
+                return tempVal1.right;
+            }
+        }
         for (AbstractItemHook itemHook : itemHooks.values()) {
             String tempVal1 = itemHook.getSimplyIDByItemStack(hookItem, useTier);
             if (tempVal1 != null) {
@@ -114,21 +132,13 @@ public class HookManager {
         return hookItem.getType().name().toLowerCase();
     }
 
-    public String getHookItemID(String pluginName, ItemStack hookItem) {
-        if (!hookItem.hasItemMeta()) {
-            return null;
-        }
-        if (!itemHooks.containsKey(pluginName)) {
-            ErrorManager.errorManager.sendErrorMessage("§cError: Can not hook into "
-                    + pluginName + " plugin, maybe we do not support this plugin, or your server didn't correctly load " +
-                    "this plugin!");
-            return null;
-        }
-        AbstractItemHook itemHook = itemHooks.get(pluginName);
-        return itemHook.getIDByItemStack(hookItem);
-    }
-
     public String[] getHookItemPluginAndID(ItemStack hookItem) {
+        if (itemBridgeHook != null) {
+            Pair<String, String> tempVal1 = itemBridgeHook.getFirstId(hookItem);
+            if (tempVal1 != null) {
+                return new String[]{tempVal1.left, tempVal1.right};
+            }
+        }
         for (AbstractItemHook itemHook : itemHooks.values()) {
             String itemID = itemHook.getIDByItemStack(hookItem);
             if (itemID != null) {
@@ -139,6 +149,12 @@ public class HookManager {
     }
 
     public ItemStack getHookItem(Player player, String pluginName, String itemID) {
+        if (itemBridgeHook != null) {
+            Optional<ItemStack> tempVal1 = itemBridgeHook.build(pluginName, player, itemID);
+            if (tempVal1.isPresent()) {
+                return tempVal1.get();
+            }
+        }
         if (!itemHooks.containsKey(pluginName)) {
             ErrorManager.errorManager.sendErrorMessage("§cError: Can not hook into "
                     + pluginName + " plugin, maybe we do not support this plugin, or your server didn't correctly load " +

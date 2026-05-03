@@ -2,6 +2,7 @@ package cn.superiormc.mythicchanger.listeners;
 
 import cn.superiormc.mythicchanger.gui.InvGUI;
 import cn.superiormc.mythicchanger.manager.ConfigManager;
+import cn.superiormc.mythicchanger.utils.SchedulerUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
@@ -64,8 +65,10 @@ public class GUIListener implements Listener {
     @EventHandler
     public void onClose(InventoryCloseEvent e) {
         if (e.getPlayer().equals(player)) {
-            HandlerList.unregisterAll(this);
-            player.updateInventory();
+            SchedulerUtil.runSync(player, () -> {
+                HandlerList.unregisterAll(this);
+                player.updateInventory();
+            });
             gui.closeEventHandle(e.getInventory());
         }
     }
