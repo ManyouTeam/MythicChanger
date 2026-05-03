@@ -2,6 +2,7 @@ package cn.superiormc.mythicchanger.gui;
 
 import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.listeners.GUIListener;
+import cn.superiormc.mythicchanger.methods.Dupe;
 import cn.superiormc.mythicchanger.utils.SchedulerUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
@@ -40,6 +41,10 @@ public abstract class InvGUI extends AbstractGUI {
                 player.openInventory(inv);
             });
         }
+    }
+
+    public void setItem(int slot, ItemStack item) {
+        inv.setItem(slot, Dupe.markGuiDisplayItem(item));
     }
 
     public Inventory getInv() {

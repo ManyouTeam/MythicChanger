@@ -57,7 +57,7 @@ public class ChangeGUI extends InvGUI {
             String title = ConfigManager.configManager.getString(optionKey + "title", "", "mode", customMode);
             inv = MythicChanger.methodUtil.createNewInv(player, ConfigManager.configManager.getInt(optionKey + "size", 54), title);
         }
-        inv.setItem(ConfigManager.configManager.getInt(optionKey + "confirm-slot", 2), BuildItem.buildItemStack(player,
+        setItem(ConfigManager.configManager.getInt(optionKey + "confirm-slot", 2), BuildItem.buildItemStack(player,
                 ConfigManager.configManager.getSection(optionKey + "confirm-item")));
         ConfigurationSection customItemSection = ConfigManager.configManager.getSection(optionKey + "custom-item");
         if (customItemSection != null) {
@@ -68,7 +68,7 @@ public class ChangeGUI extends InvGUI {
                 }
                 itemSection.addDefault("name", null);
                 itemSection.addDefault("lore", null);
-                inv.setItem(Integer.parseInt(key), BuildItem.buildItemStack(player, itemSection));
+                setItem(Integer.parseInt(key), BuildItem.buildItemStack(player, itemSection));
             }
         }
     }
