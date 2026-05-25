@@ -12,7 +12,7 @@ public class Dupe {
     private static final NamespacedKey antiDupe = new NamespacedKey(MythicChanger.instance, "anti_dupe");
 
     public static ItemStack markGuiDisplayItem(ItemStack item) {
-        if (!ConfigManager.configManager.getBoolean("change-gui.anti-dupe-fixes", false)) {
+        if (!ConfigManager.configManager.getBoolean("change-gui.anti-dupe-checker", false)) {
             return item;
         }
         if (item == null || item.getType().isAir()) {

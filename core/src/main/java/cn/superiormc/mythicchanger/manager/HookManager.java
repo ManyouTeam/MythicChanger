@@ -32,9 +32,8 @@ public class HookManager {
     public HookManager() {
         hookManager = this;
         initNormalHook();
-        if (ConfigManager.configManager.getString("hook-item-method").equalsIgnoreCase("DEFAULT")) {
-            initItemHook();
-        } else {
+        initItemHook();
+        if (ConfigManager.configManager.getString("hook-item-method").equalsIgnoreCase("ITEMBRIDGE")) {
             itemBridgeHook = BukkitItemBridge.builder()
                     .onHookSuccess(p -> cn.superiormc.ultimateshop.utils.TextUtil.sendMessage(null, cn.superiormc.ultimateshop.utils.TextUtil.pluginPrefix() + " §fUSItemBridge successfully hook into " + p + "."))
                     .detectSupportedPlugins()

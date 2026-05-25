@@ -67,10 +67,10 @@ public class MythicChanger extends JavaPlugin {
         new ConfigManager();
         new HookManager();
         new LanguageManager();
-        new ListenerManager();
         new ItemManager();
         new ChangesManager();
         new MatchItemManager();
+        new ListenerManager();
         new CommandManager();
         if (LocateManager.enableThis()) {
             new LocateManager();

@@ -41,10 +41,10 @@ public class InitManager {
         return firstLoad;
     }
 
-    private void resourceOutput(String fileName, boolean fix) {
+    private void resourceOutput(String fileName, boolean regenerate) {
         File tempVal1 = new File(MythicChanger.instance.getDataFolder(), fileName);
         if (!tempVal1.exists()) {
-            if (!firstLoad && !fix) {
+            if (!firstLoad && !regenerate) {
                 return;
             }
             File tempVal2 = new File(fileName);
