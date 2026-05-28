@@ -23,11 +23,6 @@ public class EditItem extends AbstractChangesRule {
     }
 
     @Override
-    public int getWeight() {
-        return ConfigManager.configManager.getRuleWeight("edit-item", 1);
-    }
-
-    @Override
     public boolean configNotContains(ConfigurationSection section) {
         return section.getConfigurationSection("edit-item") == null;
     }

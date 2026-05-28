@@ -36,11 +36,6 @@ public class AddLoreLast extends AbstractChangesRule {
     }
 
     @Override
-    public int getWeight() {
-        return ConfigManager.configManager.getRuleWeight("add-lore-last", 12);
-    }
-
-    @Override
     public boolean configNotContains(ConfigurationSection section) {
         return section.getStringList("add-lore-last").isEmpty();
     }

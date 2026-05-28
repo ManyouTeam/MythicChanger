@@ -48,11 +48,6 @@ public class MIUpdateLore extends AbstractChangesRule {
     }
 
     @Override
-    public int getWeight() {
-        return ConfigManager.configManager.getRuleWeight("mi-update-lore", 115);
-    }
-
-    @Override
     public boolean configNotContains(ConfigurationSection section) {
         return !section.contains("mi-update-lore");
     }

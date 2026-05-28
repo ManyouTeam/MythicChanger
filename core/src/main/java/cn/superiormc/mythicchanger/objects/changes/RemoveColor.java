@@ -1,38 +1,33 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
-import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.objects.ObjectSingleChange;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
 
-import java.util.List;
+public class RemoveColor extends AbstractChangesRule {
 
-public class ParsePAPILore extends AbstractChangesRule {
-
-    public ParsePAPILore() {
+    public RemoveColor() {
         super();
     }
 
     @Override
     public ItemStack setChange(ObjectSingleChange singleChange) {
-        if (!singleChange.getBoolean("parse-papi-lore")) {
+        if (!singleChange.getBoolean("remove-color")) {
             return singleChange.getItem();
         }
         ItemMeta meta = singleChange.getItemMeta();
-        if (!meta.hasLore()) {
-            return singleChange.getItem();
+        if (meta instanceof LeatherArmorMeta armorMeta) {
+            armorMeta.setColor(null);
+            return singleChange.setItemMeta(armorMeta);
         }
-        List<String> lore = MythicChanger.methodUtil.getItemLore(meta);
-        MythicChanger.methodUtil.setItemLore(meta,
-                lore,
-                singleChange.getPlayer());
-        return singleChange.setItemMeta(meta);
+        return singleChange.getItem();
     }
 
     @Override
     public boolean configNotContains(ConfigurationSection section) {
-        return !section.contains("parse-papi-lore");
+        return !section.contains("remove-color");
     }
 }

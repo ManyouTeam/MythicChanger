@@ -35,11 +35,6 @@ public class AddFlags extends AbstractChangesRule {
     }
 
     @Override
-    public int getWeight() {
-        return ConfigManager.configManager.getRuleWeight("add-flags", 3);
-    }
-
-    @Override
     public boolean configNotContains(ConfigurationSection section) {
         return section.getStringList("add-flags").isEmpty();
     }

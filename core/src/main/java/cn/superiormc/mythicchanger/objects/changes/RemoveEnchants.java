@@ -28,11 +28,6 @@ public class RemoveEnchants extends AbstractChangesRule {
     }
 
     @Override
-    public int getWeight() {
-        return ConfigManager.configManager.getRuleWeight("remove-enchants", -197);
-    }
-
-    @Override
     public boolean configNotContains(ConfigurationSection section) {
         return section.getStringList("remove-enchants").isEmpty();
     }

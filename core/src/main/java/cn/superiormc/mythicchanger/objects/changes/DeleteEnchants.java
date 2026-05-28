@@ -42,11 +42,6 @@ public class DeleteEnchants extends AbstractChangesRule {
     }
 
     @Override
-    public int getWeight() {
-        return -199;
-    }
-
-    @Override
     public boolean configNotContains(ConfigurationSection section) {
         return section.getConfigurationSection("delete-enchants") == null;
     }

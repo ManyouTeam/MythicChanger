@@ -4,6 +4,7 @@ import cn.superiormc.mythicchanger.manager.ChangesManager;
 import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.manager.MatchItemManager;
 import cn.superiormc.mythicchanger.objects.ObjectAction;
+import cn.superiormc.mythicchanger.objects.ObjectCondition;
 import cn.superiormc.mythicchanger.objects.ObjectSingleChange;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
@@ -29,6 +30,10 @@ public class SubChange extends AbstractChangesRule {
             if (!MatchItemManager.matchItemManager.getMatch(subSection.getConfigurationSection("match-item"), singleChange.getPlayer(), singleChange.getItem())) {
                 continue;
             }
+            ObjectCondition condition = new ObjectCondition(subSection.getConfigurationSection("conditions"));
+            if (!condition.getAllBoolean(singleChange.getPlayer(), singleChange.getOriginal(), singleChange.getItem())) {
+                continue;
+            }
             ObjectSingleChange newSingleChange = new ObjectSingleChange(subSection.getConfigurationSection("changes"), singleChange);
             if (singleChange.isFakeOrReal()) {
                 result = ChangesManager.changesManager.setFakeChange(newSingleChange);
@@ -43,11 +48,6 @@ public class SubChange extends AbstractChangesRule {
             return singleChange.getItem();
         }
         return result;
-    }
-
-    @Override
-    public int getWeight() {
-        return ConfigManager.configManager.getRuleWeight("sub-change", 1977);
     }
 
     @Override

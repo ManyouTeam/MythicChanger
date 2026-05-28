@@ -16,11 +16,6 @@ public class Empty extends AbstractChangesRule {
     }
 
     @Override
-    public int getWeight() {
-        return Integer.MAX_VALUE;
-    }
-
-    @Override
     public boolean configNotContains(ConfigurationSection section) {
         return !section.contains("empty");
     }

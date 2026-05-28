@@ -1,10 +1,18 @@
 apply-item-mode: GENERAL
+
+# Display Item
 display-item:
   material: BOOK
   name: '&fRollback book'
   lore:
     - '&7Drag this item onto the item you want to rollback its apply.'
+    - '&cOnly work for apply items that use fake changes only.'
+  max-stack: 1
+
+# Rule Configs
 real-changes:
   deapply: true
+
+# Match Item
 match-item:
   has-apply: true

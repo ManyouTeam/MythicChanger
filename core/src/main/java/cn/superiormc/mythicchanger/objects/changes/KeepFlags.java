@@ -29,11 +29,6 @@ public class KeepFlags extends AbstractChangesRule {
     }
 
     @Override
-    public int getWeight() {
-        return ConfigManager.configManager.getRuleWeight("keep-flags", -252);
-    }
-
-    @Override
     public boolean configNotContains(ConfigurationSection section) {
         return !section.contains("keep-flags");
     }

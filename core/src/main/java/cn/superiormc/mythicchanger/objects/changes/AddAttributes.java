@@ -113,11 +113,6 @@ public class AddAttributes extends AbstractChangesRule {
     }
 
     @Override
-    public int getWeight() {
-        return ConfigManager.configManager.getRuleWeight("add-attributes", 5);
-    }
-
-    @Override
     public boolean configNotContains(ConfigurationSection section) {
         return section.getConfigurationSection("add-attributes") == null;
     }

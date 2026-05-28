@@ -48,11 +48,6 @@ public class ReplaceLore extends AbstractChangesRule {
     }
 
     @Override
-    public int getWeight() {
-        return ConfigManager.configManager.getRuleWeight("replace-lore", 9);
-    }
-
-    @Override
     public boolean configNotContains(ConfigurationSection section) {
         return section.getConfigurationSection("replace-lore") == null;
     }

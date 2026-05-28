@@ -26,11 +26,6 @@ public class SetLore extends AbstractChangesRule {
     }
 
     @Override
-    public int getWeight() {
-        return ConfigManager.configManager.getRuleWeight("set-lore", 6);
-    }
-
-    @Override
     public boolean configNotContains(ConfigurationSection section) {
         return section.getStringList("set-lore").isEmpty();
     }

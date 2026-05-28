@@ -29,11 +29,6 @@ public class RemoveFlags extends AbstractChangesRule {
     }
 
     @Override
-    public int getWeight() {
-        return ConfigManager.configManager.getRuleWeight("remove-flags", -196);
-    }
-
-    @Override
     public boolean configNotContains(ConfigurationSection section) {
         return section.getStringList("remove-flags").isEmpty();
     }

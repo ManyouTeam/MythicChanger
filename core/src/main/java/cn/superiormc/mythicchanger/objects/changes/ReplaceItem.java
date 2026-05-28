@@ -25,11 +25,6 @@ public class ReplaceItem extends AbstractChangesRule {
     }
 
     @Override
-    public int getWeight() {
-        return ConfigManager.configManager.getRuleWeight("replace-item", 1000);
-    }
-
-    @Override
     public boolean configNotContains(ConfigurationSection section) {
         return section.getConfigurationSection("replace-item") == null;
     }

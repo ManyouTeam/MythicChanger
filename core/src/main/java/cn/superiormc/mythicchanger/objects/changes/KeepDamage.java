@@ -33,12 +33,6 @@ public class KeepDamage extends AbstractChangesRule {
         }
         return singleChange.getItem();
     }
-
-    @Override
-    public int getWeight() {
-        return ConfigManager.configManager.getRuleWeight("keep-damage", -250);
-    }
-
     @Override
     public boolean configNotContains(ConfigurationSection section) {
         return !section.contains("keep-damage");

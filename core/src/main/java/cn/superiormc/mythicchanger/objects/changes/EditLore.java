@@ -4,7 +4,6 @@ import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.objects.ObjectSingleChange;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
-import cn.superiormc.mythicchanger.utils.TextUtil;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -48,11 +47,6 @@ public class EditLore extends AbstractChangesRule {
         } catch (Throwable throwable) {
             return singleChange.getItem();
         }
-    }
-
-    @Override
-    public int getWeight() {
-        return ConfigManager.configManager.getRuleWeight("edit-lore", 14);
     }
 
     @Override

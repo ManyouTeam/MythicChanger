@@ -1,0 +1,67 @@
+# PREMIUM VERSION ONLY
+
+apply-item-mode: GENERAL
+
+# Display Item
+display-item:
+  material: PAPER
+  name: '&fItem Skin Rollback &8(Diamond Sword)'
+  lore:
+    - '&7Drag this item onto the item have skin to rollback.'
+  max-stack: 1
+
+# Rule Configs
+real-changes:
+  sub-change-match-one: true
+  sub-change:
+    1:
+      conditions:
+        1:
+          type: placeholder
+          placeholder: '{nbt_original_custom_model_data;;-1}'
+          rule: '<'
+          value: 0
+      changes:
+        remove-custom-model-data: true
+        remove-nbt:
+          - 'original_custom_model_data'
+      actions:
+        1:
+          type: message
+          message: 'Remove skin and clear its custom model data!'
+    2:
+      conditions:
+        1:
+          type: placeholder
+          placeholder: '{nbt_original_custom_model_data;;-1}'
+          rule: '>='
+          value: 0
+      changes:
+        set-custom-model-data: '{nbt_original_custom_model_data;;-1}'
+        remove-nbt:
+          - 'original_custom_model_data'
+      actions:
+        1:
+          type: message
+          message: 'Remove skin and rollback its custom model data!'
+
+# Match Item
+match-item:
+  item-format:
+    material: diamond_sword
+  item-format-settings:
+    require-same-key: false
+  contains-nbt:
+    - 'original_custom_model_data'
+  not-match-actions:
+    1:
+      type: message
+      message: 'This sword does not include valid skin!'
+#conditions:
+#  not-meet-actions:
+#      1:
+#        type: message
+#        message: 'You must use this apply item in test world!'
+#  1:
+#    type: world
+#    world: 'test'

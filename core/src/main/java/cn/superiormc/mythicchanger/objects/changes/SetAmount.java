@@ -18,11 +18,6 @@ public class SetAmount extends AbstractChangesRule {
     }
 
     @Override
-    public int getWeight() {
-        return ConfigManager.configManager.getRuleWeight("set-amount", 59);
-    }
-
-    @Override
     public boolean configNotContains(ConfigurationSection section) {
         return section.getString("set-amount") == null;
     }

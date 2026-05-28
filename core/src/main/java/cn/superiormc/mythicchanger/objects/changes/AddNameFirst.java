@@ -40,11 +40,6 @@ public class AddNameFirst extends AbstractChangesRule {
     }
 
     @Override
-    public int getWeight() {
-        return ConfigManager.configManager.getRuleWeight("add-name-first", 21);
-    }
-
-    @Override
     public boolean configNotContains(ConfigurationSection section) {
         return section.getString("add-name-first") == null;
     }

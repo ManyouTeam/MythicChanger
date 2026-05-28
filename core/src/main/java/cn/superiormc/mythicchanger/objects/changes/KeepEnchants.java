@@ -33,11 +33,6 @@ public class KeepEnchants extends AbstractChangesRule {
     }
 
     @Override
-    public int getWeight() {
-        return ConfigManager.configManager.getRuleWeight("keep-enchants", -251);
-    }
-
-    @Override
     public boolean configNotContains(ConfigurationSection section) {
         return !section.contains("keep-enchants");
     }

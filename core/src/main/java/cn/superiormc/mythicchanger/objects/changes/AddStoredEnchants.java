@@ -45,11 +45,6 @@ public class AddStoredEnchants extends AbstractChangesRule {
     }
 
     @Override
-    public int getWeight() {
-        return ConfigManager.configManager.getRuleWeight("add-stored-enchants", 2);
-    }
-
-    @Override
     public boolean configNotContains(ConfigurationSection section) {
         return section.getConfigurationSection("add-stored-enchants") == null;
     }

@@ -36,11 +36,6 @@ public class AddLoreSuffix extends AbstractChangesRule {
     }
 
     @Override
-    public int getWeight() {
-        return ConfigManager.configManager.getRuleWeight("add-lore-prefix", 14);
-    }
-
-    @Override
     public boolean configNotContains(ConfigurationSection section) {
         return section.getString("add-lore-suffix") == null;
     }

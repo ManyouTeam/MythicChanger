@@ -29,11 +29,6 @@ public class SetName extends AbstractChangesRule {
     }
 
     @Override
-    public int getWeight() {
-        return ConfigManager.configManager.getRuleWeight("set-name", 7);
-    }
-
-    @Override
     public boolean configNotContains(ConfigurationSection section) {
         return section.getString("set-name") == null;
     }

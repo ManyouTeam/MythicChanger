@@ -38,6 +38,7 @@ public class CommandManager {
             }
             registeredCommands.put("setlimit", new SubSetLimit());
         }
+        registeredCommands.put("viewapplyrules", new SubViewApplyRules());
         registeredCommands.put("help", new SubHelp());
         registeredCommands.put("reload", new SubReload());
         registeredCommands.put("saveitem", new SubSaveItem());

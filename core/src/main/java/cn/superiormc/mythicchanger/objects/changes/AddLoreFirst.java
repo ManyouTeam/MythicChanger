@@ -34,11 +34,6 @@ public class AddLoreFirst extends AbstractChangesRule {
     }
 
     @Override
-    public int getWeight() {
-        return ConfigManager.configManager.getRuleWeight("add-lore-first", 11);
-    }
-
-    @Override
     public boolean configNotContains(ConfigurationSection section) {
         return section.getStringList("add-lore-first").isEmpty();
     }

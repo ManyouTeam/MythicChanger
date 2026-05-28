@@ -27,11 +27,6 @@ public class KeepName extends AbstractChangesRule {
     }
 
     @Override
-    public int getWeight() {
-        return ConfigManager.configManager.getRuleWeight("keep-name", -255);
-    }
-
-    @Override
     public boolean configNotContains(ConfigurationSection section) {
         return !section.contains("keep-name");
     }

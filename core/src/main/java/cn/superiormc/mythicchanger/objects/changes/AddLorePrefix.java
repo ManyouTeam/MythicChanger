@@ -36,11 +36,6 @@ public class AddLorePrefix extends AbstractChangesRule {
     }
 
     @Override
-    public int getWeight() {
-        return ConfigManager.configManager.getRuleWeight("add-lore-prefix", 13);
-    }
-
-    @Override
     public boolean configNotContains(ConfigurationSection section) {
         return section.getString("add-lore-prefix") == null;
     }

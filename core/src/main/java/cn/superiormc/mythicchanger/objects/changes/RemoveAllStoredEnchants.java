@@ -34,11 +34,6 @@ public class RemoveAllStoredEnchants extends AbstractChangesRule {
     }
 
     @Override
-    public int getWeight() {
-        return ConfigManager.configManager.getRuleWeight("remove-all-stored-enchants", -198);
-    }
-
-    @Override
     public boolean configNotContains(ConfigurationSection section) {
         return !section.contains("remove-all-stored-enchants");
     }

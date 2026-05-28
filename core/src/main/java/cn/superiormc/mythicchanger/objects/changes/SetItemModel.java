@@ -1,38 +1,31 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
-import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.objects.ObjectSingleChange;
+import cn.superiormc.mythicchanger.utils.CommonUtil;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.List;
+public class SetItemModel extends AbstractChangesRule {
 
-public class ParsePAPILore extends AbstractChangesRule {
-
-    public ParsePAPILore() {
+    public SetItemModel() {
         super();
     }
 
     @Override
     public ItemStack setChange(ObjectSingleChange singleChange) {
-        if (!singleChange.getBoolean("parse-papi-lore")) {
+        String itemModel = singleChange.getString("set-item-model");
+        if (itemModel == null || itemModel.isEmpty()) {
             return singleChange.getItem();
         }
         ItemMeta meta = singleChange.getItemMeta();
-        if (!meta.hasLore()) {
-            return singleChange.getItem();
-        }
-        List<String> lore = MythicChanger.methodUtil.getItemLore(meta);
-        MythicChanger.methodUtil.setItemLore(meta,
-                lore,
-                singleChange.getPlayer());
+        meta.setItemModel(CommonUtil.parseNamespacedKey(itemModel));
         return singleChange.setItemMeta(meta);
     }
 
     @Override
     public boolean configNotContains(ConfigurationSection section) {
-        return !section.contains("parse-papi-lore");
+        return !section.contains("set-item-model");
     }
 }

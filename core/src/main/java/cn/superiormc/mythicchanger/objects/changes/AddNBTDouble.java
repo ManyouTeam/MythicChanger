@@ -51,11 +51,6 @@ public class AddNBTDouble extends AbstractChangesRule {
     }
 
     @Override
-    public int getWeight() {
-        return ConfigManager.configManager.getRuleWeight("add-nbt-double", 202);
-    }
-
-    @Override
     public boolean configNotContains(ConfigurationSection section) {
         return !section.contains("add-nbt-double");
     }

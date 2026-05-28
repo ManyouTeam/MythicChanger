@@ -1,31 +1,39 @@
 # PREMIUM VERSION ONLY
 
 apply-item-mode: GENERAL
+
+# Display Item
 display-item:
   material: PAPER
   name: '&fItem Skin &8(Diamond Sword)'
   lore:
     - '&7Drag this item onto the item you want to apply.'
-fake-changes:
+  max-stack: 1
+
+# Rule Configs
+real-changes:
   edit-item:
     custom-model-data: 15
+  add-nbt-int:
+    - 'original_custom_model_data;;{item_custom-model-data;;-1}'
+
+# Match Item
 match-item:
   item-format:
     material: diamond_sword
   item-format-settings:
     require-same-key: false
-  not:
-    contains-apply:
-      - ItemSkin
   not-match-actions:
     1:
       type: message
       message: 'Your sword type is not diamond sword!'
-#conditions:
-#  not-meet-actions:
-#      1:
-#        type: message
-#        message: 'You must use this apply item in world!'
-#  1:
-#    type: world
-#    world: 'test'
+conditions:
+  1:
+    type: placeholder
+    placeholder: '{nbt_original_custom_model_data;;-1}'
+    rule: '<'
+    value: 0
+    not-meet-actions:
+      1:
+        type: message
+        message: 'This item already includes item skin!'

@@ -40,11 +40,6 @@ public class AddNameLast extends AbstractChangesRule {
     }
 
     @Override
-    public int getWeight() {
-        return ConfigManager.configManager.getRuleWeight("add-name-last", 22);
-    }
-
-    @Override
     public boolean configNotContains(ConfigurationSection section) {
         return section.getString("add-name-last") == null;
     }

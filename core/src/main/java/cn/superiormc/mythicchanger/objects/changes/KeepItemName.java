@@ -27,11 +27,6 @@ public class KeepItemName extends AbstractChangesRule {
     }
 
     @Override
-    public int getWeight() {
-        return ConfigManager.configManager.getRuleWeight("keep-item-name", -253);
-    }
-
-    @Override
     public boolean configNotContains(ConfigurationSection section) {
         return !section.contains("keep-item-name") && CommonUtil.getMinorVersion(20, 5);
     }

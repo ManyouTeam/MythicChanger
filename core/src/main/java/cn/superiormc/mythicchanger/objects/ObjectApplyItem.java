@@ -198,14 +198,16 @@ public class ObjectApplyItem {
         if (meta == null) {
             return item;
         }
-        String id = "";
-        Collection<ObjectApplyItem> applyItems = getRule(meta);
-        if (!applyItems.isEmpty()) {
-            if (applyItems.contains(this)) {
-                id = meta.getPersistentDataContainer().get(MYTHICCHANGER_APPLY_RULE, PersistentDataType.STRING) + ";;" + this.id;
+        String id = this.id;
+        String oldID = meta.getPersistentDataContainer().get(MYTHICCHANGER_APPLY_RULE, PersistentDataType.STRING);
+        if (oldID != null && !oldID.isEmpty()) {
+            for (String singleID : oldID.split(";;")) {
+                if (singleID.equals(this.id)) {
+                    item.setItemMeta(meta);
+                    return item;
+                }
             }
-        } else {
-            id = this.id;
+            id = oldID + ";;" + this.id;
         }
         meta.getPersistentDataContainer().set(MYTHICCHANGER_APPLY_RULE, PersistentDataType.STRING, id);
         item.setItemMeta(meta);

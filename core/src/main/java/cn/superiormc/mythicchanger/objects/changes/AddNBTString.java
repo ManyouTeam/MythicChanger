@@ -50,11 +50,6 @@ public class AddNBTString extends AbstractChangesRule {
     }
 
     @Override
-    public int getWeight() {
-        return ConfigManager.configManager.getRuleWeight("add-nbt-string", 200);
-    }
-
-    @Override
     public boolean configNotContains(ConfigurationSection section) {
         return !section.contains("add-nbt-string");
     }

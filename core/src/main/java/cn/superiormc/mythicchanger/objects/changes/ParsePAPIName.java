@@ -27,11 +27,6 @@ public class ParsePAPIName extends AbstractChangesRule {
     }
 
     @Override
-    public int getWeight() {
-        return ConfigManager.configManager.getRuleWeight("parse-papi-name", 501);
-    }
-
-    @Override
     public boolean configNotContains(ConfigurationSection section) {
         return !section.contains("parse-papi-name");
     }

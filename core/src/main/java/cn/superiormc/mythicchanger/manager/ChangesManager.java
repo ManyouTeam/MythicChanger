@@ -9,6 +9,7 @@ import cn.superiormc.mythicchanger.utils.SchedulerUtil;
 import cn.superiormc.mythicchanger.utils.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.MemoryConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -21,7 +22,9 @@ public class ChangesManager {
 
     private final Map<Player, Collection<Integer>> itemCooldown = new ConcurrentHashMap<>();
 
-    private final Collection<AbstractChangesRule> rules = new TreeSet<>();
+    private final Collection<AbstractChangesRule> rules = new ArrayList<>();
+
+    private final Map<String, AbstractChangesRule> rulesByConfigKey = new HashMap<>();
 
     private final Collection<String> loggedRules = new HashSet<>();
 
@@ -53,7 +56,11 @@ public class ChangesManager {
         registerNewRule(new ReplaceName());
         registerNewRule(new ReplaceItem());
         registerNewRule(new ReplaceLore());
+        registerNewRule(new RemoveColor());
+        registerNewRule(new RemoveCustomModelData());
+        registerNewRule(new RemoveItemModel());
         registerNewRule(new SetCustomModelData());
+        registerNewRule(new SetItemModel());
         registerNewRule(new SetLore());
         registerNewRule(new SetName());
         registerNewRule(new SetType());
@@ -63,6 +70,10 @@ public class ChangesManager {
         registerNewRule(new ParsePAPIName());
         registerNewRule(new ParsePAPILore());
         registerNewRule(new EditItem());
+        if (MythicChanger.methodUtil.methodID().equals("paper")) {
+            registerNewRule(new RemoveData());
+            registerNewRule(new ResetData());
+        }
         if (!MythicChanger.freeVersion) {
             if (CommonUtil.checkPluginLoad("NBTAPI")) {
                 registerNewRule(new AddNBTString());
@@ -111,6 +122,7 @@ public class ChangesManager {
 
     public void registerNewRule(AbstractChangesRule rule) {
         rules.add(rule);
+        rulesByConfigKey.clear();
         MythicChanger.methodUtil.sendChat(null, TextUtil.pluginPrefix() + " §fLoaded change rule: " + rule.getClass().getSimpleName() + "!");
     }
 
@@ -125,12 +137,13 @@ public class ChangesManager {
     }
 
     public ItemStack setFakeChange(ObjectSingleChange singleChange) {
-        for (AbstractChangesRule rule : rules) {
-            if (singleChange.section == null) {
-                ErrorManager.errorManager.sendErrorMessage("§cError: Your change section is not exist, maybe your config formatting is wrong.");
-                break;
-            }
-            if (rule.configNotContains(singleChange.section)) {
+        if (singleChange.section == null) {
+            ErrorManager.errorManager.sendErrorMessage("§cError: Your change section is not exist, maybe your config formatting is wrong.");
+            return singleChange.getItem();
+        }
+        for (String configKey : singleChange.section.getKeys(false)) {
+            AbstractChangesRule rule = getRuleByConfigKey(singleChange.section, configKey);
+            if (rule == null) {
                 continue;
             }
             if (singleChange.getItemMeta() == null || singleChange.getOriginalMeta() == null) {
@@ -162,15 +175,13 @@ public class ChangesManager {
     public ItemStack setRealChange(ObjectAction action, ObjectSingleChange singleChange) {
         boolean needReturnNewItem = false;
         boolean changedItem = false;
-        for (AbstractChangesRule rule : rules) {
-            if (singleChange.section == null) {
-                ErrorManager.errorManager.sendErrorMessage("§cError: Your change section is not exist, maybe your config formatting is wrong.");
-                break;
-            }
-            if (rule.configNotContains(singleChange.section)) {
-                if (ConfigManager.configManager.getBoolean("debug")) {
-                    //TextUtil.sendMessage(null, TextUtil.pluginPrefix() + " §c" + rule.getClass().getSimpleName() +  " skipped!");
-                }
+        if (singleChange.section == null) {
+            ErrorManager.errorManager.sendErrorMessage("§cError: Your change section is not exist, maybe your config formatting is wrong.");
+            return null;
+        }
+        for (String configKey : singleChange.section.getKeys(false)) {
+            AbstractChangesRule rule = getRuleByConfigKey(singleChange.section, configKey);
+            if (rule == null) {
                 continue;
             }
             if (singleChange.getItemMeta() == null || singleChange.getOriginalMeta() == null) {
@@ -191,6 +202,22 @@ public class ChangesManager {
         }
         if (needReturnNewItem) {
             return singleChange.getItem();
+        }
+        return null;
+    }
+
+    private AbstractChangesRule getRuleByConfigKey(ConfigurationSection section, String configKey) {
+        AbstractChangesRule cachedRule = rulesByConfigKey.get(configKey);
+        if (cachedRule != null) {
+            return cachedRule;
+        }
+        ConfigurationSection singleKeySection = new MemoryConfiguration();
+        singleKeySection.set(configKey, section.get(configKey));
+        for (AbstractChangesRule rule : rules) {
+            if (!rule.configNotContains(singleKeySection)) {
+                rulesByConfigKey.put(configKey, rule);
+                return rule;
+            }
         }
         return null;
     }

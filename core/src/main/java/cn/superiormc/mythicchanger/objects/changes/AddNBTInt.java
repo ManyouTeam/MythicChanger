@@ -51,11 +51,6 @@ public class AddNBTInt extends AbstractChangesRule {
     }
 
     @Override
-    public int getWeight() {
-        return ConfigManager.configManager.getRuleWeight("add-nbt-int", 201);
-    }
-
-    @Override
     public boolean configNotContains(ConfigurationSection section) {
         return !section.contains("add-nbt-int");
     }

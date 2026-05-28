@@ -27,11 +27,6 @@ public class FixHideAttributes extends AbstractChangesRule {
     }
 
     @Override
-    public int getWeight() {
-        return ConfigManager.configManager.getRuleWeight("fix-hide-attributes", 1500);
-    }
-
-    @Override
     public boolean configNotContains(ConfigurationSection section) {
         return !section.getBoolean("fix-hide-attributes");
     }

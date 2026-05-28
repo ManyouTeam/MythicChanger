@@ -28,11 +28,6 @@ public class RemoveAllLore extends AbstractChangesRule {
     }
 
     @Override
-    public int getWeight() {
-        return ConfigManager.configManager.getRuleWeight("remove-all-lore", -301);
-    }
-
-    @Override
     public boolean configNotContains(ConfigurationSection section) {
         return !section.contains("remove-all-lore");
     }

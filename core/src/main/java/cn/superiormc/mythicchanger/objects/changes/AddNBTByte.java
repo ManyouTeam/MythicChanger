@@ -51,11 +51,6 @@ public class AddNBTByte extends AbstractChangesRule {
     }
 
     @Override
-    public int getWeight() {
-        return ConfigManager.configManager.getRuleWeight("add-nbt-byte", 203);
-    }
-
-    @Override
     public boolean configNotContains(ConfigurationSection section) {
         return !section.contains("add-nbt-byte");
     }

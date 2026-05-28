@@ -17,17 +17,11 @@ public class SetColor extends AbstractChangesRule {
     @Override
     public ItemStack setChange(ObjectSingleChange singleChange) {
         ItemMeta meta = singleChange.getItemMeta();
-        if (meta instanceof LeatherArmorMeta) {
-            LeatherArmorMeta armorMeta = (LeatherArmorMeta) meta;
+        if (meta instanceof LeatherArmorMeta armorMeta) {
             armorMeta.setColor(Color.fromRGB(singleChange.getInt("set-color")));
             return singleChange.setItemMeta(armorMeta);
         }
         return singleChange.getItem();
-    }
-
-    @Override
-    public int getWeight() {
-        return ConfigManager.configManager.getRuleWeight("set-color", 150);
     }
 
     @Override

@@ -37,11 +37,6 @@ public class ReplaceRandomItem extends AbstractChangesRule {
     }
 
     @Override
-    public int getWeight() {
-        return ConfigManager.configManager.getRuleWeight("replace-random-item", 1001);
-    }
-
-    @Override
     public boolean configNotContains(ConfigurationSection section) {
         return section.getConfigurationSection("replace-random-item") == null;
     }

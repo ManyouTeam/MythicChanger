@@ -48,11 +48,6 @@ public class ReplaceStoredEnchants extends AbstractChangesRule {
     }
 
     @Override
-    public int getWeight() {
-        return ConfigManager.configManager.getRuleWeight("replace-stored-enchants", -203);
-    }
-
-    @Override
     public boolean configNotContains(ConfigurationSection section) {
         return section.getConfigurationSection("replace-stored-enchants") == null;
     }

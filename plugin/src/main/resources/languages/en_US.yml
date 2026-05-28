@@ -31,6 +31,7 @@ help:
     &f/mythicchanger saveitem <item> &7- Save hold item.
     &f/mythicchanger givesaveitem <itemID> <player> <amount> &7- Give saved item to players.
     &f/mythicchanger setlimit <amount> &7- Set hold item apply limit. &c(Premium)
+    &f/mythicchanger viewapplyrules &7- Check applied apply item rule IDs on hold item.
     &f/mythicchanger viewnbt &7- Check custom NBT data of hold item. &c(Premium)
     &f/mythicchanger openchangegui &7- Open Change GUI. &c(Premium, require enable in config.yml)
     &f/mythicchanger reload &7- Reload the plugin.
@@ -46,6 +47,10 @@ help:
 give-save-item: "&#98FB98[MythicChanger] &fGive {player} save item {item} x{amount}!"
 nbt-view-empty: "&#98FB98[MythicChanger] &fThis item does not has any custom NBT!"
 nbt-view: "&#98FB98[MythicChanger] &fThis item has those NBT content:"
+apply-rule-view-empty: "&#98FB98[MythicChanger] &fThis item does not have MYTHICCHANGER_APPLY_RULE data!"
+apply-rule-view: "&#98FB98[MythicChanger] &fMYTHICCHANGER_APPLY_RULE: &a{rules}"
+apply-rule-view-item: "&#98FB98[MythicChanger] &f- &a{rule}"
+apply-rule-view-item-missing: "&#98FB98[MythicChanger] &f- &c{rule} &7(config not loaded)"
 rule-limit-reached: "&#98FB98[MythicChanger] &fThis item reached it's apply item rule limit!"
 do-not-apply: "&#98FB98[MythicChanger] &fThis apply item does not work on this item!"
 success-set-limit: "&#98FB98[MythicChanger] &fSuccessfully set this item apply limit to {limit}!"

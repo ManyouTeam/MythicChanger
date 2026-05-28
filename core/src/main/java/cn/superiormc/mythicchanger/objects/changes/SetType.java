@@ -22,11 +22,6 @@ public class SetType extends AbstractChangesRule {
     }
 
     @Override
-    public int getWeight() {
-        return ConfigManager.configManager.getRuleWeight("set-type", 60);
-    }
-
-    @Override
     public boolean configNotContains(ConfigurationSection section) {
         return section.getString("set-type") == null;
     }
