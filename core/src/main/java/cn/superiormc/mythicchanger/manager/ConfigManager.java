@@ -5,6 +5,7 @@ import cn.superiormc.mythicchanger.objects.ObjectApplyItem;
 import cn.superiormc.mythicchanger.objects.ObjectSingleRule;
 import cn.superiormc.mythicchanger.utils.TextUtil;
 import com.github.retrooper.packetevents.event.PacketListenerPriority;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemoryConfiguration;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -60,15 +61,13 @@ public class ConfigManager {
                 if (fileName.endsWith(".yml")) {
                     String substring = fileName.substring(0, fileName.length() - 4);
                     if (ruleMap.containsKey(substring)) {
-                        ErrorManager.errorManager.sendErrorMessage("§cError: Already loaded a rule config called: " +
-                                fileName + "!");
+                        ErrorManager.errorManager.sendErrorMessage("§cError: Already loaded a rule config called: " + fileName + "!");
                         continue;
                     }
                     ObjectSingleRule rule = new ObjectSingleRule(substring, YamlConfiguration.loadConfiguration(file));
                     ruleCaches.add(rule);
                     ruleMap.put(substring, rule);
-                    TextUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fLoaded rule: " +
-                            fileName + "!");
+                    TextUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fLoaded rule: " + fileName + "!");
                 }
             }
         }

@@ -22,7 +22,7 @@ public class MainCommand implements CommandExecutor {
                 LanguageManager.languageManager.sendStringText(sender, "error.miss-permission");
                 return true;
             }
-            if (!object.getLengthCorrect(args.length)) {
+            if (!object.getLengthCorrect(args.length, sender)) {
                 LanguageManager.languageManager.sendStringText(sender, "error.args");
                 return true;
             }

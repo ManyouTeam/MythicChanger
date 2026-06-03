@@ -13,6 +13,7 @@ command-tab:
   type-item-id: "[输入物品ID]"
 
 plugin:
+  edited: "&#98FB98[MythicChanger] &f物品已编辑!"
   reloaded: "&#98FB98[MythicChanger] &f插件已重启!"
   saved: "&#98FB98[MythicChanger] &f物品已保存!"
   item-gave: "&#98FB98[MythicChanger] &a给予玩家 {player} 名称为 {item} 的更改物品 x{amount} 个!"
@@ -28,6 +29,7 @@ help:
     &f/mythicchanger help &7- 查看帮助.
     &f/mythicchanger generateitemformat &7- 为手持物品生成 ItemFormat.
     &f/mythicchanger saveitem <item> &7- 保存手持物品.
+    &f/mythicchanger edititem <name/itemname/lore> <value...> &7- 编辑手持物品名称、物品名或 Lore.
     &f/mythicchanger viewnbt &7- 查看手持物品的自定义 NBT 信息.
     &f/mythicchanger reload &7- 重启插件.
     &f/mythicchanger giveapplyitem <item> <player> <amount> &7- 将更改物品给予指定玩家.

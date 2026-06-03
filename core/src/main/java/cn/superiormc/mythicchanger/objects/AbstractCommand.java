@@ -1,6 +1,7 @@
 package cn.superiormc.mythicchanger.objects;
 
 import cn.superiormc.mythicchanger.manager.LanguageManager;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -15,6 +16,10 @@ public abstract class AbstractCommand {
     protected boolean onlyInGame;
 
     protected Integer[] requiredArgLength;
+
+    protected Integer[] requiredConsoleArgLength;
+
+    protected boolean unlimitedArgLength;
 
     public AbstractCommand() {
         // EMPTY
@@ -38,14 +43,32 @@ public abstract class AbstractCommand {
         return requiredPermission;
     }
 
-    public boolean getLengthCorrect(int length) {
-        for (int number : requiredArgLength) {
-            if (number == length) {
-                return true;
+    public boolean getLengthCorrect(int length, CommandSender sender) {
+        if (requiredConsoleArgLength == null || requiredConsoleArgLength.length == 0) {
+            requiredConsoleArgLength = requiredArgLength;
+        }
+        if (sender instanceof Player) {
+            for (int number : requiredArgLength) {
+                if (unlimitedArgLength) {
+                    return length >= number;
+                }
+                if (number == length) {
+                    return true;
+                }
+            }
+        } else {
+            for (int number : requiredConsoleArgLength) {
+                if (unlimitedArgLength) {
+                    return length >= number;
+                }
+                if (number == length) {
+                    return true;
+                }
             }
         }
         return false;
     }
+
 
     public List<String> getTabResult(int length, Player player) {
         return new ArrayList<>();

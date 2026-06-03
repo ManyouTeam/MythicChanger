@@ -8,6 +8,7 @@ import org.bukkit.configuration.MemoryConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -63,7 +64,8 @@ public abstract class AbstractSingleRun {
                     if (tempVal1.length >= 2) {
                         defaultValue = tempVal1[tempVal1.length - 1];
                     }
-                    Object value = NBTUtil.parseNBT(item, tempVal1[0]);
+                    String[] nbtPath = tempVal1.length >= 2 ? Arrays.copyOf(tempVal1, tempVal1.length - 1) : tempVal1;
+                    Object value = NBTUtil.parseNBT(item, nbtPath);
                     if (value == null) {
                         value = defaultValue;
                     }

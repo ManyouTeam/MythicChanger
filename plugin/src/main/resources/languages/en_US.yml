@@ -15,6 +15,7 @@ command-tab:
 plugin:
   reloaded: "&#98FB98[MythicChanger] &fPlugin reloaded!"
   saved: "&#98FB98[MythicChanger] &fItem Saved!"
+  edited: "&#98FB98[MythicChanger] &fItem edited!"
   item-gave: "&#98FB98[MythicChanger] &aGave {player} apply item {item} x{amount}!"
   generated: "&#98FB98[MythicChanger] &fGenerated hold item's item format at plugin config folder!"
 
@@ -29,6 +30,7 @@ help:
     &f/mythicchanger help &7- View help.
     &f/mythicchanger generateitemformat &7- Generate Item Format for hold item.
     &f/mythicchanger saveitem <item> &7- Save hold item.
+    &f/mythicchanger edititem <name/itemname/lore> <value...> &7- Edit hold item name, item name, or lore.
     &f/mythicchanger givesaveitem <itemID> <player> <amount> &7- Give saved item to players.
     &f/mythicchanger setlimit <amount> &7- Set hold item apply limit. &c(Premium)
     &f/mythicchanger viewapplyrules &7- Check applied apply item rule IDs on hold item.

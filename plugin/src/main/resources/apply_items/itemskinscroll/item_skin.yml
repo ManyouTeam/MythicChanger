@@ -16,6 +16,8 @@ real-changes:
     custom-model-data: 15
   add-nbt-int:
     - 'original_custom_model_data;;{item_custom-model-data;;-1}'
+  add-nbt-string:
+    - 'used_skin_id;;item_skin'
 
 # Match Item
 match-item:
@@ -26,14 +28,22 @@ match-item:
   not-match-actions:
     1:
       type: message
-      message: 'Your sword type is not diamond sword!'
+      message: '&c☹ &fYour sword type is not diamond sword!'
+
+# Conditions
 conditions:
   1:
     type: placeholder
-    placeholder: '{nbt_original_custom_model_data;;-1}'
-    rule: '<'
-    value: 0
+    placeholder: '{nbt_used_skin_id;;0}'
+    rule: '=='
+    value: '0'
     not-meet-actions:
       1:
         type: message
-        message: 'This item already includes item skin!'
+        message: '&c☹ &fThis item already includes item skin!'
+
+# Actions
+success-actions:
+  1:
+    type: message
+    message: '&d✦ &fCool, it looks like magic is showing off, your {name} &fhas skin now!'

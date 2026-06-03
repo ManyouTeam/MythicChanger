@@ -2,7 +2,9 @@ package cn.superiormc.mythicchanger.objects;
 
 import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.manager.ChangesManager;
+import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.manager.MatchItemManager;
+import cn.superiormc.mythicchanger.utils.TextUtil;
 import org.bukkit.GameMode;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -50,6 +52,9 @@ public class ObjectSingleRule implements Comparable<ObjectSingleRule> {
     }
 
     public ItemStack setFakeChange(ItemStack item, Player player, boolean isPlayerInventory) {
+        if (ConfigManager.configManager.getBoolean("debug")) {
+            TextUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fSet fake change!");
+        }
         if (item == null || item.getType().isAir()) {
             return item;
         }
@@ -61,6 +66,9 @@ public class ObjectSingleRule implements Comparable<ObjectSingleRule> {
     }
 
     public ItemStack setRealChange(ItemStack item, Player player) {
+        if (ConfigManager.configManager.getBoolean("debug")) {
+            TextUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fSet fake change!");
+        }
         if (item == null || item.getType().isAir()) {
             return null;
         }

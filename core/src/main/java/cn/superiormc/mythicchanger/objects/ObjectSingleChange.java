@@ -12,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -278,7 +279,8 @@ public class ObjectSingleChange extends MemoryConfiguration {
                     if (tempVal1.length >= 2) {
                         defaultValue = tempVal1[tempVal1.length - 1];
                     }
-                    Object value = NBTUtil.parseNBT(item, tempVal1[0]);
+                    String[] nbtPath = tempVal1.length >= 2 ? Arrays.copyOf(tempVal1, tempVal1.length - 1) : tempVal1;
+                    Object value = NBTUtil.parseNBT(item, nbtPath);
                     if (value == null) {
                         value = defaultValue;
                     }

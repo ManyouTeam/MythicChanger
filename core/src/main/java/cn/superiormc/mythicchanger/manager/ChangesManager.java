@@ -141,16 +141,16 @@ public class ChangesManager {
             ErrorManager.errorManager.sendErrorMessage("§cError: Your change section is not exist, maybe your config formatting is wrong.");
             return singleChange.getItem();
         }
+        if (singleChange.getItemMeta() == null || singleChange.getOriginalMeta() == null) {
+            return singleChange.getItem();
+        }
         for (String configKey : singleChange.section.getKeys(false)) {
             AbstractChangesRule rule = getRuleByConfigKey(singleChange.section, configKey);
             if (rule == null) {
                 continue;
             }
-            if (singleChange.getItemMeta() == null || singleChange.getOriginalMeta() == null) {
-                break;
-            }
             if (ConfigManager.configManager.getBoolean("debug")) {
-                TextUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fApply fake rule: " + rule.getClass().getName());
+                TextUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fApply fake rule: " + rule.getClass().getSimpleName());
             }
             ItemStack result = rule.setChange(singleChange);
             if (singleChange.isNeedRewriteItem()) {
@@ -179,13 +179,13 @@ public class ChangesManager {
             ErrorManager.errorManager.sendErrorMessage("§cError: Your change section is not exist, maybe your config formatting is wrong.");
             return null;
         }
+        if (singleChange.getItemMeta() == null || singleChange.getOriginalMeta() == null) {
+            return null;
+        }
         for (String configKey : singleChange.section.getKeys(false)) {
             AbstractChangesRule rule = getRuleByConfigKey(singleChange.section, configKey);
             if (rule == null) {
                 continue;
-            }
-            if (singleChange.getItemMeta() == null || singleChange.getOriginalMeta() == null) {
-                break;
             }
             if (ConfigManager.configManager.getBoolean("debug")) {
                 TextUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fApply real rule: " + rule.getClass().getSimpleName());

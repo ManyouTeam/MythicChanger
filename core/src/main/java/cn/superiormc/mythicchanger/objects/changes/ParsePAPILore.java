@@ -26,7 +26,7 @@ public class ParsePAPILore extends AbstractChangesRule {
         }
         List<String> lore = MythicChanger.methodUtil.getItemLore(meta);
         MythicChanger.methodUtil.setItemLore(meta,
-                lore,
+                singleChange.parsePlaceholder(lore),
                 singleChange.getPlayer());
         return singleChange.setItemMeta(meta);
     }

@@ -14,7 +14,30 @@ public class NBTUtil {
         if (!CommonUtil.checkPluginLoad("NBTAPI")) {
             return null;
         }
+        return parseNBT(item, new String[]{key});
+    }
+
+    public static Object parseNBT(ItemStack item, String[] keys) {
+        if (!CommonUtil.checkPluginLoad("NBTAPI") || keys == null || keys.length == 0) {
+            return null;
+        }
         ReadWriteNBT nbtCompound = new NBTItem(item);
+        for (int i = 0; i < keys.length - 1; i++) {
+            if (keys[i].isEmpty()) {
+                continue;
+            }
+            nbtCompound = nbtCompound.getCompound(keys[i]);
+            if (nbtCompound == null) {
+                return null;
+            }
+        }
+        return parseNBTValue(nbtCompound, keys[keys.length - 1]);
+    }
+
+    private static Object parseNBTValue(ReadWriteNBT nbtCompound, String key) {
+        if (nbtCompound == null || key == null || key.isEmpty()) {
+            return null;
+        }
         if (nbtCompound.hasTag(key, NBTType.NBTTagByte)) {
             return nbtCompound.getByte(key);
         } else if (nbtCompound.hasTag(key, NBTType.NBTTagShort)) {

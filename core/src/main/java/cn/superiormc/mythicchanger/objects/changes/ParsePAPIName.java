@@ -22,7 +22,7 @@ public class ParsePAPIName extends AbstractChangesRule {
         if (!meta.hasDisplayName()) {
             return singleChange.getItem();
         }
-        MythicChanger.methodUtil.setItemName(meta, MythicChanger.methodUtil.getItemName(meta), singleChange.getPlayer());
+        MythicChanger.methodUtil.setItemName(meta, singleChange.parsePlaceholder(MythicChanger.methodUtil.getItemName(meta)), singleChange.getPlayer());
         return singleChange.setItemMeta(meta);
     }
 

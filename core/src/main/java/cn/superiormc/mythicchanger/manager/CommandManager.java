@@ -42,6 +42,7 @@ public class CommandManager {
         registeredCommands.put("help", new SubHelp());
         registeredCommands.put("reload", new SubReload());
         registeredCommands.put("saveitem", new SubSaveItem());
+        registeredCommands.put("edititem", new SubEditItem());
         registeredCommands.put("givesaveitem", new SubGiveSaveItem());
         registeredCommands.put("generateitemformat", new SubGenerateItemFormat());
         registeredCommands.put("giveapplyitem", new SubGiveApplyItem());
