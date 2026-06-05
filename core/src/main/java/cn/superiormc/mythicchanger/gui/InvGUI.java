@@ -1,10 +1,8 @@
 package cn.superiormc.mythicchanger.gui;
 
-import cn.superiormc.mythicchanger.MythicChanger;
-import cn.superiormc.mythicchanger.listeners.GUIListener;
+import cn.superiormc.mythicchanger.manager.ListenerManager;
 import cn.superiormc.mythicchanger.methods.Dupe;
 import cn.superiormc.mythicchanger.utils.SchedulerUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -36,9 +34,8 @@ public abstract class InvGUI extends AbstractGUI {
         constructGUI();
         if (inv != null) {
             SchedulerUtil.runSync(player, () -> {
-                this.guiListener = new GUIListener(this);
-                Bukkit.getPluginManager().registerEvents(guiListener, MythicChanger.instance);
                 player.openInventory(inv);
+                ListenerManager.listenerManager.registerNewGUIListener(player, this);
             });
         }
     }

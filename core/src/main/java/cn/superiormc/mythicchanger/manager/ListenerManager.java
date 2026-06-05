@@ -4,12 +4,21 @@ import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.listeners.*;
 import cn.superiormc.mythicchanger.protolcol.pacetevents.*;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
+import cn.superiormc.mythicchanger.gui.InvGUI;
 import com.github.retrooper.packetevents.PacketEvents;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.event.HandlerList;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public class ListenerManager {
 
     public static ListenerManager listenerManager;
+
+    private final Map<UUID, InvGUI> listeners = new HashMap<>();
 
     public ListenerManager(){
         listenerManager = this;
@@ -31,6 +40,7 @@ public class ListenerManager {
     }
 
     private void registerListeners() {
+        Bukkit.getPluginManager().registerEvents(new GUIListener(), MythicChanger.instance);
         if (CommonUtil.checkPluginLoad("MMOItems")) {
             Bukkit.getPluginManager().registerEvents(new MMOItemsReloadListener(), MythicChanger.instance);
         }
@@ -46,5 +56,26 @@ public class ListenerManager {
                 ConfigManager.configManager.getBoolean("change-gui.anti-dupe-checker", false)) {
             Bukkit.getPluginManager().registerEvents(new DupeListener(), MythicChanger.instance);
         }
+    }
+
+    public void registerNewGUIListener(Player player, InvGUI inv) {
+        unregisterListeners(player);
+        listeners.put(player.getUniqueId(), inv);
+    }
+
+    public void unregisterNewGUIListener(Player player, InvGUI inv) {
+        listeners.remove(player.getUniqueId(), inv);
+    }
+
+    public void unregisterListeners(Player player) {
+        listeners.remove(player.getUniqueId());
+    }
+
+    public InvGUI getInvGUI(Player player) {
+        return listeners.get(player.getUniqueId());
+    }
+
+    public void unregisterAllListener() {
+        HandlerList.unregisterAll(MythicChanger.instance);
     }
 }
