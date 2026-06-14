@@ -1,5 +1,7 @@
 package cn.superiormc.mythicchanger.listeners;
 
+import cn.superiormc.mythicchanger.manager.ChangesManager;
+import cn.superiormc.mythicchanger.manager.ListenerManager;
 import cn.superiormc.mythicchanger.protolcol.pacetevents.SetCursorItem;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -9,6 +11,8 @@ public class PlayerCacheListener implements Listener {
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
-        SetCursorItem.hashedStackMap.remove(event.getPlayer());
+        ListenerManager.listenerManager.unregisterListeners(event.getPlayer());
+        ChangesManager.changesManager.removeCooldown(event.getPlayer());
+        SetCursorItem.hashedStackMap.remove(event.getPlayer().getUniqueId());
     }
 }

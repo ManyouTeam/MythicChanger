@@ -6,10 +6,14 @@ import cn.superiormc.mythicchanger.protolcol.pacetevents.*;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
 import cn.superiormc.mythicchanger.gui.InvGUI;
 import com.github.retrooper.packetevents.PacketEvents;
+import com.github.retrooper.packetevents.event.PacketListener;
+import com.github.retrooper.packetevents.event.PacketListenerCommon;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -20,6 +24,8 @@ public class ListenerManager {
 
     private final Map<UUID, InvGUI> listeners = new HashMap<>();
 
+    private final Collection<PacketListenerCommon> packetListeners = new ArrayList<>();
+
     public ListenerManager(){
         listenerManager = this;
         initPacketEvents();
@@ -28,15 +34,20 @@ public class ListenerManager {
 
     private void initPacketEvents() {
         if (ConfigManager.configManager.getBoolean("packet-listener", true)) {
-            PacketEvents.getAPI().getEventManager().registerListener(new SetSlots(), ConfigManager.configManager.getPriority());
-            PacketEvents.getAPI().getEventManager().registerListener(new WindowItem(), ConfigManager.configManager.getPriority());
-            PacketEvents.getAPI().getEventManager().registerListener(new WindowMerchant(), ConfigManager.configManager.getPriority());
+            registerPacketListener(new SetSlots());
+            registerPacketListener(new WindowItem());
+            registerPacketListener(new WindowMerchant());
             if (CommonUtil.getMinorVersion(21, 5)) {
-                PacketEvents.getAPI().getEventManager().registerListener(new SetCursorItem(), ConfigManager.configManager.getPriority());
-                PacketEvents.getAPI().getEventManager().registerListener(new ContainerClick(), ConfigManager.configManager.getPriority());
+                registerPacketListener(new SetCursorItem());
+                registerPacketListener(new ContainerClick());
             }
             new WindowClick();
         }
+    }
+
+    private void registerPacketListener(PacketListener listener) {
+        packetListeners.add(PacketEvents.getAPI().getEventManager().registerListener(
+                listener, ConfigManager.configManager.getPriority()));
     }
 
     private void registerListeners() {
@@ -77,5 +88,7 @@ public class ListenerManager {
 
     public void unregisterAllListener() {
         HandlerList.unregisterAll(MythicChanger.instance);
+        PacketEvents.getAPI().getEventManager().unregisterListeners(packetListeners.toArray(new PacketListenerCommon[0]));
+        packetListeners.clear();
     }
 }

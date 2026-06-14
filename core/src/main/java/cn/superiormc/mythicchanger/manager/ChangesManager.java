@@ -7,7 +7,6 @@ import cn.superiormc.mythicchanger.objects.changes.*;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
 import cn.superiormc.mythicchanger.utils.SchedulerUtil;
 import cn.superiormc.mythicchanger.utils.TextUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemoryConfiguration;
 import org.bukkit.entity.Player;
@@ -20,7 +19,7 @@ public class ChangesManager {
 
     public static ChangesManager changesManager;
 
-    private final Map<Player, Collection<Integer>> itemCooldown = new ConcurrentHashMap<>();
+    private final Map<UUID, Collection<Integer>> itemCooldown = new ConcurrentHashMap<>();
 
     private final Collection<AbstractChangesRule> rules = new ArrayList<>();
 
@@ -223,7 +222,7 @@ public class ChangesManager {
     }
 
     public boolean getItemCooldown(Player player, int slot) {
-        Collection<Integer> result = itemCooldown.get(player);
+        Collection<Integer> result = itemCooldown.get(player.getUniqueId());
         if (result == null) {
             return false;
         }
@@ -231,19 +230,22 @@ public class ChangesManager {
     }
 
     public void addCooldown(Player player, int slot) {
-        if (itemCooldown.get(player) != null) {
-            itemCooldown.get(player).add(slot);
-            return;
-        }
-        Collection<Integer> tempVal1 = new HashSet<>();
-        tempVal1.add(slot);
-        itemCooldown.put(player, tempVal1);
+        itemCooldown.computeIfAbsent(player.getUniqueId(), uuid -> ConcurrentHashMap.newKeySet()).add(slot);
     }
 
     public void removeCooldown(Player player, int slot) {
-        if (itemCooldown.get(player) != null) {
-            itemCooldown.get(player).remove(slot);
+        UUID uuid = player.getUniqueId();
+        Collection<Integer> cooldowns = itemCooldown.get(uuid);
+        if (cooldowns != null) {
+            cooldowns.remove(slot);
+            if (cooldowns.isEmpty()) {
+                itemCooldown.remove(uuid, cooldowns);
+            }
         }
+    }
+
+    public void removeCooldown(Player player) {
+        itemCooldown.remove(player.getUniqueId());
     }
 
     public void clearCooldown() {

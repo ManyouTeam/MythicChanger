@@ -13,10 +13,11 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class SetCursorItem implements PacketListener {
 
-    public static Map<Player, HashedStack> hashedStackMap = new HashMap<>();
+    public static Map<UUID, HashedStack> hashedStackMap = new HashMap<>();
 
     @Override
     public void onPacketSend(PacketSendEvent event) {
@@ -34,6 +35,6 @@ public class SetCursorItem implements PacketListener {
             return;
         }
         serverSetSlot.setStack(SpigotConversionUtil.fromBukkitItemStack(ConfigManager.configManager.startFakeChange(item, player, true)));
-        hashedStackMap.put(player, HashedStack.fromItemStack(original));
+        hashedStackMap.put(player.getUniqueId(), HashedStack.fromItemStack(original));
     }
 }
