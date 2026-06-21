@@ -133,6 +133,14 @@ public class CommonUtil {
         return slot >= topSize;
     }
 
+    public static boolean inPlayerCraftingSlot(Player player, int slot, int windowID) {
+        if (windowID == 0 || (player.getOpenInventory().getTopInventory() instanceof CraftingInventory &&
+                player.getOpenInventory().getTopInventory().getSize() == 5)) {
+            return slot < 5;
+        }
+        return false;
+    }
+
     public static ItemStack getItemFromSlot(Player player, int slot) {
         if (slot == 39) {
             return player.getInventory().getItem(EquipmentSlot.HEAD);

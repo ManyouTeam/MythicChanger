@@ -12,11 +12,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class ListenerManager {
 
@@ -60,11 +56,10 @@ public class ListenerManager {
                 ConfigManager.configManager.getBoolean("apply-item-mode.drag-enabled", true)) {
             Bukkit.getPluginManager().registerEvents(new ApplyItemListener(), MythicChanger.instance);
         }
-        if (CommonUtil.getMinorVersion(16, 5) && !ChangesManager.changesManager.containsLog("UltimateShop")) {
+        if (CommonUtil.getMinorVersion(16, 5)) {
             Bukkit.getPluginManager().registerEvents(new ServerLoadListener(), MythicChanger.instance);
         }
-        if (CommonUtil.getMajorVersion(19) && MythicChanger.methodUtil.methodID().equals("paper") &&
-                ConfigManager.configManager.getBoolean("change-gui.anti-dupe-checker", false)) {
+        if (CommonUtil.getMajorVersion(19) && MythicChanger.methodUtil.methodID().equals("paper")) {
             Bukkit.getPluginManager().registerEvents(new DupeListener(), MythicChanger.instance);
         }
     }

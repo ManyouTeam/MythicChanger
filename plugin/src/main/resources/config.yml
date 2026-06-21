@@ -46,6 +46,10 @@ math:
 real-change-trigger:
   SetSlotPacket:
     enabled: true
+  # Require Paper.
+  # A better choice to replace "SetSlotPacket"
+  PlayerInventorySlotChangeEvent:
+    enabled: false
   InventoryClickEvent:
     enabled: true
 
@@ -62,6 +66,8 @@ keep-name-in-anvil: true
 
 # Whether only-in-player-inventory option in each rule only checks chest UI.
 check-chests-only: true
+
+ignore-player-crafting-slot: false
 
 # Premium version only.
 change-gui:

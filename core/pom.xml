@@ -207,6 +207,12 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>cn.superiormc.enchantmentslots</groupId>
+            <artifactId>plugin</artifactId>
+            <version>4.10.4</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>cn.gtemc</groupId>
             <artifactId>itembridge</artifactId>
             <version>1.0.25</version>

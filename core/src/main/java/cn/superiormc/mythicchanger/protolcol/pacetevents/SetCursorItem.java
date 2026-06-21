@@ -11,13 +11,13 @@ import io.github.retrooper.packetevents.util.SpigotConversionUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class SetCursorItem implements PacketListener {
 
-    public static Map<UUID, HashedStack> hashedStackMap = new HashMap<>();
+    public static final Map<UUID, HashedStack> hashedStackMap = new ConcurrentHashMap<>();
 
     @Override
     public void onPacketSend(PacketSendEvent event) {

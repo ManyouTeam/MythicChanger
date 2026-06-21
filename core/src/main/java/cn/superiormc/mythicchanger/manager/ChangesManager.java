@@ -25,8 +25,6 @@ public class ChangesManager {
 
     private final Map<String, AbstractChangesRule> rulesByConfigKey = new HashMap<>();
 
-    private final Collection<String> loggedRules = new HashSet<>();
-
     public ChangesManager() {
         changesManager = this;
         initRules();
@@ -104,19 +102,6 @@ public class ChangesManager {
             }
             registerNewRule(new SubChange());
         }
-        if (CommonUtil.getClass("cn.superiormc.ultimateshop.UltimateShop")) {
-            MythicChanger.methodUtil.sendChat(null, TextUtil.pluginPrefix() + " §fHooking into UltimateShop...");
-            addLog("UltimateShop");
-            registerNewRule(new AddPriceLore());
-        }
-    }
-
-    public void addLog(String log) {
-        loggedRules.add(log);
-    }
-
-    public boolean containsLog(String log) {
-        return loggedRules.contains(log);
     }
 
     public void registerNewRule(AbstractChangesRule rule) {

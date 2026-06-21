@@ -11,7 +11,6 @@ import com.github.retrooper.packetevents.event.PacketSendEvent;
 import com.github.retrooper.packetevents.protocol.packettype.PacketType;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerSetSlot;
 import io.github.retrooper.packetevents.util.SpigotConversionUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -39,12 +38,15 @@ public class SetSlots implements PacketListener {
             }
             int slot = serverSetSlot.getSlot();
             boolean isPlayerInventory = CommonUtil.inPlayerInventory(player, slot, windowID);
+            if (ConfigManager.configManager.getBoolean("ignore-player-crafting-slot") && CommonUtil.inPlayerCraftingSlot(player, slot, windowID)) {
+                return;
+            }
             ItemStack clientItemStack = ConfigManager.configManager.startFakeChange(item, player, isPlayerInventory);
             serverSetSlot.setItem(SpigotConversionUtil.fromBukkitItemStack(clientItemStack));
-            if (ChangesManager.changesManager.getItemCooldown(player, slot)) {
-                ChangesManager.changesManager.removeCooldown(player, slot);
-            } else {
-                if (ConfigManager.configManager.getBoolean("real-change-trigger.SetSlotPacket.enabled", true) && isPlayerInventory) {
+            if (ConfigManager.configManager.getBoolean("real-change-trigger.SetSlotPacket.enabled", true) && isPlayerInventory) {
+                if (ChangesManager.changesManager.getItemCooldown(player, slot)) {
+                    ChangesManager.changesManager.removeCooldown(player, slot);
+                } else {
                     startRealChange(slot, windowID, player);
                 }
             }
