@@ -184,6 +184,10 @@ public class ObjectSingleChange extends MemoryConfiguration {
         if (section.isDouble(path)) {
             return section.getDouble(path);
         }
+        String value = section.getString(path);
+        if (value == null) {
+            return 0;
+        }
         return MathUtil.doCalculate(TextUtil.withPAPI(parsePlaceholder(section.getString(path)), player)).doubleValue();
     }
 
@@ -192,7 +196,11 @@ public class ObjectSingleChange extends MemoryConfiguration {
         if (section.isDouble(path)) {
             return section.getDouble(path);
         }
-        return MathUtil.doCalculate(TextUtil.withPAPI(parsePlaceholder(section.getString(path)), player)).doubleValue();
+        String value = section.getString(path);
+        if (value == null) {
+            return defaultValue;
+        }
+        return MathUtil.doCalculate(TextUtil.withPAPI(parsePlaceholder(value), player)).doubleValue();
     }
 
     @Override
@@ -247,6 +255,9 @@ public class ObjectSingleChange extends MemoryConfiguration {
     }
 
     public String parsePlaceholder(String text) {
+        if (text == null) {
+            return null;
+        }
         text = CommonUtil.modifyString(player, text, "amount", String.valueOf(item.getAmount()),
                 "max-stack", String.valueOf(item.getMaxStackSize()),
                 "name", itemName,

@@ -40,7 +40,7 @@ public class ResetData extends AbstractChangesRule {
     private List<String> getDataTypes(ObjectSingleChange singleChange, Object value) {
         List<String> result = new ArrayList<>();
         if (value instanceof List<?>) {
-            result.addAll(singleChange.getStringList("remset-data"));
+            result.addAll(singleChange.getStringList("reset-data"));
             return result;
         }
         if (value != null) {

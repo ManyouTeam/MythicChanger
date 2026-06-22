@@ -24,6 +24,7 @@ public class InitManager {
         resourceOutput("languages/en_US.yml", true);
         resourceOutput("languages/zh_CN.yml", true);
         resourceOutput("rules/example.yml", false);
+        resourceOutput("rules/affix_randomizer.yml", false);
         resourceOutput("apply_items/itemskinscroll/item_skin.yml", false);
         resourceOutput("apply_items/itemskinscroll/item_skin_rollback.yml", false);
         resourceOutput("apply_items/Deapply.yml", false);

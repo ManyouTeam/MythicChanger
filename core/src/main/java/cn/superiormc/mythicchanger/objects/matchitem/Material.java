@@ -1,6 +1,7 @@
 package cn.superiormc.mythicchanger.objects.matchitem;
 
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -14,9 +15,9 @@ public class Material extends AbstractMatchItemRule {
     }
 
     @Override
-    public boolean getMatch(ConfigurationSection section, ItemStack item, ItemMeta meta) {
+    public boolean getMatch(ConfigurationSection section, Player player, ItemStack item, ItemMeta meta) {
         List<String> materials = new ArrayList<>();
-        for (String singleMaterial : section.getStringList("material")) {
+        for (String singleMaterial : getStringList(section, "material", player)) {
             materials.add(singleMaterial.toLowerCase());
         }
         return materials.contains(item.getType().getKey().getKey());

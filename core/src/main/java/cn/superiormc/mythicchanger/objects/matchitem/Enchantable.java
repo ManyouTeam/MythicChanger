@@ -3,6 +3,7 @@ package cn.superiormc.mythicchanger.objects.matchitem;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
 import org.bukkit.Registry;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -14,8 +15,8 @@ public class Enchantable extends AbstractMatchItemRule {
     }
 
     @Override
-    public boolean getMatch(ConfigurationSection section, ItemStack item, ItemMeta meta) {
-        for (String ench : section.getStringList("enchantable")) {
+    public boolean getMatch(ConfigurationSection section, Player player, ItemStack item, ItemMeta meta) {
+        for (String ench : getStringList(section, "enchantable", player)) {
             Enchantment vanillaEnchant = Registry.ENCHANTMENT.get(CommonUtil.parseNamespacedKey(ench.toLowerCase()));
             if (vanillaEnchant != null && vanillaEnchant.canEnchantItem(item)) {
                 return true;

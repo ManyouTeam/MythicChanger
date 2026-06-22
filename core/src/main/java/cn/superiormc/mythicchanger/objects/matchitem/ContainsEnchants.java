@@ -3,6 +3,7 @@ package cn.superiormc.mythicchanger.objects.matchitem;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
 import org.bukkit.Registry;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
@@ -15,10 +16,11 @@ public class ContainsEnchants extends AbstractMatchItemRule {
     }
 
     @Override
-    public boolean getMatch(ConfigurationSection section, ItemStack item, ItemMeta meta) {
+    public boolean getMatch(ConfigurationSection section, Player player, ItemStack item, ItemMeta meta) {
         ConfigurationSection containsEnchantsSection = section.getConfigurationSection("contains-enchants");
         for (String ench : containsEnchantsSection.getKeys(false)) {
-            Enchantment vanillaEnchant = Registry.ENCHANTMENT.get(CommonUtil.parseNamespacedKey(ench.toLowerCase()));
+            String parsedEnchant = CommonUtil.parseLang(player, ench);
+            Enchantment vanillaEnchant = Registry.ENCHANTMENT.get(CommonUtil.parseNamespacedKey(parsedEnchant.toLowerCase()));
             if (vanillaEnchant == null) {
                 continue;
             }
@@ -29,7 +31,8 @@ public class ContainsEnchants extends AbstractMatchItemRule {
             } else {
                 level = meta.getEnchantLevel(vanillaEnchant);
             }
-            if (containsEnchantsSection.getString(ench).startsWith("[")) {
+            String value = containsEnchantsSection.getString(ench, "");
+            if (CommonUtil.parseLang(player, value).startsWith("[")) {
                 return containsEnchantsSection.getIntegerList(ench).contains(level);
             } else {
                 return level > containsEnchantsSection.getInt(ench);

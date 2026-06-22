@@ -70,6 +70,7 @@ public class ChangesManager {
         if (MythicChanger.methodUtil.methodID().equals("paper")) {
             registerNewRule(new RemoveData());
             registerNewRule(new ResetData());
+            registerNewRule(new AddTool());
         }
         if (!MythicChanger.freeVersion) {
             if (CommonUtil.checkPluginLoad("NBTAPI")) {

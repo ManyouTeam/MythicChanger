@@ -5,11 +5,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MaterialTag extends AbstractMatchItemRule {
 
@@ -18,8 +16,8 @@ public class MaterialTag extends AbstractMatchItemRule {
     }
 
     @Override
-    public boolean getMatch(ConfigurationSection section, ItemStack item, ItemMeta meta) {
-        for (String singleMaterial : section.getStringList("material-tag")) {
+    public boolean getMatch(ConfigurationSection section, Player player, ItemStack item, ItemMeta meta) {
+        for (String singleMaterial : getStringList(section, "material-tag", player)) {
             Tag<Material> tempVal1 = Bukkit.getTag(Tag.REGISTRY_ITEMS, CommonUtil.parseNamespacedKey(singleMaterial), Material.class);
             if (tempVal1 != null && tempVal1.isTagged(item.getType())) {
                 return true;

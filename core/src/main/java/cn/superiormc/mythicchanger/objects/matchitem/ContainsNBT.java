@@ -3,6 +3,7 @@ package cn.superiormc.mythicchanger.objects.matchitem;
 import de.tr7zw.nbtapi.NBTCompound;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -15,9 +16,9 @@ public class ContainsNBT extends AbstractMatchItemRule {
     }
 
     @Override
-    public boolean getMatch(ConfigurationSection section, ItemStack item, ItemMeta meta) {
+    public boolean getMatch(ConfigurationSection section, Player player, ItemStack item, ItemMeta meta) {
         NBTItem nbtItem = new NBTItem(item);
-        List<String> tempVal1 = section.getStringList("contains-nbt");
+        List<String> tempVal1 = getStringList(section, "contains-nbt", player);
         for (String key : tempVal1) {
             String[] parentKeys = key.split(";;");
             if (parentKeys.length == 1 && nbtItem.hasTag(key)) {

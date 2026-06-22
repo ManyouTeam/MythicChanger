@@ -33,6 +33,8 @@ public class ListenerManager {
             registerPacketListener(new SetSlots());
             registerPacketListener(new WindowItem());
             registerPacketListener(new WindowMerchant());
+            registerPacketListener(new EntityEquipment());
+            registerPacketListener(new EntityMetadata());
             if (CommonUtil.getMinorVersion(21, 5)) {
                 registerPacketListener(new SetCursorItem());
                 registerPacketListener(new ContainerClick());

@@ -4,6 +4,7 @@ import de.tr7zw.nbtapi.NBTCompound;
 import de.tr7zw.nbtapi.NBTItem;
 import de.tr7zw.nbtapi.NBTType;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -16,9 +17,9 @@ public class NBTByte extends AbstractMatchItemRule {
     }
 
     @Override
-    public boolean getMatch(ConfigurationSection section, ItemStack item, ItemMeta meta) {
+    public boolean getMatch(ConfigurationSection section, Player player, ItemStack item, ItemMeta meta) {
         NBTItem nbtItem = new NBTItem(item);
-        List<String> tempVal1 = section.getStringList("nbt-byte");
+        List<String> tempVal1 = getStringList(section, "nbt-byte", player);
         for (String key : tempVal1) {
             String[] parentKeys = key.split(";;");
             if (parentKeys.length == 3 && nbtItem.hasTag(parentKeys[0], NBTType.NBTTagByte) && getResult(parentKeys[2], parentKeys[1], parentKeys[0], nbtItem)) {
@@ -49,19 +50,14 @@ public class NBTByte extends AbstractMatchItemRule {
     }
 
     private boolean getResult(String lastElement, String last2Element, String last3Element, NBTCompound nbtCompound) {
-        switch (last2Element) {
-            case ">=":
-                return nbtCompound.getByte(last3Element) >= Byte.parseByte(lastElement);
-            case ">":
-                return nbtCompound.getByte(last3Element) > Byte.parseByte(lastElement);
-            case "<=":
-                return nbtCompound.getByte(last3Element) <= Byte.parseByte(lastElement);
-            case "<":
-                return nbtCompound.getByte(last3Element) < Byte.parseByte(lastElement);
-            case "==":
-                return nbtCompound.getByte(last3Element) == Byte.parseByte(lastElement);
-        }
-        return false;
+        return switch (last2Element) {
+            case ">=" -> nbtCompound.getByte(last3Element) >= Byte.parseByte(lastElement);
+            case ">" -> nbtCompound.getByte(last3Element) > Byte.parseByte(lastElement);
+            case "<=" -> nbtCompound.getByte(last3Element) <= Byte.parseByte(lastElement);
+            case "<" -> nbtCompound.getByte(last3Element) < Byte.parseByte(lastElement);
+            case "==" -> nbtCompound.getByte(last3Element) == Byte.parseByte(lastElement);
+            default -> false;
+        };
     }
 
     @Override

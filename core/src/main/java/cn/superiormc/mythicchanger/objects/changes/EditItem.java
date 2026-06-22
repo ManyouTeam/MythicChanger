@@ -1,6 +1,5 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
-import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.methods.BuildItem;
 import cn.superiormc.mythicchanger.objects.ObjectSingleChange;
 import org.bukkit.configuration.ConfigurationSection;

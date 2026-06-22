@@ -4,6 +4,7 @@ import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
 import org.bukkit.Registry;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -15,8 +16,8 @@ public class HasEnchants extends AbstractMatchItemRule {
     }
 
     @Override
-    public boolean getMatch(ConfigurationSection section, ItemStack item, ItemMeta meta) {
-        for (String ench : section.getStringList("has-enchants")) {
+    public boolean getMatch(ConfigurationSection section, Player player, ItemStack item, ItemMeta meta) {
+        for (String ench : getStringList(section, "has-enchants", player)) {
             if (!MythicChanger.freeVersion && ench.equals("*")) {
                 return !meta.getEnchants().isEmpty();
             }

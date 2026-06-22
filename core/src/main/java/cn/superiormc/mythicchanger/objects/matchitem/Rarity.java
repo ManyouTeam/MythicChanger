@@ -2,8 +2,8 @@ package cn.superiormc.mythicchanger.objects.matchitem;
 
 import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.utils.TextUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemRarity;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -15,7 +15,7 @@ public class Rarity extends AbstractMatchItemRule {
     }
 
     @Override
-    public boolean getMatch(ConfigurationSection section, ItemStack item, ItemMeta meta) {
+    public boolean getMatch(ConfigurationSection section, Player player, ItemStack item, ItemMeta meta) {
         String result;
         if (meta.hasRarity()) {
             ItemRarity rarity = meta.getRarity();
@@ -24,9 +24,9 @@ public class Rarity extends AbstractMatchItemRule {
             result = "NONE";
         }
         if (ConfigManager.configManager.getBoolean("debug")) {
-            TextUtil.sendMessage(null, TextUtil.pluginPrefix() + " §cRarity: " + result);
+            TextUtil.sendMessage(null, TextUtil.pluginPrefix() + " 鎼俢Rarity: " + result);
         }
-        return result.equalsIgnoreCase(section.getString("rarity"));
+        return result.equalsIgnoreCase(getString(section, "rarity", player));
     }
 
     @Override

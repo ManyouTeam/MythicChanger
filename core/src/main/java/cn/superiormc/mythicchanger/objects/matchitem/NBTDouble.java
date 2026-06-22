@@ -5,6 +5,7 @@ import de.tr7zw.nbtapi.NBTCompound;
 import de.tr7zw.nbtapi.NBTItem;
 import de.tr7zw.nbtapi.NBTType;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -17,9 +18,9 @@ public class NBTDouble extends AbstractMatchItemRule {
     }
 
     @Override
-    public boolean getMatch(ConfigurationSection section, ItemStack item, ItemMeta meta) {
+    public boolean getMatch(ConfigurationSection section, Player player, ItemStack item, ItemMeta meta) {
         NBTItem nbtItem = new NBTItem(item);
-        List<String> tempVal1 = section.getStringList("nbt-double");
+        List<String> tempVal1 = getStringList(section, "nbt-double", player);
         for (String key : tempVal1) {
             String[] parentKeys = key.split(";;");
             if (parentKeys.length == 3 && nbtItem.hasTag(parentKeys[0], NBTType.NBTTagDouble) && getResult(parentKeys[2], parentKeys[1], parentKeys[0], nbtItem)) {
@@ -50,19 +51,14 @@ public class NBTDouble extends AbstractMatchItemRule {
     }
 
     private boolean getResult(String lastElement, String last2Element, String last3Element, NBTCompound nbtCompound) {
-        switch (last2Element) {
-            case ">=":
-                return nbtCompound.getDouble(last3Element) >= MathUtil.doCalculate(lastElement).doubleValue();
-            case ">":
-                return nbtCompound.getDouble(last3Element) > MathUtil.doCalculate(lastElement).doubleValue();
-            case "<=":
-                return nbtCompound.getDouble(last3Element) <= MathUtil.doCalculate(lastElement).doubleValue();
-            case "<":
-                return nbtCompound.getDouble(last3Element) < MathUtil.doCalculate(lastElement).doubleValue();
-            case "==":
-                return nbtCompound.getDouble(last3Element) == MathUtil.doCalculate(lastElement).doubleValue();
-        }
-        return false;
+        return switch (last2Element) {
+            case ">=" -> nbtCompound.getDouble(last3Element) >= MathUtil.doCalculate(lastElement).doubleValue();
+            case ">" -> nbtCompound.getDouble(last3Element) > MathUtil.doCalculate(lastElement).doubleValue();
+            case "<=" -> nbtCompound.getDouble(last3Element) <= MathUtil.doCalculate(lastElement).doubleValue();
+            case "<" -> nbtCompound.getDouble(last3Element) < MathUtil.doCalculate(lastElement).doubleValue();
+            case "==" -> nbtCompound.getDouble(last3Element) == MathUtil.doCalculate(lastElement).doubleValue();
+            default -> false;
+        };
     }
 
     @Override

@@ -53,11 +53,13 @@ real-change-trigger:
   InventoryClickEvent:
     enabled: true
 
-# Some change rules do not support real change perfectly.
-# For example, add-name-first rule require you also set contains-name rule.
-# Otherwise, each time you interact with this item, the name of it will have additional content added due to this rule.
-# Like: 'Good Good Good Good Good Diamond Sword' if you set add-name-first: 'Good' and interact with this item 5 times.
-bypass-real-change-limit: false
+fake-change-trigger:
+  # Normal triggers like SetSlotsPacket, WindowsItemPackets, SetCursorItemPacket so on are force enabled.
+  # Entity Packets means we will also modify item from other entities which is very cost server performance if you enable the two options here.
+  EntityEquipmentPacket:
+    enabled: false
+  EntityMetadataPacket:
+    enabled: false
 
 ignore-warning: false
 

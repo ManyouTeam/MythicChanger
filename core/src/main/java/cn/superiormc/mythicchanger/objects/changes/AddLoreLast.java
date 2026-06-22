@@ -19,12 +19,6 @@ public class AddLoreLast extends AbstractChangesRule {
 
     @Override
     public ItemStack setChange(ObjectSingleChange singleChange) {
-        if (!singleChange.isFakeOrReal() && !ConfigManager.configManager.getBoolean("bypass-real-change-limit")) {
-            ErrorManager.errorManager.sendErrorMessage("§cError: add-lore-last rule only supports" +
-                    " fake change, please remove it in real changes from all your rule configs! If you want to bypass this limit, " +
-                    "please disable limit check in config.yml file.");
-            return singleChange.getItem();
-        }
         ItemMeta meta = singleChange.getItemMeta();
         List<String> itemLore = MythicChanger.methodUtil.getItemLore(meta);
         if (itemLore == null) {

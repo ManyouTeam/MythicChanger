@@ -2,6 +2,7 @@ package cn.superiormc.mythicchanger.objects.matchitem;
 
 import cn.superiormc.mythicchanger.manager.MatchItemManager;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -12,13 +13,13 @@ public class Not extends AbstractMatchItemRule {
     }
 
     @Override
-    public boolean getMatch(ConfigurationSection section, ItemStack item, ItemMeta meta) {
+    public boolean getMatch(ConfigurationSection section, Player player, ItemStack item, ItemMeta meta) {
         ConfigurationSection notSection = section.getConfigurationSection("not");
         for (AbstractMatchItemRule rule : MatchItemManager.matchItemManager.getRules()) {
             if (rule.configNotContains(notSection)) {
                 continue;
             }
-            if (rule.getMatch(notSection, item, meta)) {
+            if (rule.getMatch(notSection, player, item, meta)) {
                 return false;
             }
         }

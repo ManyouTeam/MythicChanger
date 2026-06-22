@@ -4,6 +4,7 @@ import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
 import org.bukkit.Registry;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
@@ -16,14 +17,12 @@ public class HasStoredEnchants extends AbstractMatchItemRule {
     }
 
     @Override
-    public boolean getMatch(ConfigurationSection section, ItemStack item, ItemMeta meta) {
-        if (!(meta instanceof EnchantmentStorageMeta)) {
-            return false; // 不是附魔书直接返回 false
+    public boolean getMatch(ConfigurationSection section, Player player, ItemStack item, ItemMeta meta) {
+        if (!(meta instanceof EnchantmentStorageMeta storageMeta)) {
+            return false; // 娑撳秵妲搁梽鍕摕娑旓妇娲块幒銉ㄧ箲閸?false
         }
 
-        EnchantmentStorageMeta storageMeta = (EnchantmentStorageMeta) meta;
-
-        for (String ench : section.getStringList("has-stored-enchants")) {
+        for (String ench : getStringList(section, "has-stored-enchants", player)) {
             if (!MythicChanger.freeVersion && ench.equals("*")) {
                 return !storageMeta.getStoredEnchants().isEmpty();
             }

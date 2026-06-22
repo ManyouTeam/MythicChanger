@@ -2,6 +2,7 @@ package cn.superiormc.mythicchanger.objects.matchitem;
 
 import cn.superiormc.mythicchanger.objects.ObjectApplyItem;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -13,7 +14,7 @@ public class HasApply extends AbstractMatchItemRule {
     }
 
     @Override
-    public boolean getMatch(ConfigurationSection section, ItemStack item, ItemMeta meta) {
+    public boolean getMatch(ConfigurationSection section, Player player, ItemStack item, ItemMeta meta) {
         if (section.getBoolean("has-apply")) {
             return meta.getPersistentDataContainer().has(
                     ObjectApplyItem.MYTHICCHANGER_APPLY_RULE, PersistentDataType.STRING);

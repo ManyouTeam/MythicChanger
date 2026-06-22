@@ -78,7 +78,10 @@ public class MatchItemManager {
             if (rule.configNotContains(section)) {
                 continue;
             }
-            if (!rule.getMatch(section, item, meta)) {
+            if (ConfigManager.configManager.getBoolean("debug")) {
+                TextUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fChecking match item rule: " + rule.getClass().getSimpleName());
+            }
+            if (!rule.getMatch(section, player, item, meta)) {
                 if (!MythicChanger.freeVersion) {
                     ObjectAction action = new ObjectAction(section.getConfigurationSection("not-match-actions"));
                     action.runAllActions(player, item, item);

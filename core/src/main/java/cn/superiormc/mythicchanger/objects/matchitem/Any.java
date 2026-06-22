@@ -2,6 +2,7 @@ package cn.superiormc.mythicchanger.objects.matchitem;
 
 import cn.superiormc.mythicchanger.manager.MatchItemManager;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -14,7 +15,7 @@ public class Any extends AbstractMatchItemRule {
     }
 
     @Override
-    public boolean getMatch(ConfigurationSection section, ItemStack item, ItemMeta meta) {
+    public boolean getMatch(ConfigurationSection section, Player player, ItemStack item, ItemMeta meta) {
         ConfigurationSection anySection = section.getConfigurationSection("any");
         Set<String> anyKeys = anySection.getKeys(false);
         if (anyKeys.isEmpty()) {
@@ -27,7 +28,7 @@ public class Any extends AbstractMatchItemRule {
                     if (rule.configNotContains(checkSection)) {
                         continue;
                     }
-                    if (!rule.getMatch(checkSection, item, meta)) {
+                    if (!rule.getMatch(checkSection, player, item, meta)) {
                         continue big;
                     }
                 }
@@ -38,7 +39,7 @@ public class Any extends AbstractMatchItemRule {
                 if (rule.configNotContains(anySection)) {
                     continue;
                 }
-                if (rule.getMatch(anySection, item, meta)) {
+                if (rule.getMatch(anySection, player, item, meta)) {
                     return true;
                 }
             }

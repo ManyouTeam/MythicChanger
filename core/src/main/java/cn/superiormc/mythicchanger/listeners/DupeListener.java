@@ -5,6 +5,7 @@ import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.manager.LanguageManager;
 import cn.superiormc.mythicchanger.methods.Dupe;
 import cn.superiormc.mythicchanger.utils.ItemUtil;
+import cn.superiormc.mythicchanger.utils.TextUtil;
 import io.papermc.paper.event.player.PlayerInventorySlotChangeEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -26,6 +27,9 @@ public class DupeListener implements Listener {
             return;
         }
         if (ConfigManager.configManager.getBoolean("real-change-trigger.PlayerInventorySlotChangeEvent.enabled", true)) {
+            if (ConfigManager.configManager.getBoolean("debug")) {
+                TextUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fPlayerInventorySlotChangeEvent found!");
+            }
             if (ChangesManager.changesManager.getItemCooldown(player, slot)) {
                 ChangesManager.changesManager.removeCooldown(player, slot);
             } else {

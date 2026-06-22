@@ -1,9 +1,9 @@
 package cn.superiormc.mythicchanger.objects.matchitem;
 
 import cn.superiormc.mythicchanger.MythicChanger;
-import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.utils.TextUtil;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -14,11 +14,11 @@ public class ContainsName extends AbstractMatchItemRule {
     }
 
     @Override
-    public boolean getMatch(ConfigurationSection section, ItemStack item, ItemMeta meta) {
+    public boolean getMatch(ConfigurationSection section, Player player, ItemStack item, ItemMeta meta) {
         if (!meta.hasDisplayName()) {
             return false;
         }
-        for (String requiredName : section.getStringList("contains-name")) {
+        for (String requiredName : getStringList(section, "contains-name", player)) {
             String itemName = MythicChanger.methodUtil.getItemName(meta);
             if (TextUtil.clear(itemName).contains(TextUtil.clear(requiredName))) {
                 return true;
