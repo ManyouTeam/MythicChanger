@@ -50,6 +50,10 @@ real-change-trigger:
   # A better choice to replace "SetSlotPacket"
   PlayerInventorySlotChangeEvent:
     enabled: false
+    # There is issue when equipment slot change while opening other inventory.
+    # https://github.com/PaperMC/Paper/issues/13991
+    # You should always enable this unless this issue fixed in later Paper version.
+    ignore-equipment-when-open-other-invenotry: true
   InventoryClickEvent:
     enabled: true
 

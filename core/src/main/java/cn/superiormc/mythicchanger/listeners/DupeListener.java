@@ -10,6 +10,8 @@ import io.papermc.paper.event.player.PlayerInventorySlotChangeEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.CraftingInventory;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
 public class DupeListener implements Listener {
@@ -26,7 +28,37 @@ public class DupeListener implements Listener {
             }
             return;
         }
-        if (ConfigManager.configManager.getBoolean("real-change-trigger.PlayerInventorySlotChangeEvent.enabled", true)) {
+        if (ConfigManager.configManager.getBoolean("real-change-trigger.PlayerInventorySlotChangeEvent.enabled", false)) {
+            if (ConfigManager.configManager.getBoolean("real-change-trigger.PlayerInventorySlotChangeEvent.ignore-equipment-when-open-other-invenotry", true) &&
+                    !(player.getOpenInventory().getTopInventory() instanceof CraftingInventory)) {
+                switch (slot) {
+                    case 5:
+                        if (player.getInventory().getItem(EquipmentSlot.HEAD).hashCode() == item.hashCode()) {
+                            return;
+                        }
+                        break;
+                    case 6:
+                        if (player.getInventory().getItem(EquipmentSlot.CHEST).hashCode() == item.hashCode()) {
+                            return;
+                        }
+                        break;
+                    case 7:
+                        if (player.getInventory().getItem(EquipmentSlot.LEGS).hashCode() == item.hashCode()) {
+                            return;
+                        }
+                        break;
+                    case 8:
+                        if (player.getInventory().getItem(EquipmentSlot.FEET).hashCode() == item.hashCode()) {
+                            return;
+                        }
+                        break;
+                    case 40:
+                        if (player.getInventory().getItem(EquipmentSlot.OFF_HAND).hashCode() == item.hashCode()) {
+                            return;
+                        }
+                        break;
+                }
+            }
             if (ConfigManager.configManager.getBoolean("debug")) {
                 TextUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fPlayerInventorySlotChangeEvent found!");
             }
