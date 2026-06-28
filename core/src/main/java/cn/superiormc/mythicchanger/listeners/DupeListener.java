@@ -25,8 +25,8 @@ public class DupeListener implements Listener {
             if (Dupe.isGuiDisplayItem(item)) {
                 player.getInventory().setItem(slot, null);
                 LanguageManager.languageManager.sendStringText(player, "dupe-removed");
+                return;
             }
-            return;
         }
         if (ConfigManager.configManager.getBoolean("real-change-trigger.PlayerInventorySlotChangeEvent.enabled", false)) {
             if (ConfigManager.configManager.getBoolean("real-change-trigger.PlayerInventorySlotChangeEvent.ignore-equipment-when-open-other-invenotry", true) &&
@@ -52,7 +52,7 @@ public class DupeListener implements Listener {
                             return;
                         }
                         break;
-                    case 40:
+                    case 45:
                         if (player.getInventory().getItem(EquipmentSlot.OFF_HAND).hashCode() == item.hashCode()) {
                             return;
                         }

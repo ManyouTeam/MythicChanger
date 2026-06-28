@@ -11,7 +11,6 @@ public class PlayerCacheListener implements Listener {
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
-        ListenerManager.listenerManager.unregisterListeners(event.getPlayer());
         ChangesManager.changesManager.removeCooldown(event.getPlayer());
         SetCursorItem.hashedStackMap.remove(event.getPlayer().getUniqueId());
     }

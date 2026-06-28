@@ -55,7 +55,7 @@ public class ChangeGUI extends InvGUI {
     protected void constructGUI() {
         if (Objects.isNull(inv)) {
             String title = ConfigManager.configManager.getString(optionKey + "title", "", "mode", customMode);
-            inv = MythicChanger.methodUtil.createNewInv(player, ConfigManager.configManager.getInt(optionKey + "size", 54), title);
+            inv = MythicChanger.methodUtil.createNewInv(player, ConfigManager.configManager.getInt(optionKey + "size", 54), title, this);
         }
         setItem(ConfigManager.configManager.getInt(optionKey + "confirm-slot", 2), BuildItem.buildItemStack(player,
                 ConfigManager.configManager.getSection(optionKey + "confirm-item")));

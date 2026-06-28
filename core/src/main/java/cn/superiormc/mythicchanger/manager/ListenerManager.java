@@ -4,12 +4,10 @@ import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.listeners.*;
 import cn.superiormc.mythicchanger.protolcol.pacetevents.*;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
-import cn.superiormc.mythicchanger.gui.InvGUI;
 import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.event.PacketListener;
 import com.github.retrooper.packetevents.event.PacketListenerCommon;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 
 import java.util.*;
@@ -17,8 +15,6 @@ import java.util.*;
 public class ListenerManager {
 
     public static ListenerManager listenerManager;
-
-    private final Map<UUID, InvGUI> listeners = new HashMap<>();
 
     private final Collection<PacketListenerCommon> packetListeners = new ArrayList<>();
 
@@ -64,23 +60,6 @@ public class ListenerManager {
         if (CommonUtil.getMajorVersion(19) && MythicChanger.methodUtil.methodID().equals("paper")) {
             Bukkit.getPluginManager().registerEvents(new DupeListener(), MythicChanger.instance);
         }
-    }
-
-    public void registerNewGUIListener(Player player, InvGUI inv) {
-        unregisterListeners(player);
-        listeners.put(player.getUniqueId(), inv);
-    }
-
-    public void unregisterNewGUIListener(Player player, InvGUI inv) {
-        listeners.remove(player.getUniqueId(), inv);
-    }
-
-    public void unregisterListeners(Player player) {
-        listeners.remove(player.getUniqueId());
-    }
-
-    public InvGUI getInvGUI(Player player) {
-        return listeners.get(player.getUniqueId());
     }
 
     public void unregisterAllListener() {
