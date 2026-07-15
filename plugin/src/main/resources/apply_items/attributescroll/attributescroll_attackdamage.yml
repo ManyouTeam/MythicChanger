@@ -5,16 +5,16 @@ apply-item-mode: GENERAL
 # Display Item
 display-item:
   material: PAPER
-  name: '&#da8f87Attribute Scroll &7(Attack Damage &a+0.5&7)'
+  name: '{lang:apply_items.attribute_scroll.attack_damage.name}'
   lore:
-    - '&8Scroll'
+    - '{lang:apply_items.common.scroll}'
     - ''
-    - '&d✦ &#cbccc2Drag any &cswords or axes &#cbccc2onto this item to'
-    - '&7make its &bAttack Damage &#cbccc2value &a+0.5&#cbccc2.'
-    - '&c■ &#cbccc2Up to value &#e957ca10&#cbccc2 can be upgraded.'
+    - '{lang:apply_items.attribute_scroll.attack_damage.lore_1}'
+    - '{lang:apply_items.attribute_scroll.attack_damage.lore_2}'
+    - '{lang:apply_items.attribute_scroll.attack_damage.lore_3}'
     - ''
-    - '&#d9afd9Success Rate: &#55c57250%'
-    - '&a&lRare'
+    - '{lang:apply_items.common.success_rate_50}'
+    - '{lang:apply_items.common.rare}'
   max-stack: 1
   
 # Chance, Up to 100
@@ -46,8 +46,8 @@ conditions:
 success-actions:
   1:
     type: message
-    message: '&d✦ &fCool, it looks like magic is showing off, your {name} &fis more powerful now!'
+    message: '{lang:apply_items.common.success}'
 fail-actions:
   1:
     type: message
-    message: '&c☹ &fOh, no! Seems that this time you are now very lucky, the scroll broken, nothing changed!'
+    message: '{lang:apply_items.common.failed}'

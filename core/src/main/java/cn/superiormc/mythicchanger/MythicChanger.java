@@ -39,7 +39,7 @@ public class MythicChanger extends JavaPlugin {
             try {
                 Class<?> paperClass = Class.forName("cn.superiormc.mythicchanger.paper.PaperMethodUtil");
                 methodUtil = (SpecialMethodUtil) paperClass.getDeclaredConstructor().newInstance();
-                MythicChanger.methodUtil.sendChat(null, TextUtil.pluginPrefix() + " §fPaper is found, entering Paper plugin mode...!");
+                MythicChanger.methodUtil.sendChat(null, TextUtil.pluginPrefix() + " §fPaper is found, entering Paper plugin mode...");
             } catch (Throwable throwable) {
                 Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §cError: The plugin seems break, please download it again from site.");
                 Bukkit.getPluginManager().disablePlugin(this);
@@ -48,7 +48,7 @@ public class MythicChanger extends JavaPlugin {
             try {
                 Class<?> spigotClass = Class.forName("cn.superiormc.mythicchanger.spigot.SpigotMethodUtil");
                 methodUtil = (SpecialMethodUtil) spigotClass.getDeclaredConstructor().newInstance();
-                MythicChanger.methodUtil.sendChat(null, TextUtil.pluginPrefix() + " §fSpigot is found, entering Spigot plugin mode...!");
+                MythicChanger.methodUtil.sendChat(null, TextUtil.pluginPrefix() + " §fSpigot is found, entering Spigot plugin mode...");
             } catch (Throwable throwable) {
                 Bukkit.getConsoleSender().sendMessage(TextUtil.pluginPrefix() + " §cError: The plugin seems break, please download it again from site.");
                 Bukkit.getPluginManager().disablePlugin(this);

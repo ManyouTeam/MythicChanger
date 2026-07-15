@@ -29,7 +29,7 @@ public class RemoveData extends AbstractChangesRule {
                 singleChange.getItem().unsetData(type);
             }
         }
-        return singleChange.getItem();
+        return singleChange.updateItemMeta();
     }
 
     @Override

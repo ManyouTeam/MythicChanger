@@ -9,16 +9,10 @@ import io.papermc.paper.registry.TypedKey;
 import io.papermc.paper.registry.set.RegistryKeySet;
 import io.papermc.paper.registry.set.RegistrySet;
 import net.kyori.adventure.util.TriState;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.Registry;
-import org.bukkit.Tag;
 import org.bukkit.block.BlockType;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.ToolComponent;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -33,7 +27,7 @@ public class AddTool extends AbstractChangesRule {
         if (!CommonUtil.getMajorVersion(21)) {
             return singleChange.getItem();
         }
-        ConfigurationSection toolKey = singleChange.getConfigurationSection("add-tool");
+        ObjectSingleChange toolKey = singleChange.getConfigurationSection("add-tool");
         if (toolKey == null) {
             return singleChange.getItem();
         }
@@ -41,33 +35,33 @@ public class AddTool extends AbstractChangesRule {
         ItemStack item = singleChange.getItem();
         Tool tool = item.getData(DataComponentTypes.TOOL);
         Tool.Builder builder = Tool.tool();
-        builder.damagePerBlock(tool.damagePerBlock());
-        builder.defaultMiningSpeed(tool.defaultMiningSpeed());
-        builder.canDestroyBlocksInCreative(tool.canDestroyBlocksInCreative());
-        builder.addRules(tool.rules());
-        float baseMiningSpeed = tool.defaultMiningSpeed();
+
+        float baseMiningSpeed = 1;
+        double miningSpeedMultiplier = toolKey.getDouble("mining-speed-multiplier",
+                toolKey.getDouble("mining-speed", 1));
+        if (tool != null) {
+            builder.damagePerBlock(tool.damagePerBlock());
+            builder.defaultMiningSpeed(tool.defaultMiningSpeed());
+            builder.canDestroyBlocksInCreative(tool.canDestroyBlocksInCreative());
+            builder.addRules(tool.rules());
+            baseMiningSpeed = tool.defaultMiningSpeed();
+            if (toolKey.contains("damage-per-block-add")) {
+                builder.damagePerBlock(Math.max(0,
+                        tool.damagePerBlock() + toolKey.getInt("damage-per-block-add")));
+            }
+        }
         if (baseMiningSpeed <= 0) {
             baseMiningSpeed = 1;
         }
-
-        double miningSpeedMultiplier = toolKey.getDouble("mining-speed-multiplier",
-                toolKey.getDouble("mining-speed", 1));
         if (miningSpeedMultiplier > 0) {
             builder.defaultMiningSpeed((float) (baseMiningSpeed * miningSpeedMultiplier));
         }
-
         if (toolKey.contains("damage-per-block")) {
             builder.damagePerBlock(toolKey.getInt("damage-per-block"));
         }
-        if (toolKey.contains("damage-per-block-add")) {
-            builder.damagePerBlock(Math.max(0,
-                    tool.damagePerBlock() + toolKey.getInt("damage-per-block-add")));
-        }
-
         for (String rule : toolKey.getStringList("rules")) {
             addToolRule(builder, rule, baseMiningSpeed);
         }
-
         singleChange.setNeedRewriteItem();
         item.setData(DataComponentTypes.TOOL, builder.build());
         return singleChange.getItem();

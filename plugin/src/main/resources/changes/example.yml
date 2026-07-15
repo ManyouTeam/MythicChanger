@@ -1,0 +1,1601 @@
+sub-change-match-one: true
+sub-change:
+  tools:
+    match-item:
+      material:
+        - wooden_pickaxe
+        - stone_pickaxe
+        - iron_pickaxe
+        - golden_pickaxe
+        - diamond_pickaxe
+        - netherite_pickaxe
+        - wooden_shovel
+        - stone_shovel
+        - iron_shovel
+        - golden_shovel
+        - diamond_shovel
+        - netherite_shovel
+        - wooden_hoe
+        - stone_hoe
+        - iron_hoe
+        - golden_hoe
+        - diamond_hoe
+        - netherite_hoe
+        - shears
+        - brush
+    changes:
+      random-change:
+        1:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_quarry_heart}'
+          add-attributes:
+            block_break_speed:
+              name: 'mythicchanger:tool_quarry_heart'
+              amount: 1.6
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 1.75
+            damage-per-block-add: 1
+            rules:
+              - 'minecraft:stone,2.5,true'
+          rate: 1
+        2:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_root_splitter}'
+          add-attributes:
+            block_break_speed:
+              name: 'mythicchanger:tool_root_splitter'
+              amount: 1.1
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 1.375
+            rules:
+              - 'minecraft:oak_log,2.25,true'
+          rate: 1
+        3:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_gravel_whisper}'
+          add-attributes:
+            mining_efficiency:
+              name: 'mythicchanger:tool_gravel_whisper'
+              amount: 1.4
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 1.5
+            rules:
+              - 'minecraft:gravel,3,true'
+          rate: 1
+        4:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_clay_singer}'
+          add-attributes:
+            block_break_speed:
+              name: 'mythicchanger:tool_clay_singer'
+              amount: 0.9
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 1.25
+            rules:
+              - 'minecraft:clay,2.75,true'
+          rate: 1
+        5:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_vein_finder}'
+          add-attributes:
+            luck:
+              name: 'mythicchanger:tool_vein_finder'
+              amount: 1
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 1.125
+            rules:
+              - 'minecraft:iron_ore,2,true'
+          rate: 1
+        6:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_deep_bite}'
+          add-attributes:
+            block_break_speed:
+              name: 'mythicchanger:tool_deep_bite'
+              amount: 2.3
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 2.125
+            damage-per-block-add: 1
+          rate: 1
+        7:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_silk_grip}'
+          add-attributes:
+            luck:
+              name: 'mythicchanger:tool_silk_grip'
+              amount: 0.8
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 0.875
+            damage-per-block-add: -1
+          rate: 1
+        8:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_obsidian_tooth}'
+          add-attributes:
+            block_break_speed:
+              name: 'mythicchanger:tool_obsidian_tooth'
+              amount: 1.8
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 1
+            rules:
+              - 'minecraft:obsidian,1.25,true'
+          rate: 1
+        9:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_moss_cutter}'
+          add-attributes:
+            movement_speed:
+              name: 'mythicchanger:tool_moss_cutter'
+              amount: 0.01
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 1.313
+            rules:
+              - 'minecraft:moss_block,3.75,true'
+          rate: 1
+        10:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_glass_needle}'
+          add-attributes:
+            block_break_speed:
+              name: 'mythicchanger:tool_glass_needle'
+              amount: 1.2
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 1.875
+            rules:
+              - 'minecraft:glass,3.25,true'
+          rate: 1
+        11:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_snow_plow}'
+          add-attributes:
+            block_break_speed:
+              name: 'mythicchanger:tool_snow_plow'
+              amount: 1
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 2
+            rules:
+              - 'minecraft:snow_block,4.375,true'
+          rate: 1
+        12:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_netherrack_hunger}'
+          add-attributes:
+            block_break_speed:
+              name: 'mythicchanger:tool_netherrack_hunger'
+              amount: 1.5
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 2.25
+            rules:
+              - 'minecraft:netherrack,5,true'
+          rate: 1
+        13:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_endstone_tune}'
+          add-attributes:
+            mining_efficiency:
+              name: 'mythicchanger:tool_endstone_tune'
+              amount: 1.2
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 1.625
+            rules:
+              - 'minecraft:end_stone,2.125,true'
+          rate: 1
+        14:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_copper_pulse}'
+          add-attributes:
+            luck:
+              name: 'mythicchanger:tool_copper_pulse'
+              amount: 0.6
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 1.188
+            rules:
+              - 'minecraft:copper_ore,2.25,true'
+          rate: 1
+        15:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_deepslate_hook}'
+          add-attributes:
+            block_break_speed:
+              name: 'mythicchanger:tool_deepslate_hook'
+              amount: 1.7
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 1
+            rules:
+              - 'minecraft:deepslate,1.625,true'
+          rate: 1
+        16:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_sculk_nerve}'
+          add-attributes:
+            entity_interaction_range:
+              name: 'mythicchanger:tool_sculk_nerve'
+              amount: 0.5
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 1.5
+            rules:
+              - 'minecraft:sculk,3.5,true'
+          rate: 1
+        17:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_sandy_edge}'
+          add-attributes:
+            block_break_speed:
+              name: 'mythicchanger:tool_sandy_edge'
+              amount: 1
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 1.75
+            rules:
+              - 'minecraft:sand,4,true'
+          rate: 1
+        18:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_mud_skimmer}'
+          add-attributes:
+            movement_speed:
+              name: 'mythicchanger:tool_mud_skimmer'
+              amount: 0.012
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 1.625
+            rules:
+              - 'minecraft:mud,3.75,true'
+          rate: 1
+        19:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_basalt_drill}'
+          add-attributes:
+            block_break_speed:
+              name: 'mythicchanger:tool_basalt_drill'
+              amount: 1.4
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 1.25
+            rules:
+              - 'minecraft:basalt,2.125,true'
+          rate: 1
+        20:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_prismarine_file}'
+          add-attributes:
+            submerged_mining_speed:
+              name: 'mythicchanger:tool_prismarine_file'
+              amount: 1
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 1.375
+            rules:
+              - 'minecraft:prismarine,2.25,true'
+          rate: 1
+        21:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_cracked_handle}'
+          add-attributes:
+            block_break_speed:
+              name: 'mythicchanger:tool_cracked_handle'
+              amount: -1
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 0.438
+            damage-per-block-add: 3
+          rate: 1
+        22:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_heavy_head}'
+          add-attributes:
+            movement_speed:
+              name: 'mythicchanger:tool_heavy_head'
+              amount: -0.02
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 0.5
+          rate: 1
+        23:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_blunt_edge}'
+          add-attributes:
+            mining_efficiency:
+              name: 'mythicchanger:tool_blunt_edge'
+              amount: -1.2
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 0.313
+            rules:
+              - 'minecraft:stone,0.375,true'
+          rate: 1
+        24:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_loose_binding}'
+          add-attributes:
+            block_break_speed:
+              name: 'mythicchanger:tool_loose_binding'
+              amount: -0.7
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 0.625
+            damage-per-block-add: 4
+          rate: 1
+        25:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_waterlogged}'
+          add-attributes:
+            submerged_mining_speed:
+              name: 'mythicchanger:tool_waterlogged'
+              amount: -0.6
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 0.563
+            rules:
+              - 'minecraft:sponge,0.125,true'
+          rate: 1
+        26:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_rust_bite}'
+          add-attributes:
+            luck:
+              name: 'mythicchanger:tool_rust_bite'
+              amount: -1
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 0.75
+            damage-per-block-add: 2
+          rate: 1
+        27:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_splintered_shaft}'
+          add-attributes:
+            attack_speed:
+              name: 'base_attack_speed'
+              amount: -0.4
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 0.688
+            damage-per-block-add: 5
+          rate: 1
+        28:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_dull_rhythm}'
+          add-attributes:
+            block_break_speed:
+              name: 'mythicchanger:tool_dull_rhythm'
+              amount: -1.6
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 0.375
+            rules:
+              - 'minecraft:deepslate,0.25,true'
+          rate: 1
+        29:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_brittle_teeth}'
+          add-attributes:
+            max_health:
+              name: 'mythicchanger:tool_brittle_teeth'
+              amount: -1
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 0.875
+            damage-per-block-add: 6
+          rate: 1
+        30:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_misaligned}'
+          add-attributes:
+            entity_interaction_range:
+              name: 'mythicchanger:tool_misaligned'
+              amount: -0.5
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 0.5
+          rate: 1
+        31:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_overclocked}'
+          add-attributes:
+            block_break_speed:
+              name: 'mythicchanger:tool_overclocked'
+              amount: 3
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 2.75
+            damage-per-block-add: 2
+          rate: 1
+        32:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_careful_palm}'
+          add-attributes:
+            block_interaction_range:
+              name: 'mythicchanger:tool_careful_palm'
+              amount: 1
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 0.75
+            damage-per-block-add: -1
+          rate: 1
+        33:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_long_reach}'
+          add-attributes:
+            block_interaction_range:
+              name: 'mythicchanger:tool_long_reach'
+              amount: 1.5
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 1
+          rate: 1
+        34:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_feather_haft}'
+          add-attributes:
+            movement_speed:
+              name: 'mythicchanger:tool_feather_haft'
+              amount: 0.025
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 1.125
+          rate: 1
+        35:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_steady_grip}'
+          add-attributes:
+            knockback_resistance:
+              name: 'mythicchanger:tool_steady_grip'
+              amount: 0.08
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 1.063
+          rate: 1
+        36:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_coal_seeker}'
+          add-attributes:
+            luck:
+              name: 'mythicchanger:tool_coal_seeker'
+              amount: 0.9
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 1.125
+            rules:
+              - 'minecraft:coal_ore,2.5,true'
+          rate: 1
+        37:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_gem_twitch}'
+          add-attributes:
+            luck:
+              name: 'mythicchanger:tool_gem_twitch'
+              amount: 1.8
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 1.063
+            rules:
+              - 'minecraft:diamond_ore,1.875,true'
+          rate: 1
+        38:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_redstone_fever}'
+          add-attributes:
+            block_break_speed:
+              name: 'mythicchanger:tool_redstone_fever'
+              amount: 1.3
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 1.25
+            rules:
+              - 'minecraft:redstone_ore,2.75,true'
+          rate: 1
+        39:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_emerald_instinct}'
+          add-attributes:
+            luck:
+              name: 'mythicchanger:tool_emerald_instinct'
+              amount: 2
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 1
+            rules:
+              - 'minecraft:emerald_ore,1.75,true'
+          rate: 1
+        40:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_lapis_flow}'
+          add-attributes:
+            mining_efficiency:
+              name: 'mythicchanger:tool_lapis_flow'
+              amount: 1.5
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 1.125
+            rules:
+              - 'minecraft:lapis_ore,2.375,true'
+          rate: 1
+        41:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_cursed_weight}'
+          add-attributes:
+            movement_speed:
+              name: 'mythicchanger:tool_cursed_weight'
+              amount: -0.04
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 0.25
+            damage-per-block-add: 7
+          rate: 1
+        42:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_stonebound}'
+          add-attributes:
+            gravity:
+              name: 'mythicchanger:tool_stonebound'
+              amount: 0.03
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 0.375
+          rate: 1
+        43:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_short_handle}'
+          add-attributes:
+            block_interaction_range:
+              name: 'mythicchanger:tool_short_handle'
+              amount: -1.2
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 0.75
+          rate: 1
+        44:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_clumsy_head}'
+          add-attributes:
+            entity_interaction_range:
+              name: 'mythicchanger:tool_clumsy_head'
+              amount: -1
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 0.625
+          rate: 1
+        45:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_tunneler}'
+          add-attributes:
+            step_height:
+              name: 'mythicchanger:tool_tunneler'
+              amount: 0.4
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 1.5
+            rules:
+              - 'minecraft:tuff,3.125,true'
+          rate: 1
+        46:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_cave_runner}'
+          add-attributes:
+            safe_fall_distance:
+              name: 'mythicchanger:tool_cave_runner'
+              amount: 2
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 1.25
+          rate: 1
+        47:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_ore_magnet}'
+          add-attributes:
+            luck:
+              name: 'mythicchanger:tool_ore_magnet'
+              amount: 1.4
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 1.125
+            rules:
+              - 'minecraft:gold_ore,2.25,true'
+          rate: 1
+        48:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_soft_bite}'
+          add-attributes:
+            block_break_speed:
+              name: 'mythicchanger:tool_soft_bite'
+              amount: -0.8
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 0.5
+            rules:
+              - 'minecraft:dirt,0.5,true'
+          rate: 1
+        49:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_jammed_core}'
+          add-attributes:
+            mining_efficiency:
+              name: 'mythicchanger:tool_jammed_core'
+              amount: -2
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 0.188
+            damage-per-block-add: 8
+          rate: 1
+        50:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.tool_world_chisel}'
+          add-attributes:
+            block_break_speed:
+              name: 'mythicchanger:tool_world_chisel'
+              amount: 2.5
+              operation: ADD_NUMBER
+          add-tool:
+            mining-speed-multiplier: 1.875
+            rules:
+              - 'minecraft:stone,3,true'
+          rate: 1
+  armor:
+    match-item:
+      material:
+        - leather_helmet
+        - leather_chestplate
+        - leather_leggings
+        - leather_boots
+        - chainmail_helmet
+        - chainmail_chestplate
+        - chainmail_leggings
+        - chainmail_boots
+        - iron_helmet
+        - iron_chestplate
+        - iron_leggings
+        - iron_boots
+        - golden_helmet
+        - golden_chestplate
+        - golden_leggings
+        - golden_boots
+        - diamond_helmet
+        - diamond_chestplate
+        - diamond_leggings
+        - diamond_boots
+        - netherite_helmet
+        - netherite_chestplate
+        - netherite_leggings
+        - netherite_boots
+        - turtle_helmet
+        - elytra
+    changes:
+      random-change:
+        1:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_bulwark}'
+          add-attributes:
+            armor:
+              name: 'mythicchanger:armor_bulwark'
+              amount: 2
+              operation: ADD_NUMBER
+          rate: 1
+        2:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_iron_skin}'
+          add-attributes:
+            armor_toughness:
+              name: 'mythicchanger:armor_iron_skin'
+              amount: 1.5
+              operation: ADD_NUMBER
+          rate: 1
+        3:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_feather_step}'
+          add-attributes:
+            movement_speed:
+              name: 'mythicchanger:armor_feather_step'
+              amount: 0.025
+              operation: ADD_NUMBER
+          rate: 1
+        4:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_high_knees}'
+          add-attributes:
+            step_height:
+              name: 'mythicchanger:armor_high_knees'
+              amount: 0.45
+              operation: ADD_NUMBER
+          rate: 1
+        5:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_soft_landing}'
+          add-attributes:
+            safe_fall_distance:
+              name: 'mythicchanger:armor_soft_landing'
+              amount: 4
+              operation: ADD_NUMBER
+          rate: 1
+        6:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_fire_lining}'
+          add-attributes:
+            burning_time:
+              name: 'mythicchanger:armor_fire_lining'
+              amount: -0.2
+              operation: ADD_NUMBER
+          rate: 1
+        7:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_blast_weave}'
+          add-attributes:
+            explosion_knockback_resistance:
+              name: 'mythicchanger:armor_blast_weave'
+              amount: 0.25
+              operation: ADD_NUMBER
+          rate: 1
+        8:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_anchor_plate}'
+          add-attributes:
+            knockback_resistance:
+              name: 'mythicchanger:armor_anchor_plate'
+              amount: 0.18
+              operation: ADD_NUMBER
+          rate: 1
+        9:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_long_guard}'
+          add-attributes:
+            entity_interaction_range:
+              name: 'mythicchanger:armor_long_guard'
+              amount: 0.75
+              operation: ADD_NUMBER
+          rate: 1
+        10:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_builder_frame}'
+          add-attributes:
+            block_interaction_range:
+              name: 'mythicchanger:armor_builder_frame'
+              amount: 0.75
+              operation: ADD_NUMBER
+          rate: 1
+        11:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_vital_stitch}'
+          add-attributes:
+            max_health:
+              name: 'mythicchanger:armor_vital_stitch'
+              amount: 2
+              operation: ADD_NUMBER
+          rate: 1
+        12:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_deep_breath}'
+          add-attributes:
+            oxygen_bonus:
+              name: 'mythicchanger:armor_deep_breath'
+              amount: 1
+              operation: ADD_NUMBER
+          rate: 1
+        13:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_diver_mesh}'
+          add-attributes:
+            submerged_mining_speed:
+              name: 'mythicchanger:armor_diver_mesh'
+              amount: 0.8
+              operation: ADD_NUMBER
+          rate: 1
+        14:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_compact_fit}'
+          add-attributes:
+            scale:
+              name: 'mythicchanger:armor_compact_fit'
+              amount: -0.05
+              operation: ADD_NUMBER
+          rate: 1
+        15:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_giant_frame}'
+          add-attributes:
+            scale:
+              name: 'mythicchanger:armor_giant_frame'
+              amount: 0.08
+              operation: ADD_NUMBER
+          rate: 1
+        16:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_cloud_stitch}'
+          add-attributes:
+            gravity:
+              name: 'mythicchanger:armor_cloud_stitch'
+              amount: -0.03
+              operation: ADD_NUMBER
+          rate: 1
+        17:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_quick_buckle}'
+          add-attributes:
+            movement_speed:
+              name: 'mythicchanger:armor_quick_buckle'
+              amount: 0.018
+              operation: ADD_NUMBER
+          rate: 1
+        18:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_stubborn_shell}'
+          add-attributes:
+            armor:
+              name: 'mythicchanger:armor_stubborn_shell'
+              amount: 3
+              operation: ADD_NUMBER
+          rate: 1
+        19:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_lucky_rivets}'
+          add-attributes:
+            luck:
+              name: 'mythicchanger:armor_lucky_rivets'
+              amount: 1
+              operation: ADD_NUMBER
+          rate: 1
+        20:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_gentle_padding}'
+          add-attributes:
+            fall_damage_multiplier:
+              name: 'mythicchanger:armor_gentle_padding'
+              amount: -0.15
+              operation: ADD_NUMBER
+          rate: 1
+        21:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_paper_thin}'
+          add-attributes:
+            armor:
+              name: 'mythicchanger:armor_paper_thin'
+              amount: -2
+              operation: ADD_NUMBER
+          rate: 1
+        22:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_cracked_plate}'
+          add-attributes:
+            armor_toughness:
+              name: 'mythicchanger:armor_cracked_plate'
+              amount: -1.5
+              operation: ADD_NUMBER
+          rate: 1
+        23:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_lead_lined}'
+          add-attributes:
+            movement_speed:
+              name: 'mythicchanger:armor_lead_lined'
+              amount: -0.025
+              operation: ADD_NUMBER
+          rate: 1
+        24:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_knee_lock}'
+          add-attributes:
+            step_height:
+              name: 'mythicchanger:armor_knee_lock'
+              amount: -0.35
+              operation: ADD_NUMBER
+          rate: 1
+        25:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_hard_landing}'
+          add-attributes:
+            safe_fall_distance:
+              name: 'mythicchanger:armor_hard_landing'
+              amount: -2
+              operation: ADD_NUMBER
+          rate: 1
+        26:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_dry_tinder}'
+          add-attributes:
+            burning_time:
+              name: 'mythicchanger:armor_dry_tinder'
+              amount: 0.25
+              operation: ADD_NUMBER
+          rate: 1
+        27:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_echo_shell}'
+          add-attributes:
+            explosion_knockback_resistance:
+              name: 'mythicchanger:armor_echo_shell'
+              amount: -0.2
+              operation: ADD_NUMBER
+          rate: 1
+        28:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_slippery_straps}'
+          add-attributes:
+            knockback_resistance:
+              name: 'mythicchanger:armor_slippery_straps'
+              amount: -0.15
+              operation: ADD_NUMBER
+          rate: 1
+        29:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_tight_collar}'
+          add-attributes:
+            oxygen_bonus:
+              name: 'mythicchanger:armor_tight_collar'
+              amount: -0.6
+              operation: ADD_NUMBER
+          rate: 1
+        30:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_heavy_soul}'
+          add-attributes:
+            gravity:
+              name: 'mythicchanger:armor_heavy_soul'
+              amount: 0.04
+              operation: ADD_NUMBER
+          rate: 1
+        31:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_mirror_polish}'
+          add-attributes:
+            armor:
+              name: 'mythicchanger:armor_mirror_polish'
+              amount: 1
+              operation: ADD_NUMBER
+          rate: 1
+        32:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_turtle_memory}'
+          add-attributes:
+            oxygen_bonus:
+              name: 'mythicchanger:armor_turtle_memory'
+              amount: 1.8
+              operation: ADD_NUMBER
+          rate: 1
+        33:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_runner_laces}'
+          add-attributes:
+            movement_speed:
+              name: 'mythicchanger:armor_runner_laces'
+              amount: 0.035
+              operation: ADD_NUMBER
+          rate: 1
+        34:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_braced_spine}'
+          add-attributes:
+            knockback_resistance:
+              name: 'mythicchanger:armor_braced_spine'
+              amount: 0.25
+              operation: ADD_NUMBER
+          rate: 1
+        35:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_warm_fur}'
+          add-attributes:
+            burning_time:
+              name: 'mythicchanger:armor_warm_fur'
+              amount: -0.1
+              operation: ADD_NUMBER
+          rate: 1
+        36:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_aegis_thread}'
+          add-attributes:
+            armor:
+              name: 'mythicchanger:armor_aegis_thread'
+              amount: 1.4
+              operation: ADD_NUMBER
+          rate: 1
+        37:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_deep_pockets}'
+          add-attributes:
+            luck:
+              name: 'mythicchanger:armor_deep_pockets'
+              amount: 1.5
+              operation: ADD_NUMBER
+          rate: 1
+        38:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_resonant_guard}'
+          add-attributes:
+            armor_toughness:
+              name: 'mythicchanger:armor_resonant_guard'
+              amount: 1
+              operation: ADD_NUMBER
+          rate: 1
+        39:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_wing_harness}'
+          add-attributes:
+            safe_fall_distance:
+              name: 'mythicchanger:armor_wing_harness'
+              amount: 6
+              operation: ADD_NUMBER
+          rate: 1
+        40:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_siege_padding}'
+          add-attributes:
+            explosion_knockback_resistance:
+              name: 'mythicchanger:armor_siege_padding'
+              amount: 0.4
+              operation: ADD_NUMBER
+          rate: 1
+        41:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_open_seams}'
+          add-attributes:
+            max_health:
+              name: 'mythicchanger:armor_open_seams'
+              amount: -2
+              operation: ADD_NUMBER
+          rate: 1
+        42:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_dragging_cape}'
+          add-attributes:
+            movement_speed:
+              name: 'mythicchanger:armor_dragging_cape'
+              amount: -0.035
+              operation: ADD_NUMBER
+          rate: 1
+        43:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_awkward_bulk}'
+          add-attributes:
+            scale:
+              name: 'mythicchanger:armor_awkward_bulk'
+              amount: 0.12
+              operation: ADD_NUMBER
+          rate: 1
+        44:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_fragile_buckle}'
+          add-attributes:
+            armor:
+              name: 'mythicchanger:armor_fragile_buckle'
+              amount: -1
+              operation: ADD_NUMBER
+          rate: 1
+        45:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_bent_greaves}'
+          add-attributes:
+            step_height:
+              name: 'mythicchanger:armor_bent_greaves'
+              amount: -0.2
+              operation: ADD_NUMBER
+          rate: 1
+        46:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_guardian_plate}'
+          add-attributes:
+            armor:
+              name: 'mythicchanger:armor_guardian_plate'
+              amount: 2.5
+              operation: ADD_NUMBER
+          rate: 1
+        47:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_moon_thread}'
+          add-attributes:
+            gravity:
+              name: 'mythicchanger:armor_moon_thread'
+              amount: -0.05
+              operation: ADD_NUMBER
+          rate: 1
+        48:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_reach_plate}'
+          add-attributes:
+            block_interaction_range:
+              name: 'mythicchanger:armor_reach_plate'
+              amount: 1.2
+              operation: ADD_NUMBER
+          rate: 1
+        49:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_noisy_hinges}'
+          add-attributes:
+            luck:
+              name: 'mythicchanger:armor_noisy_hinges'
+              amount: -1
+              operation: ADD_NUMBER
+          rate: 1
+        50:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.armor_royal_fit}'
+          add-attributes:
+            max_health:
+              name: 'mythicchanger:armor_royal_fit'
+              amount: 4
+              operation: ADD_NUMBER
+          rate: 1
+  weapons:
+    match-item:
+      material:
+        - wooden_sword
+        - stone_sword
+        - iron_sword
+        - golden_sword
+        - diamond_sword
+        - netherite_sword
+        - wooden_axe
+        - stone_axe
+        - iron_axe
+        - golden_axe
+        - diamond_axe
+        - netherite_axe
+        - trident
+        - mace
+        - bow
+        - crossbow
+    changes:
+      random-change:
+        1:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_razor_edge}'
+          add-attributes:
+            attack_damage:
+              name: 'base_attack_damage'
+              amount: 2
+              operation: ADD_NUMBER
+          rate: 1
+        2:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_swift_guard}'
+          add-attributes:
+            attack_speed:
+              name: 'base_attack_speed'
+              amount: 0.4
+              operation: ADD_NUMBER
+          rate: 1
+        3:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_shield_breaker}'
+          add-attributes:
+            attack_damage:
+              name: 'base_attack_damage'
+              amount: 1.5
+              operation: ADD_NUMBER
+          rate: 1
+        4:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_giant_slayer}'
+          add-attributes:
+            attack_damage:
+              name: 'base_attack_damage'
+              amount: 3
+              operation: ADD_NUMBER
+          rate: 1
+        5:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_needle_point}'
+          add-attributes:
+            entity_interaction_range:
+              name: 'mythicchanger:weapon_needle_point'
+              amount: 0.8
+              operation: ADD_NUMBER
+          rate: 1
+        6:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_war_tempo}'
+          add-attributes:
+            attack_speed:
+              name: 'base_attack_speed'
+              amount: 0.65
+              operation: ADD_NUMBER
+          rate: 1
+        7:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_knockout_core}'
+          add-attributes:
+            attack_knockback:
+              name: 'mythicchanger:weapon_knockout_core'
+              amount: 1.2
+              operation: ADD_NUMBER
+          rate: 1
+        8:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_long_fang}'
+          add-attributes:
+            entity_interaction_range:
+              name: 'mythicchanger:weapon_long_fang'
+              amount: 1.2
+              operation: ADD_NUMBER
+          rate: 1
+        9:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_duelist_balance}'
+          add-attributes:
+            movement_speed:
+              name: 'mythicchanger:weapon_duelist_balance'
+              amount: 0.02
+              operation: ADD_NUMBER
+          rate: 1
+        10:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_bleeding_star}'
+          add-attributes:
+            sweeping_damage_ratio:
+              name: 'mythicchanger:weapon_bleeding_star'
+              amount: 0.25
+              operation: ADD_NUMBER
+          rate: 1
+        11:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_titan_grip}'
+          add-attributes:
+            attack_damage:
+              name: 'base_attack_damage'
+              amount: 4
+              operation: ADD_NUMBER
+          rate: 1
+        12:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_quick_draw}'
+          add-attributes:
+            attack_speed:
+              name: 'base_attack_speed'
+              amount: 0.8
+              operation: ADD_NUMBER
+          rate: 1
+        13:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_hunter_luck}'
+          add-attributes:
+            luck:
+              name: 'mythicchanger:weapon_hunter_luck'
+              amount: 1.5
+              operation: ADD_NUMBER
+          rate: 1
+        14:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_executioner}'
+          add-attributes:
+            attack_damage:
+              name: 'base_attack_damage'
+              amount: 2.5
+              operation: ADD_NUMBER
+          rate: 1
+        15:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_wind_cutter}'
+          add-attributes:
+            movement_speed:
+              name: 'mythicchanger:weapon_wind_cutter'
+              amount: 0.03
+              operation: ADD_NUMBER
+          rate: 1
+        16:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_breaker_hook}'
+          add-attributes:
+            attack_knockback:
+              name: 'mythicchanger:weapon_breaker_hook'
+              amount: 0.8
+              operation: ADD_NUMBER
+          rate: 1
+        17:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_clean_cut}'
+          add-attributes:
+            attack_damage:
+              name: 'base_attack_damage'
+              amount: 1.2
+              operation: ADD_NUMBER
+          rate: 1
+        18:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_wide_arc}'
+          add-attributes:
+            sweeping_damage_ratio:
+              name: 'mythicchanger:weapon_wide_arc'
+              amount: 0.45
+              operation: ADD_NUMBER
+          rate: 1
+        19:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_vampiric_grip}'
+          add-attributes:
+            max_health:
+              name: 'mythicchanger:weapon_vampiric_grip'
+              amount: 2
+              operation: ADD_NUMBER
+          rate: 1
+        20:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_arena_reach}'
+          add-attributes:
+            entity_interaction_range:
+              name: 'mythicchanger:weapon_arena_reach'
+              amount: 1.5
+              operation: ADD_NUMBER
+          rate: 1
+        21:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_chipped_edge}'
+          add-attributes:
+            attack_damage:
+              name: 'base_attack_damage'
+              amount: -1.5
+              operation: ADD_NUMBER
+          rate: 1
+        22:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_slow_swing}'
+          add-attributes:
+            attack_speed:
+              name: 'base_attack_speed'
+              amount: -0.6
+              operation: ADD_NUMBER
+          rate: 1
+        23:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_foam_core}'
+          add-attributes:
+            attack_knockback:
+              name: 'mythicchanger:weapon_foam_core'
+              amount: -0.8
+              operation: ADD_NUMBER
+          rate: 1
+        24:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_short_grip}'
+          add-attributes:
+            entity_interaction_range:
+              name: 'mythicchanger:weapon_short_grip'
+              amount: -0.8
+              operation: ADD_NUMBER
+          rate: 1
+        25:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_awkward_hilt}'
+          add-attributes:
+            movement_speed:
+              name: 'mythicchanger:weapon_awkward_hilt'
+              amount: -0.02
+              operation: ADD_NUMBER
+          rate: 1
+        26:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_flat_blade}'
+          add-attributes:
+            sweeping_damage_ratio:
+              name: 'mythicchanger:weapon_flat_blade'
+              amount: -0.25
+              operation: ADD_NUMBER
+          rate: 1
+        27:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_bad_omen}'
+          add-attributes:
+            luck:
+              name: 'mythicchanger:weapon_bad_omen'
+              amount: -1.5
+              operation: ADD_NUMBER
+          rate: 1
+        28:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_brittle_tang}'
+          add-attributes:
+            attack_damage:
+              name: 'base_attack_damage'
+              amount: -0.5
+              operation: ADD_NUMBER
+          rate: 1
+        29:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_dented_guard}'
+          add-attributes:
+            knockback_resistance:
+              name: 'mythicchanger:weapon_dented_guard'
+              amount: -0.1
+              operation: ADD_NUMBER
+          rate: 1
+        30:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_tiring_weight}'
+          add-attributes:
+            max_health:
+              name: 'mythicchanger:weapon_tiring_weight'
+              amount: -2
+              operation: ADD_NUMBER
+          rate: 1
+        31:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_meteor_head}'
+          add-attributes:
+            attack_damage:
+              name: 'base_attack_damage'
+              amount: 5
+              operation: ADD_NUMBER
+          rate: 1
+        32:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_serpent_bite}'
+          add-attributes:
+            attack_speed:
+              name: 'base_attack_speed'
+              amount: 0.5
+              operation: ADD_NUMBER
+          rate: 1
+        33:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_wall_splitter}'
+          add-attributes:
+            attack_damage:
+              name: 'base_attack_damage'
+              amount: 1.5
+              operation: ADD_NUMBER
+          rate: 1
+        34:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_skirmisher}'
+          add-attributes:
+            movement_speed:
+              name: 'mythicchanger:weapon_skirmisher'
+              amount: 0.04
+              operation: ADD_NUMBER
+          rate: 1
+        35:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_crushing_pommel}'
+          add-attributes:
+            attack_knockback:
+              name: 'mythicchanger:weapon_crushing_pommel'
+              amount: 1.5
+              operation: ADD_NUMBER
+          rate: 1
+        36:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_royal_edge}'
+          add-attributes:
+            luck:
+              name: 'mythicchanger:weapon_royal_edge'
+              amount: 2
+              operation: ADD_NUMBER
+          rate: 1
+        37:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_storm_jab}'
+          add-attributes:
+            attack_speed:
+              name: 'base_attack_speed'
+              amount: 0.7
+              operation: ADD_NUMBER
+          rate: 1
+        38:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_pike_soul}'
+          add-attributes:
+            entity_interaction_range:
+              name: 'mythicchanger:weapon_pike_soul'
+              amount: 2
+              operation: ADD_NUMBER
+          rate: 1
+        39:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_sweeping_moon}'
+          add-attributes:
+            sweeping_damage_ratio:
+              name: 'mythicchanger:weapon_sweeping_moon'
+              amount: 0.7
+              operation: ADD_NUMBER
+          rate: 1
+        40:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_heart_piercer}'
+          add-attributes:
+            attack_damage:
+              name: 'base_attack_damage'
+              amount: 3.5
+              operation: ADD_NUMBER
+          rate: 1
+        41:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_cursed_balance}'
+          add-attributes:
+            attack_speed:
+              name: 'base_attack_speed'
+              amount: -1
+              operation: ADD_NUMBER
+          rate: 1
+        42:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_heavy_pommel}'
+          add-attributes:
+            movement_speed:
+              name: 'mythicchanger:weapon_heavy_pommel'
+              amount: -0.04
+              operation: ADD_NUMBER
+          rate: 1
+        43:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_glass_edge}'
+          add-attributes:
+            attack_damage:
+              name: 'base_attack_damage'
+              amount: 1
+              operation: ADD_NUMBER
+          rate: 1
+        44:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_coward_steel}'
+          add-attributes:
+            attack_damage:
+              name: 'base_attack_damage'
+              amount: -2.5
+              operation: ADD_NUMBER
+          rate: 1
+        45:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_numb_grip}'
+          add-attributes:
+            attack_knockback:
+              name: 'mythicchanger:weapon_numb_grip'
+              amount: -1.2
+              operation: ADD_NUMBER
+          rate: 1
+        46:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_oath_brand}'
+          add-attributes:
+            max_health:
+              name: 'mythicchanger:weapon_oath_brand'
+              amount: 4
+              operation: ADD_NUMBER
+          rate: 1
+        47:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_dawn_cutter}'
+          add-attributes:
+            attack_damage:
+              name: 'base_attack_damage'
+              amount: 2.2
+              operation: ADD_NUMBER
+          rate: 1
+        48:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_hooked_tip}'
+          add-attributes:
+            entity_interaction_range:
+              name: 'mythicchanger:weapon_hooked_tip'
+              amount: 0.6
+              operation: ADD_NUMBER
+          rate: 1
+        49:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_splitting_grip}'
+          add-attributes:
+            max_health:
+              name: 'mythicchanger:weapon_splitting_grip'
+              amount: -3
+              operation: ADD_NUMBER
+          rate: 1
+        50:
+          add-lore-last:
+            - '{lang:affix_randomizer.affixes.weapon_mythic_temper}'
+          add-attributes:
+            attack_damage:
+              name: 'base_attack_damage'
+              amount: 4.5
+              operation: ADD_NUMBER
+          rate: 1

@@ -9,6 +9,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Map;
+
 public class ContainsEnchants extends AbstractMatchItemRule {
 
     public ContainsEnchants() {
@@ -18,7 +20,11 @@ public class ContainsEnchants extends AbstractMatchItemRule {
     @Override
     public boolean getMatch(ConfigurationSection section, Player player, ItemStack item, ItemMeta meta) {
         ConfigurationSection containsEnchantsSection = section.getConfigurationSection("contains-enchants");
-        for (String ench : containsEnchantsSection.getKeys(false)) {
+        for (Map.Entry<String, Object> entry : containsEnchantsSection.getValues(true).entrySet()) {
+            if (entry.getValue() instanceof ConfigurationSection) {
+                continue;
+            }
+            String ench = entry.getKey();
             String parsedEnchant = CommonUtil.parseLang(player, ench);
             Enchantment vanillaEnchant = Registry.ENCHANTMENT.get(CommonUtil.parseNamespacedKey(parsedEnchant.toLowerCase()));
             if (vanillaEnchant == null) {

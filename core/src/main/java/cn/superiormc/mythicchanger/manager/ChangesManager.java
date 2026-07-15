@@ -31,6 +31,7 @@ public class ChangesManager {
     }
 
     private void initRules() {
+        registerNewRule(new Change());
         registerNewRule(new AddEnchants());
         registerNewRule(new AddFlags());
         registerNewRule(new AddLoreFirst());
@@ -48,6 +49,9 @@ public class ChangesManager {
         registerNewRule(new RemoveAllEnchants());
         registerNewRule(new RemoveAllStoredEnchants());
         registerNewRule(new RemoveFlags());
+        registerNewRule(new RemoveAttributes());
+        registerNewRule(new RemoveAttributeByName());
+        registerNewRule(new RemoveAttributeContainsName());
         registerNewRule(new RemoveEnchants());
         registerNewRule(new RemoveStoredEnchants());
         registerNewRule(new ReplaceName());
@@ -67,6 +71,9 @@ public class ChangesManager {
         registerNewRule(new ParsePAPIName());
         registerNewRule(new ParsePAPILore());
         registerNewRule(new EditItem());
+        registerNewRule(new AddDamage());
+        registerNewRule(new Damage());
+        registerNewRule(new RepairDamage());
         if (MythicChanger.methodUtil.methodID().equals("paper")) {
             registerNewRule(new RemoveData());
             registerNewRule(new ResetData());
@@ -90,6 +97,7 @@ public class ChangesManager {
             }
             registerNewRule(new KeepItemFormat());
             registerNewRule(new EditLore());
+            registerNewRule(new EditLoreLine());
             registerNewRule(new ReplaceEnchants());
             registerNewRule(new ReplaceStoredEnchants());
             registerNewRule(new ReplaceRandomItem());
@@ -108,7 +116,7 @@ public class ChangesManager {
     public void registerNewRule(AbstractChangesRule rule) {
         rules.add(rule);
         rulesByConfigKey.clear();
-        MythicChanger.methodUtil.sendChat(null, TextUtil.pluginPrefix() + " §fLoaded change rule: " + rule.getClass().getSimpleName() + "!");
+        TextUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fLoaded change rule: " + rule.getClass().getSimpleName() + "!");
     }
 
     public ItemStack setFakeChange(ConfigurationSection section, ItemStack item, Player player, boolean isPlayerInventory) {

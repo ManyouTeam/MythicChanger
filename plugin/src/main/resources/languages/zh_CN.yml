@@ -55,7 +55,75 @@ apply-rule-view-item: "&#98FB98[MythicChanger] &f- &a{rule}"
 apply-rule-view-item-missing: "&#98FB98[MythicChanger] &f- &c{rule} &7(配置未加载)"
 
 override-lang:
-  affix: '&7??'
+  apply_items:
+    common:
+      scroll: '&8卷轴'
+      common: '&f&l普通'
+      uncommon: '&9&l罕见'
+      rare: '&a&l稀有'
+      success_rate_50: '&#d9afd9成功率: &#55c57250%'
+      success_rate_100: '&#d9afd9成功率: &#55c572100%'
+      success: '&d✦ &f魔法生效了，你的 {name} &f变得更加强大！'
+      failed: '&c☹ &f糟糕，卷轴损坏了，物品没有发生变化！'
+    deapply:
+      name: '&f回退之书'
+      lore_1: '&7将此物品拖到需要回退更改的物品上。'
+      lore_2: '&c仅适用于只使用虚拟更改的应用物品。'
+    complex_usage:
+      name: '&#da8f87幸运或厄运卷轴'
+      lore_1: '&d✦ &#cbccc2将&c钻石剑或金剑&#cbccc2拖到此物品上，'
+      lore_2: '&7为其添加附魔。'
+      lore_3: '&c■ &#cbccc2有 &#e957ca9%&#cbccc2 的概率失败。'
+      lore_4: '&c■ &#cbccc2有 &#e957ca1%&#cbccc2 的概率损坏你的剑。'
+      lore_5: '&#d9afd9请谨慎使用！'
+      success: '&d✦ &f成功添加了附魔！'
+      failed: '&c☹ &f运气不佳，什么也没有发生！'
+      broken: '&c☹ &f太糟糕了，物品消失了！'
+    attribute_scroll:
+      attack_damage:
+        name: '&#da8f87属性卷轴 &7(攻击伤害 &a+0.5&7)'
+        lore_1: '&d✦ &#cbccc2将任意&c剑或斧&#cbccc2拖到此物品上，'
+        lore_2: '&7使其&b攻击伤害&#cbccc2增加 &a0.5&#cbccc2。'
+        lore_3: '&c■ &#cbccc2最高可升级至 &#e957ca10&#cbccc2。'
+    enchant_scroll:
+      drag: '&d✦ &#cbccc2将任意&c可附魔物品&#cbccc2拖到此物品上，'
+      max_level: '&c■ &#cbccc2最高可升级至 &#e957ca10&#cbccc2 级。'
+      fortune:
+        name: '&#e0e194附魔卷轴 &7(时运 &a+1&7)'
+        effect: '&7使其&b时运&#cbccc2等级增加 &a1&#cbccc2。'
+      looting:
+        name: '&#e0e194附魔卷轴 &7(抢夺 &a+1&7)'
+        effect: '&7使其&b抢夺&#cbccc2等级增加 &a1&#cbccc2。'
+      power:
+        name: '&#e0e194附魔卷轴 &7(力量 &a+1&7)'
+        effect: '&7使其&b力量&#cbccc2等级增加 &a1&#cbccc2。'
+      protection:
+        name: '&#e0e194附魔卷轴 &7(保护 &a+1&7)'
+        effect: '&7使其&b保护&#cbccc2等级增加 &a1&#cbccc2。'
+      respiration:
+        name: '&#e0e194附魔卷轴 &7(水下呼吸 &a+1&7)'
+        effect: '&7使其&b水下呼吸&#cbccc2等级增加 &a1&#cbccc2。'
+      sharpness:
+        name: '&#e0e194附魔卷轴 &7(锋利 &a+1&7)'
+        effect: '&7使其&b锋利&#cbccc2等级增加 &a1&#cbccc2。'
+      unbreaking:
+        name: '&#e0e194附魔卷轴 &7(耐久 &a+1&7)'
+        effect: '&7使其&b耐久&#cbccc2等级增加 &a1&#cbccc2。'
+    item_skin:
+      name: '&f物品皮肤 &8(钻石剑)'
+      lore: '&7将此物品拖到需要应用皮肤的物品上。'
+      invalid_type: '&c☹ &f此皮肤只能应用于钻石剑！'
+      already_applied: '&c☹ &f此物品已经拥有皮肤！'
+      success: '&d✦ &f魔法生效了，你的 {name} &f现在拥有皮肤了！'
+    item_skin_rollback:
+      name: '&f物品皮肤回退 &8(钻石剑)'
+      lore: '&7将此物品拖到已有皮肤的物品上以回退皮肤。'
+      invalid_skin: '&c☹ &f这把剑没有有效的皮肤！'
+      success: '&d✦ &f你的 {name} &f已成功回退皮肤！'
+    reroll_affix:
+      name: '&f重随词缀'
+      lore: '&7将此物品拖到需要重新随机词缀的物品上。'
+  affix: '&7词缀'
   change_gui:
     title: '更换物品'
     confirm:

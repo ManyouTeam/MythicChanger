@@ -25,10 +25,12 @@ public class InitManager {
         resourceOutput("languages/zh_CN.yml", true);
         resourceOutput("rules/example.yml", false);
         resourceOutput("rules/affix_randomizer.yml", false);
+        resourceOutput("changes/example.yml", false);
         resourceOutput("apply_items/itemskinscroll/item_skin.yml", false);
         resourceOutput("apply_items/itemskinscroll/item_skin_rollback.yml", false);
         resourceOutput("apply_items/Deapply.yml", false);
         resourceOutput("apply_items/ComplexUsageExample.yml", false);
+        resourceOutput("apply_items/reroll_affix.yml", false);
         resourceOutput("apply_items/attributescroll/attributescroll_attackdamage.yml", false);
         resourceOutput("apply_items/enchantscroll/enchantscroll_fortune.yml", false);
         resourceOutput("apply_items/enchantscroll/enchantscroll_looting.yml", false);

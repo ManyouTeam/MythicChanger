@@ -13,6 +13,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -46,6 +47,8 @@ public class ObjectSingleChange extends MemoryConfiguration {
 
     private ObjectSingleChange parentSingleChange;
 
+    private final Set<String> activeChanges;
+
     public ObjectSingleChange(ConfigurationSection section,
                               ItemStack item,
                               Player player,
@@ -63,6 +66,7 @@ public class ObjectSingleChange extends MemoryConfiguration {
         this.itemName = ItemUtil.getItemName(item);
         this.originalName = ItemUtil.getItemName(original);
         this.needRewriteItem = false;
+        this.activeChanges = new HashSet<>();
     }
 
     public ObjectSingleChange(ConfigurationSection section,
@@ -83,6 +87,7 @@ public class ObjectSingleChange extends MemoryConfiguration {
         this.itemName = ItemUtil.getItemName(item);
         this.originalName = ItemUtil.getItemName(original);
         this.needRewriteItem = false;
+        this.activeChanges = new HashSet<>();
     }
 
     public ObjectSingleChange(ConfigurationSection section,
@@ -100,6 +105,7 @@ public class ObjectSingleChange extends MemoryConfiguration {
         this.originalName = change.getOriginalName();
         this.needRewriteItem = change.isNeedRewriteItem();
         this.parentSingleChange = change;
+        this.activeChanges = change.activeChanges;
     }
 
     public void setNeedRewriteItem() {
@@ -120,6 +126,11 @@ public class ObjectSingleChange extends MemoryConfiguration {
     public ItemStack setItemMeta(ItemMeta meta) {
         this.itemMeta = meta;
         item.setItemMeta(meta);
+        return item;
+    }
+
+    public ItemStack updateItemMeta() {
+        this.itemMeta = item.getItemMeta();
         return item;
     }
 
@@ -324,5 +335,13 @@ public class ObjectSingleChange extends MemoryConfiguration {
 
     public boolean isNeedRewriteItem() {
         return needRewriteItem;
+    }
+
+    public boolean enterChange(String id) {
+        return activeChanges.add(id);
+    }
+
+    public void exitChange(String id) {
+        activeChanges.remove(id);
     }
 }

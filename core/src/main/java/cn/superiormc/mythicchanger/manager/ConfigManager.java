@@ -32,13 +32,48 @@ public class ConfigManager {
 
     public Map<String, ObjectApplyItem> itemMap = new HashMap<>();
 
+    public Map<String, ConfigurationSection> changeMap = new HashMap<>();
+
     public Collection<ObjectSingleRule> ruleCaches = new TreeSet<>();
 
     public ConfigManager() {
         configManager = this;
         config = MythicChanger.instance.getConfig();
+        initChangeConfigs();
         initRulesConfigs();
         initApplyItemConfigs();
+    }
+
+    private void initChangeConfigs() {
+        File dir = new File(MythicChanger.instance.getDataFolder(), "changes");
+        if (!dir.exists()) {
+            dir.mkdir();
+        }
+        loadChanges(dir);
+    }
+
+    private void loadChanges(File folder) {
+        File[] files = folder.listFiles();
+        if (files == null) {
+            return;
+        }
+        for (File file : files) {
+            if (file.isDirectory()) {
+                loadChanges(file);
+                continue;
+            }
+            String fileName = file.getName();
+            if (!fileName.endsWith(".yml")) {
+                continue;
+            }
+            String id = fileName.substring(0, fileName.length() - 4);
+            if (changeMap.containsKey(id)) {
+                ErrorManager.errorManager.sendErrorMessage("§cError: Already loaded a change config called: " + fileName + "!");
+                continue;
+            }
+            changeMap.put(id, YamlConfiguration.loadConfiguration(file));
+            TextUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fLoaded change: " + fileName + "!");
+        }
     }
 
     private void initRulesConfigs() {
@@ -175,6 +210,13 @@ public class ConfigManager {
             return null;
         }
         return itemMap.get(id);
+    }
+
+    public ConfigurationSection getChange(String id) {
+        if (id == null) {
+            return null;
+        }
+        return changeMap.get(id);
     }
 
     @Nullable

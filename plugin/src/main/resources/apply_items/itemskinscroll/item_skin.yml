@@ -6,9 +6,9 @@ apply-item-mode: GENERAL
 # Display Item
 display-item:
   material: PAPER
-  name: '&fItem Skin &8(Diamond Sword)'
+  name: '{lang:apply_items.item_skin.name}'
   lore:
-    - '&7Drag this item onto the item you want to apply.'
+    - '{lang:apply_items.item_skin.lore}'
   max-stack: 1
 
 # Rule Configs
@@ -29,7 +29,7 @@ match-item:
   not-match-actions:
     1:
       type: message
-      message: '&c☹ &fYour sword type is not diamond sword!'
+      message: '{lang:apply_items.item_skin.invalid_type}'
 
 # Conditions
 conditions:
@@ -41,10 +41,10 @@ conditions:
     not-meet-actions:
       1:
         type: message
-        message: '&c☹ &fThis item already includes item skin!'
+        message: '{lang:apply_items.item_skin.already_applied}'
 
 # Actions
 success-actions:
   1:
     type: message
-    message: '&d✦ &fCool, it looks like magic is showing off, your {name} &fhas skin now!'
+    message: '{lang:apply_items.item_skin.success}'

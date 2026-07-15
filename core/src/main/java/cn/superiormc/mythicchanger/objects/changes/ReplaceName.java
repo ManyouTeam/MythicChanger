@@ -1,11 +1,13 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
 import cn.superiormc.mythicchanger.MythicChanger;
-import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.objects.ObjectSingleChange;
+import cn.superiormc.mythicchanger.utils.TextUtil;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Map;
 
 public class ReplaceName extends AbstractChangesRule {
 
@@ -15,14 +17,21 @@ public class ReplaceName extends AbstractChangesRule {
 
     @Override
     public ItemStack setChange(ObjectSingleChange singleChange) {
-        ConfigurationSection tempVal1 = singleChange.getConfigurationSection("replace-name");
+        ObjectSingleChange tempVal1 = singleChange.getConfigurationSection("replace-name");
         ItemMeta meta = singleChange.getItemMeta();
-        if (!meta.hasLore()) {
+        if (tempVal1 == null || !meta.hasLore()) {
             return singleChange.getItem();
         }
         String displayName = MythicChanger.methodUtil.getItemName(meta);
-        for (String requiredName : tempVal1.getKeys(false)) {
-            displayName = displayName.replace(requiredName, tempVal1.getString(requiredName, ""));
+        for (Map.Entry<String, Object> entry : tempVal1.section.getValues(true).entrySet()) {
+            if (entry.getValue() instanceof ConfigurationSection) {
+                continue;
+            }
+            String requiredName = TextUtil.withPAPI(singleChange.parsePlaceholder(entry.getKey()),
+                    singleChange.getPlayer());
+            String replacement = entry.getValue() == null ? "" : entry.getValue().toString();
+            replacement = TextUtil.withPAPI(singleChange.parsePlaceholder(replacement), singleChange.getPlayer());
+            displayName = displayName.replace(requiredName, replacement);
         }
         MythicChanger.methodUtil.setItemName(meta, displayName, singleChange.getPlayer());
         return singleChange.setItemMeta(meta);

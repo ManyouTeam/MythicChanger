@@ -29,7 +29,7 @@ public class ResetData extends AbstractChangesRule {
                 singleChange.getItem().resetData(type);
             }
         }
-        return singleChange.getItem();
+        return singleChange.updateItemMeta();
     }
 
     @Override

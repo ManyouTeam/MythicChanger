@@ -3,6 +3,7 @@ package cn.superiormc.mythicchanger.methods;
 import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.manager.HookManager;
 import cn.superiormc.mythicchanger.manager.ItemManager;
+import cn.superiormc.mythicchanger.utils.AttributeUtil;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
 import cn.superiormc.mythicchanger.utils.NBTUtil;
 import com.google.common.base.Enums;
@@ -326,16 +327,15 @@ public class BuildItem {
 
                 if (CommonUtil.getMinorVersion(20, 5)) {
                     String attribSlot = subSection.getString("slot");
-
-                    EquipmentSlotGroup slot = EquipmentSlotGroup.ANY;
-
+                    EquipmentSlotGroup slot = null;
                     if (attribSlot != null) {
                         EquipmentSlotGroup targetSlot = EquipmentSlotGroup.getByName(attribSlot);
                         if (targetSlot != null) {
                             slot = targetSlot;
+                        } else {
+                            slot = AttributeUtil.getAutomaticEquipmentSlotGroup(item);
                         }
                     }
-
                     if (attribName != null && attribOperation != null) {
                         AttributeModifier modifier;
                         if (CommonUtil.getMajorVersion(21)) {
@@ -358,9 +358,7 @@ public class BuildItem {
                     }
                 } else {
                     String attribSlot = subSection.getString("slot");
-
-                    EquipmentSlot slot = attribSlot != null ? Enums.getIfPresent(EquipmentSlot.class, attribSlot).or(EquipmentSlot.HAND) : null;
-
+                    EquipmentSlot slot = attribSlot != null ? Enums.getIfPresent(EquipmentSlot.class, attribSlot).or(EquipmentSlot.HAND) : AttributeUtil.getAutomaticEquipmentSlot(item);
                     if (attribName != null && attribOperation != null) {
                         AttributeModifier modifier = new AttributeModifier(
                                 id,

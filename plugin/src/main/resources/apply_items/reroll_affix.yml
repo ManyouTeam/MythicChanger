@@ -1,0 +1,24 @@
+apply-item-mode: GENERAL
+
+# Display Item
+display-item:
+  material: BOOK
+  name: '{lang:apply_items.reroll_affix.name}'
+  lore:
+    - '{lang:apply_items.reroll_affix.lore}'
+  max-stack: 1
+
+# Rule Configs
+real-changes:
+  reset-data:
+    - 'tool'
+    - 'attribute_modifiers'
+  edit-lore-line:
+    '{lang:affix_randomizer.affix}': ''
+  edit-lore-line-mode: REMOVE
+  change: example
+
+# Match Item
+match-item:
+  contains-lore:
+    - '{lang:affix_randomizer.affix}'

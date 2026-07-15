@@ -5,9 +5,9 @@ apply-item-mode: GENERAL
 # Display Item
 display-item:
   material: PAPER
-  name: '&fItem Skin Rollback &8(Diamond Sword)'
+  name: '{lang:apply_items.item_skin_rollback.name}'
   lore:
-    - '&7Drag this item onto the item have skin to rollback.'
+    - '{lang:apply_items.item_skin_rollback.lore}'
   max-stack: 1
 
 # Rule Configs
@@ -50,13 +50,13 @@ match-item:
   not-match-actions:
     1:
       type: message
-      message: '&c☹ &fThis sword does not include valid skin!'
+      message: '{lang:apply_items.item_skin_rollback.invalid_skin}'
 
 # Actions
 success-actions:
   1:
     type: message
-    message: '&d✦ &fCool, it looks like magic is showing off, your {name} &fis rollback!'
+    message: '{lang:apply_items.item_skin_rollback.success}'
   # Give back the skin item.
   2:
     type: console_command
