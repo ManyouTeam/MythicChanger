@@ -48,16 +48,19 @@ real-changes:
 real-changes:
   random-change:
     1:
+      changes:
       # Put Change Rules here.
-      set-lore: 
-        - 'Lucky Boy'
+        set-lore: 
+          - 'Lucky Boy'
+      match-item: []
       rate: 5
       actions:
         1:
           type: message
           message: 'So lucky!'
     2:
-      set-lore: 
-        - 'Not Lucky Boy'
+      changes:
+        set-lore: 
+          - 'Not Lucky Boy'
       rate: 15
 ```
