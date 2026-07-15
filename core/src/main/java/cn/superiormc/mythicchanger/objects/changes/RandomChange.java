@@ -1,10 +1,10 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
 import cn.superiormc.mythicchanger.manager.ChangesManager;
-import cn.superiormc.mythicchanger.manager.ConfigManager;
+import cn.superiormc.mythicchanger.manager.MatchItemManager;
 import cn.superiormc.mythicchanger.objects.ObjectAction;
+import cn.superiormc.mythicchanger.objects.ObjectCondition;
 import cn.superiormc.mythicchanger.objects.ObjectSingleChange;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 
@@ -27,6 +27,22 @@ public class RandomChange extends AbstractChangesRule {
         Map<String, Double> items = new HashMap<>();
         for (String itemKey : itemSection.getKeys(false)) {
             ConfigurationSection subSection = itemSection.getConfigurationSection(itemKey);
+            if (subSection == null) {
+                continue;
+            }
+            // Match the unchanged input item so reroll exclusions still see the old
+            // affix even when an earlier change has already removed its lore.
+            if (!MatchItemManager.matchItemManager.getMatch(
+                    subSection.getConfigurationSection("match-item"),
+                    singleChange.getPlayer(), singleChange.getOriginal())) {
+                continue;
+            }
+            ConfigurationSection conditionSection = subSection.getConfigurationSection("conditions");
+            if (conditionSection != null
+                    && !new ObjectCondition(conditionSection).getAllBoolean(
+                    singleChange.getPlayer(), singleChange.getOriginal(), singleChange.getItem())) {
+                continue;
+            }
             items.put(itemKey, subSection.getDouble("rate", 1.0));
         }
         if (items.isEmpty()) {
@@ -40,7 +56,9 @@ public class RandomChange extends AbstractChangesRule {
         if (pickedSection == null) {
             return singleChange.getItem();
         }
-        ObjectSingleChange newSingleChange = new ObjectSingleChange(pickedSection, singleChange);
+        ConfigurationSection changesSection = pickedSection.getConfigurationSection("changes");
+        ObjectSingleChange newSingleChange = new ObjectSingleChange(
+                changesSection != null ? changesSection : pickedSection, singleChange);
         if (singleChange.isFakeOrReal()) {
             return ChangesManager.changesManager.setFakeChange(newSingleChange);
         } else {
