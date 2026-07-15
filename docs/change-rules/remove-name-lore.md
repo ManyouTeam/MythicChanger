@@ -1,13 +1,13 @@
 # Remove Name/Lore
 
-## Remove Name <mark style="color:red;">- Premium</mark>
+## Remove Name
 
 ```yaml
 real-changes: 
   remove-name: true
 ```
 
-## Remove All Lore <mark style="color:red;">- Premium</mark>
+## Remove All Lore
 
 ```yaml
 real-changes:
