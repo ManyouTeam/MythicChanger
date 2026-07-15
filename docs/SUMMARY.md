@@ -97,6 +97,7 @@
 * [Keep](change-rules/keep.md)
 * [Deapply](change-rules/deapply.md)
 * [Apply Limit](change-rules/apply-limit.md)
+* [Damage](change-rules/damage.md)
 * [Conditions](change-rules/conditions.md)
 * [Remove/Reset Data - Require Paper](change-rules/remove-reset-data-require-paper.md)
 * [UltimateShop](change-rules/ultimateshop.md)
