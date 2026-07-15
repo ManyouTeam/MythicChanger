@@ -82,7 +82,7 @@
 * [Delete enchants](change-rules/delete-enchants.md)
 * [Remove Name/Lore](change-rules/remove-name-lore.md)
 * [Remove Enchants](change-rules/remove-enchants.md)
-* [Remove Attribute](change-rules/remove-attribute.md)
+* [Remove Attributes](change-rules/remove-attributes.md)
 * [Set Type](change-rules/set-type.md)
 * [Random](change-rules/random.md)
 * [Replace Item](change-rules/replace-item.md)

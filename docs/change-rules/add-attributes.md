@@ -9,5 +9,5 @@ real-changes:
       name: attack_damage 
       amount: '{item_attributes.ATTACK_DAMAGE.amount;;0} + 1'
       operation: ADD_NUMBER 
-      slot: HAND 
+      slot: HAND # Optional, if not set, plugin will auto set by material type
 ```
