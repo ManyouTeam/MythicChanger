@@ -1,8 +1,7 @@
 # 📚Apply Item Example - Stat Scroll
 
 {% hint style="info" %}
-This example file will only work for <mark style="color:red;">**PREMIUM**</mark> version of **MythicChanger**.\
-You <mark style="color:red;">**NEED**</mark> enable `bypass-real-change-limit` option at `config.yml` to make this example file work.
+This example file will only work for <mark style="color:red;">**PREMIUM**</mark> version of **MythicChanger**.
 
 You <mark style="color:red;">**NEED**</mark> install **NBTAPI** plugin first.
 {% endhint %}
