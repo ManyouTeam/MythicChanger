@@ -3,7 +3,6 @@ package cn.superiormc.mythicchanger.listeners;
 import cn.superiormc.mythicchanger.gui.InvGUI;
 import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.manager.ErrorManager;
-import cn.superiormc.mythicchanger.manager.ListenerManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

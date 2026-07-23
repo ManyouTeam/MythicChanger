@@ -1,11 +1,13 @@
 package cn.superiormc.mythicchanger.methods;
 
+import cn.superiormc.mythicchanger.manager.ChangesManager;
+import cn.superiormc.mythicchanger.objects.ObjectAction;
 import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.manager.HookManager;
 import cn.superiormc.mythicchanger.manager.ItemManager;
-import cn.superiormc.mythicchanger.utils.AttributeUtil;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
 import cn.superiormc.mythicchanger.utils.NBTUtil;
+import cn.superiormc.mythicchanger.utils.TextUtil;
 import com.google.common.base.Enums;
 import com.google.common.collect.MultimapBuilder;
 import org.bukkit.*;
@@ -43,12 +45,12 @@ public class BuildItem {
     public static ItemStack buildItemStack(Player player,
                                            ConfigurationSection section,
                                            String... args) {
-        ItemStack item = new ItemStack(Material.BARRIER);
-        return editItemStack(player, item, section, args);
+        ItemStack item = new ItemStack(Material.STONE);
+        return editItemStack(item, player, section, args);
     }
 
-    public static ItemStack editItemStack(Player player,
-                                          ItemStack item,
+    public static ItemStack editItemStack(ItemStack item,
+                                          Player player,
                                           ConfigurationSection section,
                                           String... args) {
 
@@ -67,6 +69,7 @@ public class BuildItem {
         } else {
             String pluginName = section.getString("hook-plugin");
             String itemID = section.getString("hook-item");
+            Object itemThing = section.get("item");
             if (pluginName != null && itemID != null) {
                 if (pluginName.equals("MMOItems") && !itemID.contains(";;")) {
                     itemID = section.getString("hook-item-type") + ";;" + itemID;
@@ -77,13 +80,24 @@ public class BuildItem {
                 if (hookItem != null) {
                     item = hookItem;
                 }
+            } else if (itemThing != null) {
+                item = MythicChanger.methodUtil.getItemObject(itemThing);
             }
         }
 
         // Amount
-        int amountKey = section.getInt("amount");
-        if (amountKey > 0) {
-            item.setAmount(amountKey);
+        int amount;
+        String[] element = section.getString("amount", "1").split("~");
+        if (element.length == 1) {
+            amount = Integer.parseInt(element[0]);
+        } else {
+            int min = Integer.parseInt(element[0]);
+            int max = Integer.parseInt(element[1]);
+            Random random = new Random();
+            amount = random.nextInt(max - min + 1) + min;
+        }
+        if (amount > 0) {
+            item.setAmount(amount);
         }
 
         ItemMeta meta = item.getItemMeta();
@@ -222,12 +236,13 @@ public class BuildItem {
             }
         }
 
+        // Jukebox
         if (CommonUtil.getMajorVersion(21)) {
             JukeboxPlayableComponent jukeboxPlayableComponent = meta.getJukeboxPlayable();
             String song = section.getString("song");
             if (song != null) {
                 jukeboxPlayableComponent.setSongKey(CommonUtil.parseNamespacedKey(song));
-                if (section.contains("show-song")) {
+                if (section.contains("show-song") && !CommonUtil.getMinorVersion(21, 5)) {
                     jukeboxPlayableComponent.setShowInTooltip(section.getBoolean("show-song"));
                 }
                 meta.setJukeboxPlayable(jukeboxPlayableComponent);
@@ -250,7 +265,7 @@ public class BuildItem {
 
         // Glow
         if (CommonUtil.getMinorVersion(20, 5)) {
-            if (section.contains("glow")) {
+            if (section.get("glow") != null) {
                 meta.setEnchantmentGlintOverride(section.getBoolean("glow"));
             }
         }
@@ -295,81 +310,90 @@ public class BuildItem {
         }
 
         // Attribute
-        ConfigurationSection attributesKey = section.getConfigurationSection("attributes");
-        if (attributesKey != null) {
-            for (String attribute : attributesKey.getKeys(false)) {
-                Attribute attributeInst;
-                if (CommonUtil.getMinorVersion(21, 2)) {
-                    attributeInst = Registry.ATTRIBUTE.get(CommonUtil.parseNamespacedKey(attribute));
-                } else {
-                    attributeInst = Enums.getIfPresent(Attribute.class, attribute.toUpperCase(Locale.ENGLISH)).orNull();
+        List<Map<?, ?>> attributes = new ArrayList<>(section.getMapList("attributes"));
+        if (!section.isList("attributes")) {
+            // Backwards compatibility for the old attribute-type section format.
+            ConfigurationSection attributesKey = section.getConfigurationSection("attributes");
+            if (attributesKey != null) {
+                for (String attribute : attributesKey.getKeys(false)) {
+                    ConfigurationSection attributeSection = attributesKey.getConfigurationSection(attribute);
+                    if (attributeSection != null) {
+                        Map<String, Object> attributeData = new LinkedHashMap<>(attributeSection.getValues(false));
+                        attributeData.put("type", attribute);
+                        attributes.add(attributeData);
+                    }
                 }
-                if (attributeInst == null) {
-                    continue;
-                }
-                ConfigurationSection subSection = attributesKey.getConfigurationSection(attribute);
-                if (subSection == null) {
-                    continue;
-                }
-                String attribId = subSection.getString("id");
-                UUID id = attribId != null ? UUID.fromString(attribId) : UUID.randomUUID();
+            }
+        }
+        for (Map<?, ?> attributeData : attributes) {
+            String attribute = getMapString(attributeData, "type");
+            if (attribute == null) {
+                continue;
+            }
+            Attribute attributeInst;
+            if (CommonUtil.getMinorVersion(21, 2)) {
+                attributeInst = Registry.ATTRIBUTE.get(CommonUtil.parseNamespacedKey(attribute));
+            } else {
+                attributeInst = Enums.getIfPresent(Attribute.class, attribute.toUpperCase(Locale.ENGLISH)).orNull();
+            }
+            if (attributeInst == null) {
+                continue;
+            }
+            String attribId = getMapString(attributeData, "id");
+            UUID id = attribId != null ? UUID.fromString(attribId) : UUID.randomUUID();
 
-                String attribName = subSection.getString("name");
-                double attribAmount = subSection.getDouble("amount");
-                String attribOperation = subSection.getString("operation");
+            String attribName = getMapString(attributeData, "name");
+            double attribAmount = getMapDouble(attributeData, "amount");
+            String attribOperation = getMapString(attributeData, "operation");
 
-                Collection<AttributeModifier> tempVal2 = meta.getAttributeModifiers(attributeInst);
-                if (tempVal2 != null) {
-                    for (AttributeModifier tempVal1 : tempVal2) {
-                        meta.removeAttributeModifier(attributeInst, tempVal1);
+            if (CommonUtil.getMinorVersion(20, 5)) {
+                String attribSlot = getMapString(attributeData, "slot");
+
+                EquipmentSlotGroup slot = EquipmentSlotGroup.ANY;
+
+                if (attribSlot != null) {
+                    EquipmentSlotGroup targetSlot = EquipmentSlotGroup.getByName(attribSlot);
+                    if (targetSlot != null) {
+                        slot = targetSlot;
                     }
                 }
 
-                if (CommonUtil.getMinorVersion(20, 5)) {
-                    String attribSlot = subSection.getString("slot");
-                    EquipmentSlotGroup slot = null;
-                    if (attribSlot != null) {
-                        EquipmentSlotGroup targetSlot = EquipmentSlotGroup.getByName(attribSlot);
-                        if (targetSlot != null) {
-                            slot = targetSlot;
-                        } else {
-                            slot = AttributeUtil.getAutomaticEquipmentSlotGroup(item);
-                        }
-                    }
-                    if (attribName != null && attribOperation != null) {
-                        AttributeModifier modifier;
-                        if (CommonUtil.getMajorVersion(21)) {
-                            modifier = new AttributeModifier(
-                                    CommonUtil.parseNamespacedKey(attribName),
-                                    attribAmount,
-                                    Enums.getIfPresent(AttributeModifier.Operation.class, attribOperation)
-                                            .or(AttributeModifier.Operation.ADD_NUMBER),
-                                    slot);
-                        } else {
-                            modifier = new AttributeModifier(
-                                    id,
-                                    attribName,
-                                    attribAmount,
-                                    Enums.getIfPresent(AttributeModifier.Operation.class, attribOperation)
-                                            .or(AttributeModifier.Operation.ADD_NUMBER),
-                                    slot);
-                        }
-                        meta.addAttributeModifier(attributeInst, modifier);
-                    }
-                } else {
-                    String attribSlot = subSection.getString("slot");
-                    EquipmentSlot slot = attribSlot != null ? Enums.getIfPresent(EquipmentSlot.class, attribSlot).or(EquipmentSlot.HAND) : AttributeUtil.getAutomaticEquipmentSlot(item);
-                    if (attribName != null && attribOperation != null) {
-                        AttributeModifier modifier = new AttributeModifier(
+                if (attribName != null && attribOperation != null) {
+                    AttributeModifier modifier;
+                    if (CommonUtil.getMajorVersion(21)) {
+                        modifier = new AttributeModifier(
+                                CommonUtil.parseNamespacedKey(attribName),
+                                attribAmount,
+                                Enums.getIfPresent(AttributeModifier.Operation.class, attribOperation)
+                                        .or(AttributeModifier.Operation.ADD_NUMBER),
+                                slot);
+                    } else {
+                        modifier = new AttributeModifier(
                                 id,
                                 attribName,
                                 attribAmount,
                                 Enums.getIfPresent(AttributeModifier.Operation.class, attribOperation)
                                         .or(AttributeModifier.Operation.ADD_NUMBER),
                                 slot);
-
-                        meta.addAttributeModifier(attributeInst, modifier);
                     }
+
+                    meta.addAttributeModifier(attributeInst, modifier);
+                }
+            } else {
+                String attribSlot = getMapString(attributeData, "slot");
+
+                EquipmentSlot slot = attribSlot != null ? Enums.getIfPresent(EquipmentSlot.class, attribSlot).or(EquipmentSlot.HAND) : null;
+
+                if (attribName != null && attribOperation != null) {
+                    AttributeModifier modifier = new AttributeModifier(
+                            id,
+                            attribName,
+                            attribAmount,
+                            Enums.getIfPresent(AttributeModifier.Operation.class, attribOperation)
+                                    .or(AttributeModifier.Operation.ADD_NUMBER),
+                            slot);
+
+                    meta.addAttributeModifier(attributeInst, modifier);
                 }
             }
         }
@@ -406,20 +430,42 @@ public class BuildItem {
         // Banner
         if (meta instanceof BannerMeta) {
             BannerMeta banner = (BannerMeta) meta;
-            ConfigurationSection bannerPatternsKey = section.getConfigurationSection("patterns");
-
-            if (bannerPatternsKey != null) {
-                for (String pattern : bannerPatternsKey.getKeys(false)) {
-                    PatternType type = null;
+            List<String> bannerPatterns = section.getStringList("patterns");
+            if (section.isList("patterns")) {
+                for (String bannerPattern : bannerPatterns) {
+                    int separatorIndex = bannerPattern.lastIndexOf(':');
+                    if (separatorIndex <= 0 || separatorIndex == bannerPattern.length() - 1) {
+                        continue;
+                    }
+                    String pattern = bannerPattern.substring(0, separatorIndex).trim();
+                    String bannerColor = bannerPattern.substring(separatorIndex + 1).trim();
+                    PatternType type;
                     if (CommonUtil.getMajorVersion(21)) {
                         type = Registry.BANNER_PATTERN.get(CommonUtil.parseNamespacedKey(pattern));
                     } else {
                         type = Enums.getIfPresent(PatternType.class, pattern.toUpperCase()).or(PatternType.BASE);
                     }
-                    String bannerColor = bannerPatternsKey.getString(pattern);
-                    if (type != null && bannerColor != null) {
+                    if (type != null) {
                         DyeColor color = Enums.getIfPresent(DyeColor.class, bannerColor.toUpperCase()).or(DyeColor.WHITE);
                         banner.addPattern(new Pattern(color, type));
+                    }
+                }
+            } else {
+                // Backwards compatibility for the old "PATTERN: COLOR" map format.
+                ConfigurationSection bannerPatternsKey = section.getConfigurationSection("patterns");
+                if (bannerPatternsKey != null) {
+                    for (String pattern : bannerPatternsKey.getKeys(false)) {
+                        PatternType type;
+                        if (CommonUtil.getMajorVersion(21)) {
+                            type = Registry.BANNER_PATTERN.get(CommonUtil.parseNamespacedKey(pattern));
+                        } else {
+                            type = Enums.getIfPresent(PatternType.class, pattern.toUpperCase()).or(PatternType.BASE);
+                        }
+                        String bannerColor = bannerPatternsKey.getString(pattern);
+                        if (type != null && bannerColor != null) {
+                            DyeColor color = Enums.getIfPresent(DyeColor.class, bannerColor.toUpperCase()).or(DyeColor.WHITE);
+                            banner.addPattern(new Pattern(color, type));
+                        }
                     }
                 }
             }
@@ -533,8 +579,12 @@ public class BuildItem {
         // Skull
         if (meta instanceof SkullMeta) {
             SkullMeta skullMeta = (SkullMeta) meta;
-            String skullTextureNameKey = section.getString("skull-meta", section.getString("skull"));
+            String skullTextureNameKey = null;
+            skullTextureNameKey = section.getString("skull-meta", section.getString("skull"));
             if (skullTextureNameKey != null) {
+                if (!MythicChanger.freeVersion) {
+                    skullTextureNameKey = TextUtil.withPAPI(skullTextureNameKey, player);
+                }
                 MythicChanger.methodUtil.setSkullMeta(skullMeta, skullTextureNameKey);
             }
         }
@@ -651,7 +701,8 @@ public class BuildItem {
                     for (String key : bundleContentKey.getKeys(false)) {
                         ConfigurationSection contentItemSection = bundleContentKey.getConfigurationSection(key);
                         if (contentItemSection != null) {
-                            bundleMeta.addItem(buildItemStack(player, contentItemSection,
+                            bundleMeta.addItem(buildItemStack(player,
+                                    contentItemSection,
                                     args));
                         }
                     }
@@ -669,7 +720,13 @@ public class BuildItem {
                 String spawnerKey = section.getString("spawner");
                 if (spawnerKey != null) {
                     EntityType entityType = Enums.getIfPresent(EntityType.class, spawnerKey.toUpperCase()).orNull();
-                    if (entityType != null) {
+                    if (MythicChanger.methodUtil.methodID().equals("paper") && CommonUtil.getMinorVersion(20, 5) && entityType == EntityType.ITEM) {
+                        spawner.setSpawnedType(EntityType.ITEM);
+                        ConfigurationSection spawnerItemSection = section.getConfigurationSection("content");
+                        if (spawnerItemSection != null) {
+                            spawner.setSpawnedItem(buildItemStack(player, spawnerItemSection));
+                        }
+                    } else {
                         spawner.setSpawnedType(entityType);
                     }
                 }
@@ -708,7 +765,8 @@ public class BuildItem {
                     for (String key : shulkerContentKey.getKeys(false)) {
                         ConfigurationSection contentItemSection = shulkerContentKey.getConfigurationSection(key);
                         if (contentItemSection != null) {
-                            box.getInventory().setItem(Integer.parseInt(key), buildItemStack(player, contentItemSection,
+                            box.getInventory().setItem(Integer.parseInt(key), buildItemStack(player,
+                                    contentItemSection,
                                     args));
                         }
                     }
@@ -772,6 +830,7 @@ public class BuildItem {
                 meta.setEnchantable(enchantable);
             }
 
+
             // Glider
             if (section.getString("glider") != null) {
                 meta.setGlider(section.getBoolean("glider"));
@@ -806,7 +865,7 @@ public class BuildItem {
 
             // Equippable
             ConfigurationSection equippable = section.getConfigurationSection("equippable");
-            if (equippable != null) {
+            if (!MythicChanger.freeVersion && equippable != null) {
                 EquippableComponent equippableComponent = meta.getEquippable();
                 List<String> entities = equippable.getStringList("entities");
                 if (!entities.isEmpty()) {
@@ -850,6 +909,7 @@ public class BuildItem {
                 }
                 meta.setEquippable(equippableComponent);
             }
+
             // Damage Resistant
             String damageResistant = section.getString("damage-resistant");
             if (damageResistant != null) {
@@ -884,6 +944,31 @@ public class BuildItem {
             }
         }
 
+        // MythicChanger Changes
+        ConfigurationSection changeSection = section.getConfigurationSection("change-item");
+        if (changeSection != null && CommonUtil.checkPluginLoad("MythicChanger")) {
+            ChangesManager.changesManager.setRealChange(new ObjectAction(), changeSection, item, player);
+        }
         return item;
+    }
+
+    private static String getMapString(Map<?, ?> values, String key) {
+        Object value = values.get(key);
+        return value == null ? null : value.toString();
+    }
+
+    private static double getMapDouble(Map<?, ?> values, String key) {
+        Object value = values.get(key);
+        if (value instanceof Number number) {
+            return number.doubleValue();
+        }
+        if (value != null) {
+            try {
+                return Double.parseDouble(value.toString());
+            } catch (NumberFormatException ignored) {
+                // Match ConfigurationSection#getDouble by returning zero for invalid values.
+            }
+        }
+        return 0;
     }
 }

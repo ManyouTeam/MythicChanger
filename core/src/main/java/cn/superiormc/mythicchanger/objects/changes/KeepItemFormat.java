@@ -1,6 +1,5 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
-import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.methods.BuildItem;
 import cn.superiormc.mythicchanger.objects.ObjectSingleChange;
 import org.bukkit.configuration.ConfigurationSection;
@@ -25,8 +24,8 @@ public class KeepItemFormat extends AbstractChangesRule {
                 keepSection.set(key, debuildSection.get(key));
             }
         }
-        return BuildItem.editItemStack(singleChange.getPlayer(),
-                singleChange.getItem(),
+        return BuildItem.editItemStack(singleChange.getItem(),
+                singleChange.getPlayer(),
                 keepSection);
     }
 

@@ -39,7 +39,7 @@ real-changes:
       flags:
       - HIDE_ATTRIBUTES
       attributes:
-        GENERIC_ATTACK_SPEED:
+        - type: GENERIC_ATTACK_SPEED
           name: decoy
           amount: 0.0
           operation: ADD_NUMBER
@@ -66,7 +66,7 @@ real-changes:
       flags:
       - HIDE_ATTRIBUTES
       attributes:
-        GENERIC_ATTACK_SPEED:
+        - type: GENERIC_ATTACK_SPEED
           name: decoy
           amount: 0.0
           operation: ADD_NUMBER

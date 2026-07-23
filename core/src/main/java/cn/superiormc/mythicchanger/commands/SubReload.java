@@ -1,7 +1,9 @@
 package cn.superiormc.mythicchanger.commands;
 
 import cn.superiormc.mythicchanger.MythicChanger;
-import cn.superiormc.mythicchanger.manager.*;
+import cn.superiormc.mythicchanger.manager.ConfigManager;
+import cn.superiormc.mythicchanger.manager.ItemManager;
+import cn.superiormc.mythicchanger.manager.LanguageManager;
 import cn.superiormc.mythicchanger.objects.AbstractCommand;
 import org.bukkit.entity.Player;
 

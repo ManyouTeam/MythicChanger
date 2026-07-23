@@ -1,9 +1,6 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
-import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.objects.ObjectSingleChange;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;

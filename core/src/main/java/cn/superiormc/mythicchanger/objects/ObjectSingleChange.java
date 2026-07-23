@@ -37,7 +37,7 @@ public class ObjectSingleChange extends MemoryConfiguration {
 
     private final ItemMeta originalMeta;
 
-    private final ConfigurationSection debuildItemFormat;
+    private final DebuildItemHolder debuildItemHolder;
 
     private final String itemName;
 
@@ -59,7 +59,8 @@ public class ObjectSingleChange extends MemoryConfiguration {
         this.item = item;
         this.itemMeta = item.getItemMeta();
         this.originalMeta = original.getItemMeta();
-        this.debuildItemFormat = DebuildItem.debuildItem(item, new MemoryConfiguration());
+        this.debuildItemHolder = new DebuildItemHolder(item);
+        prepareDebuildItemFormat(section);
         this.player = player;
         this.fakeOrReal = fakeOrReal;
         this.isPlayerInventory = isPlayerInventory;
@@ -80,7 +81,8 @@ public class ObjectSingleChange extends MemoryConfiguration {
         this.item = item;
         this.itemMeta = item.getItemMeta();
         this.originalMeta = original.getItemMeta();
-        this.debuildItemFormat = DebuildItem.debuildItem(item, new MemoryConfiguration());
+        this.debuildItemHolder = new DebuildItemHolder(item);
+        prepareDebuildItemFormat(section);
         this.player = player;
         this.fakeOrReal = fakeOrReal;
         this.isPlayerInventory = isPlayerInventory;
@@ -97,7 +99,8 @@ public class ObjectSingleChange extends MemoryConfiguration {
         this.item = change.getItem();
         this.itemMeta = change.getItemMeta();
         this.originalMeta = change.getOriginalMeta();
-        this.debuildItemFormat = change.getDebuildItemFormat();
+        this.debuildItemHolder = change.debuildItemHolder;
+        prepareDebuildItemFormat(section);
         this.player = change.getPlayer();
         this.fakeOrReal = change.isFakeOrReal();
         this.isPlayerInventory = change.isPlayerInventory();
@@ -155,7 +158,7 @@ public class ObjectSingleChange extends MemoryConfiguration {
     }
 
     public ConfigurationSection getDebuildItemFormat() {
-        return debuildItemFormat;
+        return debuildItemHolder.getFormat();
     }
 
     public String getItemName() {
@@ -276,20 +279,23 @@ public class ObjectSingleChange extends MemoryConfiguration {
         if (!MythicChanger.freeVersion) {
             text = CommonUtil.modifyString(player, text, "raw-name", TextUtil.clear(itemName),
                     "raw-original-name", TextUtil.clear(originalName));
-            Pattern pattern1 = Pattern.compile("\\{item_(.*?)}");
-            Matcher matcher1 = pattern1.matcher(text);
-            while (matcher1.find()) {
-                String key = matcher1.group(1);
-                String defaultValue = "";
-                String[] tempVal1 = key.split(";;");
-                if (tempVal1.length >= 2) {
-                    defaultValue = tempVal1[1];
+            ConfigurationSection debuildItemFormat = debuildItemHolder.getFormat();
+            if (debuildItemFormat != null) {
+                Pattern pattern1 = Pattern.compile("\\{item_(.*?)}");
+                Matcher matcher1 = pattern1.matcher(text);
+                while (matcher1.find()) {
+                    String key = matcher1.group(1);
+                    String defaultValue = "";
+                    String[] tempVal1 = key.split(";;");
+                    if (tempVal1.length >= 2) {
+                        defaultValue = tempVal1[1];
+                    }
+                    Object value = debuildItemFormat.get(tempVal1[0]);
+                    if (value == null) {
+                        value = defaultValue;
+                    }
+                    text = text.replace("{item_" + key + "}", value.toString());
                 }
-                Object value = debuildItemFormat.get(tempVal1[0]);
-                if (value == null) {
-                    value = defaultValue;
-                }
-                text = text.replace("{item_" + key + "}", value.toString());
             }
             if (CommonUtil.checkPluginLoad("NBTAPI")) {
                 Pattern pattern2 = Pattern.compile("\\{nbt_(.*?)}");
@@ -343,5 +349,51 @@ public class ObjectSingleChange extends MemoryConfiguration {
 
     public void exitChange(String id) {
         activeChanges.remove(id);
+    }
+
+    private void prepareDebuildItemFormat(ConfigurationSection configuration) {
+        if (!MythicChanger.freeVersion && containsItemPlaceholder(configuration)) {
+            debuildItemHolder.prepare();
+        }
+    }
+
+    private static boolean containsItemPlaceholder(ConfigurationSection configuration) {
+        if (configuration == null) {
+            return false;
+        }
+        for (Object value : configuration.getValues(true).values()) {
+            if (value instanceof String && ((String) value).contains("{item_")) {
+                return true;
+            }
+            if (value instanceof Iterable<?>) {
+                for (Object element : (Iterable<?>) value) {
+                    if (element instanceof String && ((String) element).contains("{item_")) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    private static final class DebuildItemHolder {
+
+        private final ItemStack item;
+
+        private ConfigurationSection format;
+
+        private DebuildItemHolder(ItemStack item) {
+            this.item = item.clone();
+        }
+
+        private void prepare() {
+            if (format == null) {
+                format = DebuildItem.debuildItem(item, new MemoryConfiguration());
+            }
+        }
+
+        private ConfigurationSection getFormat() {
+            return format;
+        }
     }
 }

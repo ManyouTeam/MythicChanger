@@ -1,7 +1,6 @@
 package cn.superiormc.mythicchanger;
 
 import cn.superiormc.mythicchanger.manager.*;
-import cn.superiormc.mythicchanger.protolcol.pacetevents.*;
 import cn.superiormc.mythicchanger.utils.CommonUtil;
 import cn.superiormc.mythicchanger.utils.SpecialMethodUtil;
 import cn.superiormc.mythicchanger.utils.TextUtil;

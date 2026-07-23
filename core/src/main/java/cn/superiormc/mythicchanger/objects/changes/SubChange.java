@@ -1,7 +1,6 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
 import cn.superiormc.mythicchanger.manager.ChangesManager;
-import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.manager.MatchItemManager;
 import cn.superiormc.mythicchanger.objects.ObjectAction;
 import cn.superiormc.mythicchanger.objects.ObjectCondition;

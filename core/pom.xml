@@ -23,14 +23,20 @@
         <dependency>
             <groupId>net.kyori</groupId>
             <artifactId>adventure-api</artifactId>
-            <version>4.25.0</version>
+            <version>5.2.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
-            <version>1.21.11-R0.1-SNAPSHOT</version>
+            <version>26.2.build.55-alpha</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.boxbeam</groupId>
+            <artifactId>Crunch</artifactId>
+            <version>master-2955c4dff3-1</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>me.clip</groupId>
@@ -165,12 +171,6 @@
             <classifier>shaded</classifier>
         </dependency>
         <dependency>
-            <groupId>com.github.Redempt</groupId>
-            <artifactId>Crunch</artifactId>
-            <version>2.0</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <groupId>com.nexomc</groupId>
             <artifactId>nexo</artifactId>
             <version>1.0.0</version>
@@ -209,7 +209,7 @@
         <dependency>
             <groupId>cn.superiormc.enchantmentslots</groupId>
             <artifactId>plugin</artifactId>
-            <version>4.10.4</version>
+            <version>5.0.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

@@ -2,7 +2,6 @@ package cn.superiormc.mythicchanger.manager;
 
 import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.utils.TextUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class ErrorManager {

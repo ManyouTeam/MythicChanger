@@ -16,8 +16,8 @@ public class EditItem extends AbstractChangesRule {
         if (singleChange.getBoolean("edit-item.replace-item", false)) {
             singleChange.setNeedRewriteItem();
         }
-        return BuildItem.editItemStack(singleChange.getPlayer(),
-                singleChange.getItem(),
+        return BuildItem.editItemStack(singleChange.getItem(),
+                singleChange.getPlayer(),
                 singleChange.getConfigurationSection("edit-item"));
     }
 

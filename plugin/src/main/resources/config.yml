@@ -41,6 +41,7 @@ hook-item-method: 'DEFAULT'
 # Premium version only.
 math:
   enabled: true
+  enable-function: true
   scale: 2
 
 real-change-trigger:

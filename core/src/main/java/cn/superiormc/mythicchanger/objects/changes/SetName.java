@@ -4,8 +4,6 @@ import cn.superiormc.mythicchanger.MythicChanger;
 import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.manager.ErrorManager;
 import cn.superiormc.mythicchanger.objects.ObjectSingleChange;
-import cn.superiormc.mythicchanger.utils.CommonUtil;
-import cn.superiormc.mythicchanger.utils.ItemUtil;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;

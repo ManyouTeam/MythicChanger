@@ -5,7 +5,6 @@ import cn.superiormc.mythicchanger.manager.ChangesManager;
 import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.manager.MatchItemManager;
 import cn.superiormc.mythicchanger.utils.TextUtil;
-import org.bukkit.GameMode;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;

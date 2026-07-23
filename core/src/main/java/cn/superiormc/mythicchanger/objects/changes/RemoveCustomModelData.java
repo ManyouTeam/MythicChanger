@@ -1,8 +1,6 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
-import cn.superiormc.mythicchanger.manager.ConfigManager;
 import cn.superiormc.mythicchanger.objects.ObjectSingleChange;
-import io.papermc.paper.datacomponent.DataComponentTypes;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;

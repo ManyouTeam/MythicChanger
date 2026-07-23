@@ -11,7 +11,6 @@ import com.github.retrooper.packetevents.protocol.item.ItemStack;
 import com.github.retrooper.packetevents.protocol.packettype.PacketType;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityMetadata;
 import io.github.retrooper.packetevents.util.SpigotConversionUtil;
-import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
 import java.util.Optional;

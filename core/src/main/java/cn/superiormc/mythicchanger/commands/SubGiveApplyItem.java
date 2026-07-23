@@ -6,7 +6,6 @@ import cn.superiormc.mythicchanger.objects.ObjectApplyItem;
 import cn.superiormc.mythicchanger.objects.AbstractCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;

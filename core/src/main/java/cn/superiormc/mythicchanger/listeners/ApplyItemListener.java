@@ -8,14 +8,27 @@ import cn.superiormc.mythicchanger.utils.ItemUtil;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataType;
 
 public class ApplyItemListener implements Listener {
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onInteract(PlayerInteractEvent event) {
+        ItemStack item = event.getItem();
+        if (item == null) {
+            return;
+        }
+        ObjectApplyItem applyItem = ConfigManager.configManager.getApplyItemID(item.getItemMeta());
+        if (applyItem != null) {
+            event.setCancelled(true);
+        }
+    }
 
     @EventHandler
     public void onApplyItemUse(InventoryClickEvent event) {
@@ -28,10 +41,9 @@ public class ApplyItemListener implements Listener {
         if (event.isCancelled()) {
             return;
         }
-        if (!(event.getWhoClicked() instanceof Player)) {
+        if (!(event.getWhoClicked() instanceof Player player)) {
             return;
         }
-        Player player = (Player)event.getWhoClicked();
         ItemStack usedItemStack = event.getCurrentItem();
         if (usedItemStack == null || usedItemStack.getType().isAir()) {
             return;

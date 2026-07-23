@@ -1,7 +1,6 @@
 package cn.superiormc.mythicchanger.utils;
 
 import cn.superiormc.mythicchanger.MythicChanger;
-import cn.superiormc.mythicchanger.manager.LanguageManager;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
