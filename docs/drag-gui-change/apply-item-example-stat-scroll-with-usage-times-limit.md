@@ -1,8 +1,6 @@
 # 📚Apply Item Example - Stat Scroll with Usage Times Limit
 
 {% hint style="info" %}
-You <mark style="color:red;">**NEED**</mark> enable `bypass-real-change-limit` option at `config.yml` to make this example file work.
-
 You <mark style="color:red;">**NEED**</mark> install **NBTAPI** plugin first.
 {% endhint %}
 
