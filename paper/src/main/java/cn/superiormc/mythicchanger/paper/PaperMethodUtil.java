@@ -297,4 +297,12 @@ public class PaperMethodUtil implements SpecialMethodUtil {
         }
         return DebuildItemPaper.serializeItemStack(item);
     }
+
+    @Override
+    public String getItemTranslateKey(ItemStack item) {
+        if (CommonUtil.getMajorVersion(18)) {
+            return item.translationKey();
+        }
+        return item.getTranslationKey();
+    }
 }

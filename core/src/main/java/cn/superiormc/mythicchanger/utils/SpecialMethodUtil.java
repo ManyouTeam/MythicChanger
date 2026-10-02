@@ -69,4 +69,6 @@ public interface SpecialMethodUtil {
                             String... args);
 
     ConfigurationSection serializeItemStack(ItemStack item);
+
+    String getItemTranslateKey(ItemStack item);
 }

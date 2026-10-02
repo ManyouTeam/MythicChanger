@@ -14,8 +14,8 @@ import java.net.HttpURLConnection;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class LocateManager {
 
@@ -31,7 +31,7 @@ public class LocateManager {
 
     public LocateManager() {
         locateManager = this;
-        this.locateMap = new HashMap<>();
+        this.locateMap = new ConcurrentHashMap<>();
         this.languageFileName = ConfigManager.configManager.getString("config-files.minecraft-locate-file.file");
         if (languageFileName == null) {
             return;
@@ -146,15 +146,16 @@ public class LocateManager {
             return ItemUtil.getItemNameWithoutVanilla(item);
         }
 
-        if (!locateMap.containsKey(item.getTranslationKey())) {
-            Object value = getValueFromJson(fileContent, item.getTranslationKey());
+        String itemNameKey = MythicChanger.methodUtil.getItemTranslateKey(item);
+        if (!locateMap.containsKey(itemNameKey)) {
+            Object value = getValueFromJson(fileContent, itemNameKey);
             if (value != null) {
-                locateMap.put(item.getTranslationKey(), String.valueOf(value));
+                locateMap.put(itemNameKey, String.valueOf(value));
             } else {
-                locateMap.put(item.getTranslationKey(), ItemUtil.getItemNameWithoutVanilla(item));
+                locateMap.put(itemNameKey, ItemUtil.getItemNameWithoutVanilla(item));
             }
         }
-        return locateMap.get(item.getTranslationKey());
+        return locateMap.get(itemNameKey);
     }
 
     private Object getValueFromJson(JSONObject jsonObject, String path) {
@@ -178,4 +179,3 @@ public class LocateManager {
         return CommonUtil.getMajorVersion(16) && !MythicChanger.freeVersion && ConfigManager.configManager.getBoolean("config-files.minecraft-locate-file.enabled");
     }
 }
-
