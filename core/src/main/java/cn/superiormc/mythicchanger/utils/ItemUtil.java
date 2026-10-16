@@ -1,7 +1,6 @@
 package cn.superiormc.mythicchanger.utils;
 
 import cn.superiormc.mythicchanger.MythicChanger;
-import cn.superiormc.mythicchanger.manager.LocateManager;
 import org.bukkit.inventory.ItemStack;
 
 public class ItemUtil {
@@ -18,9 +17,6 @@ public class ItemUtil {
         }
         if (displayItem.getItemMeta().hasDisplayName()) {
             return MythicChanger.methodUtil.getItemName(displayItem.getItemMeta());
-        }
-        if (LocateManager.enableThis() && LocateManager.locateManager != null) {
-            return LocateManager.locateManager.getLocateName(displayItem);
         }
         return getItemNameWithoutVanilla(displayItem);
     }

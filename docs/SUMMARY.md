@@ -16,6 +16,8 @@
 ## 📋Format
 
 * [📝ItemFormat™](format/itemformat-tm.md)
+  * [Component Format](format/component-format.md)
+  * [Testing Paper Components](format/component-testing.md)
 * [🎬Action Format](format/action-format.md)
 * [⚖️Condition Format](format/condition-format.md)
 * [➗Math Calculate Format](format/math-calculate-format.md)

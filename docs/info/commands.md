@@ -2,7 +2,7 @@
 
 ## /mc generateitemformat&#x20;
 
-Generate hold item into Item Format at `plugins/MythicChanger` folder.
+Save the item held in your main hand to `plugins/MythicChanger/generated-item-format.yml`. Each use overwrites that file. Set `debuild-item-method: COMPONENT` to use the component writer on Paper 1.21.5+ with MythicChanger Premium. See [Testing Paper Components](../format/component-testing.md) for a save/rebuild walkthrough.
 
 Require `mythicchanger.generateitemformat` permission.
 
@@ -22,9 +22,9 @@ Reload the plugin. Some changes still need restart the whole server.
 
 Require `mythicchanger.reload` permission.
 
-## /mc saveitem \<itemID>
+## /mc saveitem \<itemID> \[bukkit|itemformat]
 
-Save your hold items.
+Save your held item. `bukkit` is the default save method; `itemformat` follows `debuild-item-method`. For example, `/mc saveitem component-test itemformat` saves the ItemFormat under `items/component-test.yml`.
 
 Require `mythicchanger.saveitem` permission.
 

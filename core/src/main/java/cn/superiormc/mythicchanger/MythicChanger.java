@@ -71,9 +71,6 @@ public class MythicChanger extends JavaPlugin {
         new MatchItemManager();
         new ListenerManager();
         new CommandManager();
-        if (LocateManager.enableThis()) {
-            new LocateManager();
-        }
         TextUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fYour server version is: " + yearVersion + "." + majorVersion + "." + minorVersion + "!");
         TextUtil.sendMessage(null, TextUtil.pluginPrefix() + " §fPlugin is loaded. Author: PQguanfang.");
     }
