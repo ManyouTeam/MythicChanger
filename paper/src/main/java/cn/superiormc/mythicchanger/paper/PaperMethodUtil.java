@@ -12,6 +12,12 @@ import cn.superiormc.mythicchanger.utils.SpecialMethodUtil;
 import cn.superiormc.mythicchanger.utils.TextUtil;
 import com.destroystokyo.paper.profile.PlayerProfile;
 import com.destroystokyo.paper.profile.ProfileProperty;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
@@ -27,8 +33,6 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
-
-import java.util.*;
 
 public class PaperMethodUtil implements SpecialMethodUtil {
 
@@ -284,7 +288,7 @@ public class PaperMethodUtil implements SpecialMethodUtil {
 
     @Override
     public ItemStack editItemStack(ItemStack item, Player player, ConfigurationSection section, int amount, String... args) {
-        if (!CommonUtil.getMinorVersion(21, 6) || MythicChanger.freeVersion) {
+        if (!CommonUtil.getMinorVersion(21, 5) || MythicChanger.freeVersion) {
             return item;
         }
         return BuildItemPaper.editItemStack(item, player, section, amount, args);
@@ -292,7 +296,7 @@ public class PaperMethodUtil implements SpecialMethodUtil {
 
     @Override
     public ConfigurationSection serializeItemStack(ItemStack item) {
-        if (!CommonUtil.getMinorVersion(21, 6) || MythicChanger.freeVersion) {
+        if (!CommonUtil.getMinorVersion(21, 5) || MythicChanger.freeVersion) {
             return null;
         }
         return DebuildItemPaper.serializeItemStack(item);

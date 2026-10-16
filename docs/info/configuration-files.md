@@ -6,13 +6,15 @@ description: >-
 
 # 🛠️Configuration files
 
-* `items`: The location for storing saved item files. It will only be generated after save any item with `/mc saveitem` command. <mark style="color:red;">Do not modify any content here</mark>.
+* `items`: Saved item files. You can add ItemFormat YAML files here; reload with `/mc reload` and give an item with `/mc givesaveitem <ID>`.
 * `languages`: The location for storing language files. You can set the language file used by the plugin through the `config-files.language` option in the `config.yml` file. You can customize various messages within the plugin game through language files. It is not supported to display the corresponding language file based on the player client language. You can only display the same language for all players.
 * `rules`: The location for storing **Auto Match & Change** feature's configuration files.
 * `apply_items`: The location for storing **Apply Item** configuration files. **Drag Change / GUI Change** feature requires you consume Apply Item to apply item change onto specifed items.
 * `config.yml` file: The location for main common settings for plugins.
-* `generated-item-format.yml` file: When using the `/mc generateeitemformat` command, we will parse the item you are holding into an **ItemFormat** and store the parsed **ItemFormat** content in this file.
+* `generated-item-format.yml` file: When using the `/mc generateitemformat` command, we will parse the item you are holding into an **ItemFormat** and store the parsed **ItemFormat** content in this file.
 * `XX_xx.json` file: Localized files automatically generated through [Localized Item Name](../features/localized-item-name-premium.md) feature. The name of this file is determined based on the localized language you have set for this feature, but it usually ends in `. json`.
+
+Use `debuild-item-method: COMPONENT` to save supported Paper components on Paper 1.21.5+ with MythicChanger Premium. See [Component Format](../format/component-format.md) and [Testing Paper Components](../format/component-testing.md).
 
 ## Config.yml file content
 
