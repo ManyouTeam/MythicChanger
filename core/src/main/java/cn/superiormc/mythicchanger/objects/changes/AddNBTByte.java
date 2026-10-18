@@ -1,8 +1,7 @@
 package cn.superiormc.mythicchanger.objects.changes;
 
 import cn.superiormc.mythicchanger.objects.ObjectSingleChange;
-import cn.superiormc.mythicchanger.utils.MathUtil;
-import de.tr7zw.nbtapi.NBTCompound;
+import cn.superiormc.mythicchanger.utils.NBTUtil;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
@@ -11,39 +10,12 @@ import java.util.List;
 
 public class AddNBTByte extends AbstractChangesRule {
 
-    public AddNBTByte() {
-        super();
-    }
-
     @Override
     public ItemStack setChange(ObjectSingleChange singleChange) {
         NBTItem nbtItem = new NBTItem(singleChange.getItem().clone());
         List<String> tempVal1 = singleChange.getStringList("add-nbt-byte");
         for (String key : tempVal1) {
-            String[] parentKeys = key.split(";;");
-            if (parentKeys.length == 2) {
-                nbtItem.setByte(parentKeys[0], MathUtil.doCalculate(parentKeys[1]).byteValue());
-            } else if (parentKeys.length > 2) {
-                NBTCompound nbtCompound = null;
-                String lastElement = parentKeys[parentKeys.length - 1];
-                String last2Element = parentKeys[parentKeys.length - 2];
-                String[] newArray = new String[parentKeys.length - 2];
-                System.arraycopy(parentKeys, 0, newArray, 0, parentKeys.length - 2);
-                parentKeys = newArray;
-                for (String parentKey : parentKeys) {
-                    if (parentKey.isEmpty()) {
-                        continue;
-                    }
-                    if (nbtCompound == null) {
-                        nbtCompound = nbtItem.getOrCreateCompound(parentKey);
-                    } else {
-                        nbtCompound = nbtCompound.getOrCreateCompound(parentKey);
-                    }
-                }
-                if (nbtCompound != null) {
-                    nbtCompound.setByte(last2Element, MathUtil.doCalculate(lastElement).byteValue());
-                }
-            }
+            NBTUtil.setPathValue(nbtItem, key.split(";;"), "byte");
         }
         singleChange.setNeedRewriteItem();
         return nbtItem.getItem();
